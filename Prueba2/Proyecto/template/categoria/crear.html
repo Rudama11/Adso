@@ -1,0 +1,27 @@
+{% extends 'body.html' %}
+
+{% block contenido %}
+
+<form method="post" action=".">
+
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>
+                Crear Categoría
+                {{titulo}}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            {{form}}
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary btn btn-xs"><i class="fas fa-save"></i>
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
