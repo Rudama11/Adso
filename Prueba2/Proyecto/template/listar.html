@@ -26,14 +26,15 @@
             </thead>
             <tbody>
                 {% block filas %}
+
                 {% endblock %}
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        <button class="btn btn-primary btn btn-flat">
-            <i class="fas fa-plus"></i> Agregar
-        </button>
+    < class="card-footer">
+        <a href="{{crear_url}}" class="btn btn-primary btn btn-flat"><i class="fas fa-plus"></i>
+            Agregar
+        </a>
     </div>
 </div>
 {% endblock %}
