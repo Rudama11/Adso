@@ -55,7 +55,7 @@ class CategoriaCreateView(CreateView):
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
-    template_name = 'categoria/editar.html'
+    template_name = 'categoria/crear.html'
     success_url = reverse_lazy('apl:categoria_lista')
     
     def get_context_data(self, **kwargs):
