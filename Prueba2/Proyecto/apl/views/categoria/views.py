@@ -52,7 +52,7 @@ class CategoriaCreateView(CreateView):
         
         return context
     
-class CtegoriaUpdateView(UpdateView):
+class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'categoria/editar.html'
