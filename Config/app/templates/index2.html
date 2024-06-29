@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block contenido %}
+<ul>
+    {% for p in Productos %}
+    <li>{{ p.id }} / {{ p.nombre }}</li>
+        
+       {% endfor %}
+</ul>
+{% endblock %}
