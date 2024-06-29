@@ -2,32 +2,45 @@ from django.test import TestCase
 from pathlib import Path
 import sys 
 sys.path.append (str(Path(__file__).parent.parent))
-from Config.wsgi import*
-from app.models import*
+from Config.wsgi import *
+from app.models import *
 # Create your tests here.
 
-# #Listar 
-# query = Tipo.objects.all()
-# print (query)
+#Create your tests here.
+#---------------------------------------------------------------- CLASE EMPLEADO --------------------------------------------
+# 1. Crear un nuevo cliente
+# def crear_cliente():
+#     cliente = Cliente(
+#         nombre="Juan",
+#         apellido="Perez",
+#         cedula="1234567890",
+#         fecha_n=datetime(1990, 5, 15).date(),
+#         sexo="male",
+#         correo="juan.perez@example.com",
+#         direccion="Calle Principal 123"
+#     )
+#     cliente.save()
+#     print("Cliente creado:", cliente)
 
-#Insertar 
-# t=Tipo (nombre='Prueba').save()
+# 2. Listar todos los clientes
+# def listar_clientes():
+#     clientes = Cliente.objects.all()
+#     for cliente in clientes:
+#         print(cliente)
 
-# #Editar 
-           
-# try:
-#      t=Tipo.objects.get(id=1)
-#      print(t.nombre)
-#      t.nombre='Admin2'
-#      t.save()
-# except Exception as e:
-#     print(e)
-    
-    
-# #Eliminar
-# t= Tipo.objects.get(id=1)
-# t.delete() 
- 
+# 3. Actualizar un cliente existente
+# def actualizar_cliente(id_cliente, nuevo_nombre):
+#     cliente = Cliente.objects.get(id=id_cliente)
+#     cliente.nombre = nuevo_nombre
+#     cliente.save()
+#     print("Cliente actualizado:", cliente)
+
+# 4. Eliminar un cliente
+# def eliminar_cliente(id_cliente):
+#     cliente = Cliente.objects.get(id=id_cliente)
+#     cliente.delete()
+#     print("Cliente eliminado:", cliente)
+#--------------------------------------------------------------------------------
 
 # #Listar Con Filter 
 
@@ -47,16 +60,16 @@ from app.models import*
 #     cat.save()
 #     print ('Guardado Resgistro N {}'.format(cat.id))
     
-data_productos = ['Arroz', 'Leche', 'Helado', 'Lenteja', 'Soya']
+# data_productos = ['Arroz', 'Leche', 'Helado', 'Lenteja', 'Soya']
 
-# Obtener la primera categoría existente (puedes ajustar esto según tus necesidades)
-categoria_default = Categoria.objects.first()
+# # Obtener la primera categoría existente (puedes ajustar esto según tus necesidades)
+# categoria_default = Categoria.objects.first()
 
-# Crear productos y guardarlos en la base de datos
-for nombre_producto in data_productos:
-    producto = Producto(nombre=nombre_producto, categ=categoria_default)
-    producto.save()
-    print(f'Producto "{producto.nombre}" creado con éxito.')
+# # Crear productos y guardarlos en la base de datos
+# for nombre_producto in data_productos:
+#     producto = Producto(nombre=nombre_producto, categ=categoria_default)
+#     producto.save()
+#     print(f'Producto "{producto.nombre}" creado con éxito.')
 
-print('Todos los productos han sido creados.')
+# print('Todos los productos han sido creados.')
     
