@@ -1,0 +1,30 @@
+{% extends 'listar.html' %}
+{% block columnas %}
+
+<tr>
+  <th scope="col">#</th>
+  <th scope="col">Nombre</th>
+  <th scope="col">Opciones</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for c in object_list %}
+<tr>
+   
+  <td> {{c.id}} </td>
+  <td> {{c.nombre}} </td>
+  <td>
+    <button type="button" class="btn btn-primary bnt-xs"><i class="fas fa-edit"></i></button>
+    <button type="button" class="btn btn-danger bnt-xs"><i class="fas fa-trash"></i></button>
+        
+  
+  </td>
+
+
+</tr>
+
+{% endfor %}
+
+{% endblock %}
