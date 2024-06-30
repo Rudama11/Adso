@@ -124,3 +124,44 @@ class DetalleVenta(models.Model):
         verbose_name_plural = 'Detalle de Ventas'
         db_table = 'Detalle de Venta'
         ordering = ['id']
+        
+        
+#------------- Ubicacion---------------------------------------------------
+
+class Ubicacion(models.Model):
+    id = models.CharField(primary_key=True,max_length=6)
+    Departamento=models.CharField(max_length=100,verbose_name='Departamento')
+    Ciudad=models.CharField(max_length=100,verbose_name='Ciudad')
+    
+    def __str__(self):
+        return self.Ciudad
+    
+    class Meta:
+        verbose_name = 'Ubicacion'
+        verbose_name_plural = 'Ubicaciones'
+        db_table = 'Ubicacion'
+       # ordering = ['id']
+
+#------------- Proveedor---------------------------------------------------
+
+class Proveedor(models.Model):
+    Cedula='CC'
+    Cedula_Extranjeria='CE'
+    Tipo_Documento_CHOICES=[(Cedula,'Cedula de ciudadania'),(Cedula_Extranjeria,'Cedula de extranjeria')]
+    nombres = models.CharField(max_length = 100,verbose_name='Nombres')
+    apellidos = models.CharField(max_length = 100,verbose_name='Apellidos')
+    correo=models.EmailField()
+    telefono=models.IntegerField(default=0)
+    cod_postal=models.ForeignKey(Ubicacion,on_delete= models.CASCADE,max_length=6,)
+    direccion=models.CharField(max_length=150,null=True,blank=True,verbose_name='Direccion')
+    Tipo_Documento=models.CharField(max_length=2,choices=Tipo_Documento_CHOICES,default=Cedula)
+    
+    def __str__(self):
+        return self.nombres
+    
+    class Meta:
+        verbose_name = 'Proveedor'
+        verbose_name_plural = 'Proveedores'
+        db_table = 'Proveedor'
+       # ordering = ['id']
+
