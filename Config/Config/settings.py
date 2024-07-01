@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    #Index amor y paciencia 44444
+    #Index
     'inicio',
     #Login 
     'login',
