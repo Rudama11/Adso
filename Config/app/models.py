@@ -6,11 +6,10 @@ opc_generos = [
     ('female', 'Female'),
 ]
 
+# Clase Categoria
 class Categoria(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     descripcion = models.CharField(max_length=200, verbose_name='Descripcion',blank=True,null=True)
-   
-    
 
     def __str__(self):
         return self.nombre
@@ -20,7 +19,8 @@ class Categoria(models.Model):
         verbose_name_plural = 'Categorias'
         db_table = 'Categoria'
         ordering = ['id']
-#-----------------------------------------------------------------------------------------
+
+# Clase Producto
 class Producto(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     categ = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -35,8 +35,8 @@ class Producto(models.Model):
         verbose_name_plural = 'Productos'
         db_table = 'Producto'
         ordering = ['id']
- 
- #-----------------------------------------------------------------------------------------      
+
+# Clase Tipo producto
 class Tipo(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     apellido= models.CharField(max_length=150, verbose_name='Apellido', unique=True)
@@ -48,7 +48,7 @@ class Tipo(models.Model):
         db_table = 'Tipo'
         ordering = ['id']
         
-#---------------------------------------------------------------------------------------------------------------
+# Clase Empleado
 class Empleado (models.Model):
     categ=models.ManyToManyField(Categoria)#Relacion de muchos a muchos
     nombres= models.CharField(max_length=150,verbose_name='Nombres')
@@ -59,8 +59,6 @@ class Empleado (models.Model):
     edad=models.PositiveIntegerField(default=0)
     salario=models.DecimalField(default=0.00,max_digits=9,decimal_places=2)
     estado=models.BooleanField(default=True)
-    #genero=models.CharField(max_length=50)
-    # avatar=models.ImageField(upload_to='',null=True, blank=True)
     tipo=models.ForeignKey(Tipo,on_delete=models.CASCADE)
     
     def str(self):
@@ -72,7 +70,7 @@ class Empleado (models.Model):
         db_table = 'Empleado'
         #ordering=[id]
 
-#----------------------------------------------------------------------------------------------------
+# Clase Cliente
 class Cliente(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre')
     apellido = models.CharField(max_length=150, verbose_name='Apellido')
@@ -90,18 +88,19 @@ class Cliente(models.Model):
         verbose_name_plural = 'Clientes'
         db_table = 'Cliente'
         ordering = ['id']
-#-------------------------------------------------------------------------------------------------------------
-      
+
+# Clase Venta
+
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     fecha_ingreso = models.DateField(default=datetime.now)
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     iva = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-  
+
     def __str__(self):
         return self.cliente.nombre
-  
+
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
@@ -115,10 +114,10 @@ class DetalleVenta(models.Model):
     precio = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     cantidad = models.IntegerField(default=1)
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)  
-  
+
     def __str__(self):
         return self.prod.nombre
-  
+
     class Meta:
         verbose_name = 'Detalle de Venta'
         verbose_name_plural = 'Detalle de Ventas'
@@ -140,9 +139,9 @@ class Ubicacion(models.Model):
         verbose_name = 'Ubicacion'
         verbose_name_plural = 'Ubicaciones'
         db_table = 'Ubicacion'
-       # ordering = ['id']
+        # ordering = ['id']
 
-#------------- Proveedor---------------------------------------------------
+# Clase Proveedor
 
 class Proveedor(models.Model):
     Cedula='CC'
@@ -163,5 +162,5 @@ class Proveedor(models.Model):
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
-       # ordering = ['id']
+        # ordering = ['id']
 
