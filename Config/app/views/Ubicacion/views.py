@@ -14,12 +14,12 @@ def lista_ubicacion(request):
     Nombre = {
         
     'titulo': 'Listado de ubicacion',
-    'categorias': Ubicacion.objects.all()
+    'ubicacion': Ubicacion.objects.all()
     }
     
     return render(request, 'Ubicacion/listarU.html', Nombre)
 
-class CategoriaListView(ListView):
+class UbicacionListView(ListView):
     model= Ubicacion
     template_name = 'Ubicacion/listarU.html'
     
@@ -32,6 +32,6 @@ class CategoriaListView(ListView):
         return JsonResponse(Nombre)
     
     def get_context_data(self, **kwargs):
-       context = super().get_context_data(**kwargs)
-       context['titulo'] = 'Listado de Categorias'
-       return context
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Listado de Ubicacion'
+        return context

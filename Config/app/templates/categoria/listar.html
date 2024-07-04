@@ -1,11 +1,10 @@
 {% extends 'listar.html' %}
 
 {% block columnas %}
-
 <tr>
-  <th scope="col">#</th>
-  <th scope="col">Nombre</th>
-  <th scope="col">Opciones</th>
+    <th scope="col">Id</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Opciones</th>
 
 </tr>
 {% endblock %}
@@ -13,16 +12,13 @@
 {% block filas %}
 {% for c in object_list %}
 <tr>
-
-  <td> {{c.id}} </td>
-  <td> {{c.nombre}} </td>
-  <td>
-    <button type="button" class="btn btn-primary bnt-xs"><i class="fas fa-edit"></i></button>
-    <button type="button" class="btn btn-danger bnt-xs"><i class="fas fa-trash"></i></button>
-  </td>
-
+    <td>{{c.id}}</td>
+    <td>{{c.nombre}}</td>
+    <td>
+        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
 </tr>
-
 {% endfor %}
 
 {% endblock %}

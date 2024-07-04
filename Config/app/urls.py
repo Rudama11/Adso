@@ -8,11 +8,15 @@ from app.views.Proveedor.views import *
 app_name = 'app'
 
 urlpatterns = [
-    path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'), 
-    path('categoria/listar2/', lista_categoria, name='categoria_lista2' ),
-    path('Ubicacion/listarU/', lista_ubicacion, name='ubicacion_listarU' ),
-    path('Proveedor/listarP/', lista_Proveedor,name='Proveedores_listarP')
-    
-    # path('uno/', Vista1, name='Vista1'),
-    # path('dos/', Vista2, name='Vista2'),  # Corregido el nombre a 'Vi44sta2'
+    # Categoria
+    path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'),
+    path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
+    path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editar'),
+    path('categoria/eliminar/<int:pk>/', CategoriaDeleteView.as_view(), name='categoria_eliminar'), 
+
+    # Ubicacion
+    path('Ubicacion/listarU/', lista_ubicacion, name='ubicacion_listarU'),
+
+    # Proveedor
+    path('Proveedor/listarP/', lista_Proveedor, name='Proveedores_listarP'),
 ]

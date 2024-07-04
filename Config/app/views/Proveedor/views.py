@@ -14,12 +14,12 @@ def lista_Proveedor(request):
     Nombre = {
         
     'titulo': 'Listado de Proveedores',
-    'categorias': Proveedor.objects.all()
+    'proveedor': Proveedor.objects.all()
     }
     
     return render(request, 'Proveedor/listarP.html', Nombre)
 
-class CategoriaListView(ListView):
+class ProveedorListView(ListView):
     model= Proveedor 
     template_name = 'Proveedor/listarP.html'
     
@@ -32,6 +32,6 @@ class CategoriaListView(ListView):
         return JsonResponse(Nombre)
     
     def get_context_data(self, **kwargs):
-       context = super().get_context_data(**kwargs)
-       context['titulo'] = 'Listado de Categorias'
-       return context
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Listado de Proveedores'
+        return context

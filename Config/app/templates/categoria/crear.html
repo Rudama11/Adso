@@ -36,10 +36,13 @@
             {% endfor %}
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary btn btn-xs">
+            <button class="btn btn-success swalDefaultSuccess"">
                 <i class="fas fa-save"></i>
-                Guardar
+                Confirmar
             </button>
+            <a href="{{ listar_url }}" class="btn btn-info btn-flat">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
         </div>
     </div>
 </form>
