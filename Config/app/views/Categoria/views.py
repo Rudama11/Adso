@@ -1,18 +1,16 @@
-from django.views.decorators.csrf import *
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.http.response import HttpResponse as HttpResponse
 from django.urls import reverse_lazy
-
 from app.models import Categoria
 from app.forms import CategoriaForm
 
 def lista_categoria(request):
     context = {
-        'titulo': 'Listado de Categorias',
+        'titulo': 'Listado de Categorías',
         'categorias': Categoria.objects.all()
     }
     return render(request, 'categoria/listar.html', context)
@@ -31,25 +29,24 @@ class CategoriaListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Categorias'
+        context['titulo'] = 'Listado de Categorías'
         context['entidad'] = 'Categoría'
         context['crear_url'] = reverse_lazy('app:categoria_crear')
-        
         return context
-    
+
 class CategoriaCreateView(CreateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'categoria/crear.html'
     success_url = reverse_lazy('app:categoria_listar')
 
-    def get_context(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Categorías'
         context['entidad'] = 'Categoría'
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         return context
-    
+
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
@@ -62,7 +59,7 @@ class CategoriaUpdateView(UpdateView):
         context['entidad'] = 'Categoría'
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         return context
-    
+
 class CategoriaDeleteView(DeleteView):
     model = Categoria
     template_name = 'categoria/eliminar.html'
