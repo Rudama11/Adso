@@ -1,37 +1,74 @@
-import django
-from django.views.decorators.csrf import csrf_protect,csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from typing import Any
-from django.http import HttpRequest, JsonResponse
+from django.http import JsonResponse
+from django.urls import reverse_lazy
 from django.http.response import HttpResponse as HttpResponse
 from app.models import Ubicacion
-
+from app.forms import UbicacionForm
 
 def lista_ubicacion(request):
-    Nombre = {
-        
-    'titulo': 'Listado de ubicacion',
-    'ubicacion': Ubicacion.objects.all()
+    context = {
+        'titulo': 'Listado de Ubicaciones',
+        'ubicaciones': Ubicacion.objects.all()
     }
-    
-    return render(request, 'Ubicacion/listarU.html', Nombre)
+    return render(request, 'Ubicacion/listarU.html', context)
 
 class UbicacionListView(ListView):
-    model= Ubicacion
+    model = Ubicacion
     template_name = 'Ubicacion/listarU.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
         
-    def post(self, request,*args, **kwargs):
-        Nombre ={'Nombre': 'Lorena'}
-        return JsonResponse(Nombre)
+    def post(self, request, *args, **kwargs):
+        data = {'Nombre': 'Lorena'}
+        return JsonResponse(data)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Ubicacion'
+        context['titulo'] = 'Listado de Ubicaciones'
+        context['entidad'] = 'Ubicacion'
+        context['crear_url'] = reverse_lazy('app:ubicacion_crear')
+        return context
+
+class UbicacionCreateView(CreateView):
+    model = Ubicacion
+    form_class = UbicacionForm
+    template_name = 'Ubicacion/crearU.html'
+    success_url = reverse_lazy('app:ubicacion_listarU')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Ubicacion'
+        context['entidad'] = 'Ubicacion'
+        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
+        return context
+
+class UbicacionUpdateView(UpdateView):
+    model = Ubicacion
+    form_class = UbicacionForm
+    template_name = 'Ubicacion/crearU.html'
+    success_url = reverse_lazy('app:ubicacion_listarU')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Actualizar Ubicacion'
+        context['entidad'] = 'Ubicacion'
+        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
+        return context
+
+class UbicacionDeleteView(DeleteView):
+    model = Ubicacion
+    template_name = 'Ubicacion/eliminarU.html'
+    success_url = reverse_lazy('app:Ubicacion_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Eliminar Ubicacion'
+        context['entidad'] = 'Ubicacion'
+        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
         return context

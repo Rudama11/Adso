@@ -1,4 +1,3 @@
-from django.test import TestCase
 from pathlib import Path
 import sys 
 sys.path.append (str(Path(__file__).parent.parent))
@@ -21,6 +20,11 @@ from app.models import *
 #     )
 #     cliente.save()
 #     print("Cliente creado:", cliente)
+
+#Crear una Ubicacion
+# u = Ubicacion(id=1,Departamento="Boyaca",Ciudad="Sogamoso").save()
+# query = Ubicacion.objects.all()
+# print(query)
 
 # 2. Listar todos los clientes
 # def listar_clientes():
@@ -72,4 +76,3 @@ from app.models import *
 #     print(f'Producto "{producto.nombre}" creado con éxito.')
 
 # print('Todos los productos han sido creados.')
-    
