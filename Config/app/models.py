@@ -128,18 +128,18 @@ class DetalleVenta(models.Model):
 #------------- Ubicacion---------------------------------------------------
 
 class Ubicacion(models.Model):
-    id = models.CharField(primary_key=True,max_length=6)
-    Departamento=models.CharField(max_length=100,verbose_name='Departamento')
-    Ciudad=models.CharField(max_length=100,verbose_name='Ciudad')
+    id = models.CharField(primary_key=True, max_length=6)
+    departamento = models.CharField(max_length=100, verbose_name='Departamento')
+    ciudad = models.CharField(max_length=100, verbose_name='Ciudad')
     
     def __str__(self):
-        return self.Ciudad
+        return self.ciudad
     
     class Meta:
         verbose_name = 'Ubicacion'
         verbose_name_plural = 'Ubicaciones'
         db_table = 'Ubicacion'
-        # ordering = ['id']
+
 
 # Clase Proveedor
 
@@ -163,4 +163,3 @@ class Proveedor(models.Model):
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
         # ordering = ['id']
-

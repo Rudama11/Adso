@@ -1,4 +1,4 @@
-{% extends 'listarU.html' %}
+{% extends "listar.html" %}
 
 {% block columnas %}
 <tr>
@@ -6,20 +6,19 @@
   <th scope="col">Departamento</th>
   <th scope="col">Ciudad</th>
   <th scope="col">Opciones</th>
-
 </tr>
 {% endblock %}
 
 {% block filas %}
-{% for u in object_list %}
+{% for u in ubicaciones %}
 <tr>
-  <td>{{u.id}}</td>
-  <td>{{u.departamento}}</td>
+  <td>{{ u.id }}</td>
+  <td>{{ u.departamento }}</td>
+  <td>{{ u.ciudad }}</td>
   <td>
-    <a href="{% url 'app:ubicacion_editar' c.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-    <a href="{% url 'app:ubicacion_eliminar' c.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+    <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
   </td>
 </tr>
 {% endfor %}
-
 {% endblock %}

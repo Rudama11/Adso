@@ -15,10 +15,12 @@ urlpatterns = [
     path('categoria/eliminar/<int:pk>/', CategoriaDeleteView.as_view(), name='categoria_eliminar'), 
 
     # Ubicacion
+    # Ubicacion
     path('Ubicacion/listarU/', lista_ubicacion, name='ubicacion_listarU'),
     path('Ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('Ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
     path('Ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),
+
     # Proveedor
     path('Proveedor/listarP/', lista_Proveedor, name='Proveedores_listarP'),
     # path('Proveedor/crear/', CategoriaCreateView.as_view(), name='proveedor_crear'),

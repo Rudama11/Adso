@@ -9,13 +9,14 @@ from django.http.response import HttpResponse as HttpResponse
 from app.models import Ubicacion
 from app.forms import UbicacionForm
 
+@login_required
 def lista_ubicacion(request):
     context = {
         'titulo': 'Listado de Ubicaciones',
-        'ubicaciones': Ubicacion.objects.all()
+        'ubicaciones': Ubicacion.objects.all(),
+        'crear_url': reverse_lazy('app:ubicacion_crear')  # Asegúrate de tener esta línea
     }
     return render(request, 'Ubicacion/listarU.html', context)
-
 class UbicacionListView(ListView):
     model = Ubicacion
     template_name = 'Ubicacion/listarU.html'
@@ -64,7 +65,7 @@ class UbicacionUpdateView(UpdateView):
 class UbicacionDeleteView(DeleteView):
     model = Ubicacion
     template_name = 'Ubicacion/eliminarU.html'
-    success_url = reverse_lazy('app:Ubicacion_listar')
+    success_url = reverse_lazy('app:ubicacion_listarU')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
