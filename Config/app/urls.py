@@ -3,6 +3,8 @@ from app.views import*
 from app.views.Categoria.views import *
 from app.views.Ubicacion.views import *
 from app.views.Proveedor.views import * 
+from app.views.Cliente.views import *
+
 # Define el namespace para la aplicación
 
 app_name = 'app'
@@ -26,4 +28,11 @@ urlpatterns = [
     # path('Proveedor/crear/', CategoriaCreateView.as_view(), name='proveedor_crear'),
     # path('Proveedor/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='proveedor_editar'),
     # path('Proveedor/eliminar/<int:pk>/', CategoriaDeleteView.as_view(), name='proveedor_eliminar')
+
+    #Cliente
+    path('Cliente/listarC/', lista_cliente, name='cliente_listarC'),
+    path('Cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
+    path('Cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
+    path('Cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
+
 ]

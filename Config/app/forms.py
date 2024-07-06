@@ -1,7 +1,7 @@
 from dataclasses import fields
 from django.forms import ModelForm, TextInput, Textarea
 
-from app.models import Categoria,Ubicacion
+from app.models import *
 
 #Clase Categoria
 
@@ -48,6 +48,28 @@ class UbicacionForm(ModelForm):
             'ciudad': TextInput(
             attrs={
                     'placeholder': 'Ingrese la ciudad',
+                    }
+                ),
+        }
+
+class ClienteForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+
+
+    class Meta:
+        model = Cliente
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del cliente'
+                    }
+                ),
+            'apellido': TextInput(
+            attrs={
+                    'placeholder': 'Ingrese el apellido del cliente',
                     }
                 ),
         }
