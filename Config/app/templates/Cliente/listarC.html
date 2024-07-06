@@ -1,0 +1,34 @@
+{% extends "listar.html" %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Apellido</th>
+    <th scope="col">Cedula</th>
+    <th scope="col">Fecha Nacimiento</th>
+    <th scope="col">Sexo</th>
+    <th scope="col">Correo</th>
+    <th scope="col">Direccion Residencia</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for cl in clientes %}
+<tr>
+    <td>{{ cl.id }}</td>
+    <td>{{ cl.nombre }}</td>
+    <td>{{ cl.apellido }}</td>
+    <td>{{ cl.cedula }}</td>
+    <td>{{ cl.fecha_n }}</td>
+    <td>{{ cl.sexo }}</td>
+    <td>{{ cl.correo }}</td>
+    <td>{{ cl.direccion }}</td>
+
+    <td>
+    <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+    <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
