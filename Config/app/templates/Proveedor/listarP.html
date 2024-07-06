@@ -1,29 +1,33 @@
-{% extends 'listar.html' %}
-{% block columnas %}
+{% extends "listar.html" %}
 
+{% block columnas %}
 <tr>
-  <th scope="col">id</th>
-  <th scope="col">nombre</th>
-  <th scope="col">apellido</th>
-  <th scope="col">correo</th>
-  <th scope="col">telefono</th>
-  <th scope="col">direccion</th>
+  <th scope="col">Id</th>
+  <th scope="col">Nombre</th>
+  <th scope="col">Apellido</th>
+  <th scope="col">Correo</th>
+  <th scope="col">Telefono</th>
+  <th scope="col">Direccion</th>
   <th scope="col">Tipo_Documento</th>
-  <th scope="col">cod_postal_id</th>
+  <th scope="col">Cod_postal_id</th>
 </tr>
 {% endblock %}
 
 {% block filas %}
-{% for c in object_list %}
+{% for p in proveedores %}
 <tr>
-  <td> {{c.id}} </td>
-  <td> {{c.nombre}} </td>
+  <td> {{p.id}} </td>
+  <td> {{p.nombres}} </td>
+  <td> {{p.apellidos}} </td>
+  <td> {{p.correo}} </td>
+  <td> {{p.telefono}} </td>
+  <td> {{p.direccion}} </td>
+  <td> {{p.Tipo_Documento}} </td>
+  <td> {{p.cod_postal_id}} </td>
   <td>
-    <button type="button" class="btn btn-primary bnt-xs"><i class="fas fa-edit"></i></button>
-    <button type="button" class="btn btn-danger bnt-xs"><i class="fas fa-trash"></i></button>
+    <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+    <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
   </td>
 </tr>
-
 {% endfor %}
-
 {% endblock %}

@@ -73,3 +73,26 @@ class ClienteForm(ModelForm):
                     }
                 ),
         }
+    
+#Proveedor
+
+class ProveedorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Proveedor
+        fields = '__all__'
+        widgets = {
+            'nombres': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del Proveedor'
+                    }
+                ),
+            'apellidos': TextInput(
+            attrs={
+                    'placeholder': 'Ingrese el apellido',
+                    }
+                ),
+        }
