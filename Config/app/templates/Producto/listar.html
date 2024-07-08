@@ -19,10 +19,10 @@
     <td>{{pro.id}}</td>
     <td>{{pro.nombre}}</td>
     <td>{{pro.precio}}</td>
-    <td>{{pro.categ_id}}</td>
+    <td>{{pro.categ.nombre}}</td>
     <td>{{pro.descripcion}}</td>
     <td>{{pro.stock}}</td>
-    <td>{{pro.tipo_pro_id}}</td>
+    <td>{{pro.tipo_pro.nombre}}</td>
     <td>
         <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
         <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
