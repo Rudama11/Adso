@@ -1,9 +1,10 @@
 from django.urls import path
-from app.views import*
 from app.views.Categoria.views import *
 from app.views.Ubicacion.views import *
 from app.views.Proveedor.views import * 
 from app.views.Cliente.views import *
+from app.views.Tipo.views import *
+from app.views.Producto.views import *
 
 # Define el namespace para la aplicación
 
@@ -37,5 +38,19 @@ urlpatterns = [
     path('Cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('Cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
     path('Cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
+
+    #Tipo
+
+    path('Tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
+    path('Tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
+    path('Tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editar'),
+    path('Tipo/eliminar/<int:pk>/', TipoDeleteView.as_view(), name='tipo_eliminar'),
+
+    # Producto
+
+    path('Producto/listar/', ProductoListView.as_view(), name='producto_listar'),
+    path('Producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
+    path('Producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editar'),
+    path('Producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
 
 ]

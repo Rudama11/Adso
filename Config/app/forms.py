@@ -96,3 +96,45 @@ class ProveedorForm(ModelForm):
                     }
                 ),
         }
+
+class TipoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Tipo
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del Tipo de producto'
+                    }
+                ),
+            'descripcion': TextInput(
+            attrs={
+                    'placeholder': 'Ingrese la descripcion del Tipo',
+                    }
+                ),
+        }
+
+class ProductoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Producto
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del producto'
+                    }
+                ),
+            'descripcion': TextInput(
+            attrs={
+                    'placeholder': 'Ingrese la descripcion del producto',
+                    }
+                ),
+        }

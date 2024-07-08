@@ -1,0 +1,25 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Descripción</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for t in object_list %}
+<tr>
+    <td>{{t.id}}</td>
+    <td>{{t.nombre}}</td>
+    <td>{{t.descripcion}}</td>
+    <td>
+        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+{% endfor %}
+
+{% endblock %}

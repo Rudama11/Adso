@@ -69,10 +69,20 @@ from app.models import *
 # # Obtener la primera categoría existente (puedes ajustar esto según tus necesidades)
 # categoria_default = Categoria.objects.first()
 
-# # Crear productos y guardarlos en la base de datos
+# Crear productos y guardarlos en la base de datos
 # for nombre_producto in data_productos:
 #     producto = Producto(nombre=nombre_producto, categ=categoria_default)
 #     producto.save()
 #     print(f'Producto "{producto.nombre}" creado con éxito.')
 
 # print('Todos los productos han sido creados.')
+
+
+# Eliminar todos los productos y confirmar la eliminación
+productos = Producto.objects.all()
+for producto in productos:
+    print(f'Eliminando producto "{producto.nombre}"...')
+    producto.delete()
+    print(f'Producto "{producto.nombre}" eliminado con éxito.')
+
+print('Todos los productos han sido eliminados.')

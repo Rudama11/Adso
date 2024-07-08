@@ -20,13 +20,26 @@ class Categoria(models.Model):
         db_table = 'Categoria'
         ordering = ['id']
 
+# Clase Tipo producto
+class Tipo(models.Model):
+    nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
+    descripcion = models.CharField(max_length=300, verbose_name='Descripción', blank=True, null=True)
+    def __str__(self):
+        return self.nombre
+    class Meta:
+        verbose_name = 'Tipo'
+        verbose_name_plural = 'Tipos'
+        db_table = 'Tipo'
+        ordering = ['id']
+
 # Clase Producto
 class Producto(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
-    categ = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    imagen_prod = models.ImageField(upload_to='product/%y/%m/%d', null=True, blank=True)
-    precio = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-
+    descripcion = models.CharField(max_length=200, verbose_name='Descripcion',blank=True,null=True)
+    stock = models.IntegerField(default=0, verbose_name='Stock')
+    precio = models.DecimalField(default=0.00, max_digits=9, decimal_places=3)
+    categ = models.ForeignKey('Categoria', on_delete=models.CASCADE, verbose_name='Categoría')
+    tipo_pro = models.ForeignKey('Tipo', on_delete=models.CASCADE, verbose_name='Tipo')
     def __str__(self):
         return self.nombre
 
@@ -34,18 +47,6 @@ class Producto(models.Model):
         verbose_name = 'Producto'
         verbose_name_plural = 'Productos'
         db_table = 'Producto'
-        ordering = ['id']
-
-# Clase Tipo producto
-class Tipo(models.Model):
-    nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
-    apellido= models.CharField(max_length=150, verbose_name='Apellido', unique=True)
-    def __str__(self):
-        return self.nombre
-    class Meta:
-        verbose_name = 'Tipo'
-        verbose_name_plural = 'Tipos'
-        db_table = 'Tipo'
         ordering = ['id']
         
 # Clase Empleado
