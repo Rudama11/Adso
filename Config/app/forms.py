@@ -138,3 +138,26 @@ class ProductoForm(ModelForm):
                     }
                 ),
         }
+        
+#------------------------- normativa --------------------------------------------
+
+class NormativaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['decreto'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Normativa
+        fields = '__all__'
+        widgets = {
+            'decreto': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la normativa',
+                    }
+                ),
+            'detalles': TextInput(
+            attrs={
+                    'placeholder': 'Ingrese la descripcion ',
+                    }
+                ),
+        }

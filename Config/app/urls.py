@@ -5,6 +5,7 @@ from app.views.Proveedor.views import *
 from app.views.Cliente.views import *
 from app.views.Tipo.views import *
 from app.views.Producto.views import *
+from app.views.Normativa.views import *
 
 # Define el namespace para la aplicación
 
@@ -52,5 +53,11 @@ urlpatterns = [
     path('Producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
     path('Producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editar'),
     path('Producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
+    
+    # Norma
+path('Normativa/listar/', NormativaListView.as_view(), name='Normativa_listar'),
+    path('Normativa/crear/', NormativaCreateView.as_view(), name='Normativa_crear'),
+    path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='Normativa_editar'),
+    path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='Normativa_eliminar'),
 
 ]

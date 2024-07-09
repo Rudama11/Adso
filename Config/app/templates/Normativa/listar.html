@@ -1,0 +1,27 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Decreto</th>
+    <th scope="col">Descripción</th>
+    <th scope="col">producto</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for N in object_list %}
+<tr>
+    <td>{{N.id}}</td>
+    <td>{{N.decreto}}</td>
+    <td>{{N.detalles}}</td>
+    <td>{{N.producto}}</td>
+    <td>
+        <a href="{% url 'app:Normativa_editar' N.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:Normativa_eliminar' N.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+{% endfor %}
+
+{% endblock %}
