@@ -164,3 +164,17 @@ class Proveedor(models.Model):
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
         # ordering = ['id']
+        
+#------------- Normativas-----------------------------
+class Normativa(models.Model):
+    decreto=models.CharField(max_length=150,verbose_name='Decreto')
+    detalles=models.CharField(max_length=500,verbose_name='Detalles')
+    producto=models.ForeignKey(Producto,on_delete=models.CASCADE,default=True)
+    
+    def __str__(self):
+        return self.decreto
+    class Meta:
+        verbose_name = 'Normativa'
+        verbose_name_plural = 'Normativas'
+        db_table = 'Normativa'
+      #  ordering = ['id']
