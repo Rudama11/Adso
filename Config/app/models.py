@@ -1,6 +1,13 @@
 from django.db import models
 from datetime import datetime
 
+Tipo_Documento_Choices = [
+    ('CC','Cédula de ciudadanía'),
+    ('CE','Cédula de extranjería'),
+    ('TI','Tarjeta de identidad'),
+    ('PA','Pasaporte'),
+    ('NIT','Numero de identificación tributaria')
+]
 opc_generos = [
     ('male', 'Male'),
     ('female', 'Female'),
@@ -147,14 +154,15 @@ class Ubicacion(models.Model):
 class Proveedor(models.Model):
     Cedula='CC'
     Cedula_Extranjeria='CE'
-    Tipo_Documento_CHOICES=[(Cedula,'Cedula de ciudadania'),(Cedula_Extranjeria,'Cedula de extranjeria')]
+    Nit='NIT'
+    Tipo_Documento_CHOICES=[(Cedula,'Cedula de ciudadania'),(Cedula_Extranjeria,'Cedula de extranjeria'),(Nit,'NIT')]
     nombres = models.CharField(max_length = 100,verbose_name='Nombres')
     apellidos = models.CharField(max_length = 100,verbose_name='Apellidos')
     correo=models.EmailField()
     telefono=models.IntegerField(default=0)
     cod_postal=models.ForeignKey(Ubicacion,on_delete= models.CASCADE,max_length=6,)
     direccion=models.CharField(max_length=150,null=True,blank=True,verbose_name='Direccion')
-    Tipo_Documento=models.CharField(max_length=2,choices=Tipo_Documento_CHOICES,default=Cedula)
+    Tipo_Documento=models.CharField(max_length=3,choices=Tipo_Documento_CHOICES,default=Cedula)
     
     def __str__(self):
         return self.nombres
