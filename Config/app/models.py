@@ -13,7 +13,7 @@ opc_generos = [
     ('female', 'Female'),
 ]
 
-# Clase Categoria
+#------------- Categoría ---------------------------------------------------
 class Categoria(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     descripcion = models.CharField(max_length=200, verbose_name='Descripcion',blank=True,null=True)
@@ -27,7 +27,7 @@ class Categoria(models.Model):
         db_table = 'Categoria'
         ordering = ['id']
 
-# Clase Tipo producto
+#-------------  Tipo de Producto ---------------------------------------------------
 class Tipo(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     descripcion = models.CharField(max_length=300, verbose_name='Descripción', blank=True, null=True)
@@ -39,7 +39,21 @@ class Tipo(models.Model):
         db_table = 'Tipo'
         ordering = ['id']
 
-# Clase Producto
+#------------- Ubicación ---------------------------------------------------
+class Ubicacion(models.Model):
+    id = models.CharField(primary_key=True, max_length=6)
+    departamento = models.CharField(max_length=100, verbose_name='Departamento')
+    ciudad = models.CharField(max_length=100, verbose_name='Ciudad')
+    
+    def __str__(self):
+        return self.ciudad
+    
+    class Meta:
+        verbose_name = 'Ubicacion'
+        verbose_name_plural = 'Ubicaciones'
+        db_table = 'Ubicacion'
+
+#------------- Producto ---------------------------------------------------
 class Producto(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     descripcion = models.CharField(max_length=200, verbose_name='Descripcion',blank=True,null=True)
@@ -56,7 +70,7 @@ class Producto(models.Model):
         db_table = 'Producto'
         ordering = ['id']
         
-# Clase Empleado
+#------------- Empleado ---------------------------------------------------
 class Empleado (models.Model):
     categ=models.ManyToManyField(Categoria)#Relacion de muchos a muchos
     nombres= models.CharField(max_length=150,verbose_name='Nombres')
@@ -78,18 +92,19 @@ class Empleado (models.Model):
         db_table = 'Empleado'
         #ordering=[id]
 
-# Clase Cliente
+#------------- Cliente ---------------------------------------------------
 class Cliente(models.Model):
     nombre = models.CharField(max_length=150, verbose_name='Nombre')
     apellido = models.CharField(max_length=150, verbose_name='Apellido')
-    cedula = models.CharField(max_length=10, unique=True, verbose_name='Cedula')
-    fecha_n = models.DateField(default=datetime.now, verbose_name='Fecha de Nacimiento')
-    sexo = models.CharField(max_length=10, choices=opc_generos, default='male', verbose_name='Sexo')
+    tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
+    edad = models.PositiveIntegerField(default=0)
     correo = models.EmailField(max_length=150, verbose_name='Correo')
-    direccion = models.CharField(max_length=150, verbose_name='Direccion')
+    cod_postal = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, verbose_name='Código Postal', null=True, blank=True)
+    direccion = models.CharField(max_length=150, verbose_name='Dirección')
+    telefono = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.nombre
+        return f"{self.nombre} {self.apellido} - {self.get_tipo_documento_display()}"
 
     class Meta:
         verbose_name = 'Cliente'
@@ -97,7 +112,7 @@ class Cliente(models.Model):
         db_table = 'Cliente'
         ordering = ['id']
 
-# Clase Venta
+#------------- Venta ---------------------------------------------------
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
@@ -115,7 +130,7 @@ class Venta(models.Model):
         db_table = 'Venta'
         ordering = ['id']
 
-#-------------------------------------------------------------------------------------------------------------
+#------------- Detalle de venta ---------------------------------------------------
 class DetalleVenta(models.Model):
     fk_venta = models.ForeignKey(Venta, on_delete=models.CASCADE)
     prod = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -133,45 +148,24 @@ class DetalleVenta(models.Model):
         ordering = ['id']
         
         
-#------------- Ubicacion---------------------------------------------------
-
-class Ubicacion(models.Model):
-    id = models.CharField(primary_key=True, max_length=6)
-    departamento = models.CharField(max_length=100, verbose_name='Departamento')
-    ciudad = models.CharField(max_length=100, verbose_name='Ciudad')
-    
-    def __str__(self):
-        return self.ciudad
-    
-    class Meta:
-        verbose_name = 'Ubicacion'
-        verbose_name_plural = 'Ubicaciones'
-        db_table = 'Ubicacion'
-
-
-# Clase Proveedor
+#------------- Proveedor ---------------------------------------------------
 
 class Proveedor(models.Model):
-    Cedula='CC'
-    Cedula_Extranjeria='CE'
-    Nit='NIT'
-    Tipo_Documento_CHOICES=[(Cedula,'Cedula de ciudadania'),(Cedula_Extranjeria,'Cedula de extranjeria'),(Nit,'NIT')]
-    nombres = models.CharField(max_length = 100,verbose_name='Nombres')
-    apellidos = models.CharField(max_length = 100,verbose_name='Apellidos')
-    correo=models.EmailField()
-    telefono=models.IntegerField(default=0)
-    cod_postal=models.ForeignKey(Ubicacion,on_delete= models.CASCADE,max_length=6,)
-    direccion=models.CharField(max_length=150,null=True,blank=True,verbose_name='Direccion')
-    Tipo_Documento=models.CharField(max_length=3,choices=Tipo_Documento_CHOICES,default=Cedula)
-    
+    nombres = models.CharField(max_length=100, verbose_name='Nombres')
+    apellidos = models.CharField(max_length=100, verbose_name='Apellidos')
+    correo = models.EmailField()
+    telefono = models.IntegerField(default=0)
+    cod_postal = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, verbose_name='Código Postal', null=True, blank=True)
+    direccion = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
+    tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
+
     def __str__(self):
-        return self.nombres
-    
+        return f"{self.nombres} {self.apellidos} - {self.get_tipo_documento_display()}"
+
     class Meta:
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
-        # ordering = ['id']
         
 #------------- Normativas-----------------------------
 class Normativa(models.Model):
@@ -185,4 +179,4 @@ class Normativa(models.Model):
         verbose_name = 'Normativa'
         verbose_name_plural = 'Normativas'
         db_table = 'Normativa'
-      #  ordering = ['id']
+        #ordering = ['id']
