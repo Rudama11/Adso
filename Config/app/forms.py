@@ -3,7 +3,7 @@ from django.forms import ModelForm, TextInput, Textarea
 from django import forms
 from app.models import *
 
-#Clase Categoria
+#------------- Categoría ---------------------------------------------------
 
 class CategoriaForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -28,7 +28,7 @@ class CategoriaForm(ModelForm):
                     ),
         }
         
-#CLase Ubicacion
+#------------- Ubicación ---------------------------------------------------
 
 class UbicacionForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -51,6 +51,7 @@ class UbicacionForm(ModelForm):
                     }
                 ),
         }
+#------------- Cliente ---------------------------------------------------
 
 class ClienteForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -74,8 +75,7 @@ class ClienteForm(ModelForm):
                 ),
         }
     
-#Proveedor
-
+#------------- Proveedor ---------------------------------------------------
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -98,6 +98,7 @@ class ProveedorForm(forms.ModelForm):
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
             self.fields['nit'].widget.attrs['style'] = 'display:none;'
 
+#------------- Tipo ---------------------------------------------------
 class TipoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -119,6 +120,7 @@ class TipoForm(ModelForm):
                 ),
         }
 
+#------------- Producto ---------------------------------------------------
 class ProductoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -140,7 +142,7 @@ class ProductoForm(ModelForm):
                 ),
         }
 
-#------------------------- normativa --------------------------------------------
+#------------- Normativa ---------------------------------------------------
 
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
