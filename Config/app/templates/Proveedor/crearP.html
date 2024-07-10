@@ -3,7 +3,6 @@
 {% load widget_tweaks %}
 
 {% block contenido %}
-
 <form method="post" action=".">
     <div class="card card-default">
         <div class="card-header">
@@ -13,25 +12,50 @@
             </h3>
         </div>
         <div class="card-body">
-            {% csrf_token %} {% if form.errors %} {{form.errors}}
+            {% csrf_token %}
+            {% if form.errors %}
+            {{form.errors}}
             <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                    ×
-                </button>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h5>
                     <i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear un Proveedor.
                 </h5>
                 <ul>
-                    {% for field in form %} {% for error in field.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
                     <li>{{ error }}</li>
-                    {% endfor %} {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
                 </ul>
             </div>
-            {% endif %} {% for field in form.visible_fields %}
+            {% endif %}
             <div class="form-group">
-                <label for="email">{{ field.label}} </label>
+                <label for="tipo_persona">{{ form.tipo_persona.label }}</label>
+                {{ form.tipo_persona|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group" id="nombres_field">
+                <label for="nombres">{{ form.nombres.label }}</label>
+                {{ form.nombres|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group" id="apellidos_field">
+                <label for="apellidos">{{ form.apellidos.label }}</label>
+                {{ form.apellidos|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group" id="razon_social_field" style="display: none;">
+                <label for="razon_social">{{ form.razon_social.label }}</label>
+                {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group" id="nit_field" style="display: none;">
+                <label for="nit">{{ form.nit.label }}</label>
+                {{ form.nit|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            {% for field in form %}
+            {% if field.name not in 'tipo_persona nombres apellidos razon_social nit' %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
+            {% endif %}
             {% endfor %}
         </div>
         <div class="card-footer">
@@ -41,20 +65,38 @@
             </button>
             <a href="{% url 'app:proveedor_listarP' %}" class="btn btn-info btn-flat">
                 <i class="fas fa-times"></i> Cancelar
-            </a>            
+            </a>
         </div>
     </div>
 </form>
 
 <script>
-    {% if form.errors %}
-    var errors = '';
-    {% for field in form %}
-        {% for error in field.errors %}
-            errors += '{{ error }}\n';
-        {% endfor %}
-    {% endfor %}
+    document.addEventListener('DOMContentLoaded', function() {
+        var tipoPersonaField = document.querySelector('select[name="tipo_persona"]');
+        var nombresField = document.querySelector('div#nombres_field');
+        var apellidosField = document.querySelector('div#apellidos_field');
+        var razonSocialField = document.querySelector('div#razon_social_field');
+        var nitField = document.querySelector('div#nit_field');
 
+        function toggleFields() {
+            if (tipoPersonaField.value === 'PN') {
+                nombresField.style.display = 'block';
+                apellidosField.style.display = 'block';
+                razonSocialField.style.display = 'none';
+                nitField.style.display = 'none';
+            } else {
+                nombresField.style.display = 'none';
+                apellidosField.style.display = 'none';
+                razonSocialField.style.display = 'block';
+                nitField.style.display = 'block';
+            }
+        }
+
+        tipoPersonaField.addEventListener('change', toggleFields);
+        toggleFields();
+    });
+
+    {% if form.errors %}
     Swal.fire({
         title: 'Error',
         text: 'Ha ocurrido un error al intentar guardar un Proveedor',
