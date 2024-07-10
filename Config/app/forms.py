@@ -1,6 +1,6 @@
 from dataclasses import fields
 from django.forms import ModelForm, TextInput, Textarea
-
+from django import forms
 from app.models import *
 
 #Clase Categoria
@@ -76,26 +76,27 @@ class ClienteForm(ModelForm):
     
 #Proveedor
 
-class ProveedorForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombres'].widget.attrs['autofocus'] = True
-
+class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
         fields = '__all__'
         widgets = {
-            'nombres': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del Proveedor'
-                    }
-                ),
-            'apellidos': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese el apellido',
-                    }
-                ),
+            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del Proveedor'}),
+            'apellidos': forms.TextInput(attrs={'placeholder': 'Ingrese el apellido'}),
+            'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social'}),
+            'nit': forms.TextInput(attrs={'placeholder': 'Ingrese el NIT'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+        # Inicialmente oculta los campos de Persona Jurídica
+        if self.instance and self.instance.tipo_persona == 'PJ':
+            self.fields['nombres'].widget.attrs['style'] = 'display:none;'
+            self.fields['apellidos'].widget.attrs['style'] = 'display:none;'
+        else:
+            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
+            self.fields['nit'].widget.attrs['style'] = 'display:none;'
 
 class TipoForm(ModelForm):
     def __init__(self, *args, **kwargs):
