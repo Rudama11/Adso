@@ -3,7 +3,7 @@ from django.forms import ModelForm, TextInput, Textarea
 from django import forms
 from app.models import *
 
-#Clase Categoria
+#------------- Categoría ---------------------------------------------------
 
 class CategoriaForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -28,7 +28,7 @@ class CategoriaForm(ModelForm):
                     ),
         }
         
-#CLase Ubicacion
+#------------- Ubicación ---------------------------------------------------
 
 class UbicacionForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -74,7 +74,7 @@ class ClienteForm(ModelForm):
                 ),
         }
     
-#Proveedor
+#------------- Proveedor ---------------------------------------------------
 
 class ProveedorForm(forms.ModelForm):
     class Meta:
@@ -119,6 +119,7 @@ class TipoForm(ModelForm):
                 ),
         }
 
+#------------- Producto ---------------------------------------------------
 class ProductoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
