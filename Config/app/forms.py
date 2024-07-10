@@ -76,6 +76,7 @@ class ClienteForm(ModelForm):
         }
     
 #------------- Proveedor ---------------------------------------------------
+
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -97,6 +98,7 @@ class ProveedorForm(forms.ModelForm):
         else:
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
             self.fields['nit'].widget.attrs['style'] = 'display:none;'
+
 
 #------------- Tipo ---------------------------------------------------
 class TipoForm(ModelForm):

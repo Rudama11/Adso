@@ -164,7 +164,7 @@ class Proveedor(models.Model):
     nit = models.CharField(max_length=15, verbose_name='NIT', null=True, blank=True)
     correo = models.EmailField()
     telefono = models.IntegerField(default=0)
-    cod_postal = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, verbose_name='Código Postal', null=True, blank=True)
+    cod_postal = models.ForeignKey('Ubicacion', on_delete=models.CASCADE, verbose_name='Ubicacion')
     direccion = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
     tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
 
@@ -175,6 +175,14 @@ class Proveedor(models.Model):
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
+
+    def get_nombre_mostrar(self):
+        if self.tipo_persona == 'PN':
+            return self.nombres
+        elif self.tipo_persona == 'PJ':
+            return self.razon_social
+        else:
+            return ''
         
 #------------- Normativas-----------------------------
 class Normativa(models.Model):
