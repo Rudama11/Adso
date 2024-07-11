@@ -16,18 +16,18 @@
 {% block filas %}
 {% for p in proveedores %}
 <tr>
-  <td>{{ p.id }}</td>
-  <td>{{ p.get_tipo_persona_display }}</td>
-  <td>{{ p.nombres if p.tipo_persona == 'PN' else p.razon_social }}</td>
-  <td>{{ p.correo }}</td>
-  <td>{{ p.telefono }}</td>
-  <td>{{ p.direccion }}</td>
-  <td>{{ p.get_tipo_documento_display }}</td>
-  <td>{{ p.cod_postal_id }}</td>
-  <td>
-    <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-    <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-  </td>
+    <td>{{ p.id }}</td>
+    <td>{{ p.get_nombre_mostrar }}</td>
+    <td>{{ p.apellidos }}</td>
+    <td>{{ p.correo }}</td>
+    <td>{{ p.telefono }}</td>
+    <td>{{ p.direccion }}</td>
+    <td>{{ p.tipo_documento }}</td>
+    <td>{{ p.cod_postal.ciudad }}</td>
+    <td>
+        <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
 </tr>
 {% endfor %}
 {% endblock %}
