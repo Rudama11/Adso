@@ -20,21 +20,22 @@ urlpatterns = [
 
     # Ubicacion
     
-    path('Ubicacion/listarU/', lista_ubicacion, name='ubicacion_listarU'),
+    path('Ubicacion/listarU/', UbicacionListView.as_view(), name='ubicacion_listarU'),
     path('Ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('Ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
     path('Ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),
 
     # Proveedor
     
-    path('Proveedor/listarP/', lista_proveedor, name='proveedor_listarP'),
+    path('Proveedor/listarP/',ProveedorListView.as_view(), name='proveedor_listarP'),
     path('Proveedor/crear/', ProveedorCreateView.as_view(), name='proveedor_crear'),
     path('Proveedor/editar/<int:pk>/', ProveedorUpdateView.as_view(), name='proveedor_editar'),
     path('Proveedor/eliminar/<int:pk>/', ProveedorDeleteView.as_view(), name='proveedor_eliminar'),
 
     #Cliente
     
-    path('Cliente/listarC/', lista_cliente, name='cliente_listarC'),
+    path('Cliente/listarC/', ClienteListView.as_view(), name='cliente_listarC'),
+    #path('Cliente/listarC/', lista_cliente, name='cliente_listarC'),
     path('Cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('Cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
     path('Cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
@@ -54,7 +55,7 @@ urlpatterns = [
     path('Producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
 
     # Norma
-path('Normativa/listar/', NormativaListView.as_view(), name='Normativa_listar'),
+    path('Normativa/listar/', NormativaListView.as_view(), name='Normativa_listar'),
     path('Normativa/crear/', NormativaCreateView.as_view(), name='Normativa_crear'),
     path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='Normativa_editar'),
     path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='Normativa_eliminar'),
