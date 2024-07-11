@@ -45,10 +45,6 @@
                 <label for="id_razon_social">Razón Social</label>
                 {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_razon_social'}}
             </div>
-            <div class="form-group" id="nit_field" style="display:none;">
-                <label for="id_nit">NIT</label>
-                {{ form.nit|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_nit'}}
-            </div>
             <div class="form-group" id="tipo_documento_field">
                 <label for="id_tipo_documento">Tipo de documento</label>
                 {{ form.tipo_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_tipo_documento'}}
@@ -59,7 +55,7 @@
             </div>
 
             {% for field in form.visible_fields %}
-            {% if field.name not in "tipo_persona,nombres,apellidos,razon_social,nit,tipo_documento,numero_documento" %}
+            {% if field.name not in "tipo_persona,nombres,apellidos,razon_social,tipo_documento,numero_documento" %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
@@ -85,7 +81,6 @@
         var nombresField = document.getElementById('nombres_field');
         var apellidosField = document.getElementById('apellidos_field');
         var razonSocialField = document.getElementById('razon_social_field');
-        var nitField = document.getElementById('nit_field');
         var tipo_documentoField = document.getElementById('tipo_documento_field');
         var numero_documentoField = document.getElementById('numero_documento_field');
 
@@ -94,16 +89,14 @@
                 nombresField.style.display = 'block';
                 apellidosField.style.display = 'block';
                 razonSocialField.style.display = 'none';
-                nitField.style.display = 'none';
                 tipo_documentoField.style.display = 'block';
                 numero_documentoField.style.display = 'block';
             } else {
                 nombresField.style.display = 'none';
                 apellidosField.style.display = 'none';
                 razonSocialField.style.display = 'block';
-                nitField.style.display = 'block';
-                tipo_documentoField.style.display = 'none';
-                numero_documentoField.style.display = 'none';
+                tipo_documentoField.style.display = 'block';
+                numero_documentoField.style.display = 'block';
             }
         }
 

@@ -161,7 +161,6 @@ class Proveedor(models.Model):
     nombres = models.CharField(max_length=100, verbose_name='Nombres', null=True, blank=True)
     apellidos = models.CharField(max_length=100, verbose_name='Apellidos', null=True, blank=True)
     razon_social = models.CharField(max_length=150, verbose_name='Razon Social', null=True, blank=True)
-    nit = models.CharField(max_length=15, verbose_name='NIT', null=True, blank=True)
     tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
     numero_documento = models.CharField(max_length=20, verbose_name='Numero de Documento', null=True, blank=True)
     correo = models.EmailField()

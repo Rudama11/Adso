@@ -84,7 +84,6 @@ class ProveedorForm(forms.ModelForm):
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del Proveedor'}),
             'apellidos': forms.TextInput(attrs={'placeholder': 'Ingrese el apellido'}),
             'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social'}),
-            'nit': forms.TextInput(attrs={'placeholder': 'Ingrese el NIT'}),
             'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
@@ -100,14 +99,11 @@ class ProveedorForm(forms.ModelForm):
             self.fields['nombres'].widget.attrs['style'] = 'display:block;'
             self.fields['apellidos'].widget.attrs['style'] = 'display:block;'
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['nit'].widget.attrs['style'] = 'display:none;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:none;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:none;'
+            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
+            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
         else:
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['nit'].widget.attrs['style'] = 'display:none;'
             self.fields['razon_social'].widget.attrs['style'] = 'display:block;'
-            self.fields['nit'].widget.attrs['style'] = 'display:block;'
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
