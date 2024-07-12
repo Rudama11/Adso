@@ -4,6 +4,7 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
+    <th scope="col">Descripcion</th>
     <th scope="col">Opciones</th>
 
 </tr>
@@ -14,6 +15,7 @@
 <tr>
     <td>{{c.id}}</td>
     <td>{{c.nombre}}</td>
+    <td>{{c.descripcion}}</td>
     <td>
         <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
         <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
