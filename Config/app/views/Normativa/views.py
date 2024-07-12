@@ -7,13 +7,6 @@ from django.urls import reverse_lazy
 from app.models import Normativa
 from app.forms import NormativaForm
 
-def lista_Normativa(request):
-    context = {
-        'titulo': 'Lista de normas',
-        'tipos': Normativa.objects.all()
-    }
-    return render(request, 'Normativa/listar.html', context)
-
 class NormativaListView(ListView):
     model = Normativa
     template_name = 'normativa/listar.html'
@@ -28,45 +21,45 @@ class NormativaListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Lista de normas'
+        context['titulo'] = 'Lista de normavitas'
         context['entidad'] = 'Normativa'
-        context['crear_url'] = reverse_lazy('app:Normativa_crear')
+        context['crear_url'] = reverse_lazy('app:normativa_crear')
         return context
 
 class NormativaCreateView(CreateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/crear.html'
-    success_url = reverse_lazy('app:Normativa_listar')
+    success_url = reverse_lazy('app:normativa_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'añadir norma'
+        context['titulo'] = 'Añadir normavita'
         context['entidad'] = 'Normativa'
-        context['listar_url'] = reverse_lazy('app:Normativa_listar')
+        context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
 
 class NormativaUpdateView(UpdateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/crear.html'
-    success_url = reverse_lazy('app:Normativa_listar')
+    success_url = reverse_lazy('app:normativa_listar')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar norma'
+        context['titulo'] = 'Actualizar normavita'
         context['entidad'] = 'Normativa'
-        context['listar_url'] = reverse_lazy('app:Normativa_listar')
+        context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
 
 class NormativaDeleteView(DeleteView):
     model = Normativa
     template_name = 'Normativa/eliminar.html'
-    success_url = reverse_lazy('app:Normativa_listar')
+    success_url = reverse_lazy('app:normativa_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Norma'
+        context['titulo'] = 'Eliminar Normavita'
         context['entidad'] = 'Normativa'
-        context['listar_url'] = reverse_lazy('app:Normativa_listar')
+        context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context

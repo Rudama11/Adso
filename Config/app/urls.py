@@ -35,7 +35,6 @@ urlpatterns = [
     #Cliente
     
     path('Cliente/listarC/', ClienteListView.as_view(), name='cliente_listarC'),
-    #path('Cliente/listarC/', lista_cliente, name='cliente_listarC'),
     path('Cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('Cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
     path('Cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
@@ -55,10 +54,10 @@ urlpatterns = [
     path('Producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
 
     # Norma
-    path('Normativa/listar/', NormativaListView.as_view(), name='Normativa_listar'),
-    path('Normativa/crear/', NormativaCreateView.as_view(), name='Normativa_crear'),
-    path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='Normativa_editar'),
-    path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='Normativa_eliminar'),
+    path('Normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
+    path('Normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
+    path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
+    path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
 
 
 ]

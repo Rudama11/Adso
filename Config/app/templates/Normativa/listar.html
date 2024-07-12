@@ -11,15 +11,15 @@
 {% endblock %}
 
 {% block filas %}
-{% for N in object_list %}
+{% for n in object_list %}
 <tr>
-    <td>{{N.id}}</td>
-    <td>{{N.decreto}}</td>
-    <td>{{N.detalles}}</td>
-    <td>{{N.producto}}</td>
+    <td>{{n.id}}</td>
+    <td>{{n.decreto}}</td>
+    <td>{{n.detalles}}</td>
+    <td>{{n.producto}}</td>
     <td>
-        <a href="{% url 'app:Normativa_editar' N.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:Normativa_eliminar' N.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:normativa_editar' n.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:normativa_eliminar' n.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}
