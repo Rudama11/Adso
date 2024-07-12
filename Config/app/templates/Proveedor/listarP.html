@@ -38,3 +38,21 @@
 </tr>
 {% endfor %}
 {% endblock %}
+
+{% block javascript %}
+<script type="application/javascript">
+$(document).ready(function () { 
+    if ($('#tabla').length > 0) { 
+        $('#tabla').DataTable({
+            responsive: true,
+            columnDefs: [
+                { responsivePriority: 1, targets: [0, -1] }, // Priorizar la primera y última columna
+                { responsivePriority: 2, targets: [9, 10, 11] }, // Ajustar según tus necesidades específicas
+                // Asegurar que las columnas necesarias no se oculten en pantallas pequeñas
+                { responsivePriority: 3, targets: [1, 2, 3, 4, 5, 6, 7, 8] }
+            ]
+        });
+    }
+});
+</script>
+{% endblock %}
