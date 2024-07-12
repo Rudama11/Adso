@@ -1,28 +1,31 @@
 {% extends 'home.html' %}
 {% block body %}
-    <body class="hold-transition layout-top-nav">
+    <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <!-- Header -->
-        {% include 'header.html' %}
+        {% include 'aside/header.html' %}
+        <!-- Sidebar -->
+        {% include 'aside/sidebar.html' %}
         <!-- Content -->
         <div class="content-wrapper">
             <div class="content-header">
-                <div class="container">
-                    <div class="row mb-2">
+                <div class="container-fluid">
+                    <div class="row">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"> Bienvenido <small>Example 3.0</small></h1>
+                            <h1 class="m-0 text-dark"> Bienvenidos: <small>Módulo | {{ entidad }}</small></h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Inicio app</a></li>
-                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                                <!-- <li class="breadcrumb-item"><a href="{% url 'index_pr' %}">InicioAside</a></li> -->
+                                <li class="breadcrumb-item"><a href="{{listar_url}}">{{entidad}}</a></li> 
+                                
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="content">
-                <div class="container">
+                <div class="container-fluid">
                     {% block contenido %}
 
                     {% endblock %}
@@ -32,9 +35,9 @@
         <!-- Footer -->
         {% include 'footer.html' %}
     </div>
-
+    <!-- Block javascript -->
     {% block javascript %}
-    
-    {% endblock  %}
+
+    {% endblock %}
     </body>
 {% endblock %}

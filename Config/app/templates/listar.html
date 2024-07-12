@@ -1,4 +1,4 @@
-{% extends "body.html" %}
+{% extends "layout.html" %}
 {% load static %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' %}"/> 
@@ -18,7 +18,7 @@
         </h3>
     </div>
     <div class="card-body">
-        <table class="table" id="tabla">
+        <table class="table table-responsive" id="tabla">
             <thead>
                 {% block columnas %} 
                 {% endblock %}
