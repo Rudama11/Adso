@@ -165,9 +165,14 @@ class NormativaForm(ModelForm):
                     'placeholder': 'Ingrese la normativa',
                     }
                 ),
-            'detalles': TextInput(
+            'descripcion': TextInput(
             attrs={
                     'placeholder': 'Ingrese la descripcion ',
+                    }
+                ),
+            'producto':forms.Select(
+                attrs={
+                    'placeholder': 'Seleccione el producto',
                     }
                 ),
         }

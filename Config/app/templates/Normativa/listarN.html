@@ -3,9 +3,9 @@
 {% block columnas %}
 <tr>
     <th scope="col">Id</th>
-    <th scope="col">Decreto</th>
+    <th scope="col">Numero de decreto</th>
     <th scope="col">Descripción</th>
-    <th scope="col">producto</th>
+    <th scope="col">Producto</th>
 
 </tr>
 {% endblock %}
@@ -15,7 +15,7 @@
 <tr>
     <td>{{n.id}}</td>
     <td>{{n.decreto}}</td>
-    <td>{{n.detalles}}</td>
+    <td>{{n.descripcion}}</td>
     <td>{{n.producto}}</td>
     <td>
         <a href="{% url 'app:normativa_editar' n.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

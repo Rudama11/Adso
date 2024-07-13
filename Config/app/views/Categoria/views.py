@@ -8,13 +8,6 @@ from django.urls import reverse_lazy
 from app.models import Categoria
 from app.forms import CategoriaForm
 
-def lista_categoria(request):
-    context = {
-        'titulo': 'Listado de Categorías',
-        'categorias': Categoria.objects.all()
-    }
-    return render(request, 'categoria/listar.html', context)
-
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'categoria/listar.html'

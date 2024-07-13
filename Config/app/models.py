@@ -179,7 +179,7 @@ class Proveedor(models.Model):
 #------------- Normativas-----------------------------
 class Normativa(models.Model):
     decreto=models.CharField(max_length=150,verbose_name='Decreto')
-    detalles=models.CharField(max_length=500,verbose_name='Detalles')
+    descripcion=models.CharField(max_length=500,verbose_name='Detalles')
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE,default=True)
     
     def __str__(self):
