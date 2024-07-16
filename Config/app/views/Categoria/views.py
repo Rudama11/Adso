@@ -10,7 +10,7 @@ from app.forms import CategoriaForm
 
 class CategoriaListView(ListView):
     model = Categoria
-    template_name = 'categoria/listar.html'
+    template_name = 'Categoria/listar.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -30,7 +30,7 @@ class CategoriaListView(ListView):
 class CategoriaCreateView(CreateView):
     model = Categoria
     form_class = CategoriaForm
-    template_name = 'categoria/crear.html'
+    template_name = 'Categoria/crear.html'
     success_url = reverse_lazy('app:categoria_listar')
 
     def get_context_data(self, **kwargs):
@@ -43,7 +43,7 @@ class CategoriaCreateView(CreateView):
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
-    template_name = 'categoria/crear.html'
+    template_name = 'Categoria/crear.html'
     success_url = reverse_lazy('app:categoria_listar')
     
     def get_context_data(self, **kwargs):
@@ -55,7 +55,7 @@ class CategoriaUpdateView(UpdateView):
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    template_name = 'categoria/eliminar.html'
+    template_name = 'Categoria/eliminar.html'
     success_url = reverse_lazy('app:categoria_listar')
 
     def get_context_data(self, **kwargs):
