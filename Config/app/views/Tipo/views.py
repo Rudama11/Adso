@@ -37,7 +37,7 @@ class TipoCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Tipos'
         context['entidad'] = 'Tipo'
-        context['listar_url'] = reverse_lazy('app: tipo_listar')
+        context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
 
 class TipoUpdateView(UpdateView):
