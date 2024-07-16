@@ -23,7 +23,7 @@ class NormativaListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de normativas'
-        context['entidad'] = 'Normativa'
+        context['entidad'] = 'Normativas'
         context['crear_url'] = reverse_lazy('app:normativa_crear')
         return context
 
@@ -35,8 +35,8 @@ class NormativaCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Normativa'
-        context['entidad'] = 'Normativa'
+        context['titulo'] = 'Crear una normativa'
+        context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
 
@@ -48,7 +48,7 @@ class NormativaUpdateView(UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar normativa'
+        context['titulo'] = 'Actualizar una Normativa'
         context['entidad'] = 'Normativa'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
@@ -60,7 +60,7 @@ class NormativaDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Normativa'
-        context['entidad'] = 'Normativa'
+        context['titulo'] = 'Eliminar una Normativa'
+        context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context

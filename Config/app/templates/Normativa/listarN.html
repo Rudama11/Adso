@@ -6,20 +6,21 @@
     <th scope="col">Numero de decreto</th>
     <th scope="col">Descripción</th>
     <th scope="col">Producto</th>
+    <th scope="col">Opciones</th>
 
 </tr>
 {% endblock %}
 
 {% block filas %}
-{% for n in object_list %}
+{% for no in object_list %}
 <tr>
-    <td>{{n.id}}</td>
-    <td>{{n.decreto}}</td>
-    <td>{{n.descripcion}}</td>
-    <td>{{n.producto}}</td>
+    <td>{{no.id}}</td>
+    <td>{{no.decreto}}</td>
+    <td>{{no.descripcion}}</td>
+    <td>{{no.producto}}</td>
     <td>
-        <a href="{% url 'app:normativa_editar' n.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:normativa_eliminar' n.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:normativa_editar' no.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:normativa_eliminar' no.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}
