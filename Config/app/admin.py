@@ -7,4 +7,4 @@ admin.site.register(Cliente)
 admin.site.register(Venta)
 admin.site.register(DetalleVenta)
 admin.site.register(Ubicacion)
-
+admin.site.register(Tipo)
