@@ -40,12 +40,12 @@ class UbicacionForm(ModelForm):
         model = Ubicacion
         fields = '__all__'
         widgets = {
-            'departamento': TextInput(
+            'departamento': forms.Select(
                 attrs={
                     'placeholder': 'Ingrese el departamento'
                     }
                 ),
-            'ciudad': TextInput(
+            'ciudad': forms.Select(
             attrs={
                     'placeholder': 'Ingrese la ciudad',
                     }
