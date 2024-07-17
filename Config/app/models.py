@@ -100,23 +100,24 @@ class Empleado (models.Model):
 
 #------------- Cliente ---------------------------------------------------
 class Cliente(models.Model):
-    nombre = models.CharField(max_length=150, verbose_name='Nombre')
-    apellido = models.CharField(max_length=150, verbose_name='Apellido')
+    tipo_persona = models.CharField(max_length=2, choices=Tipo_Persona_Choices, default='PN', verbose_name='Tipo de Persona')
+    nombres = models.CharField(max_length=100, verbose_name='Nombres', null=True, blank=True)
+    apellidos = models.CharField(max_length=100, verbose_name='Apellidos', null=True, blank=True)
+    razon_social = models.CharField(max_length=150, verbose_name='Razon Social', null=True, blank=True)
     tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
-    edad = models.PositiveIntegerField(default=0)
-    correo = models.EmailField(max_length=150, verbose_name='Correo')
-    cod_postal = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, verbose_name='Código Postal', null=True, blank=True)
-    direccion = models.CharField(max_length=150, verbose_name='Dirección')
+    numero_documento = models.CharField(max_length=20, verbose_name='Numero de Documento', null=True, blank=True)
+    correo = models.EmailField()
     telefono = models.IntegerField(default=0)
-
+    cod_postal = models.ForeignKey('Ubicacion', on_delete=models.CASCADE, verbose_name='Ubicacion')
+    direccion = models.CharField(max_length=150, null=True, blank=True, verbose_name='Dirección')
+    
     def __str__(self):
-        return f"{self.nombre} {self.apellido} - {self.get_tipo_documento_display()}"
+        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
 
     class Meta:
         verbose_name = 'Cliente'
-        verbose_name_plural = 'Clientes'
+        verbose_name_plural = 'Cliente'
         db_table = 'Cliente'
-        ordering = ['id']
 
 #------------- Venta ---------------------------------------------------
 
