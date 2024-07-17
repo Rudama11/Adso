@@ -1,23 +1,6 @@
 from django.db import models
 from datetime import datetime
-
-Tipo_Documento_Choices = [
-    ('CC','Cédula de ciudadanía'),
-    ('CE','Cédula de extranjería'),
-    ('TI','Tarjeta de identidad'),
-    ('PA','Pasaporte'),
-    ('NIT','Numero de identificación tributaria')
-]
-
-Tipo_Persona_Choices = [
-    ('PN', 'Persona Natural'),
-    ('PJ', 'Persona Jurídica')
-]
-
-opc_generos = [
-    ('male', 'Male'),
-    ('female', 'Female'),
-]
+from .choices import *
 
 #------------- Categoría ---------------------------------------------------
 class Categoria(models.Model):
@@ -48,8 +31,8 @@ class Tipo(models.Model):
 #------------- Ubicación ---------------------------------------------------
 class Ubicacion(models.Model):
     id = models.CharField(primary_key=True, max_length=6)
-    departamento = models.CharField(max_length=100, verbose_name='Departamento')
-    ciudad = models.CharField(max_length=100, verbose_name='Ciudad')
+    departamento = models.CharField(max_length=50,choices=Departamentos,default='1',verbose_name='Departamento')
+    ciudad = models.CharField(max_length=50,choices=Municipios,default='1',verbose_name='Ciudad')
     
     def __str__(self):
         return self.ciudad
@@ -78,7 +61,7 @@ class Producto(models.Model):
         
 #------------- Empleado ---------------------------------------------------
 class Empleado (models.Model):
-    categ=models.ManyToManyField(Categoria)#Relacion de muchos a muchos
+    categ=models.ManyToManyField(Categoria)
     nombres= models.CharField(max_length=150,verbose_name='Nombres')
     apellido=models.CharField(max_length=150,verbose_name='Apellidos')
     cedula=models.CharField(max_length=11,unique=True, verbose_name='Cedula')
@@ -96,7 +79,6 @@ class Empleado (models.Model):
         verbose_name='Empleado'
         verbose_name_plural='Empleados'
         db_table = 'Empleado'
-        #ordering=[id]
 
 #------------- Cliente ---------------------------------------------------
 class Cliente(models.Model):
@@ -189,4 +171,3 @@ class Normativa(models.Model):
         verbose_name = 'Normativa'
         verbose_name_plural = 'Normativas'
         db_table = 'Normativa'
-        #ordering = ['id']

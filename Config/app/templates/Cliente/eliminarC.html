@@ -18,7 +18,7 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
                 <h5><i class="icon fas fa-ban"></i>Ha ocurrido un error al intentar
-                    eliminar un registro de cliente</h5>
+                    eliminar un Proveedor</h5>
                 <ul>
                     {% for field in form %}
                     {% for error in field.errors %}
@@ -30,7 +30,7 @@
             {% endif %}
             <div class="alert alert-danger alert-dismissible">
                 <h5><i class="icon fas fa-ban"></i>Advertencia!</h5>
-                Deseas eliminar el registro #{{object.id}}?
+                Deseas eliminar el Proveedor #{{object.id}}?
             </div>
         </div>
         <div class="card-footer">
