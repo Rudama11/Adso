@@ -1,2 +1,12 @@
-**/__pycache__/
+# Ignore SQLite database file
+db.sqlite3
+
+# Other patterns to ignore...
+__pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.env
+.env
+*.venv
+.venv
