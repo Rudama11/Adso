@@ -2,6 +2,7 @@ from dataclasses import fields
 from django.forms import ModelForm, TextInput, Textarea
 from django import forms
 from app.models import *
+from django_select2.forms import Select2Widget
 
 #---------------------------------------------------------- Categoria ----------------------------------------------------------
 
@@ -35,21 +36,21 @@ class UbicacionForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['departamento'].widget.attrs['autofocus'] = True
 
-
     class Meta:
         model = Ubicacion
         fields = '__all__'
         widgets = {
             'departamento': forms.Select(
                 attrs={
-                    'placeholder': 'Ingrese el departamento'
-                    }
-                ),
-            'ciudad': forms.Select(
-            attrs={
-                    'placeholder': 'Ingrese la ciudad',
-                    }
-                ),
+                    'placeholder': 'Seleccione el departamento'
+                }
+            ),
+            'ciudad': Select2Widget(attrs={
+                'placeholder': 'Escriba o seleccione la ciudad',
+                'data-minimum-input-length': 1,  # Mínimo de caracteres antes de buscar
+                'data-placeholder': 'Escriba para buscar',
+                'class': 'form-control',
+            }),
         }
 
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
