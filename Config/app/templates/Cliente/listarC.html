@@ -3,13 +3,17 @@
 {% block columnas %}
 <tr>
     <th scope="col">Id</th>
-    <th scope="col">Nombre</th>
-    <th scope="col">Apellido</th>
-    <th scope="col">Cedula</th>
-    <th scope="col">Fecha Nacimiento</th>
-    <th scope="col">Sexo</th>
+    <th scope="col">Tipo de persona</th>
+    <th scope="col">Nombres</th>
+    <th scope="col">Apellidos</th>
+    <th scope="col">Razón social</th>
+    <th scope="col">Tipo de documento</th>
+    <th scope="col">Numero de documento</th>
     <th scope="col">Correo</th>
-    <th scope="col">Direccion Residencia</th>
+    <th scope="col">Telefono</th>
+    <th scope="col">Ciudad</th>
+    <th scope="col">Direccion</th>
+    <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
 
@@ -17,17 +21,19 @@
 {% for cl in object_list %}
 <tr>
     <td>{{ cl.id }}</td>
-    <td>{{ cl.nombre }}</td>
-    <td>{{ cl.apellido }}</td>
-    <td>{{ cl.cedula }}</td>
-    <td>{{ cl.fecha_n }}</td>
-    <td>{{ cl.sexo }}</td>
+    <td>{{ cl.tipo_persona }}</td>
+    <td>{{ cl.nombres }}</td>
+    <td>{{ cl.apellidos }}</td>
+    <td>{{ cl.razon_social }}</td>
+    <td>{{ cl.tipo_documento }}</td>
+    <td>{{ cl.numero_documento }}</td>
     <td>{{ cl.correo }}</td>
+    <td>{{ cl.telefono }}</td>
+    <td>{{ cl.cod_postal.ciudad }}</td>
     <td>{{ cl.direccion }}</td>
-
     <td>
-    <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-    <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}
