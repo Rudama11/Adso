@@ -32,7 +32,7 @@ class Tipo(models.Model):
 class Ubicacion(models.Model):
     id = models.CharField(primary_key=True, max_length=6)
     departamento = models.CharField(max_length=50,choices=Departamentos,default='1',verbose_name='Departamento')
-    ciudad = models.CharField(max_length=50,choices=Municipios,default='1',verbose_name='Ciudad')
+    ciudad = models.CharField(max_length=50,choices=Ciudades,default='1',verbose_name='Ciudad')
     
     def __str__(self):
         return self.ciudad

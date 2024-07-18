@@ -31,26 +31,13 @@ class CategoriaForm(ModelForm):
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
 
-class UbicacionForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['departamento'].widget.attrs['autofocus'] = True
-
+class UbicacionForm(forms.ModelForm):
     class Meta:
         model = Ubicacion
-        fields = '__all__'
+        fields = ['departamento', 'ciudad']
         widgets = {
-            'departamento': forms.Select(
-                attrs={
-                    'placeholder': 'Seleccione el departamento'
-                }
-            ),
-            'ciudad': Select2Widget(attrs={
-                'placeholder': 'Escriba o seleccione la ciudad',
-                'data-minimum-input-length': 1,  # Mínimo de caracteres antes de buscar
-                'data-placeholder': 'Escriba para buscar',
-                'class': 'form-control',
-            }),
+            'departamento': forms.Select(attrs={'class': 'select2'}),
+            'ciudad': forms.Select(attrs={'class': 'select2'}),
         }
 
 #---------------------------------------------------------- Cliente ----------------------------------------------------------

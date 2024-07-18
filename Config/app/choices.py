@@ -52,7 +52,7 @@ Departamentos = [
 ]
 
 
-Municipios = [
+Ciudades = [
     ('1','Leticia'),
     ('2','Puerto Nariño'),
     ('3','Abejorral'),
