@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'login',
     #lib
     'widget_tweaks',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
