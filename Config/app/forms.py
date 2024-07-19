@@ -177,3 +177,46 @@ class NormativaForm(ModelForm):
                     }
                 ),
         }
+        
+#------------------------- ventas --------------------------------------------
+
+from django import forms
+from django.forms import ModelForm
+from app.models import Venta
+
+class VentaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cliente'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Venta
+        fields = '__all__'
+        widgets = {
+            'cliente': forms.Select(
+                attrs={
+                    'placeholder': 'Seleccione el cliente',
+                }
+            ),
+            'fecha_ingreso': forms.DateInput(
+                attrs={
+                    'placeholder': 'Ingrese la fecha de ingreso',
+                    'type': 'date'
+                }
+            ),
+            'subtotal': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Ingrese el subtotal',
+                }
+            ),
+            'total': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Ingrese el total',
+                }
+            ),
+            'iva': forms.NumberInput(
+                attrs={
+                    'placeholder': 'Ingrese el IVA',
+                }
+            ),
+        }
