@@ -300,7 +300,14 @@ h6 {
   display: block;
   background-color: rgba(33, 37, 41, 0.03);
 }
+#login-link {
+  display: block; /* Asegúrate de que el enlace esté configurado para mostrarse */
+  color: var(--nav-color); /* Asegúrate de que el color sea visible */
+}
 
+#login-link:hover {
+  color: var(--nav-hover-color); /* Cambiar color al pasar el cursor */
+}
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
