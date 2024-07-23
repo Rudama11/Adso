@@ -42,6 +42,7 @@
 
 {% block javascript %}
 <!-- Urls de los archivos Js -->
+<script src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
@@ -56,10 +57,16 @@
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 
 <script>
-    $(function () {
+    $(document).ready(function () {
         $("#tabla").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "dom": 'Bfrtip' // Esto asegura que los botones sean visibles
         }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
     });
 </script>
