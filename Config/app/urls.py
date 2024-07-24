@@ -7,6 +7,7 @@ from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
+from app.views.Empleado.views import *
 
 app_name = 'app'
 
@@ -67,4 +68,13 @@ urlpatterns = [
     path('Ventas/crearV/', VentasCreateView.as_view(), name='venta_crear'),
     path('Ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
     path('Ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
+    
+    #------------- Empleado -----------------------------
+    
+    path('Empleado/listarE/', EmpleadoListView.as_view(), name='empleado_listar'),
+    path('Empleado/crearE/', EmpleadoCreateView.as_view(), name='empleado_crear'),
+    path('Empleado/editar/<int:pk>/', EmpleadoUpdateView.as_view(), name='empleado_editar'),
+    path('Empleado/eliminar/<int:pk>/', EmpleadoDeleteView.as_view(), name='empleado_eliminar'),
 ]
+
+
