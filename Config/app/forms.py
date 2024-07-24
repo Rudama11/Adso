@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django.forms import ModelForm, TextInput, Textarea
+from django.forms import ModelForm, TextInput, Textarea, Select
 from django import forms
 from app.models import *
 from django_select2.forms import Select2Widget
@@ -217,6 +217,65 @@ class VentaForm(ModelForm):
             'iva': forms.NumberInput(
                 attrs={
                     'placeholder': 'Ingrese el IVA',
+                }
+            ),
+        }
+
+#------------------------- Empleado --------------------------------------------
+
+class EmpleadoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Empleado
+        fields = '__all__'
+        widgets = {
+            'nombres': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del empleado',
+                }
+            ),
+            'apellido': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el apellido del empleado',
+                }
+            ),
+            'cedula': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la cedula del empleado',
+                }
+            ),
+            'fecha_registro': forms.DateInput(
+                attrs={
+                    'placeholder': 'Ingrese la fecha de registro',
+                    'type': 'date'
+                }
+            ),
+            'edad': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la edad del empleado',
+                }
+            ),
+            'salario': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el salario del empleado',
+                }
+            ),
+            'estado': Select(
+                attrs={
+                    'placeholder': 'Seleccione el estado del empleado',
+                }
+            ),
+            'tipo': Select(
+                attrs={
+                    'placeholder': 'Seleccione el tipo de empleado',
+                }
+            ),
+            'categ': Select(
+                attrs={
+                    'placeholder': 'Seleccione la categoría del empleado',
                 }
             ),
         }
