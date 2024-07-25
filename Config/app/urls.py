@@ -7,7 +7,7 @@ from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
-from app.views.Empleado.views import *
+from app.views.Persona.views import *
 
 app_name = 'app'
 
@@ -71,10 +71,10 @@ urlpatterns = [
     
     #------------- Empleado -----------------------------
     
-    path('Empleado/listarE/', EmpleadoListView.as_view(), name='empleado_listar'),
-    path('Empleado/crearE/', EmpleadoCreateView.as_view(), name='empleado_crear'),
-    path('Empleado/editar/<int:pk>/', EmpleadoUpdateView.as_view(), name='empleado_editar'),
-    path('Empleado/eliminar/<int:pk>/', EmpleadoDeleteView.as_view(), name='empleado_eliminar'),
+    path('Persona/listar/', PersonaListView.as_view(), name='persona_listar'),
+    path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
+    path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
+    path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
 ]
 
 

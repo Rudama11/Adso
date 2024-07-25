@@ -179,11 +179,6 @@ class NormativaForm(ModelForm):
         }
         
 #------------------------- ventas --------------------------------------------
-
-from django import forms
-from django.forms import ModelForm
-from app.models import Venta
-
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -223,13 +218,13 @@ class VentaForm(ModelForm):
 
 #------------------------- Empleado --------------------------------------------
 
-class EmpleadoForm(ModelForm):
+class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombres'].widget.attrs['autofocus'] = True
 
     class Meta:
-        model = Empleado
+        model = Persona
         fields = '__all__'
         widgets = {
             'nombres': TextInput(
