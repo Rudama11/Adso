@@ -160,7 +160,7 @@ class Producto(models.Model):
     venta = models.ForeignKey(
         'Venta',
         on_delete=models.CASCADE,
-        verbose_name='Venta',
+        verbose_name='Vendedor',
         blank=True,
         null=True
     )

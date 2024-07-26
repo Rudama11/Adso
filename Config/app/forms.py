@@ -129,26 +129,40 @@ class TipoForm(ModelForm):
         }
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
-class ProductoForm(ModelForm):
+class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
+        # Agregar estilos y placeholders a los campos
+        self.fields['nombre'].widget.attrs.update({
+            'placeholder': 'Ingrese el nombre del producto',
+            'class': 'form-control'
+        })
+        self.fields['descripcion'].widget.attrs.update({
+            'placeholder': 'Ingrese la descripción del producto',
+            'class': 'form-control'
+        })
+        self.fields['stock'].widget.attrs.update({
+            'placeholder': 'Ingrese el stock del producto',
+            'class': 'form-control'
+        })
+        self.fields['precio'].widget.attrs.update({
+            'placeholder': 'Ingrese el precio del producto',
+            'class': 'form-control'
+        })
+        self.fields['categoria'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['tipo_pro'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['venta'].widget.attrs.update({
+            'class': 'form-control'
+        })
 
     class Meta:
         model = Producto
         fields = '__all__'
-        widgets = {
-            'nombre': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del producto'
-                    }
-                ),
-            'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion del producto',
-                    }
-                ),
-        }
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
 
