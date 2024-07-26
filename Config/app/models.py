@@ -60,18 +60,18 @@ class Ubicacion(models.Model):
         choices=Departamentos,
         default='1',
         verbose_name='Departamento'
-        )
+    )
     ciudad = models.CharField(
         max_length=50,
         validators=[MinLengthValidator(3)],
         choices=Ciudades,
-        default='1',
+        default='1-1',
         verbose_name='Ciudad'
-        )
-    
+    )
+
     def __str__(self):
         return self.ciudad
-    
+
     class Meta:
         verbose_name = 'Ubicacion'
         verbose_name_plural = 'Ubicacion'
