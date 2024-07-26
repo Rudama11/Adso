@@ -1,0 +1,500 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Conaldex Boyacá</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{%static 'img/favicon.png'%}" rel="icon">
+  <link href="{%static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{%static  'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{%static  'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{%static 'vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{%static  'vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{%static  'vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{%static 'css/main.css'%}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Updated: Jun 14 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <div class="profile-img">
+      <img src="{%static 'img/Logoc.jpg' %}" alt="" class="img-fluid rounded-circle">
+    </div>
+
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1 class="sitename">Conaldex Boyacá</h1>
+    </a>
+
+    <div class="social-links text-center">
+      <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Inicio</a></li>
+        <li><a href="#about"><i class="bi bi-person navicon"></i> Acerca de</a></li>
+        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Nosotros</a></li>
+        <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portafolio</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
+        <li><a href="login" id="login-link"><i class="bi bi-box-arrow-in-right navicon"></i> Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+
+      <img src="{%static 'img/hero-bg.jpg' %}" alt="" data-aos="fade-in" class="">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h2>CONALDEX</h2>
+        <p> Nunca <span class="typed" data-typed-items="olvides la seguridad"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>CONALDEX BOYACÁ</h2>
+        <p>Empresa dedicada a la venta , mantenimiento e instalación de toda clase de extintores portátiles, kit de carretera, Botiquines, camillas, señalización y todo lo relacionado con seguridad industrial . cumplimos con todos los requisitos legales , el cual nos permite prestar un servicio de calidad.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-4">
+            <img src="{%static 'img/sede.jpg' %}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-8 content">
+            <h2>CONALDEX.</h2>
+            <p class="fst-italic py-3">
+              Somos una empresa líder en la venta y recarga de extintores, comprometidos con la seguridad y la protección de nuestros clientes. 
+              Desde nuestros inicios, nos hemos dedicado a ofrecer productos de la más alta calidad y servicios confiables.
+            </p>
+            <div class="row">
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Dirección:</strong> <span>Calle 7 #14-65</span></li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Ciudad:</strong> <span>Sogamoso - Boyacá</span></li>
+                </ul>
+              </div>
+            </div>
+            <p class="py-3">
+              En Conaldex Boyacá también ofrecemos una amplia gama de Equipos de Protección Personal (EPP) para garantizar la seguridad de los trabajadores en diversas industrias. 
+              Entendemos la importancia de la seguridad en el lugar de trabajo, por lo que nuestros productos cumplen con los más altos estándares de calidad y normativas vigentes.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Resume Section -->
+    <section id="resume" class="resume section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nosotros</h2>
+        <p>
+          Nuestro equipo está compuesto por profesionales altamente capacitados y comprometidos con la excelencia en el servicio al cliente. 
+          Nos esforzamos por mantenernos actualizados en tecnología y conocimientos para proporcionar soluciones eficientes y efectivas a nuestras necesidades.
+        </p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+
+            <h3 class="resume-title">Misión</h3>
+            <div class="resume-item">
+              <p>Nuestra misión es proteger vidas y propiedades mediante la provisión de productos y servicios de seguridad contra incendios y Equipos de Protección Personal, 
+                promoviendo una cultura de prevención y cuidado en todos los ámbitos.</p>
+            </div><!-- Edn Resume Item -->
+
+            <h3 class="resume-title">Visión</h3>
+            <div class="resume-item">
+              <p>Ser reconocidos como la empresa líder en seguridad contra incendios y protección personal en la región de Boyacá, 
+                destacándonos por nuestra calidad, innovación y compromiso con la satisfacción del cliente.</p>
+            </div><!-- Edn Resume Item -->
+
+          </div>
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="resume-title"><Em>Experiencia Profesional</Em></h3>
+            <div class="resume-item">
+              <p><em>Tecnico Certificado por: </em></p>
+              <ul>
+                <li>Asociación Nacional de Protección contra el Fuego (NFPA).</li>
+                <li>Servicio Nacional de Aprendizaje (SENA). </li>
+                <li>Cualtis Colombia SAS.</li>
+              </ul>
+            </div><!-- Edn Resume Item -->
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Resume Section -->
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Portafolio</h2>
+        <p>
+          En Conaldex Boyacá, nos enorgullecemos de ofrecer una amplia gama de productos y servicios diseñados para satisfacer tus necesidades de seguridad y protección. 
+          Nuestro portafolio incluye:
+        </p>
+        <br>
+        <ul>
+           <li>Extintores.</li>
+           <li>Botiquines.</li>
+           <li>Señalizaciones.</li>
+           <li>Camillas.</li> 
+      </ul>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Todo</li>
+            <li data-filter=".filter-app">Extintores</li>
+            <li data-filter=".filter-product">Botiquines</li>
+            <li data-filter=".filter-branding">Señalizaciones</li>
+            <li data-filter=".filter-books">Otros</li>
+          </ul><!-- End Portfolio Filters -->
+
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/extint.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Extintores</h4>
+                  <p>Gran variedad de extintores</p>
+                  <a href="static/img/portfolio/extint.jpg" title="Extintores" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" titl
+                  e="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/boti.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Botiquines</h4>
+                  <p>Botiquines disponibles</p>
+                  <a href="static/img/portfolio/boti.jpg" title="Botiquin 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/señal.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Señalizaciones 1</h4>
+                  <p>Señalizaciones Verdes</p>
+                  <a href="static/img/portfolio/señal.jpg" title="Señalizaciones 1" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>      
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/otros.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Conos</h4>
+                  <p>Conos disponibles</p>
+                  <a href="static/img/portfolio/otros.jpg" title="Conos" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/extint2.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Extintores Amarillos</h4>
+                  <p>Extintores amarillos disponibles</p>
+                  <a href="static/img/portfolio/extint2.jpg" title="Extintores 2" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/boti2.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Botiquin 2</h4>
+                  <p>Botiquin tipo 2</p>
+                  <a href="static/img/portfolio/boti2.jpg" title="Botiquin 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/señal2.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Señalizaciones 2</h4>
+                  <p>Señalizaciones Azules</p>
+                  <a href="static/img/portfolio/señal2.jpg" title="Señalizaciones Azules" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/otros2.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Puntos ecologicos</h4>
+                  <p>Puntos ecologicos disponibles</p>
+                  <a href="static/img/portfolio/otros2.jpg" title="Puntos ecologicos" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/extint3.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Soporte extintores</h4>
+                  <p>Soportes para los extintores</p>
+                  <a href="static/img/portfolio/extint3.jpg" title="Soporte de extintores" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/boti3.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Botiquin 3</h4>
+                  <p>Contenido del botiquin</p>
+                  <a href="static/img/portfolio/boti3.jpg" title="Botiquin 3" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/señal3.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Señalizacion extintor</h4>
+                  <p>Señalixaciones para el uso de los extintores</p>
+                  <a href="static/img/portfolio/señal3.jpg" title="Señalizacion extintores" data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-books">
+              <div class="portfolio-content h-100">
+                <img src="static/img/portfolio/otros3.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Kit de carretera</h4>
+                  <p>Kits de uso de carreteras</p>
+                  <a href="static/img/portfolio/otros3.jpg" title="Kit carretera" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+          </div><!-- End Portfolio Container -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Portfolio Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contacto</h2>
+        <p>En Conaldex Boyacá, valoramos la comunicación con nuestros clientes. 
+          Si tienes alguna pregunta, necesitas más información sobre nuestros productos y servicios, o deseas solicitar una cotización, no dudes en ponerte en contacto con nosotros. 
+          Estamos aquí para asistirte en todo lo que necesites.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-5">
+
+            <div class="info-wrap">
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Dirección</h3>
+                  <p>Calle 7 # 14-65, Sogamoso, Boyacá</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Telefono</h3>
+                  <p>+57 312435259</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Correo</h3>
+                  <p>conaldexboyaca@gmail.com</p>
+                </div>
+              </div><!-- End Info Item -->
+
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15880.018521495409!2d-72.9345594!3d5.7124662!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e6a45d00be51003%3A0xe0598bba0d568291!2sConaldex!5e0!3m2!1ses-419!2sco!4v1721763529479!5m2!1ses-419!2sco" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <form action="{% url 'enviar_correo' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              {% csrf_token %}
+              <div class="row gy-4">
+
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name" class="form-control" required="">
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject" required="">
+                </div>
+
+                <div class="col-md-12">
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message" required=""></textarea>
+                </div>
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">reemplaze_for_javascript</div>
+
+                  <button type="submit">Send Message</button>
+                </div>
+
+              </div>
+            </form>
+          </div><!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/typed.js/typed.umd.js' %}"></script>
+  <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

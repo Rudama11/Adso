@@ -1,0 +1,36 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <!-- boton de acceso directo a productos -->
+    <td colspan="200">
+        <div class="d-flex justify-content-start flex-wrap">
+            <a href="{% url 'app:producto_listar' %}" class="btn btn-primary btn-sm mx-1">
+                <i class="fas fa-box fa-xs"></i> Producto
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Descripción</th>
+    <th scope="col">Opciones</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for t in object_list %}
+<tr>
+    <td>{{t.id}}</td>
+    <td>{{t.nombre}}</td>
+    <td>{{t.descripcion}}</td>
+    <td>
+        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+{% endfor %}
+
+{% endblock %}
