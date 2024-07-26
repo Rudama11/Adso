@@ -13,23 +13,23 @@
             </h3>
         </div>
         <div class="card-body">
-            {% csrf_token %} {% if form.errors %} {{form.errors}}
+            {% csrf_token %}
+            {% if form.errors %}
             <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                    ×
-                </button>
-                <h5>
-                    <i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear una ubicación.
-                </h5>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear una ubicación.</h5>
                 <ul>
-                    {% for field in form %} {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %} {% endfor %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
                 </ul>
             </div>
-            {% endif %} {% for field in form.visible_fields %}
+            {% endif %}
+            {% for field in form.visible_fields %}
             <div class="form-group">
-                <label for="email">{{ field.label}} </label>
+                <label for="{{ field.id_for_label }}">{{ field.label }} </label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             {% endfor %}
@@ -41,10 +41,24 @@
             </button>
             <a href="{% url 'app:ubicacion_listarU' %}" class="btn btn-info btn-flat">
                 <i class="fas fa-times"></i> Cancelar
-            </a>            
+            </a>
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'Selecciona una opción',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";  // Personaliza el texto aquí
+                }
+            }
+        });
+    });
+</script>
 
 <script>
     {% if form.errors %}

@@ -2,6 +2,16 @@
 
 {% block columnas %}
 <tr>
+    <!-- boton de acceso directo a productos -->
+    <td colspan="200">
+        <div class="d-flex justify-content-start flex-wrap">
+            <a href="{% url 'app:producto_listar' %}" class="btn btn-primary btn-sm mx-1">
+                <i class="fas fa-box fa-xs"></i> Producto
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
     <th scope="col">Descripción</th>

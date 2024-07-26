@@ -1,26 +1,28 @@
 {% extends "layout.html" %}
+
 {% load static %}
+
 {% block head %}
-<link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' %}"/> 
-<link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' %}"/>
-<script src="{% static 'lib/datatables-1.10.20/js/jquery.dataTables.js' %}"></script>
-<script src="{% static 'lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' %}"></script>
-<script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' %}"></script>
+
+<!-- Urls de los archivos CSS -->
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+
 {% endblock %}
 
 {% block contenido %}
 <div class="card card-default">
     <div class="card-header">
         <h3 class="card-title">
-            <i class="fas fa-search"></i> 
+            <i class="fas fa-search"></i>
             {{ titulo }}
         </h3>
     </div>
     <div class="card-body">
-        <table class="table table-responsive" id="tabla">
+        <table id="tabla" class="table table-bordered table-striped">
             <thead>
-                {% block columnas %} 
+                {% block columnas %}
                 {% endblock %}
             </thead>
             <tbody>
@@ -34,15 +36,38 @@
             Agregar
         </a>
     </div>
+
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script type="application/javascript">
-$(document).ready(function () { 
-    $('#tabla').DataTable({
-        responsive: false
+<!-- Urls de los archivos Js -->
+<script src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#tabla").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "dom": 'Bfrtip' // Esto asegura que los botones sean visibles
+        }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
     });
-});
 </script>
 {% endblock %}

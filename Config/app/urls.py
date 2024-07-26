@@ -6,6 +6,8 @@ from app.views.Cliente.views import *
 from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
+from app.views.Ventas.views import *
+from app.views.Persona.views import *
 
 app_name = 'app'
 
@@ -59,5 +61,20 @@ urlpatterns = [
     path('Normativa/crearN/', NormativaCreateView.as_view(), name='normativa_crear'),
     path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
     path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
-
+    
+    #------------- Ventas -----------------------------
+    
+    path('Ventas/listarV/', VentasListView.as_view(), name='venta_listar'),
+    path('Ventas/crearV/', VentasCreateView.as_view(), name='venta_crear'),
+    path('Ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
+    path('Ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
+    
+    #------------- Empleado -----------------------------
+    
+    path('Persona/listar/', PersonaListView.as_view(), name='persona_listar'),
+    path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
+    path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
+    path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
 ]
+
+

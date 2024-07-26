@@ -51,30 +51,43 @@
 
   function php_email_form_submit(thisForm, action, formData) {
     fetch(action, {
-      method: 'POST',
-      body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+        method: 'POST',
+        body: formData,
+        headers: {'X-Requested-With': 'XMLHttpRequest','X-CSRFToken':csrftoken }
     })
-    .then(response => {
-      if( response.ok ) {
-        return response.text();
-      } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
-      }
-    })
-    .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
-      } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
-      }
-    })
-    .catch((error) => {
-      displayError(thisForm, error);
-    });
-  }
+        .then(response => response.json().then(data => {
+            if (response.ok) {
+                return data;
+            } else {
+                throw new Error(data.message || `${response.url} ${response.status} ${response.statusText} `);
+            }
+        }))
+        .then(data => {
+            thisForm.querySelector('.loading').classList.remove('d-block');
+            // if (data.trim() !== '') {
+            if (data.error === 'false') {
+                thisForm.querySelector('.sent-message').classList.add('d-block');
+                thisForm.querySelector('.sent-message').innerHTML = data.message;
+                thisForm.reset();
+                window.location.reload();
+            } else if (data.error === 'true') {
+                displayError(thisForm, data.message);
+            } else {
+                throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action);
+            }
+        })
+        .catch((error) => {
+            displayError(thisForm, error);
+        });
+}
+        //     .then(response => {
+        //     if (response.ok) {
+        //         // return response.text();
+        //         return response.json();
+        //     } else {
+        //         throw new Error(`${response.url} ${response.status} ${response.statusText} `);
+        //     }
+        // })
 
   function displayError(thisForm, error) {
     thisForm.querySelector('.loading').classList.remove('d-block');
