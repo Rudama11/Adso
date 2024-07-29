@@ -1,0 +1,192 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.invoice-container {
+    width: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-logo {
+    width: 120px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.invoice-info {
+    text-align: right;
+    font-size: 16px;
+}
+
+.invoice-info p {
+    margin: 5px 0;
+}
+
+.details-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.company-details, .client-details {
+    width: 45%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.company-details label, .client-details label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.company-details input, .client-details input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.product-table th, .product-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.product-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.product-table td input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.totals {
+    text-align: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.delete-row {
+    background: url("{% static '/Config/app/static/img/trash-icon.png' %}") no-repeat center center;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 24px;
+}
+
+.delete-row:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.totals p {
+    margin: 5px 0;
+}
+
+button {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.error {
+    border: 2px solid red;
+    background-color: #fdd;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block; /* Hacer el mensaje visible */
+}
+
+/* Estilos para impresión */
+@media print {
+    .buttons {
+        display: none; /* Oculta la sección de botones al imprimir */
+    }
+
+    .invoice-container {
+        width: 100%;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .product-table th, .product-table td {
+        padding: 8px;
+        word-wrap: break-word; /* Asegura que el texto se ajuste en la celda */
+    }
+
+    .product-table td.detail {
+        white-space: normal; /* Permite que el texto se ajuste en varias líneas */
+        overflow: visible; /* Asegura que el contenido no se oculte */
+        max-width: none; /* Elimina la restricción de ancho */
+    }
+
+    .product-table th:last-child,
+    .product-table td:last-child {
+        display: none;
+    }
+
+    /* Estilo para mostrar texto en lugar de campos de entrada */
+    input, textarea {
+        border: none;
+        background: none;
+        box-shadow: none;
+        font-size: inherit;
+        line-height: inherit;
+        color: inherit;
+    }
+}
