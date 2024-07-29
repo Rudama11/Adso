@@ -33,22 +33,6 @@
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             {% endfor %}
-            <div class="form-group">
-                <label for="id_departamento">Departamento</label>
-                <select name="departamento" id="id_departamento">
-                    <option value="" disabled selected>Seleccione un departamento</option>
-                    <option value="1">Amazonas</option>
-                    <!-- Agrega más departamentos aquí -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="id_ciudad">Ciudad</label>
-                <select name="ciudad" id="id_ciudad">
-                    <option value="" disabled selected>Seleccione una ciudad</option>
-                    <option value="1" class="1">Leticia</option> <!-- Ciudad de Amazonas -->
-                    <!-- Agrega más opciones de ciudad aquí -->
-                </select>
-            </div>
         </div>
         <div class="card-footer">
             <button class="btn btn-success swalDefaultSuccess">
@@ -72,18 +56,6 @@
                     return "No se encontraron resultados";  // Personaliza el texto aquí
                 }
             }
-        });
-
-        $('#id_departamento').change(function() {
-            var selectedDepartamento = $(this).val();
-            $('#id_ciudad option').each(function() {
-                if ($(this).hasClass(selectedDepartamento)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-            $('#id_ciudad').val(''); // Restablece la ciudad seleccionada
         });
     });
 </script>
