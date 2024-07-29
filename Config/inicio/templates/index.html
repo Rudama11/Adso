@@ -414,39 +414,44 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="{% url 'enviar_correo' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form action="{% url 'enviar_correo' %}" method="post" class="php-email-form" enctype="multipart/form-data" data-aos="fade-up" data-aos-delay="200">
               {% csrf_token %}
               <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name" class="form-control" required="">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message" required=""></textarea>
-                </div>
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">reemplaze_for_javascript</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
+          
+                  <div class="col-md-6">
+                      <label for="name-field" class="pb-2">Nombres:</label>
+                      <input type="text" name="name" id="name" class="form-control" required="">
+                  </div>
+          
+                  <div class="col-md-6">
+                      <label for="email-field" class="pb-2">Correo:</label>
+                      <input type="email" class="form-control" name="email" id="email" required="">
+                  </div>
+          
+                  <div class="col-md-12">
+                      <label for="subject-field" class="pb-2">Asunto:</label>
+                      <input type="text" class="form-control" name="subject" id="subject" required="">
+                  </div>
+          
+                  <div class="col-md-12">
+                      <label for="message-field" class="pb-2">Mensaje:</label>
+                      <textarea class="form-control" name="message" rows="10" id="message" required=""></textarea>
+                  </div>
+          
+                  <div class="col-md-12">
+                      <label for="image-field" class="pb-2">Agregar Imagen:</label>
+                      <input type="file" class="form-control" name="image" id="image">
+                  </div>
+          
+                  <div class="col-md-12 text-center">
+                      <div class="loading">Cargando...</div>
+                      <div class="error-message"></div>
+                      <div class="sent-message">Su mensaje ha sido enviado. Muchas gracias!</div>
+                      <button type="submit">Enviar Mensaje</button>
+                  </div>
+          
               </div>
-            </form>
+          </form>          
           </div><!-- End Contact Form -->
 
         </div>
@@ -460,18 +465,14 @@
   <footer id="footer" class="footer position-relative">
 
     <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
+      <div class="copyright text-center">
+        <p>© <span>Derechos Reservados</span> <strong class="px-1 sitename">Conaldex Boyacá</strong></p>
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Diseñado por Conaldex Boyacá
       </div>
     </div>
-
+    
   </footer>
 
   <!-- Scroll Top -->
