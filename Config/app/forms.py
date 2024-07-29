@@ -152,7 +152,9 @@ class ProveedorForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Agregar autofocus al campo nombre
         self.fields['nombre'].widget.attrs['autofocus'] = True
+        
         # Agregar estilos y placeholders a los campos
         self.fields['nombre'].widget.attrs.update({
             'placeholder': 'Ingrese el nombre del producto',
@@ -179,12 +181,15 @@ class ProductoForm(forms.ModelForm):
         self.fields['venta'].widget.attrs.update({
             'class': 'form-control'
         })
-
+    
     class Meta:
         model = Producto
         fields = '__all__'
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
+from django import forms
+from django.forms import ModelForm, TextInput
+from .models import Normativa
 
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -198,20 +203,22 @@ class NormativaForm(ModelForm):
             'decreto': TextInput(
                 attrs={
                     'placeholder': 'Ingrese la normativa',
-                    }
-                ),
+                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                }
+            ),
             'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion ',
-                    }
-                ),
-            'producto':forms.Select(
                 attrs={
-                    'placeholder': 'Seleccione el producto',
-                    }
-                ),
+                    'placeholder': 'Ingrese la descripción',
+                    'class': 'form-control'
+                }
+            ),
+            'producto': forms.Select(
+                attrs={
+                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                }
+            ),
         }
-        
+
 #------------------------- ventas --------------------------------------------
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -250,7 +257,7 @@ class VentaForm(ModelForm):
             ),
         }
 
-#------------------------- Empleado --------------------------------------------
+#------------------------- Persona --------------------------------------------
 
 class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):
