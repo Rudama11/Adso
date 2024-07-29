@@ -1,1 +1,96 @@
-{% extends 'crear.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}"/>
+</head>
+<body>
+    <div class="invoice-container">
+        <header>
+            <div class="header-section">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="company-logo">
+                <div class="invoice-info">
+                    <p>Número de Factura: <span id="invoice-number">001</span></p>
+                    <p>Fecha de Factura: <span id="invoice-date">2024-07-24</span></p>
+                    <p>Fecha de Vencimiento: <span id="due-date">2024-08-24</span></p>
+                </div>
+            </div>
+            <div class="details-section">
+                <div class="company-details">
+                    <label for="company-name">Nombre de la Empresa:</label>
+                    <input type="text" id="company-name" minlength="5" required>
+                    <span class="error-message" id="company-name-error"></span>
+
+                    <label for="company-nit">NIT:</label>
+                    <input type="text" id="company-nit" minlength="10" maxlength="12" required pattern="\d+">
+
+                    <label for="company-address">Dirección:</label>
+                    <input type="text" id="company-address" minlength="5" required>
+
+                    <label for="company-email">Correo:</label>
+                    <input type="email" id="company-email" required>
+
+                    <label for="company-phone">Teléfono:</label>
+                    <input type="tel" id="company-phone" pattern="\+57\d{10}" required placeholder="+57xxxxxxxxxx">
+                </div>
+                <div class="client-details">
+                    <label for="client-name">Nombre/Razón Social:</label>
+                    <input type="text" id="client-name" minlength="5" required>
+
+                    <label for="client-id">Número de Documento:</label>
+                    <input type="text" id="client-id" minlength="10" maxlength="12" required pattern="\d+">
+
+                    <label for="client-address">Dirección:</label>
+                    <input type="text" id="client-address" minlength="5" required>
+
+                    <label for="client-email">Correo:</label>
+                    <input type="email" id="client-email" required>
+
+                    <label for="client-phone">Celular:</label>
+                    <input type="tel" id="client-phone" pattern="\+57\d{10}" required placeholder="+57xxxxxxxxxx">
+                </div>
+            </div>
+        </header>
+        <main>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cantidad</th>
+                        <th class="detail">Detalle</th> <!-- Añadida la clase 'detail' -->
+                        <th>Precio Unitario</th>
+                        <th>Impuesto (%)</th>
+                        <th>Precio Total</th>
+                        <th>Acciones</th> <!-- La columna que se ocultará al imprimir -->
+                    </tr>
+                </thead>
+                <tbody id="product-rows">
+                    <tr>
+                        <td><input type="number" class="product-id" min="0" required></td>
+                        <td><input type="number" class="product-quantity" min="1" required></td>
+                        <td><input type="text" class="product-detail" required></td>
+                        <td><input type="number" class="product-price" min="0" step="0.01" required></td>
+                        <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
+                        <td><span class="product-total">$0.00</span></td>
+                        <td><button type="button" class="delete-row"></button></td>
+                    </tr>
+                    <!-- Más filas según sea necesario -->
+                </tbody>
+            </table>
+            <div class="totals">
+                <p>Subtotal: <span id="subtotal">$0</span></p>
+                <p>Impuestos: <span id="taxes">$0</span></p>
+                <p>Total: <span id="total">$0</span></p>
+            </div>
+        </main>
+        <div class="buttons">
+            <button onclick="printInvoice()">Imprimir PDF</button>
+            <button onclick="addProductRow()">Agregar Producto</button>
+        </div>
+    </div>
+    <script src="{%static 'lib/venta/script.js' %}"></script>
+</body>
+</html>
