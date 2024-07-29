@@ -2,9 +2,7 @@
 
 {% block columnas %}
 
-
 <tr>
-    <!-- botones de acceso directo a normas y tipo -->
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
             <a href="{% url 'app:normativa_listar' %}" class="btn btn-secondary btn-sm mx-1">
@@ -20,11 +18,12 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
-    <th scope="col">Precio</th>
-    <th scope="col">Categoría</th>
     <th scope="col">Descripción</th>
     <th scope="col">Stock</th>
+    <th scope="col">Precio</th>
+    <th scope="col">Categoría</th>
     <th scope="col">Tipo de producto</th>
+    <th scope="col">Vendedor</th>
     <th scope="col">Opciones</th>
 
 </tr>
@@ -35,11 +34,12 @@
 <tr>
     <td>{{pro.id}}</td>
     <td>{{pro.nombre}}</td>
-    <td>{{pro.precio}}</td>
-    <td>{{pro.categ.nombre}}</td>
     <td>{{pro.descripcion}}</td>
     <td>{{pro.stock}}</td>
+    <td>{{pro.precio}}</td>
+    <td>{{pro.categ.nombre}}</td>
     <td>{{pro.tipo_pro.nombre}}</td>
+    
     <td>
         <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
         <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
@@ -49,4 +49,3 @@
 {% endfor %}
 
 {% endblock %}
- 

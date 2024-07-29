@@ -33,3 +33,5 @@ class logoutredirect(RedirectView):
     def dispatch(self, request,*kwargs ):
         logout(request)
         return super().dispatch(request, *kwargs)
+    
+ 

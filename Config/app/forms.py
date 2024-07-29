@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django.forms import ModelForm, TextInput, Textarea
+from django.forms import ModelForm, TextInput, Textarea, Select
 from django import forms
 from app.models import *
 from django_select2.forms import Select2Widget
@@ -28,10 +28,52 @@ class CategoriaForm(ModelForm):
                     }
                     ),
         }
+
+#---------------------------------------------------------- Tipo ----------------------------------------------------------
+
+class TipoForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+        # Agregar estilos y placeholders a los campos
+        self.fields['nombre'].widget.attrs.update({
+            'placeholder': 'Ingrese el nombre del Tipo de producto',
+            'class': 'form-control'
+        })
+        self.fields['descripcion'].widget.attrs.update({
+            'placeholder': 'Ingrese la descripción del Tipo',
+            'class': 'form-control'
+        })
+
+    class Meta:
+        model = Tipo
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del Tipo de producto'
+                }
+            ),
+            'descripcion': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la descripción del Tipo de producto'
+                }
+            ),
+        }
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
-
 class UbicacionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['departamento'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione el departamento'
+        })
+        self.fields['ciudad'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione la ciudad'
+        })
+
     class Meta:
         model = Ubicacion
         fields = ['departamento', 'ciudad']
@@ -105,52 +147,49 @@ class ProveedorForm(forms.ModelForm):
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
-#---------------------------------------------------------- Tipo ----------------------------------------------------------
-
-class TipoForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = Tipo
-        fields = '__all__'
-        widgets = {
-            'nombre': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del Tipo de producto'
-                    }
-                ),
-            'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion del Tipo',
-                    }
-                ),
-        }
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
-class ProductoForm(ModelForm):
+class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Agregar autofocus al campo nombre
         self.fields['nombre'].widget.attrs['autofocus'] = True
-
+        
+        # Agregar estilos y placeholders a los campos
+        self.fields['nombre'].widget.attrs.update({
+            'placeholder': 'Ingrese el nombre del producto',
+            'class': 'form-control'
+        })
+        self.fields['descripcion'].widget.attrs.update({
+            'placeholder': 'Ingrese la descripción del producto',
+            'class': 'form-control'
+        })
+        self.fields['stock'].widget.attrs.update({
+            'placeholder': 'Ingrese el stock del producto',
+            'class': 'form-control'
+        })
+        self.fields['precio'].widget.attrs.update({
+            'placeholder': 'Ingrese el precio del producto',
+            'class': 'form-control'
+        })
+        self.fields['categoria'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['tipo_pro'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['venta'].widget.attrs.update({
+            'class': 'form-control'
+        })
+    
     class Meta:
         model = Producto
         fields = '__all__'
-        widgets = {
-            'nombre': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del producto'
-                    }
-                ),
-            'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion del producto',
-                    }
-                ),
-        }
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
+from django import forms
+from django.forms import ModelForm, TextInput
+from .models import Normativa
 
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -164,26 +203,23 @@ class NormativaForm(ModelForm):
             'decreto': TextInput(
                 attrs={
                     'placeholder': 'Ingrese la normativa',
-                    }
-                ),
+                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                }
+            ),
             'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion ',
-                    }
-                ),
-            'producto':forms.Select(
                 attrs={
-                    'placeholder': 'Seleccione el producto',
-                    }
-                ),
+                    'placeholder': 'Ingrese la descripción',
+                    'class': 'form-control'
+                }
+            ),
+            'producto': forms.Select(
+                attrs={
+                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                }
+            ),
         }
-        
+
 #------------------------- ventas --------------------------------------------
-
-from django import forms
-from django.forms import ModelForm
-from app.models import Venta
-
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -217,6 +253,65 @@ class VentaForm(ModelForm):
             'iva': forms.NumberInput(
                 attrs={
                     'placeholder': 'Ingrese el IVA',
+                }
+            ),
+        }
+
+#------------------------- Persona --------------------------------------------
+
+class PersonaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Persona
+        fields = '__all__'
+        widgets = {
+            'nombres': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del empleado',
+                }
+            ),
+            'apellido': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el apellido del empleado',
+                }
+            ),
+            'cedula': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la cedula del empleado',
+                }
+            ),
+            'fecha_registro': forms.DateInput(
+                attrs={
+                    'placeholder': 'Ingrese la fecha de registro',
+                    'type': 'date'
+                }
+            ),
+            'edad': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la edad del empleado',
+                }
+            ),
+            'salario': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el salario del empleado',
+                }
+            ),
+            'estado': Select(
+                attrs={
+                    'placeholder': 'Seleccione el estado del empleado',
+                }
+            ),
+            'tipo': Select(
+                attrs={
+                    'placeholder': 'Seleccione el tipo de empleado',
+                }
+            ),
+            'categ': Select(
+                attrs={
+                    'placeholder': 'Seleccione la categoría del empleado',
                 }
             ),
         }

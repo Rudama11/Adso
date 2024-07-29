@@ -9,7 +9,7 @@ from app.forms import ProductoForm
 
 def lista_producto(request):
     context = {
-        'titulo': 'Listado de productos',
+        'titulo': 'Listado de Productos',
         'tipos': Producto.objects.all()
     }
     return render(request, 'Producto/listar.html', context)
@@ -28,7 +28,7 @@ class ProductoListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de productos'
+        context['titulo'] = 'Listado de Productos'
         context['entidad'] = 'Producto'
         context['crear_url'] = reverse_lazy('app:producto_crear')
         return context
