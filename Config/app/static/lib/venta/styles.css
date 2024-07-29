@@ -127,7 +127,7 @@ button {
     margin: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -135,7 +135,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #1974d6;
 }
 
 .error {
@@ -188,4 +188,22 @@ button:hover {
         line-height: inherit;
         color: inherit;
     }
+}
+
+.button-trash {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f52207; /* Color de fondo por defecto */
+    color: white;
+    font-size: 16px;
+    text-decoration: none; /* Quita el subrayado del enlace */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-trash:hover {
+    background-color: #bd2222; /* Color al pasar el mouse */
 }
