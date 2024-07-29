@@ -28,10 +28,52 @@ class CategoriaForm(ModelForm):
                     }
                     ),
         }
+
+#---------------------------------------------------------- Tipo ----------------------------------------------------------
+
+class TipoForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+        # Agregar estilos y placeholders a los campos
+        self.fields['nombre'].widget.attrs.update({
+            'placeholder': 'Ingrese el nombre del Tipo de producto',
+            'class': 'form-control'
+        })
+        self.fields['descripcion'].widget.attrs.update({
+            'placeholder': 'Ingrese la descripción del Tipo',
+            'class': 'form-control'
+        })
+
+    class Meta:
+        model = Tipo
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el nombre del Tipo de producto'
+                }
+            ),
+            'descripcion': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la descripción del Tipo de producto'
+                }
+            ),
+        }
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
-
 class UbicacionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['departamento'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione el departamento'
+        })
+        self.fields['ciudad'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione la ciudad'
+        })
+
     class Meta:
         model = Ubicacion
         fields = ['departamento', 'ciudad']
@@ -105,28 +147,6 @@ class ProveedorForm(forms.ModelForm):
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
-#---------------------------------------------------------- Tipo ----------------------------------------------------------
-
-class TipoForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = Tipo
-        fields = '__all__'
-        widgets = {
-            'nombre': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del Tipo de producto'
-                    }
-                ),
-            'descripcion': TextInput(
-            attrs={
-                    'placeholder': 'Ingrese la descripcion del Tipo',
-                    }
-                ),
-        }
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):
