@@ -21,7 +21,7 @@
             <div class="details-section">
                 <div class="company-details">
                     <label for="company-name">Nombre de la Empresa:</label>
-                    <input type="text" id="company-name" minlength="5" required>
+                    <input type="text" id="company-name" value="CONALDEX-BOYACA" minlength="5" required>
                     <span class="error-message" id="company-name-error"></span>
 
                     <label for="company-nit">NIT:</label>
@@ -60,24 +60,15 @@
                     <tr>
                         <th>ID</th>
                         <th>Cantidad</th>
-                        <th class="detail">Detalle</th> <!-- Añadida la clase 'detail' -->
+                        <th class="detail">Detalle</th>
                         <th>Precio Unitario</th>
                         <th>Impuesto (%)</th>
                         <th>Precio Total</th>
-                        <th>Acciones</th> <!-- La columna que se ocultará al imprimir -->
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="product-rows">
-                    <tr>
-                        <td><input type="number" class="product-id" min="0" required></td>
-                        <td><input type="number" class="product-quantity" min="1" required></td>
-                        <td><input type="text" class="product-detail" required></td>
-                        <td><input type="number" class="product-price" min="0" step="0.01" required></td>
-                        <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
-                        <td><span class="product-total">$0.00</span></td>
-                        <td><button type="button" class="delete-row"></button></td>
-                    </tr>
-                    <!-- Más filas según sea necesario -->
+                    <!-- Las filas de productos se agregarán aquí -->
                 </tbody>
             </table>
             <div class="totals">
@@ -94,6 +85,6 @@
             </a>           
         </div>
     </div>
-    <script src="{%static 'lib/venta/script.js' %}"></script>
+    <script src="{% static 'lib/venta/script.js' %}"></script>
 </body>
 </html>
