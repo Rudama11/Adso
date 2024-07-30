@@ -187,10 +187,6 @@ class ProductoForm(forms.ModelForm):
         fields = '__all__'
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
-from django import forms
-from django.forms import ModelForm, TextInput
-from .models import Normativa
-
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
