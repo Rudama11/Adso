@@ -7,6 +7,22 @@
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+<style>
+    .custom-button {
+        background-color: #007bff;  /* Color de fondo azul */
+        border: 1px solid #007bff;  /* Borde azul */
+        color: #fff;                /* Texto blanco */
+        margin: 5px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .custom-button:hover {
+        background-color: #0056b3; /* Color de fondo más oscuro al pasar el mouse */
+        border: 1px solid #0056b3;
+    }
+</style>
 {% endblock %}
 
 {% block contenido %}
@@ -66,6 +82,7 @@
                 {
                     extend: 'copy',
                     text: 'Copiar tabla',
+                    className: 'custom-button',
                     exportOptions: {
                         columns: ':not(:last-child)' // Excluir la última columna
                     }
@@ -73,6 +90,7 @@
                 {
                     extend: 'csv',
                     text: 'Archivo CSV',
+                    className: 'custom-button',
                     exportOptions: {
                         columns: ':not(:last-child)' // Excluir la última columna
                     }
@@ -80,6 +98,7 @@
                 {
                     extend: 'excel',
                     text: 'Archivo Excel',
+                    className: 'custom-button',
                     exportOptions: {
                         columns: ':not(:last-child)' // Excluir la última columna
                     }
@@ -87,6 +106,7 @@
                 {
                     extend: 'pdf',
                     text: 'PDF',
+                    className: 'custom-button',
                     exportOptions: {
                         columns: ':not(:last-child)' // Excluir la última columna
                     }
@@ -94,6 +114,7 @@
                 {
                     extend: 'print',
                     text: 'Imprimir',
+                    className: 'custom-button',
                     exportOptions: {
                         columns: ':not(:last-child)' // Excluir la última columna
                     }
