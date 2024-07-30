@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td><input type="number" class="product-price" min="0" step="0.01" required></td>
             <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
             <td><span class="product-total">$0.00</span></td>
-            <td><button type="button" class="delete-row"></button></td>
+            <td><button type="button" class="delete-row" onclick="deleteRow(this)">Eliminar</button></td>
         `;
 
         productRows.appendChild(row);
@@ -26,6 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
             row.remove();
             validateInputs();
         });
+    }
+
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+        validateInputs();
     }
 
     function validateInputs() {
@@ -87,7 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Update totals in the HTML
         document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`; // Mostrar subtotal
         document.getElementById('taxes').textContent = `$${taxes.toFixed(2)}`; // Mostrar impuestos
-        document.getElementById('total').textContent = `$${total}`; // Mos
+        document.getElementById('total').textContent = `$${total}`; // Mostrar total
+
         // Validate company and client details
         const requiredFields = document.querySelectorAll('#company-name, #company-address, #company-nit, #company-email, #company-phone, #client-name, #client-address, #client-id, #client-email, #client-phone');
 
@@ -111,12 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Add event listener for inputs to validate dynamically
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', validateInputs);
     });
-
-    // Add a default product row
-    addProductRow();
 
     window.addProductRow = addProductRow;
     window.printInvoice = printInvoice;
