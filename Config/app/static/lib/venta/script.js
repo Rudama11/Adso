@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td><input type="number" class="product-price" min="0" step="0.01" required></td>
             <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
             <td><span class="product-total">$0.00</span></td>
-            <td><button type="button" class="delete-row" onclick="deleteRow(this)">Eliminar</button></td>
+            <td><button type="button" class="delete-row" onclick="deleteRow(this)"></button></td>
         `;
 
         productRows.appendChild(row);
