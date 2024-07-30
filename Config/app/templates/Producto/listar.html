@@ -5,10 +5,30 @@
 <tr>
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
-            <a href="{% url 'app:normativa_listar' %}" class="btn btn-secondary btn-sm mx-1">
+            <a href="{% url 'app:normativa_listar' %}" 
+               class="btn btn-secondary btn-sm mx-1"
+               style="background-color: #059089; 
+               border: 1px solid #03615c; 
+               color: #fff; 
+               padding: 4px 10px; 
+               border-radius: 4px; 
+               cursor: pointer; 
+               text-decoration: none;"
+               onmouseover="this.style.backgroundColor='#03615c'; this.style.borderColor='#03615c';"
+               onmouseout="this.style.backgroundColor='#059089'; this.style.borderColor='#03615c';">
                 <i class="fas fa-book fa-xs"></i> Normas
             </a>
-            <a href="{% url 'app:tipo_listar' %}" class="btn btn-info btn-sm mx-1">
+            <a href="{% url 'app:tipo_listar' %}" 
+               class="btn btn-info btn-sm mx-1"
+               style="background-color: #06bad5;
+                border: 1px solid #117a8b; 
+                color: #fff; 
+                padding: 4px 10px; 
+                border-radius: 4px; 
+                cursor: pointer; 
+                text-decoration: none;"
+               onmouseover="this.style.backgroundColor='#117a8b'; this.style.borderColor='#0d6e7f';"
+               onmouseout="this.style.backgroundColor='#17a2b8'; this.style.borderColor='#117a8b';">
                 <i class="fas fa-tags fa-xs"></i> Tipos
             </a>
         </div>

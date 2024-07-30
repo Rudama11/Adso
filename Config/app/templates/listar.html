@@ -7,20 +7,22 @@
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+
 <style>
     .custom-button {
-        background-color: #007bff;  /* Color de fondo azul */
-        border: 1px solid #007bff;  /* Borde azul */
+        background-color: #487099;  /* Color de fondo azul */
+        border: 2px solid #3b4c60;  /* Borde azul */
         color: #fff;                /* Texto blanco */
-        margin: 5px;
-        padding: 5px 10px;
+        margin: 0;                  /* Elimina el margen entre botones */
+        padding: 4px 10px;
         border-radius: 4px;
         cursor: pointer;
+        display: inline-block;      /* Asegura que los botones estén en línea */
     }
     
     .custom-button:hover {
-        background-color: #0056b3; /* Color de fondo más oscuro al pasar el mouse */
-        border: 1px solid #0056b3;
+        background-color: #1d3c5d; /* Color de fondo más oscuro al pasar el mouse */
+        border: 2px solid #09335f; /* Asegúrate de especificar el ancho del borde */
     }
 </style>
 {% endblock %}
@@ -46,8 +48,8 @@
         </table>
     </div>
     <div class="card-footer">
-        <a href="{{ crear_url }}" class="btn btn-primary btn btn-flat"><i class="fas fa-plus"></i>
-            Agregar
+        <a href="{{ crear_url }}" class="btn btn-flat" style="background-color: #28a745; border: 1px solid #28a745; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+            <i class="fas fa-plus"></i> Agregar
         </a>
     </div>
 </div>
