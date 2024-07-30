@@ -87,8 +87,11 @@
             </div>
         </main>
         <div class="buttons">
-            <button onclick="printInvoice()">Imprimir PDF</button>
             <button onclick="addProductRow()">Agregar Producto</button>
+            <button onclick="printInvoice()">Imprimir PDF</button>
+            <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
+                <i class="fas fa-times"></i> Cancelar
+            </a>           
         </div>
     </div>
     <script src="{%static 'lib/venta/script.js' %}"></script>

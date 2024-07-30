@@ -1,18 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.core.mail import send_mail
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.conf import settings
-from django.shortcuts import redirect
-from django.urls import reverse
+from django.core.mail import send_mail, EmailMessage
 from django.http import JsonResponse
+from django.conf import settings
 from django.views.decorators.csrf import csrf_protect
-# Create your views here.
 
 class IndexView(TemplateView):
-    template_name ='index.html'
-    # views.py en la aplicación 'inicio'
+    template_name = 'index.html'
 
 @csrf_protect
 def enviar_correo(request):
@@ -22,6 +16,7 @@ def enviar_correo(request):
             email = request.POST.get('email')
             subject = request.POST.get('subject')
             message = request.POST.get('message')
+            image = request.FILES.get('image')
 
             if not all([name, email, subject, message]):
                 raise ValueError("Todos los campos son obligatorios.")
@@ -33,17 +28,21 @@ def enviar_correo(request):
                 f"Email: {email}\n"
                 f"Asunto: {subject}\n\n"
                 f"Mensaje:\n{message}\n\n"
-                f"Este mensaje ha sido enviado desde el formulario de contacto de la pagina de Conaldex."
+                f"Este mensaje ha sido enviado desde el formulario de contacto de la página de Conaldex."
             )
 
             # Enviar el correo
-            send_mail(
-                subject,  # Asunto
-                full_message,  # Mensaje mejorado
-                settings.DEFAULT_FROM_EMAIL,  # De
-                ["boyacaconaldex@gmail.com"],  # Para
-                fail_silently=False,
+            email_message = EmailMessage(
+                subject,
+                full_message,
+                settings.DEFAULT_FROM_EMAIL,
+                ["boyacaconaldex@gmail.com"],
             )
+
+            if image:
+                email_message.attach(image.name, image.read(), image.content_type)
+
+            email_message.send(fail_silently=False)
             
             return JsonResponse({'message': 'La información se envió correctamente!!!', 'error': 'false'}, status=200)
         
