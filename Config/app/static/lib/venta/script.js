@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', function () {
         input.addEventListener('input', validateInputs);
     });
 
+    // Automatically add a product row when the page loads
+    addProductRow();
+
     window.addProductRow = addProductRow;
     window.printInvoice = printInvoice;
 });
