@@ -1,0 +1,8 @@
+.icon-hover-yellow {
+    color: white; /* Color inicial del icono */
+    transition: color 0.3s ease; /* Transición suave */
+}
+
+.icon-hover-yellow:hover {
+    color: yellow; /* Color del icono al pasar el cursor */
+}
