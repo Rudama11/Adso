@@ -3,7 +3,7 @@
 {% block columnas %}
 <tr>
     <th scope="col">Id</th>
-    <th scope="col">Roles</th>
+    <th scope="col">Rol de usuario</th>
     <th scope="col">Nombre</th>
     <th scope="col">Apellidos</th>
     <th scope="col">Tipo de Documento</th>
@@ -21,7 +21,7 @@
 {% for per in object_list %}
 <tr>
     <td>{{per.id}}</td>
-    <td>{{per.ROLES}}</td>
+    <td>{{per.get_rol_display}}</td>
     <td>{{per.nombres}}</td>
     <td>{{per.apellidos}}</td>
     <td>{{per.tipo_documento}}</td>
