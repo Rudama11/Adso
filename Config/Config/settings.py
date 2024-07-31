@@ -1,4 +1,10 @@
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+}
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

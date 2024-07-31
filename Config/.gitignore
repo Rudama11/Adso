@@ -1,9 +1,3 @@
-# Ignorar archivos de entorno virtual
-.venv/
-
 # Archivos de configuración de sistema
 *.pyc
 __pycache__/
-
-# Archivos de entorno
-.env

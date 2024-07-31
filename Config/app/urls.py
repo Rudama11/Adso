@@ -79,7 +79,7 @@ urlpatterns = [
     
     #------------- Backup del sistema -----------------------------
     
-    path('backup/', backup_view, name='backup'),  # Vista para la página de backup
-    path('backup/create/', backup_database, name='respaldo'),  # Ruta para crear el backup
-    path('restore/', restore_database, name='restauracion'),
+    path('backup/', backup_view, name='backup'),
+    path('backup/create/', backup_database, name='respaldo'),  # Asegúrate de que esta línea esté presente
+    path('backup/restore/', restore_database, name='restauracion'),
 ]

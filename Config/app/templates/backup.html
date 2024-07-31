@@ -12,7 +12,7 @@
             <h1>Copia de Seguridad de la Base de Datos</h1>
         </div>
         <div class="backup-form">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'app:respaldo' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <button type="submit">Realizar Backup</button>
             </form>
