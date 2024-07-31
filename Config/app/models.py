@@ -176,11 +176,12 @@ class Producto(models.Model):
         
 #----------------------------------------------- Persona -----------------------------------------------
 class Persona(models.Model):
-    ROLES = (
-        (1, 'Admin'),
-        (2, 'Usuario Normal'),
+    rol = models.CharField(
+        max_length=1,
+        choices=Roles,
+        default='1',
+        verbose_name='Rol de usuario'
     )
-    rol = models.IntegerField(choices=ROLES, verbose_name='Rol')
     nombres = models.CharField(
         max_length=150,
         validators=[MinLengthValidator(3)],
