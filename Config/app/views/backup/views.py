@@ -1,25 +1,28 @@
-# app/views.py
-from django.shortcuts import render
-from django.http import HttpResponse
 import os
-import sqlite3
+import shutil
+import datetime
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.conf import settings
+from django.contrib import messages
+
+def backup_view(request):
+    # Agregar un mensaje de éxito si se envió un backup correctamente
+    if 'backup_success' in request.GET:
+        messages.success(request, "Copia de seguridad creada exitosamente.")
+    return render(request, 'backup.html')
 
 def backup_database(request):
-    # Definir la ruta y nombre del archivo de copia de seguridad
     backup_dir = os.path.join(settings.BASE_DIR, 'backups')  # Ruta de la carpeta backups
     os.makedirs(backup_dir, exist_ok=True)  # Crear la carpeta si no existe
-    print(f"Directorio de backup: {backup_dir}")  # Verifica la ruta
-    backup_file = os.path.join(backup_dir, 'backup.sqlite3')
 
-    # Conectar a la base de datos actual
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_file = os.path.join(backup_dir, f'backup_{timestamp}.sqlite3')
+
     try:
-        conn = sqlite3.connect(os.path.join(settings.BASE_DIR, 'db.sqlite3'))
-        with open(backup_file, 'w') as f:
-            for line in conn.iterdump():
-                f.write('%s\n' % line)
-        conn.close()
-        return HttpResponse("Copia de seguridad creada exitosamente en la carpeta backups.")
+        shutil.copy(os.path.join(settings.BASE_DIR, 'db.sqlite3'), backup_file)
+        # Redirigir a la vista de backup y mostrar un mensaje de éxito
+        return redirect('app:backup')  # Asegúrate de que el nombre sea correcto
     except Exception as e:
         return HttpResponse(f"Error al crear la copia de seguridad: {e}")
 
@@ -38,6 +41,3 @@ def restore_database(request):
         return HttpResponse("Base de datos restaurada exitosamente.")
     else:
         return HttpResponse("Error al restaurar la base de datos.")
-
-def backup_view(request):
-    return render(request, 'backup.html')
