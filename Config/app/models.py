@@ -196,7 +196,7 @@ class Persona(models.Model):
         choices=Tipo_Documento_Choices, 
         default='CC', 
         verbose_name='Tipo de Documento'
-        )
+    )
     correo = models.EmailField(
         max_length=254,
         validators=[EmailValidator()],

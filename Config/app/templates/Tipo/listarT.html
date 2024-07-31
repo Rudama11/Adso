@@ -31,8 +31,8 @@
     <td>{{t.nombre}}</td>
     <td>{{t.descripcion}}</td>
     <td>
-        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm"title="Editar"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm"title="Eliminar"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}

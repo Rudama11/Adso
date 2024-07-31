@@ -254,7 +254,6 @@ class VentaForm(ModelForm):
         }
 
 #------------------------- Persona --------------------------------------------
-
 class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
