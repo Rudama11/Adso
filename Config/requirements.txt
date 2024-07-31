@@ -1,0 +1,4 @@
+django
+pillow
+django-widget-tweaks
+django-select2
