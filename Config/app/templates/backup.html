@@ -1,28 +1,28 @@
-<!-- app/templates/backup.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
     <title>Backup de Base de Datos</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Asegúrate de que la ruta sea correcta -->
 </head>
 <body>
-    <h1>Backup de Base de Datos</h1>
-
-    <h2>Crear Backup</h2>
-    <form action="{% url 'app:respaldo' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Crear Copia de Seguridad</button>
-    </form>
-
-    <h2>Restaurar Backup</h2>
-    <form action="{% url 'app:restauracion' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="backup_file" accept=".sqlite3" required>
-        <button type="submit">Restaurar Copia de Seguridad</button>
-    </form>
-
+    <div class="backup-container">
+        <div class="backup-header">
+            <h1>Copia de Seguridad de la Base de Datos</h1>
+        </div>
+        <div class="backup-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit">Realizar Backup</button>
+            </form>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
+                {% csrf_token %}
+                <input type="file" name="backup_file" required>
+                <button type="submit">Restaurar Backup</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

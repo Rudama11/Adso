@@ -1,4 +1,5 @@
 from django.urls import path
+from app.views.backup.views import *
 from app.views.Categoria.views import *
 from app.views.Ubicacion.views import *
 from app.views.Proveedor.views import * 
@@ -8,7 +9,6 @@ from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
 from app.views.Persona.views import *
-from app.views.Backup.views import *
 
 app_name = 'app'
 
@@ -83,5 +83,3 @@ urlpatterns = [
     path('backup/create/', backup_database, name='respaldo'),  # Ruta para crear el backup
     path('restore/', restore_database, name='restauracion'),
 ]
-
-
