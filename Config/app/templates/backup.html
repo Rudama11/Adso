@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
+    <title>Backup de Base de Datos</title>
+</head>
+<body>
+    <div class="backup-container">
+        <div class="backup-header">
+            <h1>Copia de Seguridad de la Base de Datos</h1>
+        </div>
+        <div class="backup-form">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit">Realizar Backup</button>
+            </form>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
+                {% csrf_token %}
+                <input type="file" name="backup_file" required>
+                <button type="submit">Restaurar Backup</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
