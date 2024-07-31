@@ -1,0 +1,40 @@
+{% extends 'listar.html' %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Rol de usuario</th>
+    <th scope="col">Nombre</th>
+    <th scope="col">Apellidos</th>
+    <th scope="col">Tipo de Documento</th>
+    <th scope="col">Correo</th>
+    <th scope="col">Teléfono</th>
+    <th scope="col">Numero Documento</th>
+    <th scope="col">Usuario</th>
+    <th scope="col">password</th>
+    <th scope="col">Opciones</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for per in object_list %}
+<tr>
+    <td>{{per.id}}</td>
+    <td>{{per.get_rol_display}}</td>
+    <td>{{per.nombres}}</td>
+    <td>{{per.apellidos}}</td>
+    <td>{{per.tipo_documento}}</td>
+    <td>{{per.correo}}</td>
+    <td>{{per.telefono}}</td>
+    <td>{{per.numero_documento}}</td>
+    <td>{{per.usuario}}</td>
+    <td>{{per.password}}</td>
+    <td>
+        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+{% endfor %}
+
+{% endblock %}
