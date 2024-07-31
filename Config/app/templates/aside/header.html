@@ -37,11 +37,7 @@
     </div>
 </div>
     <ul class="navbar-nav ml-auto">
-        <a class="nav-link" href="">
-            <i class="fas fa-database" aria-hidden="true"></i>
-            <span>Copia de Seguridad</span> <!-- Texto opcional -->
-        </a>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" title="Configuración de usuario">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-users-cog"></i>
             </a>
@@ -60,14 +56,13 @@
                     <span class="float-right text-muted text-sm">12 hours</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">
+                <a href="#" class="dropdown-item dropdown-footer" >
                     <p>Este sistema permite realizar diferentes configuraciones</p>
                 </a>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout'%}">
-
+            <a class="nav-link" href="{% url 'logout'%}" title="Cerrar sesión">
                 <i class="fas fa-power-off" aria-hidden="true"></i>
             </a>
         </li>
