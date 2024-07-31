@@ -30,8 +30,8 @@
     <td>{{E.estado}}</td>
     <td>{{E.Tipo}}</td>
     <td>
-        <a href="{% url 'app:persona_editar' E.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:persona_eliminar' E.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}
