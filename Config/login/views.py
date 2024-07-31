@@ -1,12 +1,3 @@
-# from typing import Any
-# from django.http import HttpRequest
-# from django.http.response import HttpResponse as HttpResponse
-# from django.shortcuts import redirect,render
-# from django.views.generic import RedirectView
-# from django.contrib.auth.views import LoginView
-# from django.contrib.auth import login,logout 
-# # Create your views here.
-
 from django.shortcuts import render,redirect
 from django.http.response import HttpResponse as HttpResponse
 from django.views.generic import RedirectView
@@ -34,4 +25,3 @@ class logoutredirect(RedirectView):
         logout(request)
         return super().dispatch(request, *kwargs)
     
- 

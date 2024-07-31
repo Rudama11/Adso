@@ -8,6 +8,7 @@ from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
 from app.views.Persona.views import *
+from app.views.Backup.views import *
 
 app_name = 'app'
 
@@ -75,6 +76,11 @@ urlpatterns = [
     path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
     path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
     path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
+    
+    #------------- Backup del sistema -----------------------------
+    
+    path('backup/', backup_database, name='respaldo'),
+    path('restore/', restore_database, name='restauracion'),
 ]
 
 
