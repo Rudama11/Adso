@@ -10,41 +10,53 @@
     </ul>
 
 
-<div class="container">
-    
-    <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-        <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Modulos</a>
-                <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                    <li><a href="{% url 'app:producto_listar'%}" class="dropdown-item"><i class="fas fa-boxes"></i>Productos</a></li>
-                    <li><a href="{% url 'app:categoria_listar'%}"class="dropdown-item"><i class="fas fa-shopping-cart"></i>Categoria</a></li>
-                    <li><a href="{% url 'app:cliente_listarC'%}" class="dropdown-item"><i class="fas fa-users"></i>Clientes</a></li>
-                    <li><a href="{% url 'app:normativa_listar'%}" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Normativas</a></li>
-                    <li><a href="{% url 'app:proveedor_listarP'%}" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Proveedor</a></li>
-                    <li><a href="{% url 'app:tipo_listar'%}"  class="dropdown-item"><i class="fas fa-shopping-cart"></i>Tipo</a></li>
-                    <li><a href="{% url 'app:ubicacion_listarU'%}" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Ubicacion</a></li>
-                    <li><a href="{% url 'app:venta_listar'%}" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Ventas</a></li>
-                    <li><a href="{% url 'app:persona_listar'%}" class="dropdown-item"><i class="fas fa-shopping-cart"></i>Persona</a></li>
-                </ul>
-            </li>
-        </ul>
+    <div class="container">
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Modulos</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                        <li><a href="{% url 'app:producto_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-boxes"></i>Productos</a></li>
+                        <li><a href="{% url 'app:categoria_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Categoria</a></li>
+                        <li><a href="{% url 'app:cliente_listarC'%}" class="dropdown-item"><i
+                                    class="fas fa-users"></i>Clientes</a></li>
+                        <li><a href="{% url 'app:normativa_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Normativas</a></li>
+                        <li><a href="{% url 'app:proveedor_listarP'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Proveedor</a></li>
+                        <li><a href="{% url 'app:tipo_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Tipo</a></li>
+                        <li><a href="{% url 'app:ubicacion_listarU'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Ubicacion</a></li>
+                        <li><a href="{% url 'app:venta_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Ventas</a></li>
+                        <li><a href="{% url 'app:persona_listar'%}" class="dropdown-item"><i
+                                    class="fas fa-shopping-cart"></i>Persona</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
     <ul class="navbar-nav ml-auto">
+        <a class="nav-link" href="{% url 'app:backup' %}">
+            <i class="fas fa-database" aria-hidden="true"></i>
+        </a>
         <li class="nav-item dropdown" title="Configuración de usuario">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-users-cog"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-header">
-                        Último Acceso: 20 de junio de 2024
-                    </span>
+                <span class="dropdown-header">
+                    Último Acceso: 20 de junio de 2024
+                </span>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
                     <i class="fas fa-edit mr-2"></i> Editar perfil
@@ -56,7 +68,7 @@
                     <span class="float-right text-muted text-sm">12 hours</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer" >
+                <a href="#" class="dropdown-item dropdown-footer">
                     <p>Este sistema permite realizar diferentes configuraciones</p>
                 </a>
             </div>
