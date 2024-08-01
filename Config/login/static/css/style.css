@@ -13,6 +13,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    padding: 20px; /* Añadir un padding para evitar recortes en dispositivos pequeños */
 }
 
 .container {
@@ -20,10 +21,16 @@ body {
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
-    width: 768px;
-    max-width: 100%;
+    width: 90%;
+    max-width: 600px;
     min-height: 480px;
     overflow: hidden;
+    margin: 20px auto;
+}
+
+.container h1 {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .container p {
@@ -31,16 +38,21 @@ body {
     line-height: 20px;
     letter-spacing: 0.3px;
     margin: 20px 0;
+    text-align: center;
 }
 
 .container span {
     font-size: 12px;
+    display: block;
+    margin: 10px 0;
+    text-align: center;
 }
 
 .container a {
     color: #333;
     font-size: 13px;
     text-decoration: none;
+    text-align: center;
 }
 
 .container button {
@@ -229,4 +241,85 @@ body {
 
 .button.active {
     background-color: #2a72d1;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .container h1 {
+        font-size: 24px;
+    }
+
+    .container p {
+        font-size: 13px;
+    }
+
+    .container span {
+        font-size: 11px;
+    }
+
+    .container a {
+        font-size: 12px;
+    }
+
+    .container button {
+        font-size: 11px;
+        padding: 8px 35px;
+    }
+
+    .container input {
+        font-size: 12px;
+    }
+
+    .toggle-container {
+        border-radius: 150px 0 0 150px;
+    }
+
+    .container.active .toggle-container {
+        border-radius: 0 150px 150px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        border-radius: 20px;
+        margin: 10px;
+    }
+
+    .container h1 {
+        font-size: 20px;
+    }
+
+    .container p {
+        font-size: 12px;
+    }
+
+    .container span {
+        font-size: 10px;
+    }
+
+    .container a {
+        font-size: 11px;
+    }
+
+    .container button {
+        font-size: 10px;
+        padding: 7px 25px;
+    }
+
+    .container input {
+        font-size: 11px;
+    }
+
+    .toggle-container {
+        border-radius: 150px 0 0 150px;
+    }
+
+    .container.active .toggle-container {
+        border-radius: 0 150px 150px 0;
+    }
 }
