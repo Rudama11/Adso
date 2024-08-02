@@ -18,9 +18,17 @@
             </form>
             <form method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
                 {% csrf_token %}
-                <input type="file" name="backup_file" required>
+                <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
+                <button type="button" id="select-file-button">Seleccionar archivo</button>
+                <span id="file-name">Sin archivos seleccionados</span>
                 <button type="submit">Restaurar Backup</button>
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+<!-- Urls de los archivos Js -->
+<script src="{% static 'js/respaldo/backup.js' %}"></script>
+
 {% endblock %}
