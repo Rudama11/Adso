@@ -4,6 +4,8 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
     <title>Backup de Base de Datos</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 {% endblock %}
 
 {% block contenido %}
@@ -28,7 +30,21 @@
 {% endblock %}
 
 {% block javascript %}
-<!-- Urls de los archivos Js -->
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
-
+<script>
+    // Mostrar alerta de éxito si hay mensajes
+    {% if messages %}
+        {% for message in messages %}
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ message }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        {% endfor %}
+    {% endif %}
+</script>
 {% endblock %}
