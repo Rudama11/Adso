@@ -1,0 +1,3 @@
+# Archivos de configuración de sistema
+*.pyc
+__pycache__/
