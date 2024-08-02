@@ -31,29 +31,53 @@ body {
     align-items: center;
 }
 
-.backup-form button {
+.backup-button {
     display: inline-block;
     padding: 12px 20px;
     margin: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #28a745;
+    background-color: #28a745; /* Color para el botón de backup */
     color: white;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.backup-form button:hover {
-    background-color: #218838;
+.backup-button:hover {
+    background-color: #218838; /* Hover para el botón de backup */
+}
+
+.restore-button {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #25b5ce; /* Color para el botón de restaurar */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.restore-button:hover {
+    background-color: #0793ac; /* Hover para el botón de restaurar */
 }
 
 #select-file-button {
-    background-color: #007bff;
+    background-color: #007bff; /* Color para el botón de seleccionar archivo */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
 }
 
 #select-file-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Hover para el botón de seleccionar archivo */
 }
 
 #file-name {

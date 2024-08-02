@@ -16,14 +16,14 @@
         <div class="backup-form">
             <form method="POST" action="{% url 'app:respaldo' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <button type="submit">Realizar Backup</button>
+                <button type="submit" class="backup-button">Realizar Backup</button>
             </form>
-            <form method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
+            <form id="restore-form" method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
                 {% csrf_token %}
                 <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
                 <button type="button" id="select-file-button">Seleccionar archivo</button>
                 <span id="file-name">Sin archivos seleccionados</span>
-                <button type="submit">Restaurar Backup</button>
+                <button type="submit" class="restore-button">Restaurar Backup</button>
             </form>
         </div>
     </div>
@@ -34,17 +34,19 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
 <script>
-    // Mostrar alerta de éxito si hay mensajes
-    {% if messages %}
-        {% for message in messages %}
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '{{ message }}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        {% endfor %}
-    {% endif %}
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mostrar alerta de éxito si hay mensajes
+        {% if messages %}
+            {% for message in messages %}
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '{{ message }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            {% endfor %}
+        {% endif %}
+    });
 </script>
 {% endblock %}
