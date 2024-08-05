@@ -10,19 +10,19 @@
 
 <style>
     .custom-button {
-        background-color: #1f5a96;  /* Color de fondo azul */
-        border: 2px solid hwb(0 100% 0%);  /* Borde azul */
-        color: #fff;                /* Texto blanco */
-        margin: 0;                  /* Elimina el margen entre botones */
+        background-color: #1f5a96;
+        border: 2px solid hwb(0 100% 0%);
+        color: #fff;
+        margin: 0;
         padding: 4px 10px;
         border-radius: 4px;
         cursor: pointer;
-        display: inline-block;      /* Asegura que los botones estén en línea */
+        display: inline-block;
     }
-    
+
     .custom-button:hover {
-        background-color: #1d3c5d; /* Color de fondo más oscuro al pasar el mouse */
-        border: 2px solid #09335f; /* Asegúrate de especificar el ancho del borde */
+        background-color: #1d3c5d;
+        border: 2px solid #09335f;
     }
 </style>
 {% endblock %}
@@ -34,6 +34,11 @@
             <i class="fas fa-address-book" style="margin-right: 5px;"></i>
             {{ titulo }}
         </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target=".bd-example-modal-lg">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
+        </div>
     </div>
     <div class="card-body">
         <table id="tabla" class="table table-bordered table-striped">
@@ -51,6 +56,28 @@
         <a href="{{ crear_url }}" class="btn btn-flat" style="background-color: #23853a; border: 1px solid #23853a; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
             <i class="fas fa-plus"></i> Agregar
         </a>
+    </div>
+</div>
+
+<!-- Modal de Filtrado -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Filtrar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% block filtro_form %}
+                <!-- Bloque para personalizar el formulario de filtrado -->
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -86,7 +113,7 @@
                     text: 'Copiar tabla',
                     className: 'custom-button',
                     exportOptions: {
-                        columns: ':not(:last-child)' // Excluir la última columna
+                        columns: ':not(:last-child)'
                     }
                 },
                 {
@@ -94,7 +121,7 @@
                     text: 'Archivo CSV',
                     className: 'custom-button',
                     exportOptions: {
-                        columns: ':not(:last-child)' // Excluir la última columna
+                        columns: ':not(:last-child)'
                     }
                 },
                 {
@@ -102,7 +129,7 @@
                     text: 'Archivo Excel',
                     className: 'custom-button',
                     exportOptions: {
-                        columns: ':not(:last-child)' // Excluir la última columna
+                        columns: ':not(:last-child)'
                     }
                 },
                 {
@@ -110,7 +137,7 @@
                     text: 'PDF',
                     className: 'custom-button',
                     exportOptions: {
-                        columns: ':not(:last-child)' // Excluir la última columna
+                        columns: ':not(:last-child)'
                     }
                 },
                 {
@@ -118,11 +145,11 @@
                     text: 'Imprimir',
                     className: 'custom-button',
                     exportOptions: {
-                        columns: ':not(:last-child)' // Excluir la última columna
+                        columns: ':not(:last-child)'
                     }
                 }
             ],
-            "dom": 'Bfrtip' // Esto asegura que los botones sean visibles
+            "dom": 'Bfrtip'
         }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
     });
 </script>
