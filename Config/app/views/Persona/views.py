@@ -57,7 +57,7 @@ class PersonaUpdateView(UpdateView):
 class PersonaDeleteView(DeleteView):
     model = Persona
     template_name = 'Persona/eliminar.html'
-    success_url = reverse_lazy('app:empleado_listar')
+    success_url = reverse_lazy('app:persona_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

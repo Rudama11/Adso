@@ -84,7 +84,7 @@
 
 {% block javascript %}
 <!-- Urls de los archivos Js -->
-<script src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
@@ -105,7 +105,7 @@
             "lengthChange": false,
             "autoWidth": false,
             "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"
             },
             "buttons": [
                 {
