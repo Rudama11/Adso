@@ -5,18 +5,16 @@
 <tr>
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
-            <a href="{% url 'app:normativa_listar' %}" 
-               class="btn btn-secondary btn-sm mx-1"
-               style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
-               onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
-               onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
+            <a href="{% url 'app:normativa_listar' %}" class="btn btn-secondary btn-sm mx-1"
+                style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
+                onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
+                onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
                 <i class="fas fa-book fa-xs"></i> Normas
             </a>
-            <a href="{% url 'app:tipo_listar' %}" 
-               class="btn btn-info btn-sm mx-1"
-               style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
-               onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
-               onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
+            <a href="{% url 'app:tipo_listar' %}" class="btn btn-info btn-sm mx-1"
+                style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
+                onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
+                onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
                 <i class="fas fa-tags fa-xs"></i> Tipos
             </a>
         </div>
@@ -47,10 +45,11 @@
     <td>{{pro.precio}}</td>
     <td>{{pro.categ.nombre}}</td>
     <td>{{pro.tipo_pro.nombre}}</td>
-    
+
     <td>
         <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i
+                class="fas fa-trash"></i></a>
     </td>
 
 </tr>
