@@ -3,6 +3,7 @@ from datetime import datetime,date
 from .choices import *
 from django.core.validators import *
 from django.contrib.auth.models import *
+from django.utils import timezone
 
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
@@ -113,9 +114,9 @@ class Venta(models.Model):
     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    fecha_salida = models.DateField(default=datetime.now)
-    persona = models.ForeignKey('Persona', on_delete=models.CASCADE, null=True)
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    fecha_emision = models.DateTimeField(auto_now_add=True)
+    persona = models.ForeignKey(Persona,on_delete=models.CASCADE,)
+    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.num_factura:
