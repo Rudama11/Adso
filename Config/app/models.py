@@ -95,7 +95,7 @@ class Cliente(models.Model):
     numero_documento = models.CharField(max_length=10,validators=[MinValueValidator(8)],verbose_name='Numero de Documento',null=True,blank=True)
     correo = models.EmailField(max_length=254,validators=[EmailValidator()],verbose_name='Correo')
     telefono = models.IntegerField(default=0)
-    cod_postal = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
+    ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=150,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
