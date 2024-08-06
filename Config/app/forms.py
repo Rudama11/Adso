@@ -215,60 +215,40 @@ class NormativaForm(ModelForm):
 
 #------------------------- ventas --------------------------------------------
 class VentaForm(forms.ModelForm):
+    numero_documento = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    nombre_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    direccion_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    correo_cliente = forms.EmailField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    telefono_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['cliente'].widget.attrs.update({
-            'autofocus': True,
-            'class': 'select2',  # Añadir la clase select2
-            'placeholder': 'Seleccione el cliente',
-        })
+        self.fields['cliente'].widget.attrs['autofocus'] = True
 
         if self.instance.pk:
             try:
                 cliente = self.instance.cliente
-                self.fields['numero_documento'] = forms.CharField(
-                    initial=cliente.numero_documento,
-                    required=False,
-                    widget=forms.TextInput(attrs={'readonly': 'readonly'})
-                )
+                self.fields['numero_documento'].initial = cliente.numero_documento
+                self.fields['nombre_cliente'].initial = cliente.nombre
+                self.fields['direccion_cliente'].initial = cliente.direccion
+                self.fields['correo_cliente'].initial = cliente.correo
+                self.fields['telefono_cliente'].initial = cliente.telefono
             except Cliente.DoesNotExist:
                 pass
 
     class Meta:
         model = Venta
-        fields = '__all__'
+        fields = ['cliente', 'subtotal', 'total', 'impuestos', 'persona']
         widgets = {
-            'fecha_emision': forms.DateTimeInput(
+            'cliente': forms.Select(
                 attrs={
-                    'placeholder': 'Ingrese la fecha de emisión',
-                    'type': 'datetime-local'
+                    'placeholder': 'Seleccione el cliente',
                 }
             ),
-            'subtotal': forms.NumberInput(
-                attrs={
-                    'placeholder': 'Ingrese el subtotal',
-                }
-            ),
-            'total': forms.NumberInput(
-                attrs={
-                    'placeholder': 'Ingrese el total',
-                }
-            ),
-            'impuestos': forms.NumberInput(
-                attrs={
-                    'placeholder': 'Ingrese los impuestos',
-                }
-            ),
-            'persona': forms.Select(
-                attrs={
-                    'placeholder': 'Seleccione la persona',
-                }
-            ),
-            'descripcion': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la descripción',
-                }
-            ),
+            'subtotal': forms.NumberInput(attrs={'placeholder': 'Ingrese el subtotal'}),
+            'total': forms.NumberInput(attrs={'placeholder': 'Ingrese el total'}),
+            'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
+            'persona': forms.Select(attrs={'placeholder': 'Seleccione la persona'}),
         }
 
 #------------------------- Persona --------------------------------------------
