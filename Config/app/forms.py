@@ -95,7 +95,7 @@ class ClienteForm(forms.ModelForm):
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
             'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'cod_postal': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
+            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
 
@@ -128,7 +128,7 @@ class ProveedorForm(forms.ModelForm):
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
             'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'cod_postal': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
+            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
 

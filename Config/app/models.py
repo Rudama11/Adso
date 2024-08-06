@@ -37,13 +37,14 @@ class Ubicacion(models.Model):
     ciudad = models.CharField(max_length=50,validators=[MinLengthValidator(1)],choices=Ciudades,default='1',verbose_name='Ciudad')
     
     def __str__(self):
-        return self.ciudad
+        return f"{self.get_departamento_display()} - {self.get_ciudad_display()}"
     
     class Meta:
         verbose_name = 'Ubicacion'
-        verbose_name_plural = 'Ubicacion'
+        verbose_name_plural = 'Ubicaciones'
         db_table = 'Ubicacion'
         ordering = ['id']
+
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
@@ -92,7 +93,7 @@ class Cliente(models.Model):
     apellidos = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Apellidos',null=True,blank=True)
     razon_social = models.CharField(max_length=150,verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinValueValidator(8)],verbose_name='Numero de Documento',null=True,blank=True)
+    numero_documento = models.CharField(max_length=10, validators=[MinLengthValidator(8)], verbose_name='Numero de Documento', null=True, blank=True)
     correo = models.EmailField(max_length=254,validators=[EmailValidator()],verbose_name='Correo')
     telefono = models.IntegerField(default=0)
     ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
@@ -168,7 +169,7 @@ class Proveedor(models.Model):
     numero_documento = models.CharField(max_length=10,validators=[MinValueValidator(8)],verbose_name='Numero de Documento',null=True,blank=True)
     correo = models.EmailField(max_length=254,validators=[EmailValidator()],verbose_name='Correo')
     telefono = models.IntegerField(default=0)
-    cod_postal = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
+    ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=150,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
