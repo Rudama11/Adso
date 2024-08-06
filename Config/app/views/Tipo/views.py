@@ -27,6 +27,24 @@ class TipoListView(ListView):
         context['crear_url'] = reverse_lazy('app:tipo_crear')
         return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Obtener los parámetros GET
+        id = self.request.GET.get('id')
+        nombre = self.request.GET.get('nombre')
+        descripcion = self.request.GET.get('descripcion')
+        
+        # Aplicar filtros si los parámetros existen
+        if id:
+            queryset = queryset.filter(id=id)
+        if nombre:
+            queryset = queryset.filter(nombre__icontains=nombre)
+        if descripcion:
+            queryset = queryset.filter(descripcion__icontains=descripcion)
+        
+        return queryset
+
 class TipoCreateView(CreateView):
     model = Tipo
     form_class = TipoForm
