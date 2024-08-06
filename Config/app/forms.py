@@ -95,7 +95,7 @@ class ClienteForm(forms.ModelForm):
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
             'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'cod_postal': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
+            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
 
@@ -128,7 +128,7 @@ class ProveedorForm(forms.ModelForm):
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
             'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'cod_postal': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
+            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
 
@@ -230,10 +230,10 @@ class VentaForm(ModelForm):
                     'placeholder': 'Seleccione el cliente',
                 }
             ),
-            'fecha_ingreso': forms.DateInput(
+            'fecha_emision': forms.DateTimeInput(
                 attrs={
-                    'placeholder': 'Ingrese la fecha de ingreso',
-                    'type': 'date'
+                    'placeholder': 'Ingrese la fecha de emisión',
+                    'type': 'datetime-local'
                 }
             ),
             'subtotal': forms.NumberInput(
@@ -246,9 +246,19 @@ class VentaForm(ModelForm):
                     'placeholder': 'Ingrese el total',
                 }
             ),
-            'iva': forms.NumberInput(
+            'impuestos': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Ingrese el IVA',
+                    'placeholder': 'Ingrese los impuestos',
+                }
+            ),
+            'persona': forms.Select(
+                attrs={
+                    'placeholder': 'Seleccione la persona',
+                }
+            ),
+            'descripcion': forms.TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la descripción',
                 }
             ),
         }

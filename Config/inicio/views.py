@@ -51,4 +51,5 @@ def enviar_correo(request):
         except Exception as e:
             return JsonResponse({'message': 'Error al enviar el correo: ' + str(e), 'error': 'true'}, status=500)
     
-    return JsonResponse({'message': 'No hemos podido completar la solicitud. {enviar_correo} no found', 'error': 'true'}, status=405)
+    return JsonResponse({'message': 'No hemos podido completar la solicitud. {enviar_correo} no encontrado', 'error': 'true'}, status=405)
+

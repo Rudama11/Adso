@@ -37,13 +37,14 @@ class Ubicacion(models.Model):
     ciudad = models.CharField(max_length=50,validators=[MinLengthValidator(1)],choices=Ciudades,default='1',verbose_name='Ciudad')
     
     def __str__(self):
-        return self.ciudad
+        return f"{self.get_departamento_display()} - {self.get_ciudad_display()}"
     
     class Meta:
         verbose_name = 'Ubicacion'
-        verbose_name_plural = 'Ubicacion'
+        verbose_name_plural = 'Ubicaciones'
         db_table = 'Ubicacion'
         ordering = ['id']
+
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
@@ -92,10 +93,10 @@ class Cliente(models.Model):
     apellidos = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Apellidos',null=True,blank=True)
     razon_social = models.CharField(max_length=150,verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinValueValidator(8)],verbose_name='Numero de Documento',null=True,blank=True)
+    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex='^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
     correo = models.EmailField(max_length=254,validators=[EmailValidator()],verbose_name='Correo')
-    telefono = models.IntegerField(default=0)
-    cod_postal = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
+    telefono = models.DecimalField(default=0,max_digits=10,decimal_places=0,validators=[MinValueValidator(9999999999)])
+    ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=150,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
@@ -165,10 +166,10 @@ class Proveedor(models.Model):
     apellidos = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Apellidos',null=True,blank=True)
     razon_social = models.CharField(max_length=150,verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinValueValidator(8)],verbose_name='Numero de Documento',null=True,blank=True)
+    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex='^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
     correo = models.EmailField(max_length=254,validators=[EmailValidator()],verbose_name='Correo')
-    telefono = models.IntegerField(default=0)
-    cod_postal = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
+    telefono = models.DecimalField(default=0,max_digits=10,decimal_places=0,validators=[MinValueValidator(9999999999)])
+    ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=150,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):

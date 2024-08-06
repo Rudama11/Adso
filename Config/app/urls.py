@@ -70,7 +70,7 @@ urlpatterns = [
     path('Ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
     path('Ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
     
-    #------------- Empleado -----------------------------
+    #------------- Persona -----------------------------
     
     path('Persona/listar/', PersonaListView.as_view(), name='persona_listar'),
     path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
