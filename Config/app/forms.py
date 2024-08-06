@@ -152,10 +152,8 @@ class ProveedorForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Agregar autofocus al campo nombre
         self.fields['nombre'].widget.attrs['autofocus'] = True
         
-        # Agregar estilos y placeholders a los campos
         self.fields['nombre'].widget.attrs.update({
             'placeholder': 'Ingrese el nombre del producto',
             'class': 'form-control'
@@ -199,7 +197,7 @@ class NormativaForm(ModelForm):
             'decreto': TextInput(
                 attrs={
                     'placeholder': 'Ingrese la normativa',
-                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                    'class': 'form-control'
                 }
             ),
             'descripcion': TextInput(
@@ -210,7 +208,7 @@ class NormativaForm(ModelForm):
             ),
             'producto': forms.Select(
                 attrs={
-                    'class': 'form-control'  # Agregar clase para estilos consistentes
+                    'class': 'form-control'
                 }
             ),
         }
@@ -219,10 +217,13 @@ class NormativaForm(ModelForm):
 class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['cliente'].widget.attrs['autofocus'] = True
+        self.fields['cliente'].widget.attrs.update({
+            'autofocus': True,
+            'class': 'select2',  # Añadir la clase select2
+            'placeholder': 'Seleccione el cliente',
+        })
 
-        # Agregar validación para el número de documento solo si hay un cliente
-        if self.instance.pk:  # Si la instancia ya existe (ha sido guardada)
+        if self.instance.pk:
             try:
                 cliente = self.instance.cliente
                 self.fields['numero_documento'] = forms.CharField(
@@ -231,18 +232,12 @@ class VentaForm(forms.ModelForm):
                     widget=forms.TextInput(attrs={'readonly': 'readonly'})
                 )
             except Cliente.DoesNotExist:
-                # Si no existe el cliente, no hacer nada
                 pass
 
     class Meta:
         model = Venta
         fields = '__all__'
         widgets = {
-            'cliente': forms.Select(
-                attrs={
-                    'placeholder': 'Seleccione el cliente',
-                }
-            ),
             'fecha_emision': forms.DateTimeInput(
                 attrs={
                     'placeholder': 'Ingrese la fecha de emisión',
