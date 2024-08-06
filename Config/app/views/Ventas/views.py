@@ -29,7 +29,7 @@ class VentasListView(ListView):
 
 class VentasCreateView(CreateView):
     model = Venta
-    form_class = VentaForm  # Cambiado a VentaForm
+    form_class = VentaForm
     template_name = 'Ventas/crearV.html'
     success_url = reverse_lazy('app:venta_listar')
 
@@ -42,7 +42,7 @@ class VentasCreateView(CreateView):
 
 class VentasUpdateView(UpdateView):
     model = Venta
-    form_class = VentaForm  # Cambiado a VentaForm
+    form_class = VentaForm
     template_name = 'Ventas/crearV.html'
     success_url = reverse_lazy('app:venta_listar')
     

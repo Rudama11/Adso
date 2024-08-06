@@ -230,10 +230,10 @@ class VentaForm(ModelForm):
                     'placeholder': 'Seleccione el cliente',
                 }
             ),
-            'fecha_ingreso': forms.DateInput(
+            'fecha_emision': forms.DateTimeInput(
                 attrs={
-                    'placeholder': 'Ingrese la fecha de ingreso',
-                    'type': 'date'
+                    'placeholder': 'Ingrese la fecha de emisión',
+                    'type': 'datetime-local'
                 }
             ),
             'subtotal': forms.NumberInput(
@@ -246,9 +246,19 @@ class VentaForm(ModelForm):
                     'placeholder': 'Ingrese el total',
                 }
             ),
-            'iva': forms.NumberInput(
+            'impuestos': forms.NumberInput(
                 attrs={
-                    'placeholder': 'Ingrese el IVA',
+                    'placeholder': 'Ingrese los impuestos',
+                }
+            ),
+            'persona': forms.Select(
+                attrs={
+                    'placeholder': 'Seleccione la persona',
+                }
+            ),
+            'descripcion': forms.TextInput(
+                attrs={
+                    'placeholder': 'Ingrese la descripción',
                 }
             ),
         }
