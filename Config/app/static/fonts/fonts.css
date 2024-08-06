@@ -3,7 +3,7 @@
   font-family: 'Source Sans Pro';
   font-style: italic;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xK1dSBYKcSV-LCoeQqfX1RYOo3qPZ7qsDJT9g.woff2) format('woff2');
+  src: url('../fonts/family/SourceSansPro/cyrillic-ext.woff2') format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
@@ -11,7 +11,7 @@
   font-family: 'Source Sans Pro';
   font-style: italic;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xK1dSBYKcSV-LCoeQqfX1RYOo3qPZ7jsDJT9g.woff2) format('woff2');
+  src: url('../fonts/family/SourceSansPro/cyrillic.woff2') format('woff2');
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek-ext */
@@ -59,7 +59,7 @@
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: 300;
-  src: url(https://fonts.gstatic.com/s/sourcesanspro/v22/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwmhduz8A.woff2) format('woff2');
+  src: url('../fonts/family/SourceSansPro/cyrillic-ext1.woff2') format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 /* cyrillic */
