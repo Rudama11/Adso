@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}"> <!-- Agregar CSS de select2 -->
 </head>
 <body>
     <div class="invoice-container">
@@ -21,8 +22,7 @@
                 </div>
                 <div class="details-section">
                     <div class="company-details">
-                        <h3> Datos emisor de factura</h3>
-                        
+                        <h3> Datos emisor de factura</h3> 
                         <label for="company-name">Nombre de la Empresa:</label>
                         <input type="text" id="company-name" value="CONALDEX-BOYACA" readonly>
 
@@ -33,7 +33,7 @@
                         <input type="text" id="company-address" value="Calle 7 # 14-65" readonly>
 
                         <label for="company-email">Correo:</label>
-                        <input type="email" id="company-email" value="boyacaconaldex@gmail.com" readonly>
+                        <input type="email" id="company-email" value="conaldexboyaca@gmail.com" readonly>
 
                         <label for="company-phone">Teléfono:</label>
                         <input type="tel" id="company-phone" value="+57 3124352596" readonly>
@@ -41,12 +41,11 @@
 
                     <div class="client-details">
                         <h3> Datos remitente de factura</h3>
-
                         <label for="client-id">Número de Documento:</label>
                         <input type="text" id="client-id" value="{{ form.numero_documento.value }}" readonly>
 
                         <label for="client-name">Nombre/Razón Social:</label>
-                        {{ form.cliente }}
+                        {{ form.cliente }} <!-- Usar el campo de cliente que es un select2 -->
 
                         <label for="client-address">Dirección:</label>
                         <input type="text" id="client-address" name="direccion_cliente" minlength="5" required>
@@ -93,5 +92,19 @@
         </form>
     </div>
     <script src="{% static 'lib/venta/script.js' %}"></script>
+    <script src="{% static 'lib/select2/js/select2.min.js' %}"></script> <!-- Agregar JS de select2 -->
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: 'Selecciona una opción',
+                allowClear: true,
+                language: {
+                    noResults: function() {
+                        return "No se encontraron resultados";  // Personaliza el texto aquí
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
