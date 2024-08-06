@@ -21,7 +21,8 @@
                 </div>
                 <div class="details-section">
                     <div class="company-details">
-                        <h3> Datos emisor de factura</h3> 
+                        <h3> Datos emisor de factura</h3>
+                        
                         <label for="company-name">Nombre de la Empresa:</label>
                         <input type="text" id="company-name" value="CONALDEX-BOYACA" readonly>
 
@@ -37,12 +38,15 @@
                         <label for="company-phone">Teléfono:</label>
                         <input type="tel" id="company-phone" value="+57 3124352596" readonly>
                     </div>
+
                     <div class="client-details">
                         <h3> Datos remitente de factura</h3>
+
                         <label for="client-id">Número de Documento:</label>
-                        {{ form.persona }}
-                        <label for="client-name">Nombre/Razón Social de cliente:</label>
-                        {{ form.cliente.numero_documento }}
+                        <input type="text" id="client-id" value="{{ form.numero_documento.value }}" readonly>
+
+                        <label for="client-name">Nombre/Razón Social:</label>
+                        {{ form.cliente }}
 
                         <label for="client-address">Dirección:</label>
                         <input type="text" id="client-address" name="direccion_cliente" minlength="5" required>

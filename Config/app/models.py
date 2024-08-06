@@ -116,9 +116,9 @@ class Venta(models.Model):
     impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     fecha_emision = models.DateTimeField(auto_now_add=True)
-    persona = models.ForeignKey(Persona,on_delete=models.CASCADE,)
-    cliente = models.ForeignKey(Cliente,on_delete=models.CASCADE)
-    
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+
     def save(self, *args, **kwargs):
         if not self.num_factura:
             latest_venta = Venta.objects.all().order_by('id').last()
@@ -128,10 +128,11 @@ class Venta(models.Model):
             else:
                 new_id = 1
             self.num_factura = f'Conal-{new_id:05d}'
+        
         super(Venta, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.num_factura} - {self.cliente.nombre}"
+        return f"{self.num_factura} - {self.cliente.nombre} - {self.cliente.numero_documento}"
 
     class Meta:
         verbose_name = 'Venta'
