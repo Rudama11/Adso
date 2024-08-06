@@ -216,10 +216,23 @@ class NormativaForm(ModelForm):
         }
 
 #------------------------- ventas --------------------------------------------
-class VentaForm(ModelForm):
+class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
+
+        # Agregar validación para el número de documento solo si hay un cliente
+        if self.instance.pk:  # Si la instancia ya existe (ha sido guardada)
+            try:
+                cliente = self.instance.cliente
+                self.fields['numero_documento'] = forms.CharField(
+                    initial=cliente.numero_documento,
+                    required=False,
+                    widget=forms.TextInput(attrs={'readonly': 'readonly'})
+                )
+            except Cliente.DoesNotExist:
+                # Si no existe el cliente, no hacer nada
+                pass
 
     class Meta:
         model = Venta
