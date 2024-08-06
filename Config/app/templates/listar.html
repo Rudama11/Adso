@@ -35,7 +35,7 @@
             {{ titulo }}
         </h3>
         <div class="card-tools">
-            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target=".bd-example-modal-lg">
+            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target="#filtroModal">
                 <i class="fas fa-filter"></i> Filtrar
             </button>
         </div>
@@ -59,23 +59,24 @@
     </div>
 </div>
 
-<!-- Modal de Filtrado -->
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- Modal Grande -->
+<div class="modal fade" id="filtroModal" tabindex="-1" role="dialog" aria-labelledby="filtroModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Filtrar</h5>
+                <h5 class="modal-title" id="filtroModalLabel">Filtrar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                {% block filtro_form %}
-                <!-- Bloque para personalizar el formulario de filtrado -->
+                {% block filtro_form_contenido %}
                 {% endblock %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
+                <button type="button" class="btn btn-danger" onclick="clearFilters()">Limpiar Filtros</button>
             </div>
         </div>
     </div>
@@ -152,5 +153,16 @@
             "dom": 'Bfrtip'
         }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
     });
+
+    function clearFilters() {
+        // Limpia los campos del formulario
+        document.querySelector('#filtroModal form').reset();
+        // Redirige a la URL sin parámetros de filtro
+        window.location.href = "{% url 'app:tipo_listar' %}";
+    }
+
+    function applyFilters() {
+        document.querySelector('#filtroModal form').submit();
+    }
 </script>
 {% endblock %}
