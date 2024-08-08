@@ -40,13 +40,13 @@
 {% endfor %}
 {% endblock %}
 
-{% block filtro_form %}
+{% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:normativa_listar' %}">
     <div class="form-group">
         <label for="id">Id</label>
         <input type="text" class="form-control" id="id" name="id" placeholder="Ingrese el ID">
     </div>
-    <div class="form-group">
+    <div class="form-group"
         <label for="decreto">Número de decreto</label>
         <input type="text" class="form-control" id="decreto" name="decreto" placeholder="Ingrese el número de decreto">
     </div>
@@ -58,6 +58,6 @@
         <label for="producto">Producto</label>
         <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el producto">
     </div>
-    <button type="submit" class="btn btn-primary">Aplicar filtros</button>
+  
 </form>
 {% endblock %}

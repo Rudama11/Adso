@@ -27,6 +27,27 @@ class NormativaListView(ListView):
         context['crear_url'] = reverse_lazy('app:normativa_crear')
         return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Obtener los parámetros GET
+        id = self.request.GET.get('id')
+        decreto = self.request.GET.get('decreto')
+        descripcion = self.request.GET.get('descripcion')
+        producto = self.request.GET.get('producto')
+        
+        # Aplicar filtros si los parámetros existen
+        if id:
+            queryset = queryset.filter(id=id)
+        if decreto:
+            queryset = queryset.filter(decreto__icontains=decreto)
+        if descripcion:
+            queryset = queryset.filter(descripcion__icontains=descripcion)
+        if producto:
+            queryset = queryset.filter(producto__icontains=producto)
+        
+        return queryset
+
 class NormativaCreateView(CreateView):
     model = Normativa
     form_class = NormativaForm
