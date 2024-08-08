@@ -1,5 +1,4 @@
 {% load static %}
-
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -10,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}"> <!-- Agregar CSS de select2 -->
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
 </head>
 
 <body>
@@ -42,30 +41,20 @@
                     <label for="company-phone">Teléfono:</label>
                     <input type="tel" id="company-phone" value="+57 3124352596" readonly>
                 </div>
+                
                 <div class="client-details">
                     <h3>Datos Remitente</h3>
-                    <label for="client-id">Número de Documento:</label>
-                    <input type="text" id="id_numero_documento" name="numero_documento" readonly>
-                
-                    <label for="client-name">Nombre/Razón Social:</label>
-                    <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
-                
-                    <label for="client-address">Dirección:</label>
-                    <input type="text" id="id_direccion_cliente" name="direccion_cliente" readonly>
-                
-                    <label for="client-email">Correo:</label>
-                    <input type="email" id="id_correo_cliente" name="correo_cliente" readonly>
-                
-                    <label for="client-phone">Celular:</label>
-                    <input type="tel" id="id_telefono_cliente" name="telefono_cliente" readonly>
+                    <label for="id_cliente">Cliente:</label>
+                    {{ form.cliente }}  <!-- Selector para cliente -->
                 </div>
             </div>
         </header>
+
         <main>
             <table class="product-table">
                 <thead>
                     <tr>
-                        <th>Detalle</th> <!-- Mover "Detalle" al primer lugar -->
+                        <th>Detalle</th>
                         <th>ID</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
@@ -75,7 +64,31 @@
                     </tr>
                 </thead>
                 <tbody id="product-rows">
+                    <tr>
+                        <td>
+                            <input type="text" name="detalle[]" placeholder="Descripción del producto" required>
+                        </td>
+                        <td>
+                            {{ form.producto }}  <!-- Selector para producto -->
+                        </td>
+                        <td>
+                            <input type="number" name="cantidad[]" placeholder="Cantidad" min="1" required>
+                        </td>
+                        <td>
+                            <input type="number" name="precio_unitario[]" placeholder="Precio Unitario" step="0.01" min="0" required>
+                        </td>
+                        <td>
+                            <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100" required>
+                        </td>
+                        <td>
+                            <span class="precio-total">$0.00</span>
+                        </td>
+                        <td>
+                            <button type="button" onclick="removeProductRow(this)">Eliminar</button>
+                        </td>
+                    </tr>
                 </tbody>
+                
             </table>
             <div class="totals">
                 <p>Subtotal: <span id="subtotal">$0</span></p>
@@ -83,17 +96,25 @@
                 <p>Total: <span id="total">$0</span></p>
             </div>
         </main>
+        
         <div class="buttons">
+            <button type="submit">Guardar</button>
             <button onclick="printInvoice()">Imprimir PDF</button>
-            <button onclick="addProductRow()">Agregar Producto</button>
+            <button type="button" onclick="addProductRow()">Agregar Producto</button>
             <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
     </div>
-    <script src="{% static 'lib/venta/script.js' %}"></script>
+
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/venta/script.js' %}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 </body>
-
 </html>

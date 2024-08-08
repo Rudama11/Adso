@@ -68,11 +68,18 @@ class VentasDeleteView(DeleteView):
         return context
 
 
-def productos_api(request):
-    productos = Producto.objects.values('id', 'producto', 'valor')
-    return JsonResponse(list(productos), safe=False)
+def cliente_api(request, cliente_id):
+    cliente = get_object_or_404(Cliente, numero_documento=cliente_id)
+    data = {
+        'correo': cliente.correo,
+        'direccion': cliente.direccion,
+        'telefono': cliente.telefono,
+    }
+    return JsonResponse(data)
 
-
-def clientes_api(request):
-    cliente = Cliente.objects.values('id', 'producto', 'valor')
-    return JsonResponse(list(cliente), safe=False)
+def producto_api(request, producto):
+    producto = get_object_or_404(Producto, nombre=producto)
+    data = {
+        'precio': producto.precio,
+    }
+    return JsonResponse(data)

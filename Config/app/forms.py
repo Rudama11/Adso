@@ -176,10 +176,7 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo_pro'].widget.attrs.update({
             'class': 'form-control'
         })
-        self.fields['venta'].widget.attrs.update({
-            'class': 'form-control'
-        })
-    
+        
     class Meta:
         model = Producto
         fields = '__all__'
@@ -215,42 +212,46 @@ class NormativaForm(ModelForm):
 
 #------------------------- ventas --------------------------------------------
 class VentaForm(forms.ModelForm):
-    numero_documento = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    nombre_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    direccion_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    correo_cliente = forms.EmailField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    telefono_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['cliente'].widget.attrs['autofocus'] = True
-
-        if self.instance.pk:
-            try:
-                cliente = self.instance.cliente
-                self.fields['numero_documento'].initial = cliente.numero_documento
-                self.fields['nombre_cliente'].initial = cliente.nombre
-                self.fields['direccion_cliente'].initial = cliente.direccion
-                self.fields['correo_cliente'].initial = cliente.correo
-                self.fields['telefono_cliente'].initial = cliente.telefono
-            except Cliente.DoesNotExist:
-                pass
-
+    cliente = forms.ModelChoiceField(
+        queryset=Cliente.objects.all(),
+        widget=forms.Select(attrs={'class': 'select2', 'required': 'required'}),
+        empty_label="Seleccione un cliente"
+    )
+    
+    producto = forms.ModelChoiceField(
+        queryset=Producto.objects.all(),
+        widget=forms.Select(attrs={'class': 'select2', 'required': 'required'}),
+        empty_label="Seleccione un producto"
+    )
+    
     class Meta:
         model = Venta
-        fields = ['cliente', 'subtotal', 'total', 'impuestos', 'persona']
+        fields = ['cliente', 'producto', 'subtotal', 'impuestos', 'total']
+        
         widgets = {
-            'cliente': forms.Select(
-                attrs={
-                    'placeholder': 'Seleccione el cliente',
-                    'class': 'select2',  # Agrega select2 para facilitar la búsqueda
-                }
-            ),
-            'subtotal': forms.NumberInput(attrs={'placeholder': 'Ingrese el subtotal'}),
-            'total': forms.NumberInput(attrs={'placeholder': 'Ingrese el total'}),
-            'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
-            'persona': forms.Select(attrs={'placeholder': 'Seleccione la persona'}),
+            'subtotal': forms.NumberInput(attrs={'readonly': 'readonly'}),
+            'impuestos': forms.NumberInput(attrs={'readonly': 'readonly'}),
+            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        super(VentaForm, self).__init__(*args, **kwargs)
+        self.fields['subtotal'].initial = 0.00
+        self.fields['impuestos'].initial = 0.00
+        self.fields['total'].initial = 0.00
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cliente = cleaned_data.get("cliente")
+        producto = cleaned_data.get("producto")
+        
+        # Validación adicional si es necesario
+        if not cliente:
+            self.add_error('cliente', "El cliente es obligatorio.")
+        if not producto:
+            self.add_error('producto', "El producto es obligatorio.")
+        
+        return cleaned_data
 
 
 #------------------------- Persona --------------------------------------------

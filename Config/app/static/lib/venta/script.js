@@ -1,126 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const productRows = document.getElementById('product-rows');
+$(document).ready(function() {
+    $('.select2').select2();
 
-    function addProductRow() {
-        const row = document.createElement('tr');
-    
-        row.innerHTML = `
-            <td><input type="text" class="product-detail" required></td> <!-- Mover "Detalle" al primer lugar -->
-            <td><input type="number" class="product-id" min="0" required></td>
-            <td><input type="number" class="product-quantity" min="1" required></td>
-            <td><input type="number" class="product-price" min="0" step="0.01" required></td>
-            <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
-            <td><span class="product-total">$0.00</span></td>
-            <td><button type="button" class="delete-row" onclick="deleteRow(this)"></button></td>
-        `;
-    
-        productRows.appendChild(row);
-    
-        // Revalidate the new row
-        row.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', validateInputs);
-        });
-    
-        // Add delete functionality
-        row.querySelector('.delete-row').addEventListener('click', function () {
-            row.remove();
-            validateInputs();
-        });
-    }
-
-    function deleteRow(button) {
-        const row = button.closest('tr');
-        row.remove();
-        validateInputs();
-    }
-
-    function validateInputs() {
-        let isValid = true;
-        let ids = new Set();
-        let subtotal = 0;
-        let taxes = 0;
-
-        // Validate product rows
-        document.querySelectorAll('#product-rows tr').forEach(row => {
-            const id = row.querySelector('.product-id').value;
-            const quantity = row.querySelector('.product-quantity').value;
-            const price = row.querySelector('.product-price').value;
-            const tax = row.querySelector('.product-tax').value;
-
-            // Check for duplicate IDs
-            if (ids.has(id)) {
-                row.querySelector('.product-id').classList.add('error');
-                isValid = false;
-            } else {
-                row.querySelector('.product-id').classList.remove('error');
-                ids.add(id);
-            }
-
-            // Check for negative values
-            if (quantity <= 0) {
-                row.querySelector('.product-quantity').classList.add('error');
-                isValid = false;
-            } else {
-                row.querySelector('.product-quantity').classList.remove('error');
-            }
-
-            if (price < 0) {
-                row.querySelector('.product-price').classList.add('error');
-                isValid = false;
-            } else {
-                row.querySelector('.product-price').classList.remove('error');
-            }
-
-            if (tax < 0 || tax > 100) {
-                row.querySelector('.product-tax').classList.add('error');
-                isValid = false;
-            } else {
-                row.querySelector('.product-tax').classList.remove('error');
-            }
-
-            // Calculate total price
-            const total = (quantity * price * (1 + tax / 100)).toFixed(2);
-            row.querySelector('.product-total').textContent = `$${total}`;
-
-            // Accumulate totals
-            subtotal += parseFloat(price * quantity); // Sumar al subtotal
-            taxes += parseFloat(total) - parseFloat(price * quantity); // Sumar a los impuestos
-        });
-
-        const total = (subtotal + taxes).toFixed(2); // Total final
-
-        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`; // Mostrar subtotal
-        document.getElementById('taxes').textContent = `$${taxes.toFixed(2)}`; // Mostrar impuestos
-        document.getElementById('total').textContent = `$${total}`; // Mostrar total
-
-        const requiredFields = document.querySelectorAll('#company-name, #company-address, #company-nit, #company-email, #company-phone, #client-name, #client-address, #client-id, #client-email, #client-phone');
-
-        requiredFields.forEach(field => {
-            if (!field.checkValidity()) {
-                field.classList.add('error');
-                isValid = false;
-            } else {
-                field.classList.remove('error');
+    // Manejar el cambio en el selector de cliente
+    $('#id_cliente').change(function() {
+        var clienteId = $(this).val();
+        
+        // Realiza una llamada AJAX para obtener los datos del cliente
+        $.ajax({
+            url: '/ruta/al/api/clientes/' + clienteId, // Asegúrate de que esta URL es correcta
+            method: 'GET',
+            success: function(data) {
+                $('#cliente-correo').text(data.correo);
+                $('#cliente-direccion').text(data.direccion);
+                $('#cliente-telefono').text(data.telefono);
+            },
+            error: function() {
+                // Manejo de errores
+                $('#cliente-correo').text('');
+                $('#cliente-direccion').text('');
+                $('#cliente-telefono').text('');
             }
         });
-
-        return isValid;
-    }
-
-    function printInvoice() {
-        if (validateInputs()) {
-            window.print();
-        } else {
-            alert('Por favor, corrija los errores antes de imprimir la factura.');
-        }
-    }
-
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', validateInputs);
     });
 
-    addProductRow();
-
-    window.addProductRow = addProductRow;
-    window.printInvoice = printInvoice;
+    // Manejar el cambio en el selector de producto
+    $('select[name="producto"]').change(function() {
+        var productoId = $(this).val();
+        
+        // Realiza una llamada AJAX para obtener los datos del producto
+        $.ajax({
+            url: '/ruta/al/api/productos/' + productoId, // Asegúrate de que esta URL es correcta
+            method: 'GET',
+            success: function(data) {
+                $('#producto-precio').text(data.precio);
+            },
+            error: function() {
+                // Manejo de errores
+                $('#producto-precio').text('');
+            }
+        });
+    });
 });
