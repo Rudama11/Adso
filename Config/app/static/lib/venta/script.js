@@ -3,24 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addProductRow() {
         const row = document.createElement('tr');
-
+    
         row.innerHTML = `
+            <td><input type="text" class="product-detail" required></td> <!-- Mover "Detalle" al primer lugar -->
             <td><input type="number" class="product-id" min="0" required></td>
             <td><input type="number" class="product-quantity" min="1" required></td>
-            <td><input type="text" class="product-detail" required></td>
             <td><input type="number" class="product-price" min="0" step="0.01" required></td>
             <td><input type="number" class="product-tax" min="0" max="100" step="0.01" required></td>
             <td><span class="product-total">$0.00</span></td>
             <td><button type="button" class="delete-row" onclick="deleteRow(this)"></button></td>
         `;
-
+    
         productRows.appendChild(row);
-
+    
         // Revalidate the new row
         row.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', validateInputs);
         });
-
+    
         // Add delete functionality
         row.querySelector('.delete-row').addEventListener('click', function () {
             row.remove();
@@ -87,15 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
             taxes += parseFloat(total) - parseFloat(price * quantity); // Sumar a los impuestos
         });
 
-        // Calculate final values
         const total = (subtotal + taxes).toFixed(2); // Total final
 
-        // Update totals in the HTML
         document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`; // Mostrar subtotal
         document.getElementById('taxes').textContent = `$${taxes.toFixed(2)}`; // Mostrar impuestos
         document.getElementById('total').textContent = `$${total}`; // Mostrar total
 
-        // Validate company and client details
         const requiredFields = document.querySelectorAll('#company-name, #company-address, #company-nit, #company-email, #company-phone, #client-name, #client-address, #client-id, #client-email, #client-phone');
 
         requiredFields.forEach(field => {
@@ -118,12 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Add event listener for inputs to validate dynamically
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', validateInputs);
     });
 
-    // Automatically add a product row when the page loads
     addProductRow();
 
     window.addProductRow = addProductRow;

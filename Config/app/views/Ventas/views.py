@@ -2,12 +2,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from app.models import Venta
+from app.models import Venta,Producto,Cliente
 from app.forms import VentaForm
 from app.models import Cliente
+
 class VentasListView(ListView):
     model = Venta
     template_name = 'Ventas/listarV.html'
@@ -65,17 +67,12 @@ class VentasDeleteView(DeleteView):
         context['listar_url'] = reverse_lazy('app:venta_listar')
         return context
 
-def obtener_info_cliente(request):
-    cliente_id = request.GET.get('cliente_id')
-    try:
-        cliente = Cliente.objects.get(pk=cliente_id)
-        data = {
-            'numero_documento': cliente.numero_documento,
-            'nombre': cliente.nombre,
-            'direccion': cliente.direccion,
-            'correo': cliente.correo,
-            'telefono': cliente.telefono
-        }
-        return JsonResponse(data)
-    except Cliente.DoesNotExist:
-        return JsonResponse({'error': 'Cliente no encontrado'}, status=404)
+
+def productos_api(request):
+    productos = Producto.objects.values('id', 'producto', 'valor')
+    return JsonResponse(list(productos), safe=False)
+
+
+def clientes_api(request):
+    cliente = Cliente.objects.values('id', 'producto', 'valor')
+    return JsonResponse(list(cliente), safe=False)

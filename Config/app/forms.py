@@ -243,6 +243,7 @@ class VentaForm(forms.ModelForm):
             'cliente': forms.Select(
                 attrs={
                     'placeholder': 'Seleccione el cliente',
+                    'class': 'select2',  # Agrega select2 para facilitar la búsqueda
                 }
             ),
             'subtotal': forms.NumberInput(attrs={'placeholder': 'Ingrese el subtotal'}),
@@ -250,6 +251,7 @@ class VentaForm(forms.ModelForm):
             'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
             'persona': forms.Select(attrs={'placeholder': 'Seleccione la persona'}),
         }
+
 
 #------------------------- Persona --------------------------------------------
 class PersonaForm(ModelForm):

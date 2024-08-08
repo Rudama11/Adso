@@ -147,13 +147,12 @@ button:hover {
     color: red;
     font-size: 14px;
     margin-top: 5px;
-    display: block; /* Hacer el mensaje visible */
+    display: block;
 }
 
-/* Estilos para impresión */
 @media print {
     .buttons {
-        display: none; /* Oculta la sección de botones al imprimir */
+        display: none;
     }
 
     .invoice-container {
@@ -165,13 +164,13 @@ button:hover {
     
     .product-table th, .product-table td {
         padding: 8px;
-        word-wrap: break-word; /* Asegura que el texto se ajuste en la celda */
+        word-wrap: break-word;
     }
 
     .product-table td.detail {
-        white-space: normal; /* Permite que el texto se ajuste en varias líneas */
-        overflow: visible; /* Asegura que el contenido no se oculte */
-        max-width: none; /* Elimina la restricción de ancho */
+        white-space: normal;
+        overflow: visible;
+        max-width: none;
     }
 
     .product-table th:last-child,
@@ -179,7 +178,6 @@ button:hover {
         display: none;
     }
 
-    /* Estilo para mostrar texto en lugar de campos de entrada */
     input, textarea {
         border: none;
         background: none;
@@ -196,14 +194,14 @@ button:hover {
     margin: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #f52207; /* Color de fondo por defecto */
+    background-color: #f52207;
     color: white;
     font-size: 16px;
-    text-decoration: none; /* Quita el subrayado del enlace */
+    text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .button-trash:hover {
-    background-color: #bd2222; /* Color al pasar el mouse */
+    background-color: #bd2222;
 }
