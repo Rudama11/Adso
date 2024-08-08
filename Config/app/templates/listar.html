@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="{% static 'node_modules/sienna-accessibility/custom.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/icheck-bootstrap/icheck-bootstrap.min.css' %}" />
 
-
 <style>
     .custom-button {
         background-color: #1f5a96;
@@ -101,10 +100,8 @@
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-<!-- <script src="{% static 'node_modules/sienna-accessibility/sienna.min.js' %}"></script> -->
 <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
 <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
-<!-- AdminLTE for demo purposes -->
 <script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}"></script>
 
@@ -166,8 +163,10 @@
     function clearFilters() {
         // Limpia los campos del formulario
         document.querySelector('#filtroModal form').reset();
-        // Redirige a la URL sin parámetros de filtro
-        window.location.href = "{% url 'app:tipo_listar' %}";
+        // Redirige a la URL actual sin parámetros
+        const url = new URL(window.location.href);
+        url.search = ''; // Elimina todos los parámetros de búsqueda
+        window.location.href = url.toString();
     }
 
     function applyFilters() {
