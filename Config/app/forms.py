@@ -176,10 +176,7 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo_pro'].widget.attrs.update({
             'class': 'form-control'
         })
-        self.fields['venta'].widget.attrs.update({
-            'class': 'form-control'
-        })
-    
+        
     class Meta:
         model = Producto
         fields = '__all__'
@@ -214,43 +211,22 @@ class NormativaForm(ModelForm):
         }
 
 #------------------------- ventas --------------------------------------------
-class VentaForm(forms.ModelForm):
-    numero_documento = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    nombre_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    direccion_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    correo_cliente = forms.EmailField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-    telefono_cliente = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
-
+class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['cliente'].widget.attrs['autofocus'] = True
+        self.fields['num_factura'].widget.attrs['autofocus'] = True
 
-        if self.instance.pk:
-            try:
-                cliente = self.instance.cliente
-                self.fields['numero_documento'].initial = cliente.numero_documento
-                self.fields['nombre_cliente'].initial = cliente.nombre
-                self.fields['direccion_cliente'].initial = cliente.direccion
-                self.fields['correo_cliente'].initial = cliente.correo
-                self.fields['telefono_cliente'].initial = cliente.telefono
-            except Cliente.DoesNotExist:
-                pass
 
     class Meta:
         model = Venta
-        fields = ['cliente', 'subtotal', 'total', 'impuestos', 'persona']
+        fields = '__all__'
         widgets = {
-            'cliente': forms.Select(
+            'nombre': TextInput(
                 attrs={
-                    'placeholder': 'Seleccione el cliente',
-                }
-            ),
-            'subtotal': forms.NumberInput(attrs={'placeholder': 'Ingrese el subtotal'}),
-            'total': forms.NumberInput(attrs={'placeholder': 'Ingrese el total'}),
-            'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
-            'persona': forms.Select(attrs={'placeholder': 'Seleccione la persona'}),
+                    'placeholder': 'Ingrese un numero de factura'
+                    }
+                ),
         }
-
 #------------------------- Persona --------------------------------------------
 class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):

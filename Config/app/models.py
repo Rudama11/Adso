@@ -52,9 +52,8 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=150,validators=[MinLengthValidator(3)],verbose_name='Descripcion',blank=True,null=True)
     stock = models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(10000)],verbose_name='Stock')
     precio = models.DecimalField(default=0.00,max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)])
-    categoria = models.ForeignKey('Categoria',on_delete=models.CASCADE,verbose_name='Categoría')
-    tipo_pro = models.ForeignKey('Tipo',on_delete=models.CASCADE,verbose_name='Tipo')
-    venta = models.ForeignKey('Venta',on_delete=models.CASCADE,verbose_name='Vendedor',blank=True,null=True)
+    categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
+    tipo_pro = models.ForeignKey(Tipo,on_delete=models.CASCADE)
     
     def __str__(self):
         return self.nombre
@@ -118,47 +117,17 @@ class Venta(models.Model):
     fecha_emision = models.DateTimeField(auto_now_add=True)
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-
-    def save(self, *args, **kwargs):
-        if not self.num_factura:
-            latest_venta = Venta.objects.all().order_by('id').last()
-            if latest_venta:
-                latest_id = int(latest_venta.num_factura.split('-')[-1])
-                new_id = latest_id + 1
-            else:
-                new_id = 1
-            self.num_factura = f'Conal-{new_id:05d}'
-        
-        super(Venta, self).save(*args, **kwargs)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.num_factura} - {self.cliente.nombre} - {self.cliente.numero_documento}"
+        return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
 
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
-        # ordering = ['id']
-#----------------------------------------------- Detalle de venta -----------------------------------------------
-class DetalleVenta(models.Model):
-    precio = models.DecimalField(default=0.00,max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)])
-    descuento = models.DecimalField(default=0.00,max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)])
-    cantidad = models.IntegerField(default=1,validators=[MinValueValidator(1)])
-    total = models.DecimalField(default=0.00,max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)],verbose_name='Total')
-    fecha_ingreso = models.DateField(default=date.today,verbose_name='Fecha de Ingreso')
-    fecha_salida = models.DateField(default=date.today,verbose_name='Fecha de Salida')
-    producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
-    venta = models.ForeignKey(Venta,on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'{self.producto.nombre} - {self.cantidad}'
 
-    class Meta:
-        verbose_name = 'Detalle de Venta'
-        verbose_name_plural = 'Detalles de Ventas'
-        db_table = 'DetalleVenta'
-        ordering = ['id']
-        
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
