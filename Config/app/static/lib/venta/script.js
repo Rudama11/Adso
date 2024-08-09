@@ -1,45 +1,36 @@
-
 $(document).ready(function() {
-    // Inicializar select2
+    // Inicializar Select2
     $('.select2').select2();
 
-    // Evento para cuando cambie el cliente seleccionado
+    // Evento al seleccionar un cliente
     $('#id_cliente').change(function() {
-        var clienteID = $(this).val();
-        if (clienteID) {
+        var clienteId = $(this).val();
+        if (clienteId) {
             $.ajax({
-                url: '/api/clientes/' + clienteID + '/',
-                type: "GET",
-                dataType: "json",
+                url: '/path-to-your-api/cliente/' + clienteId + '/',  // Ajusta la URL de tu API
+                type: 'GET',
                 success: function(data) {
-                    // Llenar los campos de correo, dirección y teléfono con los datos del cliente
-                    $('#id_direccion').val(data.direccion);
-                    $('#id_correo').val(data.correo);
-                    $('#id_telefono').val(data.telefono);
+                    $('#id_numero_documento').val(data.numero_documento);
+                    $('#id_nombre_cliente').val(data.nombre);
+                    $('#id_direccion_cliente').val(data.direccion);
+                    $('#id_correo_cliente').val(data.correo);
+                    $('#id_telefono_cliente').val(data.telefono);
                 }
             });
-        } else {
-            $('#id_direccion').val('');
-            $('#id_correo').val('');
-            $('#id_telefono').val('');
         }
     });
 
-    // Evento para cuando cambie el producto seleccionado
+    // Evento al seleccionar un producto
     $('#id_producto').change(function() {
-        var productoID = $(this).val();
-        if (productoID) {
+        var productoId = $(this).val();
+        if (productoId) {
             $.ajax({
-                url: '/api/productos/' + productoID + '/',
-                type: "GET",
-                dataType: "json",
+                url: '/path-to-your-api/producto/' + productoId + '/',  // Ajusta la URL de tu API
+                type: 'GET',
                 success: function(data) {
-                    // Llenar el campo de precio unitario con los datos del producto
                     $('#id_precio_unitario').val(data.precio);
                 }
             });
-        } else {
-            $('#id_precio_unitario').val('');
         }
     });
 });
