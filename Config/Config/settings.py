@@ -1,5 +1,6 @@
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import os
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
@@ -13,7 +14,6 @@ SECRET_KEY = 'django-insecure-l$w2&3)pz0=h_a-hg^=k8%-ehfi2elsgexc&01&002-8rc@&al
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -68,8 +68,12 @@ WSGI_APPLICATION = 'Config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Conaldex_Boyaca',
+        'USER': 'root',
+        'PASSWORD': 'Adso2670',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -96,32 +100,27 @@ USE_I18N = True
 
 USE_TZ = True
 
-import os
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# Configuración de archivos estáticos
 STATIC_URL = '/static/'
-os.path.join(BASE_DIR / 'static')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    # This defines a prefix so the url paths will become /static/node_modules/...
-    ('node_modules', os.path.join(BASE_DIR, 'node_modules/')),
-)
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Ruta al directorio static principal
+    os.path.join(BASE_DIR, 'node_modules/'),  # Ruta al directorio node_modules
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/dashboard'
 LOGOUT_REDIRECT_URL = '/login/'
 
 # Olvido su contraseña
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ruben961103@gmail.com' 
 EMAIL_HOST_PASSWORD = 'paco tjrt dyyi irwq'
+
 
 #inicio
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
