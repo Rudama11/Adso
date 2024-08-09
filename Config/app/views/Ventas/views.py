@@ -66,22 +66,3 @@ class VentasDeleteView(DeleteView):
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')
         return context
-
-
-def cliente_api(request, id):
-    cliente = Cliente.objects.get(pk=id)
-    data = {
-        'numero_documento': cliente.numero_documento,
-        'nombre': cliente.nombre,
-        'direccion': cliente.direccion,
-        'correo': cliente.correo,
-        'telefono': cliente.telefono,
-    }
-    return JsonResponse(data)
-
-def producto_api(request, id):
-    producto = Producto.objects.get(pk=id)
-    data = {
-        'precio': producto.precio,
-    }
-    return JsonResponse(data)

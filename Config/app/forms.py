@@ -211,49 +211,22 @@ class NormativaForm(ModelForm):
         }
 
 #------------------------- ventas --------------------------------------------
-class VentaForm(forms.ModelForm):
-    cliente = forms.ModelChoiceField(
-        queryset=Cliente.objects.all(),
-        widget=forms.Select(attrs={'class': 'select2', 'required': 'required'}),
-        empty_label="Seleccione un cliente"
-    )
-    
-    producto = forms.ModelChoiceField(
-        queryset=Producto.objects.all(),
-        widget=forms.Select(attrs={'class': 'select2', 'required': 'required'}),
-        empty_label="Seleccione un producto"
-    )
-    
+class VentaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['num_factura'].widget.attrs['autofocus'] = True
+
+
     class Meta:
         model = Venta
-        fields = ['cliente', 'producto', 'subtotal', 'impuestos', 'total']
-        
+        fields = '__all__'
         widgets = {
-            'subtotal': forms.NumberInput(attrs={'readonly': 'readonly'}),
-            'impuestos': forms.NumberInput(attrs={'readonly': 'readonly'}),
-            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
+            'nombre': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese un numero de factura'
+                    }
+                ),
         }
-        
-    def __init__(self, *args, **kwargs):
-        super(VentaForm, self).__init__(*args, **kwargs)
-        self.fields['subtotal'].initial = 0.00
-        self.fields['impuestos'].initial = 0.00
-        self.fields['total'].initial = 0.00
-
-    def clean(self):
-        cleaned_data = super().clean()
-        cliente = cleaned_data.get("cliente")
-        producto = cleaned_data.get("producto")
-        
-        # Validación adicional si es necesario
-        if not cliente:
-            self.add_error('cliente', "El cliente es obligatorio.")
-        if not producto:
-            self.add_error('producto', "El producto es obligatorio.")
-        
-        return cleaned_data
-
-
 #------------------------- Persona --------------------------------------------
 class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):

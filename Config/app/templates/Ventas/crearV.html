@@ -42,14 +42,12 @@
                     <label for="company-phone">Teléfono:</label>
                     <input type="tel" id="company-phone" value="+57 3124352596" readonly>
                 </div>
-                
+
                 <div class="client-details">
                     <h3> Datos remitente de factura</h3>
-                    <label for="client-name">Cliente:</label>
+                    <label for="client-id">Número de Documento:</label>
                     {{ form.cliente|add_class:"select2" }}
 
-                    <label for="client-id">Número de Documento:</label>
-                    <input type="text" id="id_numero_documento" name="numero_documento" readonly>
 
                     <label for="client-name">Nombre/Razón Social:</label>
                     <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
@@ -70,8 +68,8 @@
             <table class="product-table">
                 <thead>
                     <tr>
-                        <th>Detalle</th>
-                        <th>ID</th>
+                        <th>Item</th>
+                        <th>Descripción</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
                         <th>Impuesto (%)</th>
@@ -82,19 +80,21 @@
                 <tbody id="product-rows">
                     <tr>
                         <td>
-                            <input type="text" name="detalle[]" placeholder="Descripción del producto" required>
+                            <input type="text" name="detalle[]" placeholder="Item01" required>
                         </td>
                         <td>
-                            {{ form.producto|add_class:"select2" }}  <!-- Selector para producto -->
+                            {{ form.producto|add_class:"select2" }}
                         </td>
                         <td>
                             <input type="number" name="cantidad[]" placeholder="Cantidad" min="1" required>
                         </td>
                         <td>
-                            <input type="number" id="id_precio_unitario" name="precio_unitario[]" placeholder="Precio Unitario" step="0.01" min="0" readonly>
+                            <input type="number" id="id_precio_unitario" name="precio_unitario[]"
+                                placeholder="Precio Unitario" step="0.01" min="0" readonly>
                         </td>
                         <td>
-                            <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100" required>
+                            <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100"
+                                required>
                         </td>
                         <td>
                             <span class="precio-total">$0.00</span>
@@ -104,7 +104,7 @@
                         </td>
                     </tr>
                 </tbody>
-                
+
             </table>
             <div class="totals">
                 <p>Subtotal: <span id="subtotal">$0</span></p>
@@ -112,7 +112,7 @@
                 <p>Total: <span id="total">$0</span></p>
             </div>
         </main>
-        
+
         <div class="buttons">
             <button type="submit">Guardar</button>
             <button onclick="printInvoice()">Imprimir PDF</button>
@@ -123,8 +123,9 @@
         </div>
     </div>
 
-    <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script> <!-- Carga jQuery una sola vez -->
+    <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
 </body>
+
 </html>

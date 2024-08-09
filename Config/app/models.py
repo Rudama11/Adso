@@ -117,10 +117,10 @@ class Venta(models.Model):
     fecha_emision = models.DateTimeField(auto_now_add=True)
     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='ventas')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.num_factura
+        return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
 
     class Meta:
         verbose_name = 'Venta'
