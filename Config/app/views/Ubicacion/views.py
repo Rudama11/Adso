@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.http.response import HttpResponse as HttpResponse
 from app.models import Ubicacion
 from app.forms import UbicacionForm
+from app.choices import Departamentos,Ciudades
 
 @login_required
 def lista_ubicacion(request):
@@ -34,7 +35,27 @@ class UbicacionListView(ListView):
         context['titulo'] = 'Listado de Ubicaciones'
         context['entidad'] = 'Ubicacion'
         context['crear_url'] = reverse_lazy('app:ubicacion_crear')
+        
+         # Obtener las opciones de choices
+        context['departamentos'] = Departamentos  # Asegúrate de que Departamentos sea un iterable de opciones
+        context['ciudades'] = Ciudades  # Asegúrate de que Ciudades sea un iterable de opciones
+        
         return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Obtener los parámetros GET
+        departamento = self.request.GET.get('departamento')
+        ciudad = self.request.GET.get('ciudad')
+
+        # Aplicar filtros si los parámetros existen
+        if departamento:
+            queryset = queryset.filter(departamento=departamento)
+        if ciudad:
+            queryset = queryset.filter(ciudad=ciudad)
+
+        return queryset
 
 class UbicacionCreateView(CreateView):
     model = Ubicacion
