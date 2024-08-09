@@ -1,5 +1,19 @@
 {% extends 'listar.html' %}
 
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:categoria_listar' %}">
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
+    </div>
+
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
+    </div>
+</form>
+{% endblock %}
+
 {% block columnas %}
 <tr>
     <th scope="col">Id</th>

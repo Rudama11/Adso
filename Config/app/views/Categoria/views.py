@@ -26,7 +26,21 @@ class CategoriaListView(ListView):
         context['entidad'] = 'Categoría'
         context['crear_url'] = reverse_lazy('app:categoria_crear')
         return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Obtener los parámetros GET
+        nombre = self.request.GET.get('nombre')
+        descripcion = self.request.GET.get('descripcion')
 
+        # Aplicar filtros si los parámetros existen
+        if nombre:
+            queryset = queryset.filter(nombre__icontains=nombre)
+        if descripcion:
+            queryset = queryset.filter(descripcion__icontains=descripcion)
+
+        return queryset
 class CategoriaCreateView(CreateView):
     model = Categoria
     form_class = CategoriaForm
