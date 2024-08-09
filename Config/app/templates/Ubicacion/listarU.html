@@ -1,5 +1,34 @@
 {% extends "listar.html" %}
 
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:ubicacion_listarU' %}">
+    <div class="form-group">
+        <label for="departamento">Departamento</label>
+        <select class="form-control" id="departamento" name="departamento">
+            <option value="">Todos</option>
+            {% for key, value in departamentos %}
+                <option value="{{ key }}" {% if request.GET.departamento == key %}selected{% endif %}>
+                    {{ value }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="ciudad">Ciudad</label>
+        <select class="form-control" id="ciudad" name="ciudad">
+            <option value="">Todos</option>
+            {% for key, value in ciudades %}
+                <option value="{{ key }}" {% if request.GET.ciudad == key %}selected{% endif %}>
+                    {{ value }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+</form>
+{% endblock %}
+
 {% block columnas %}
 <tr>
   <th scope="col">Id</th>
