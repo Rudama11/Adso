@@ -1,5 +1,4 @@
 {% load static %}
-
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -10,143 +9,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}"> <!-- Agregar CSS de select2 -->
+    <link rel="stylesheet" href="{% static 'lib/jquery/css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
 </head>
 
 <body>
     <div class="invoice-container">
-        <form method="post">
-            {% csrf_token %}
-            <header>
-                <div class="header-section">
-                    <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="company-logo">
-                    <div class="invoice-info">
-                        <p>Número de Factura: {{ form.num_factura.value|default_if_none:"001" }}</p>
-                        <p>Fecha de Factura: {{ form.fecha_emision.value|default_if_none:"2024-07-24" }}</p>
-                    </div>
+        <header>
+            <div class="header-section">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="company-logo">
+                <div class="invoice-info">
+                    <p>Número de Factura: <span id="invoice-number">001</span></p>
+                    <p>Fecha de Factura: <span id="invoice-date">2024-07-24</span></p>
+                    <p>Fecha de Vencimiento: <span id="due-date">2024-08-24</span></p>
                 </div>
-                <div class="details-section">
-                    <div class="company-details">
-                        <h3> Datos emisor de factura</h3>
-                        <label for="company-name">Nombre de la Empresa:</label>
-                        <input type="text" id="company-name" value="CONALDEX-BOYACA" readonly>
-
-                        <label for="company-nit">NIT:</label>
-                        <input type="text" id="company-nit" value="91068006-8" readonly>
-
-                        <label for="company-address">Dirección:</label>
-                        <input type="text" id="company-address" value="Calle 7 # 14-65" readonly>
-
-                        <label for="company-email">Correo:</label>
-                        <input type="email" id="company-email" value="conaldexboyaca@gmail.com" readonly>
-
-                        <label for="company-phone">Teléfono:</label>
-                        <input type="tel" id="company-phone" value="+57 3124352596" readonly>
-                    </div>
-
-                    <div class="client-details">
-                        <h3> Datos remitente de factura</h3>
-                        <label for="client-name">Cliente:</label>
-                        {{ form.cliente|add_class:"select2" }}
-
-                        <label for="client-id">Número de Documento:</label>
-                        <input type="text" id="id_numero_documento" name="numero_documento" readonly>
-
-                        <label for="client-name">Nombre/Razón Social:</label>
-                        <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
-
-                        <label for="client-address">Dirección:</label>
-                        <input type="text" id="id_direccion_cliente" name="direccion_cliente" readonly>
-
-                        <label for="client-email">Correo:</label>
-                        <input type="email" id="id_correo_cliente" name="correo_cliente" readonly>
-
-                        <label for="client-phone">Celular:</label>
-                        <input type="tel" id="id_telefono_cliente" name="telefono_cliente" readonly>
-                    </div>
-                </div>
-            </header>
-            <main>
-                <table class="product-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Cantidad</th>
-                            <th class="detail">Detalle</th>
-                            <th>Precio Unitario</th>
-                            <th>Impuesto (%)</th>
-                            <th>Precio Total</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="product-rows">
-                        <!-- Las filas de productos se agregarán aquí -->
-                    </tbody>
-                </table>
-                <div class="totals">
-                    <p>Subtotal: <span id="subtotal">$0</span></p>
-                    <p>Impuestos: <span id="taxes">$0</span></p>
-                    <p>Total: <span id="total">$0</span></p>
-                </div>
-            </main>
-            <div class="buttons">
-                <button type="submit">Guardar Factura</button>
-                <button type="button" onclick="addProductRow()">Agregar Producto</button>
-                <button type="button" onclick="printInvoice()">Imprimir PDF</button>
-                <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
-                    <i class="fas fa-times"></i> Cancelar
-                </a>
             </div>
-        </form>
+            <div class="details-section">
+                <div class="company-details">
+                    <h3>Datos Emisor</h3>
+                    <label for="company-name">Nombre de la Empresa:</label>
+                    <input type="text" id="company-name" value="CONALDEX-BOYACA" readonly>
+
+                    <label for="company-nit">NIT:</label>
+                    <input type="text" id="company-nit" value="91068006-8" readonly>
+
+                    <label for="company-address">Dirección:</label>
+                    <input type="text" id="company-address" value="Calle 7 # 14-65" readonly>
+
+                    <label for="company-email">Correo:</label>
+                    <input type="email" id="company-email" value="conaldexboyaca@gmail.com" readonly>
+
+                    <label for="company-phone">Teléfono:</label>
+                    <input type="tel" id="company-phone" value="+57 3124352596" readonly>
+                </div>
+
+                <div class="client-details">
+                    <h3> Datos remitente de factura</h3>
+                    <label for="client-id">Número de Documento:</label>
+                    {{ form.cliente|add_class:"select2" }}
+
+
+                    <label for="client-name">Nombre/Razón Social:</label>
+                    <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
+
+                    <label for="client-address">Dirección:</label>
+                    <input type="text" id="id_direccion_cliente" name="direccion_cliente" readonly>
+
+                    <label for="client-email">Correo:</label>
+                    <input type="email" id="id_correo_cliente" name="correo_cliente" readonly>
+
+                    <label for="client-phone">Celular:</label>
+                    <input type="tel" id="id_telefono_cliente" name="telefono_cliente" readonly>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Impuesto (%)</th>
+                        <th>Precio Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="product-rows">
+                    <tr>
+                        <td>
+                            <input type="text" name="detalle[]" placeholder="Item01" required>
+                        </td>
+                        <td>
+                            {{ form.producto|add_class:"select2" }}
+                        </td>
+                        <td>
+                            <input type="number" name="cantidad[]" placeholder="Cantidad" min="1" required>
+                        </td>
+                        <td>
+                            <input type="number" id="id_precio_unitario" name="precio_unitario[]"
+                                placeholder="Precio Unitario" step="0.01" min="0" readonly>
+                        </td>
+                        <td>
+                            <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100"
+                                required>
+                        </td>
+                        <td>
+                            <span class="precio-total">$0.00</span>
+                        </td>
+                        <td>
+                            <button type="button" onclick="removeProductRow(this)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+            <div class="totals">
+                <p>Subtotal: <span id="subtotal">$0</span></p>
+                <p>Impuestos: <span id="taxes">$0</span></p>
+                <p>Total: <span id="total">$0</span></p>
+            </div>
+        </main>
+
+        <div class="buttons">
+            <button type="submit">Guardar</button>
+            <button onclick="printInvoice()">Imprimir PDF</button>
+            <button type="button" onclick="addProductRow()">Agregar Producto</button>
+            <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
     </div>
 
+    <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
-    <script src="{% static 'lib/select2/js/select2.min.js' %}"></script> <!-- Agregar JS de select2 -->
-
-    <script>
-        $(document).ready(function () {
-            // Inicializa Select2
-            $('.select2').select2({
-                placeholder: 'Selecciona una opción',
-                allowClear: true,
-                language: {
-                    noResults: function () {
-                        return "No se encontraron resultados";  // Personaliza el texto aquí
-                    }
-                }
-            });
-
-            // Evento cuando cambia la selección del cliente
-            $('#id_cliente').change(function () {
-                var clienteId = $(this).val();
-                if (clienteId) {
-                    $.ajax({
-                        url: '{% url "app:obtener_info_cliente" %}',  // Cambia esto a la URL de tu vista
-                        data: {
-                            'cliente_id': clienteId
-                        },
-                        success: function (data) {
-                            $('#id_numero_documento').val(data.numero_documento);
-                            $('#id_nombre_cliente').val(data.nombre);
-                            $('#id_direccion_cliente').val(data.direccion);
-                            $('#id_correo_cliente').val(data.correo);
-                            $('#id_telefono_cliente').val(data.telefono);
-                        },
-                        error: function () {
-                            alert('Cliente no encontrado');
-                        }
-                    });
-                } else {
-                    // Limpia los campos si no hay cliente seleccionado
-                    $('#id_numero_documento').val('');
-                    $('#id_nombre_cliente').val('');
-                    $('#id_direccion_cliente').val('');
-                    $('#id_correo_cliente').val('');
-                    $('#id_telefono_cliente').val('');
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
