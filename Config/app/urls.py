@@ -69,8 +69,8 @@ urlpatterns = [
     path('Ventas/crearV/', VentasCreateView.as_view(), name='venta_crear'),
     path('Ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
     path('Ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
-    path('Ventas/productos_api', productos_api, name='productos_api'),
-    path('Ventas/clientes_api', clientes_api, name='clientes_api'),  # <-- Aquí agregas una coma
+    path('Ventas/clientes/<str:numero_documento>/', cliente_detail, name='cliente_detail'),
+    path('Ventas/productos/<int:id>/', producto_detail, name='producto_detail'),
 
     #-------------------------------------------------- Persona --------------------------------------------------
     

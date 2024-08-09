@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura</title>
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery/css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
 </head>
 
@@ -43,9 +44,24 @@
                 </div>
                 
                 <div class="client-details">
-                    <h3>Datos Remitente</h3>
-                    <label for="id_cliente">Cliente:</label>
-                    {{ form.cliente }}  <!-- Selector para cliente -->
+                    <h3> Datos remitente de factura</h3>
+                    <label for="client-name">Cliente:</label>
+                    {{ form.cliente|add_class:"select2" }}
+
+                    <label for="client-id">Número de Documento:</label>
+                    <input type="text" id="id_numero_documento" name="numero_documento" readonly>
+
+                    <label for="client-name">Nombre/Razón Social:</label>
+                    <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
+
+                    <label for="client-address">Dirección:</label>
+                    <input type="text" id="id_direccion_cliente" name="direccion_cliente" readonly>
+
+                    <label for="client-email">Correo:</label>
+                    <input type="email" id="id_correo_cliente" name="correo_cliente" readonly>
+
+                    <label for="client-phone">Celular:</label>
+                    <input type="tel" id="id_telefono_cliente" name="telefono_cliente" readonly>
                 </div>
             </div>
         </header>
@@ -69,13 +85,13 @@
                             <input type="text" name="detalle[]" placeholder="Descripción del producto" required>
                         </td>
                         <td>
-                            {{ form.producto }}  <!-- Selector para producto -->
+                            {{ form.producto|add_class:"select2" }}  <!-- Selector para producto -->
                         </td>
                         <td>
                             <input type="number" name="cantidad[]" placeholder="Cantidad" min="1" required>
                         </td>
                         <td>
-                            <input type="number" name="precio_unitario[]" placeholder="Precio Unitario" step="0.01" min="0" required>
+                            <input type="number" id="id_precio_unitario" name="precio_unitario[]" placeholder="Precio Unitario" step="0.01" min="0" readonly>
                         </td>
                         <td>
                             <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100" required>
@@ -107,14 +123,8 @@
         </div>
     </div>
 
-    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script> <!-- Carga jQuery una sola vez -->
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
 </body>
 </html>
