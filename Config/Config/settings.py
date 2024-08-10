@@ -101,10 +101,10 @@ USE_I18N = True
 USE_TZ = True
 
 # Configuración de archivos estáticos
-STATIC_URL = '/static/'
+STATIC_URL = 'app/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Ruta al directorio static principal
+    os.path.join(BASE_DIR, 'app/static'),  # Ruta al directorio static principal
     os.path.join(BASE_DIR, 'node_modules/'),  # Ruta al directorio node_modules
 ]
 

@@ -214,7 +214,7 @@ class NormativaForm(ModelForm):
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['num_factura'].widget.attrs['autofocus'] = True
+        self.fields['cliente'].widget.attrs['autofocus'] = True
 
 
     class Meta:
