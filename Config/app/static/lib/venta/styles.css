@@ -1,207 +1,236 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #f5f5f5;
     margin: 0;
     padding: 0;
 }
 
 .invoice-container {
-    width: 80%;
-    margin: 30px auto;
+    max-width: 900px;
+    margin: 20px auto;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: #fff;
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Agregado para bordes redondeados */
 }
 
-.header-section {
+header {
     display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
     justify-content: space-between;
-    align-items: center;
+    border-bottom: 2px solid #1f5a96;
+    padding-bottom: 20px;
 }
 
-.company-logo {
-    width: 120px;
-    display: block;
-    margin-bottom: 20px;
+.logo {
+    max-width: 100px;
+    margin-right: 20px;
+}
+
+h1, h2 {
+    margin: 0;
+    color: #1f5a96;
+}
+
+h3 {
+    color: #1f5a96;
+    margin-bottom: 10px;
+}
+
+.company-info p {
+    margin: 5px 0;
+}
+
+.company-details {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
 }
 
 .invoice-info {
-    text-align: right;
-    font-size: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
 }
 
 .invoice-info p {
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
-.details-section {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
+.client-info {
+    margin-top: 20px;
 }
 
-.company-details, .client-details {
-    width: 45%;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.company-details label, .client-details label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.company-details input, .client-details input {
-    width: calc(100% - 20px);
+.client-data {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.product-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-size: 16px;
-}
-
-.product-table th, .product-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
     background-color: #f9f9f9;
 }
 
-.product-table th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
+.client-details p {
+    margin: 10px 0;
 }
 
-.product-table td input {
+.invoice-info input,
+.client-info input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    width: 80%;
+}
+
+.invoice-details table {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    margin-top: 20px;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-details th, .invoice-details td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.invoice-details th {
+    background-color: #1f5a96;
+    color: #fff;
+}
+
+.invoice-details tr:hover {
+    background-color: #f0f0f0;
+}
+
+.invoice-totals {
+    margin-top: 20px;
+    text-align: right;
 }
 
 .totals {
-    text-align: right;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.delete-row {
-    background: url("/static/img/trash.png") no-repeat center center;
-    background-size: contain;
-    width: 24px;
-    height: 24px;
-    border: none;
-    cursor: pointer;
     display: inline-block;
-    line-height: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    width: 250px;
+    text-align: left;
 }
 
-.delete-row:hover {
-    background-color: transparent;
-    box-shadow: none;
+.invoice-totals h3 {
+    margin-top: 0;
+    font-weight: bold;
 }
 
-.totals p {
+.invoice-totals p {
     margin: 5px 0;
 }
 
-button {
-    display: inline-block;
-    padding: 12px 20px;
-    margin: 10px;
+.invoice-totals input {
     border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    width: 60px;
+    text-align: right;
+}
+
+button#add-item {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #1f5a96;
+    color: #fff;
+    border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
 
-button:hover {
-    background-color: #1974d6;
+button#add-item:hover {
+    background-color: #155a80;
 }
 
-.error {
-    border: 2px solid red;
-    background-color: #fdd;
+button.delete-item {
+    padding: 10px 20px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
+button.delete-item:hover {
+    background-color: #d32f2f;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    margin-top: 20px;
+}
+
+.footer-buttons button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #1f5a96;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.footer-buttons button:hover {
+    background-color: #155a80;
+}
+
+.signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+}
+
+.signatures div {
+    text-align: center;
+    width: 45%;
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start; /* Alinea el contenido hacia la izquierda en pantallas pequeñas */
+    }
+
+    .invoice-info,
+    .client-data,
+    .totals {
+        width: 100%; /* Asegura que los contenedores ocupen el 100% del ancho */
+    }
+
+    .footer-buttons {
+        flex-direction: column; /* Coloca los botones en columna en pantallas pequeñas */
+        align-items: flex-start; /* Alinea los botones hacia la izquierda */
+    }
 }
 
 @media print {
-    .buttons {
-        display: none;
-    }
-
     .invoice-container {
-        width: 100%;
-        border: none;
-        box-shadow: none;
-        padding: 0;
-    }
-    
-    .product-table th, .product-table td {
-        padding: 8px;
-        word-wrap: break-word;
+        color: black; /* Asegura que el texto sea visible en impresión */
     }
 
-    .product-table td.detail {
-        white-space: normal;
-        overflow: visible;
-        max-width: none;
+    /* Asegura que el encabezado "Totales" sea visible */
+    .invoice-totals h3 {
+        color: black !important;
     }
 
-    .product-table th:last-child,
-    .product-table td:last-child {
-        display: none;
+    /* Ocultar elementos no necesarios en impresión */
+    .footer-buttons,
+    #add-item,
+    .acciones {
+        display: none !important;
     }
-
-    input, textarea {
-        border: none;
-        background: none;
-        box-shadow: none;
-        font-size: inherit;
-        line-height: inherit;
-        color: inherit;
-    }
-}
-
-.button-trash {
-    display: inline-block;
-    padding: 12px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #f52207;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.button-trash:hover {
-    background-color: #bd2222;
 }

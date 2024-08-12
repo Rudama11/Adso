@@ -1,4 +1,5 @@
 {% load static %}
+
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -16,111 +17,84 @@
 <body>
     <div class="invoice-container">
         <header>
-            <div class="header-section">
-                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="company-logo">
-                <div class="invoice-info">
-                    <p>Número de Factura: <span id="invoice-number">001</span></p>
-                    <p>Fecha de Factura: <span id="invoice-date">2024-07-24</span></p>
-                    <p>Fecha de Vencimiento: <span id="due-date">2024-08-24</span></p>
+            <div class="company-info">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="logo">
+                <h1>Conaldex-Boyaca</h1>
+                <div class="company-details">
+                    <p><strong>NIT:</strong> 91068006-8</p>
+                    <p><strong>Dirección:</strong> Calle 7 # 14-65</p>
+                    <p><strong>Correo:</strong> conaldexboyaca@gmail.com</p>
+                    <p><strong>Celular:</strong> +57 3124352596</p>
                 </div>
             </div>
-            <div class="details-section">
-                <div class="company-details">
-                    <h3>Datos Emisor</h3>
-                    <label for="company-name">Nombre de la Empresa:</label>
-                    <input type="text" id="company-name" value="CONALDEX-BOYACA" readonly>
-
-                    <label for="company-nit">NIT:</label>
-                    <input type="text" id="company-nit" value="91068006-8" readonly>
-
-                    <label for="company-address">Dirección:</label>
-                    <input type="text" id="company-address" value="Calle 7 # 14-65" readonly>
-
-                    <label for="company-email">Correo:</label>
-                    <input type="email" id="company-email" value="conaldexboyaca@gmail.com" readonly>
-
-                    <label for="company-phone">Teléfono:</label>
-                    <input type="tel" id="company-phone" value="+57 3124352596" readonly>
-                </div>
-
-                <div class="client-details">
-                    <h3> Datos remitente de factura</h3>
-                    <label for="client-id">Número de Documento:</label>
-                    {{ form.cliente|add_class:"select2" }}
-
-
-                    <label for="client-name">Nombre/Razón Social:</label>
-                    <input type="text" id="id_nombre_cliente" name="nombre_cliente" readonly>
-
-                    <label for="client-address">Dirección:</label>
-                    <input type="text" id="id_direccion_cliente" name="direccion_cliente" readonly>
-
-                    <label for="client-email">Correo:</label>
-                    <input type="email" id="id_correo_cliente" name="correo_cliente" readonly>
-
-                    <label for="client-phone">Celular:</label>
-                    <input type="tel" id="id_telefono_cliente" name="telefono_cliente" readonly>
+            <div class="invoice-info">
+                <h2>FACTURA</h2>
+                <div class="invoice-details">
+                    <p><strong>Fecha Emisión:</strong> <input type="date" id="fecha_emision"></p>
+                    <p><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha_vencimiento"></p>
+                    <p><strong>Número de Factura:</strong> <input type="text" id="num_factura"></p>
                 </div>
             </div>
         </header>
 
-        <main>
-            <table class="product-table">
+        <section class="client-info">
+            <div class="client-data">
+                <h3>Enviar A</h3>
+                <div class="client-details">
+                    <p><strong>Nombre Cliente:</strong> <input type="text" id="cliente_nombre"></p>
+                    <p><strong>Dirección Cliente:</strong> <input type="text" id="cliente_direccion"></p>
+                    <p><strong>CIF/NIF:</strong> <input type="text" id="cliente_cif"></p>
+                    <p><strong>Teléfono:</strong> <input type="text" id="cliente_telefono"></p>
+                    <p><strong>Mail:</strong> <input type="email" id="cliente_mail"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="invoice-details">
+            <table>
                 <thead>
                     <tr>
-                        <th>Item</th>
                         <th>Descripción</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
-                        <th>Impuesto (%)</th>
-                        <th>Precio Total</th>
+                        <th>Total</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="product-rows">
-                    <tr>
-                        <td>
-                            <input type="text" name="detalle[]" placeholder="Item01" required>
-                        </td>
-                        <td>
-                            {{ form.producto|add_class:"select2" }}
-                        </td>
-                        <td>
-                            <input type="number" name="cantidad[]" placeholder="Cantidad" min="1" required>
-                        </td>
-                        <td>
-                            <input type="number" id="id_precio_unitario" name="precio_unitario[]"
-                                placeholder="Precio Unitario" step="0.01" min="0" readonly>
-                        </td>
-                        <td>
-                            <input type="number" name="impuesto[]" placeholder="Impuesto (%)" min="0" max="100"
-                                required>
-                        </td>
-                        <td>
-                            <span class="precio-total">$0.00</span>
-                        </td>
-                        <td>
-                            <button type="button" onclick="removeProductRow(this)">Eliminar</button>
-                        </td>
-                    </tr>
+                <tbody id="invoice-items">
                 </tbody>
-
             </table>
-            <div class="totals">
-                <p>Subtotal: <span id="subtotal">$0</span></p>
-                <p>Impuestos: <span id="taxes">$0</span></p>
-                <p>Total: <span id="total">$0</span></p>
-            </div>
-        </main>
+            <button type="button" id="add-item">Añadir Producto</button>
+        </section>
 
-        <div class="buttons">
-            <button type="submit">Guardar</button>
-            <button onclick="printInvoice()">Imprimir PDF</button>
-            <button type="button" onclick="addProductRow()">Agregar Producto</button>
+        <section class="invoice-totals">
+            <div class="totals">
+                <h3>Totales</h3>
+                <p><strong>Subtotal:</strong> <span id="subtotal">0,00</span> €</p>
+                <p><strong>Descuento:</strong> <input type="number" id="descuento" value="0"> €</p>
+                <p><strong>Subtotal - Dto:</strong> <span id="subtotal_dto">0,00</span> €</p>
+                <p><strong>IVA:</strong> <input type="number" id="iva" value="21"> %</p>
+                <p><strong>Total IVA:</strong> <span id="total_iva">0,00</span> €</p>
+                <p><strong>TOTAL:</strong> <span id="total">0,00</span> €</p>
+            </div>
+        </section>
+
+        <div class="footer-buttons">
+            <button id="print-pdf">Imprimir PDF</button>
             <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
+        <footer>
+            <div class="signatures">
+                <div>
+                    <p>Firma Empresa</p>
+                </div>
+                <div>
+                    <p>Firma Cliente</p>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>

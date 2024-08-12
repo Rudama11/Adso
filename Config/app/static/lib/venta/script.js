@@ -1,80 +1,52 @@
-$(document).ready(function() {
-    // Inicializa select2 en los campos correspondientes
-    $('#id_cliente').select2({
-        ajax: {
-            url: '/path-to-your-api/cliente/',  // URL de la API para clientes
-            dataType: 'json',
-            delay: 250,
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(item) {
-                        return {
-                            id: item.id,
-                            text: item.numero_documento + ' - ' + item.nombre
-                        };
-                    })
-                };
-            },
-            cache: true
-        },
-        placeholder: 'Seleccione un cliente',
-        minimumInputLength: 1,
-        templateResult: function(data) {
-            if (!data.id) {
-                return data.text;
-            }
-            return $('<span>' + data.text + '</span>');
-        }
-    });
+document.addEventListener("DOMContentLoaded", () => {
+    const addItemButton = document.getElementById("add-item");
+    const invoiceItems = document.getElementById("invoice-items");
+    
+    addItemButton.addEventListener("click", () => {
+        const row = document.createElement("tr");
+        
+        row.innerHTML = `
+            <td><input type="text" class="descripcion" required></td>
+            <td><input type="number" class="cantidad" value="1" min="1" required></td>
+            <td><input type="number" class="precio-unitario" value="0" min="0" step="0.01" required></td>
+            <td class="total">0,00</td>
+            <td><button type="button" class="delete-item">Eliminar</button></td>
+        `;
+        
+        invoiceItems.appendChild(row);
+        updateTotals();
 
-    $('#id_cliente').change(function() {
-        var clienteId = $(this).val();
-        if (clienteId) {
-            $.ajax({
-                url: '/path-to-your-api/cliente/' + clienteId + '/',  // Ajusta la URL de tu API
-                type: 'GET',
-                success: function(data) {
-                    $('#id_numero_documento').val(data.numero_documento);
-                    $('#id_nombre_cliente').val(data.nombre);
-                    $('#id_direccion_cliente').val(data.direccion);
-                    $('#id_correo_cliente').val(data.correo);
-                    $('#id_telefono_cliente').val(data.telefono);
-                }
-            });
-        }
+        row.querySelector(".delete-item").addEventListener("click", () => {
+            invoiceItems.removeChild(row);
+            updateTotals();
+        });
     });
+    
+    invoiceItems.addEventListener("input", updateTotals);
 
-    $('#id_producto').select2({
-        ajax: {
-            url: '/path-to-your-api/producto/',  // URL de la API para productos
-            dataType: 'json',
-            delay: 250,
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(item) {
-                        return {
-                            id: item.id,
-                            text: item.descripcion
-                        };
-                    })
-                };
-            },
-            cache: true
-        },
-        placeholder: 'Seleccione un producto',
-        minimumInputLength: 1
-    });
+    function updateTotals() {
+        let subtotal = 0;
+        const rows = invoiceItems.querySelectorAll("tr");
 
-    $('#id_producto').change(function() {
-        var productoId = $(this).val();
-        if (productoId) {
-            $.ajax({
-                url: '/path-to-your-api/producto/' + productoId + '/',
-                type: 'GET',
-                success: function(data) {
-                    $('#id_precio_unitario').val(data.precio);
-                }
-            });
-        }
-    });
+        rows.forEach(row => {
+            const cantidad = parseFloat(row.querySelector(".cantidad").value);
+            const precioUnitario = parseFloat(row.querySelector(".precio-unitario").value);
+            const total = cantidad * precioUnitario;
+            row.querySelector(".total").textContent = total.toFixed(2);
+            subtotal += total;
+        });
+
+        document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+
+        const descuento = parseFloat(document.getElementById("descuento").value);
+        const subtotalDto = subtotal - descuento;
+        document.getElementById("subtotal_dto").textContent = subtotalDto.toFixed(2);
+
+        const iva = parseFloat(document.getElementById("iva").value);
+        const totalIva = subtotalDto * (iva / 100);
+        document.getElementById("total_iva").textContent = totalIva.toFixed(2);
+
+        const total = subtotalDto + totalIva;
+        document.getElementById("total").textContent = total.toFixed(2);
+    }
 });
