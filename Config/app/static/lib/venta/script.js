@@ -1,11 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
     const addItemButton = document.getElementById("add-item");
     const invoiceItems = document.getElementById("invoice-items");
+    let itemCount = 0; // Contador para el número de ítem
     
     addItemButton.addEventListener("click", () => {
+        itemCount++; // Incrementar el contador cada vez que se agrega un nuevo ítem
         const row = document.createElement("tr");
         
         row.innerHTML = `
+            <td>${itemCount}</td> <!-- Mostrar el número de ítem -->
             <td><input type="text" class="descripcion" required></td>
             <td><input type="number" class="cantidad" value="1" min="1" required></td>
             <td><input type="number" class="precio-unitario" value="0" min="0" step="0.01" required></td>
@@ -18,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         row.querySelector(".delete-item").addEventListener("click", () => {
             invoiceItems.removeChild(row);
+            itemCount--; // Decrementar el contador al eliminar un ítem
+            updateItemNumbers(); // Actualizar los números de ítem
             updateTotals();
         });
     });
@@ -48,6 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const total = subtotalDto + totalIva;
         document.getElementById("total").textContent = total.toFixed(2);
+    }
+
+    function updateItemNumbers() {
+        const rows = invoiceItems.querySelectorAll("tr");
+        rows.forEach((row, index) => {
+            row.querySelector("td:first-child").textContent = index + 1; // Actualiza el número de ítem
+        });
     }
 
     // Agregar evento al botón de imprimir

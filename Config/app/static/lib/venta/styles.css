@@ -82,6 +82,10 @@ h3 {
     width: 80%;
 }
 
+.invoice-details {
+    overflow-x: auto; /* Agrega desplazamiento horizontal si es necesario */
+}
+
 .invoice-details table {
     width: 100%;
     margin-top: 20px;
@@ -92,7 +96,7 @@ h3 {
 }
 
 .invoice-details th, .invoice-details td {
-    padding: 15px;
+    padding: 10px; /* Reduce el padding para evitar que la tabla se desborde */
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
 }
@@ -153,7 +157,7 @@ button#add-item:hover {
 }
 
 button.delete-item {
-    padding: 10px 20px;
+    padding: 5px 10px; /* Reduce el padding del botón */
     background-color: #ff4444;
     color: #fff;
     border: none;
@@ -231,6 +235,14 @@ button.delete-item:hover {
         flex-direction: column; /* Coloca los botones en columna en pantallas pequeñas */
         align-items: flex-start; /* Alinea los botones hacia la izquierda */
     }
+
+    .invoice-details table {
+        font-size: 14px; /* Ajusta el tamaño de fuente para pantallas pequeñas */
+    }
+
+    .invoice-details th, .invoice-details td {
+        padding: 8px; /* Ajusta el padding para pantallas pequeñas */
+    }
 }
 
 @media print {
@@ -247,6 +259,6 @@ button.delete-item:hover {
     .footer-buttons,
     #add-item,
     .acciones {
-        display: none !important;
+        display: none !important; /* Esto debería ocultar la columna de acciones */
     }
 }
