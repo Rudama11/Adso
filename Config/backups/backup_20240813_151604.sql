@@ -125,7 +125,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$870000$73NcjRu1jP73iYwN7SYoRa$p0GBiIQN097CyN8TJjj1GW/YK5hK8oNarizk58SYsd8=','2024-08-13 18:22:05.372946',1,'Admin','','','conaldexboyaca@gmail.com',1,1,'2024-08-13 18:21:48.413476');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$870000$73NcjRu1jP73iYwN7SYoRa$p0GBiIQN097CyN8TJjj1GW/YK5hK8oNarizk58SYsd8=','2024-08-13 20:11:15.917570',1,'Admin','','','conaldexboyaca@gmail.com',1,1,'2024-08-13 18:21:48.413476');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +198,7 @@ CREATE TABLE `categoria` (
   `descripcion` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `categoria` (
 
 LOCK TABLES `categoria` WRITE;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-INSERT INTO `categoria` VALUES (2,'Hola soy una prueba mas','jejejajajeje');
+INSERT INTO `categoria` VALUES (3,'jHola jajeje','Lelo marco');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,7 +422,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('2j7hb6hnclxpc2i2a48gbydyjqtqachr','.eJxVjbEOwjAMRP8lM4pwY5qkIzvfEDm2oQXUoqaZEP9OK3WA9d7du7dJVJc-1aJzGsR0BszhN8vEDx03IHcab5PlaVzmIdutYnda7GUSfZ737p-gp9Kv6-ia9gRHEo5Xjo68skMK6FqE1vmIGtArIniVDIjKIg2HhjJELxBW6XZWX6lUZi3FdMtc9fMF6i8_tQ:1sdwbC:2QTnUDWHjMf9ouUYcpgSklt8sbmBEFIhWM7ndWLle28','2024-08-27 18:50:26.158236');
+INSERT INTO `django_session` VALUES ('1shrrsouoovhga32hm9ivymq0ylrtifd','.eJxVjDEOwjAMRe-SGUW4MU3CyN4zVI5tSAElUtNOiLtDpQ6w_vfef5mR1iWPa9N5nMScDZjD75aIH1o2IHcqt2q5lmWekt0Uu9Nmhyr6vOzu30Gmlr91dF1_giMJxytHR17ZIQV0PULvfEQN6BURvEoCRGWRjkNHCaIXCOb9Acz9N30:1sdxrP:ubk8vuFrUB5R_83UlqRtniY63Gb2LxlzqTBeybiH_9s','2024-08-27 20:11:15.917570');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,4 +646,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-13 14:54:27
+-- Dump completed on 2024-08-13 15:16:04

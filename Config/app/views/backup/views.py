@@ -3,42 +3,42 @@ import datetime
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
-from django.contrib import messages
 import subprocess
 
 def backup_view(request):
     return render(request, 'backup.html')
 
 def backup_database(request):
-    backup_dir = os.path.join(settings.BASE_DIR, 'backups')
-    os.makedirs(backup_dir, exist_ok=True)
+    if request.method == 'POST':
+        backup_dir = os.path.join(settings.BASE_DIR, 'backups')
+        os.makedirs(backup_dir, exist_ok=True)
 
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_file = os.path.join(backup_dir, f'backup_{timestamp}.sql')
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_file = os.path.join(backup_dir, f'backup_{timestamp}.sql')
 
-    try:
-        db_name = settings.DATABASES['default']['NAME']
-        db_user = settings.DATABASES['default']['USER']
-        db_password = settings.DATABASES['default']['PASSWORD']
-        db_host = settings.DATABASES['default']['HOST']
-        db_port = settings.DATABASES['default']['PORT']
+        try:
+            db_name = settings.DATABASES['default']['NAME']
+            db_user = settings.DATABASES['default']['USER']
+            db_password = settings.DATABASES['default']['PASSWORD']
+            db_host = settings.DATABASES['default']['HOST']
+            db_port = settings.DATABASES['default']['PORT']
 
-        # Comando para hacer dump de la base de datos
-        dump_command = [
-            'mysqldump',
-            f'--user={db_user}',
-            f'--password={db_password}',
-            f'--host={db_host}',
-            f'--port={db_port}',
-            db_name,
-            f'--result-file={backup_file}'
-        ]
+            dump_command = [
+                'mysqldump',
+                f'--user={db_user}',
+                f'--password={db_password}',
+                f'--host={db_host}',
+                f'--port={db_port}',
+                db_name,
+                f'--result-file={backup_file}'
+            ]
 
-        subprocess.run(dump_command, check=True)
+            subprocess.run(dump_command, check=True)
 
-        return JsonResponse({'status': 'success', 'message': 'Copia de seguridad creada exitosamente.'})
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': f"Error al crear la copia de seguridad: {e}"})
+            # Enviar respuesta JSON
+            return JsonResponse({'status': 'success', 'message': 'Copia de seguridad creada exitosamente.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': f"Error al crear la copia de seguridad: {e}"})
 
 def restore_database(request):
     if request.method == 'POST' and request.FILES['backup_file']:

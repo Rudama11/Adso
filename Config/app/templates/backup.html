@@ -36,4 +36,9 @@
 {% block javascript %}
 <script src="{% static 'js/respaldo/sweetalert2.all.min.js' %}"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // No se mostrarán alertas automáticamente al cargar la página
+    });
+</script>
 {% endblock %}
