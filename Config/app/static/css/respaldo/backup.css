@@ -8,6 +8,7 @@ body {
 
 .backup-container {
     width: 80%;
+    max-width: 800px; /* Limita el ancho máximo para pantallas grandes */
     margin: 30px auto;
     padding: 20px;
     border: 1px solid #ddd;
@@ -28,20 +29,49 @@ body {
 .backup-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 20px;
 }
 
-.backup-button {
+.form-section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.backup-section h2,
+.restore-section h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espacio entre los elementos del formulario */
+}
+
+input[type="file"] {
+    display: none; /* Oculta el input de archivo, ya que usamos un botón personalizado */
+}
+
+.backup-button,
+.restore-button,
+#select-file-button {
     display: inline-block;
     padding: 12px 20px;
-    margin: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #28a745; /* Color para el botón de backup */
-    color: white;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.backup-button {
+    background-color: #28a745; /* Color para el botón de backup */
+    color: white;
 }
 
 .backup-button:hover {
@@ -49,16 +79,8 @@ body {
 }
 
 .restore-button {
-    display: inline-block;
-    padding: 12px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
     background-color: #28a6bd; /* Color para el botón de restaurar */
     color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .restore-button:hover {
@@ -68,12 +90,6 @@ body {
 #select-file-button {
     background-color: #007bff; /* Color para el botón de seleccionar archivo */
     color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-    transition: background-color 0.3s ease;
 }
 
 #select-file-button:hover {
@@ -81,6 +97,8 @@ body {
 }
 
 #file-name {
+    display: block;
     margin-top: 10px;
     color: #555;
+    text-align: center;
 }
