@@ -17,49 +17,35 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Modulos</a>
+                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Módulos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-truck-loading"></i> Categorías</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-boxes"></i> Productos</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>
-                        <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
+                        <li><a href="{% url 'app:producto_listar'%}" class="dropdown-item"><i
+                                class="fas fa-boxes"></i>Productos</a></li>
+                        <li><a href="{% url 'app:categoria_listar'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Categoría</a></li>
+                        <li><a href="{% url 'app:cliente_listarC'%}" class="dropdown-item"><i
+                                class="fas fa-users"></i>Clientes</a></li>
+                        <li><a href="{% url 'app:normativa_listar'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Normativas</a></li>
+                        <li><a href="{% url 'app:proveedor_listarP'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Proveedor</a></li>
+                        <li><a href="{% url 'app:tipo_listar'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Tipo</a></li>
+                        <li><a href="{% url 'app:ubicacion_listarU'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Ubicación</a></li>
+                        <li><a href="{% url 'app:venta_listar'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Ventas</a></li>
+                        <li><a href="{% url 'app:persona_listar'%}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i>Persona</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-header">15 Notifications</span>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> 4 new messages
-                        <span class="float-right text-muted text-sm">3 mins</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-users mr-2"></i> 8 friend requests
-                        <span class="float-right text-muted text-sm">12 hours</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-file mr-2"></i> 3 new reports
-                        <span class="float-right text-muted text-sm">2 days</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                </div>
-            <li class="nav-item">
-                <!-- logout -->
-                <a class="nav-link" href="{%url 'logout'%}">
+
+                <a class="nav-link" href="{%url 'logout'%}"title='cerrar sesión'>
                     <i class="fas fa-power-off" aria-hidden="True"></i>
                 </a>
-            </li>
-
             </li>
         </ul>
     </div>
