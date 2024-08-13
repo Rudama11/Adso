@@ -8,16 +8,21 @@
 {% endblock %}
 
 {% block contenido %}
-    <div class="backup-container">
-        <div class="backup-header">
-            <h1>Copia de Seguridad de la Base de Datos</h1>
-        </div>
-        <div class="backup-form">
-            <form method="POST" action="{% url 'app:respaldo' %}" enctype="multipart/form-data">
+<div class="backup-container">
+    <div class="backup-header">
+        <h1>Copia de Seguridad de la Base de Datos</h1>
+    </div>
+    <div class="backup-form">
+        <div class="form-section backup-section">
+            <h2>Realizar Backup</h2>
+            <form id="backup-form" method="POST" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <button type="submit" class="backup-button">Realizar Backup</button>
             </form>
-            <form id="restore-form" method="POST" enctype="multipart/form-data" action="{% url 'app:restauracion' %}">
+        </div>
+        <div class="form-section restore-section">
+            <h2>Restaurar Backup</h2>
+            <form id="restore-form" method="POST" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
                 <button type="button" id="select-file-button">Seleccionar archivo</button>
@@ -26,6 +31,12 @@
             </form>
         </div>
     </div>
+</div>
+
+    <script>
+        const backupUrl = "{% url 'app:respaldo' %}";
+        const restoreUrl = "{% url 'app:restauracion' %}";
+    </script>
 {% endblock %}
 
 {% block javascript %}
@@ -33,18 +44,7 @@
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Mostrar alerta de éxito si hay mensajes
-        {% if messages %}
-            {% for message in messages %}
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: '{{ message }}',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            {% endfor %}
-        {% endif %}
+        // No se mostrarán alertas automáticamente al cargar la página
     });
 </script>
 {% endblock %}
