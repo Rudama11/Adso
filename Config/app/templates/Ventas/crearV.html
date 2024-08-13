@@ -1,5 +1,4 @@
 {% load static %}
-
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -12,6 +11,8 @@
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
     <link rel="stylesheet" href="{% static 'lib/jquery/css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
 </head>
 
 <body>
@@ -80,26 +81,14 @@
         </section>
 
         <div class="footer-buttons">
-            <button id="print-pdf">Imprimir PDF</button>
-            <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
-                <i class="fas fa-times"></i> Cancelar
-            </a>
+            <button type="button" id="print-invoice">Imprimir factura</button>
+            <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
+
         </div>
-        <footer>
-            <div class="signatures">
-                <div>
-                    <p>Firma Empresa</p>
-                </div>
-                <div>
-                    <p>Firma Cliente</p>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
 </body>
-
 </html>

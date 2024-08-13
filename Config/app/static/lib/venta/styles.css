@@ -199,6 +199,22 @@ button.delete-item:hover {
     width: 45%;
 }
 
+#cancel {
+    background-color: #b82b2b; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: 2px solid #a71d1d; /* Borde del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    text-decoration: none; /* Quitar subrayado */
+    transition: background-color 0.3s, border-color 0.3s; /* Transición para efectos */
+}
+
+#cancel:hover {
+    background-color: #a71d1d; /* Color de fondo al pasar el mouse */
+    border-color: #911d1d; /* Cambiar el color del borde al pasar el mouse */
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;

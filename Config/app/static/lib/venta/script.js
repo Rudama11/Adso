@@ -49,4 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const total = subtotalDto + totalIva;
         document.getElementById("total").textContent = total.toFixed(2);
     }
+
+    // Agregar evento al botón de imprimir
+    const printButton = document.getElementById("print-invoice"); // Asegúrate de que el ID coincida
+    if (printButton) {
+        printButton.addEventListener("click", () => {
+            window.print(); // Llama a la función de impresión del navegador
+        });
+    } else {
+        console.error("Botón de impresión no encontrado");
+    }
 });
