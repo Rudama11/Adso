@@ -89,7 +89,6 @@ class Persona(models.Model):
 class Cliente(models.Model):
     tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Nombres',null=True, blank=True)
-    apellidos = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Apellidos',null=True,blank=True)
     razon_social = models.CharField(max_length=150,verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
     numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex='^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
@@ -133,7 +132,6 @@ class Venta(models.Model):
 class Proveedor(models.Model):
     tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Persona')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Nombres',null=True, blank=True)
-    apellidos = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Apellidos',null=True,blank=True)
     razon_social = models.CharField(max_length=150,verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
     numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex='^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)

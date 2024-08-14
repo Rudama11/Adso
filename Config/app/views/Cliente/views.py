@@ -31,7 +31,6 @@ class ClienteListView(ListView):
         # Obtener los parámetros GET
         tipo_persona = self.request.GET.get('tipo_persona')
         nombres = self.request.GET.get('nombres')
-        apellidos = self.request.GET.get('apellidos')
         tipo_documento = self.request.GET.get('tipo_documento')
         correo = self.request.GET.get('correo')
         telefono = self.request.GET.get('telefono')
@@ -44,8 +43,6 @@ class ClienteListView(ListView):
             queryset = queryset.filter(tipo_persona=tipo_persona)
         if nombres:
             queryset = queryset.filter(nombres__icontains=nombres)
-        if apellidos:
-            queryset = queryset.filter(apellidos__icontains=apellidos)
         if tipo_documento:
             queryset = queryset.filter(tipo_documento=tipo_documento)
         if correo:
