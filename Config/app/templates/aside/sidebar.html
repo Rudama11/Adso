@@ -1,95 +1,82 @@
 {% load static %}
 <aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{% static 'img/logoConaldex.jfif' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
-        <span class="brand-text font-weight-light">CONALDEX</span>
+        <img src="{% static 'img/logoConaldex.jfif' %}" alt="Conaldex Logo" class="brand-image img-circle elevation-3" style="opacity: .9; border-radius: 50%;">
+        <span class="brand-text font-weight-bold" style="color: #1f5a96;">CONALDEX</span>
     </a>
+
+    <!-- Sidebar -->
     <div class="sidebar">
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <!-- User Panel -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
             <div class="image">
-                <img src="{% static 'img/img2.jpg' %}" class="img-circle elevation-2" alt="User Image">
+                <img src="{% static 'img/img2.jpg' %}" class="img-circle elevation-2" alt="User Image" style="border: 2px solid #1f5a96;">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Productos EPP</a>
+                <a href="#" class="d-block font-weight-bold" style="color: #1f5a96;">Productos EPP</a>
             </div>
         </div>
+
+        <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header">Módulos</li>
+                <!-- Header -->
+                <li class="nav-header" style="color: #1f5a96;">Módulos</li>
 
-                </a>
-                </li>
+                <!-- Menu Items -->
                 <li class="nav-item">
                     <a href="{% url 'app:categoria_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-layer-group"></i>
-                        <p>
-                            Categoría
-                        </p>
+                        <i class="nav-icon fas fa-layer-group" style="color: #1f5a96;"></i>
+                        <b><p>Categoría</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:cliente_listarC' %}" class="nav-link">
-                        <i class="nav-icon fas fa-user-tie"></i>
-                        <p>
-                            Clientes
-                        </p>
+                        <i class="nav-icon fas fa-user-tie" style="color: #1f5a96;"></i>
+                        <b><p>Clientes</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:normativa_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-balance-scale"></i>
-                        <p>
-                            Normativas
-                        </p>
+                        <i class="nav-icon fas fa-balance-scale" style="color: #1f5a96;"></i>
+                        <b><p>Normativas</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:persona_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Persona
-                        </p>
+                        <i class="nav-icon fas fa-users" style="color: #1f5a96;"></i>
+                        <b><p>Persona</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:producto_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-hard-hat"></i>
-                        <p>
-                            Productos
-                        </p>
+                        <i class="nav-icon fas fa-hard-hat" style="color: #1f5a96;"></i>
+                        <b><p>Productos</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:proveedor_listarP' %}" class="nav-link">
-                        <i class="nav-icon fas fa-truck"></i>
-                        <p>
-                            Proveedor
-                        </p>
+                        <i class="nav-icon fas fa-truck" style="color: #1f5a96;"></i>
+                        <b><p>Proveedor</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:tipo_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            Tipo
-                        </p>
+                        <i class="nav-icon fas fa-tags" style="color: #1f5a96;"></i>
+                        <b><p>Tipo</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:ubicacion_listarU' %}" class="nav-link">
-                        <i class="nav-icon fas fa-map-marker-alt"></i>
-                        <p>
-                            Ubicación
-                        </p>
+                        <i class="nav-icon fas fa-map-marker-alt" style="color: #1f5a96;"></i>
+                        <b><p>Ubicación</p></b>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:venta_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Ventas
-                        </p>
+                        <i class="nav-icon fas fa-shopping-cart" style="color: #1f5a96;"></i>
+                        <b><p>Ventas</p></b>
                     </a>
                 </li>                
             </ul>
