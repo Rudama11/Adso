@@ -1,8 +1,8 @@
 from dataclasses import fields
-from django.forms import ModelForm, TextInput, Textarea, Select
+from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput, DecimalField
 from django import forms
-from app.models import *
 from django_select2.forms import Select2Widget
+from app.models import *
 
 #---------------------------------------------------------- Categoria ----------------------------------------------------------
 
@@ -11,7 +11,6 @@ class CategoriaForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
 
-
     class Meta:
         model = Categoria
         fields = '__all__'
@@ -19,14 +18,15 @@ class CategoriaForm(ModelForm):
             'nombre': TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre'
-                    }
-                ),
+                }
+            ),
             'descripcion': Textarea(
-            attrs={'placeholder': 'Ingrese la descripción',
+                attrs={
+                    'placeholder': 'Ingrese la descripción',
                     'rows': 1,
                     'cols': 50
-                    }
-                    ),
+                }
+            ),
         }
 
 #---------------------------------------------------------- Tipo ----------------------------------------------------------
@@ -62,6 +62,7 @@ class TipoForm(forms.ModelForm):
         }
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
+
 class UbicacionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -83,6 +84,7 @@ class UbicacionForm(forms.ModelForm):
         }
 
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
+
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
@@ -149,11 +151,11 @@ class ProveedorForm(forms.ModelForm):
 
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
+
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
-        
         self.fields['nombre'].widget.attrs.update({
             'placeholder': 'Ingrese el nombre del producto',
             'class': 'form-control'
@@ -182,6 +184,7 @@ class ProductoForm(forms.ModelForm):
         fields = '__all__'
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
+
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -211,11 +214,11 @@ class NormativaForm(ModelForm):
         }
 
 #------------------------- ventas --------------------------------------------
+
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
-
 
     class Meta:
         model = Venta
@@ -224,10 +227,12 @@ class VentaForm(ModelForm):
             'nombre': TextInput(
                 attrs={
                     'placeholder': 'Ingrese un numero de factura'
-                    }
-                ),
+                }
+            ),
         }
+
 #------------------------- Persona --------------------------------------------
+
 class PersonaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -284,3 +289,45 @@ class PersonaForm(ModelForm):
                 }
             ),
         }
+
+#---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
+
+class ProductoFilterForm(forms.Form):
+    nombre = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Nombre del producto', 'class': 'form-control'})
+    )
+    descripcion = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Descripción del producto', 'class': 'form-control'})
+    )
+    stock_min = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={'placeholder': 'Stock mínimo', 'class': 'form-control'})
+    )
+    stock_max = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={'placeholder': 'Stock máximo', 'class': 'form-control'})
+    )
+    precio_min = forms.DecimalField(
+        required=False,
+        decimal_places=2,
+        max_digits=10,
+        widget=forms.NumberInput(attrs={'placeholder': 'Precio mínimo', 'class': 'form-control'})
+    )
+    precio_max = forms.DecimalField(
+        required=False,
+        decimal_places=2,
+        max_digits=10,
+        widget=forms.NumberInput(attrs={'placeholder': 'Precio máximo', 'class': 'form-control'})
+    )
+    categoria = forms.ModelChoiceField(
+        required=False,
+        queryset=Categoria.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    tipo_pro = forms.ModelChoiceField(
+        required=False,
+        queryset=Tipo.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )

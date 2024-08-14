@@ -1,7 +1,61 @@
 {% extends 'listar.html' %}
 
-{% block columnas %}
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:producto_listar' %}">
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
+    </div>
 
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
+    </div>
+
+    <div class="form-group">
+        <label for="stock_min">Stock Mínimo</label>
+        <input type="number" class="form-control" id="stock_min" name="stock_min" value="{{ request.GET.stock_min }}">
+    </div>
+
+    <div class="form-group">
+        <label for="stock_max">Stock Máximo</label>
+        <input type="number" class="form-control" id="stock_max" name="stock_max" value="{{ request.GET.stock_max }}">
+    </div>
+
+    <div class="form-group">
+        <label for="precio_min">Precio Mínimo</label>
+        <input type="number" class="form-control" id="precio_min" name="precio_min" value="{{ request.GET.precio_min }}">
+    </div>
+
+    <div class="form-group">
+        <label for="precio_max">Precio Máximo</label>
+        <input type="number" class="form-control" id="precio_max" name="precio_max" value="{{ request.GET.precio_max }}">
+    </div>
+
+    <div class="form-group">
+        <label for="categoria">Categoría</label>
+        <select class="form-control" id="categoria" name="categoria">
+            <option value="">Todas</option>
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if request.GET.categoria == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tipo_pro">Tipo de Producto</label>
+        <select class="form-control" id="tipo_pro" name="tipo_pro">
+            <option value="">Todos</option>
+            {% for tipo in tipos %}
+                <option value="{{ tipo.id }}" {% if request.GET.tipo_pro == tipo.id|stringformat:"s" %}selected{% endif %}>{{ tipo.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+</form>
+{% endblock %}
+
+{% block columnas %}
 <tr>
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
@@ -30,28 +84,24 @@
     <th scope="col">Categoría</th>
     <th scope="col">Tipo de producto</th>
     <th scope="col">Opciones</th>
-
 </tr>
 {% endblock %}
 
 {% block filas %}
 {% for pro in object_list %}
 <tr>
-    <td>{{pro.id}}</td>
-    <td>{{pro.nombre}}</td>
-    <td>{{pro.descripcion}}</td>
-    <td>{{pro.stock}}</td>
-    <td>{{pro.precio}}</td>
-    <td>{{pro.categoria.nombre}}</td>
-    <td>{{pro.tipo_pro.nombre}}</td>
+    <td>{{ pro.id }}</td>
+    <td>{{ pro.nombre }}</td>
+    <td>{{ pro.descripcion }}</td>
+    <td>{{ pro.stock }}</td>
+    <td>{{ pro.precio }}</td>
+    <td>{{ pro.categoria.nombre }}</td>
+    <td>{{ pro.tipo_pro.nombre }}</td>
 
     <td>
         <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i
-                class="fas fa-trash"></i></a>
+        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
     </td>
-
 </tr>
 {% endfor %}
-
 {% endblock %}
