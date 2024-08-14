@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
     const addItemButton = document.getElementById("add-item");
     const invoiceItems = document.getElementById("invoice-items");
-    let itemCount = 0; // Contador para el número de ítem
+    let itemCount = 0;
     
     addItemButton.addEventListener("click", () => {
-        itemCount++; // Incrementar el contador cada vez que se agrega un nuevo ítem
+        itemCount++;
         const row = document.createElement("tr");
         
         row.innerHTML = `
             <td>${itemCount}</td> <!-- Mostrar el número de ítem -->
             <td><input type="text" class="descripcion" required></td>
-            <td><input type="number" class="cantidad" value="1" min="1" required></td>
-            <td><input type="number" class="precio-unitario" value="0" min="0" step="0.01" required></td>
-            <td><input type="number" class="iva" value="21" min="0" max="100" step="0.01" required></td> <!-- Campo para IVA -->
-            <td class="total">0,00</td>
+            <td><input type="number" class="cantidad" value="1" min="1" step="1" required></td>
+            <td><input type="number" class="precio-unitario" value="0" min="0" step="1" required></td>
+            <td><input type="number" class="iva" value="19" min="0" max="100" step="1" required></td>
+            <td class="total">0.0</td>
             <td><button type="button" class="delete-item">Eliminar</button></td>
         `;
         
@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         row.querySelector(".delete-item").addEventListener("click", () => {
             invoiceItems.removeChild(row);
-            itemCount--; // Decrementar el contador al eliminar un ítem
-            updateItemNumbers(); // Actualizar los números de ítem
+            itemCount--;
+            updateItemNumbers();
             updateTotals();
         });
     });
@@ -38,46 +38,43 @@ document.addEventListener("DOMContentLoaded", () => {
         rows.forEach(row => {
             const cantidad = parseFloat(row.querySelector(".cantidad").value);
             const precioUnitario = parseFloat(row.querySelector(".precio-unitario").value);
-            const iva = parseFloat(row.querySelector(".iva").value) / 100; // Convertir a decimal
+            const iva = parseFloat(row.querySelector(".iva").value) / 100;
             const totalSinIva = cantidad * precioUnitario;
-            const totalConIva = totalSinIva * (1 + iva); // Calcular el total con IVA
-            row.querySelector(".total").textContent = totalConIva.toFixed(2);
+            const totalConIva = totalSinIva * (1 + iva);
+            row.querySelector(".total").textContent = totalConIva.toFixed(1);
             subtotal += totalSinIva;
-            totalIva += totalSinIva * iva; // Acumular el IVA total
+            totalIva += totalSinIva * iva;
         });
 
-        document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+        document.getElementById("subtotal").textContent = subtotal.toFixed(1);
 
-        const descuento = parseFloat(document.getElementById("descuento").value);
-        const subtotalDto = subtotal - descuento;
-        document.getElementById("subtotal_dto").textContent = subtotalDto.toFixed(2);
+        const descuento = parseFloat(document.getElementById("descuento").value) / 100;
+        const subtotalDto = subtotal * (1 - descuento);
+        document.getElementById("subtotal_dto").textContent = subtotalDto.toFixed(1);
 
-        document.getElementById("total_iva").textContent = totalIva.toFixed(2);
+        document.getElementById("total_iva").textContent = totalIva.toFixed(1);
 
         const total = subtotalDto + totalIva;
-        document.getElementById("total").textContent = total.toFixed(2);
+        document.getElementById("total").textContent = total.toFixed(1);
     }
 
     function updateItemNumbers() {
         const rows = invoiceItems.querySelectorAll("tr");
         rows.forEach((row, index) => {
-            row.querySelector("td:first-child").textContent = index + 1; // Actualiza el número de ítem
+            row.querySelector("td:first-child").textContent = index + 1;
         });
     }
 
-    // Agregar evento al botón de imprimir
     const printButton = document.getElementById("print-invoice");
     if (printButton) {
         printButton.addEventListener("click", () => {
-            // Ocultar la columna de acciones antes de imprimir
             const accionesColumnas = document.querySelectorAll('th:last-child, td:last-child');
             accionesColumnas.forEach(columna => {
                 columna.style.display = 'none';
             });
 
-            window.print(); // Llama a la función de impresión del navegador
+            window.print();
 
-            // Volver a mostrar la columna de acciones después de imprimir
             accionesColumnas.forEach(columna => {
                 columna.style.display = '';
             });
