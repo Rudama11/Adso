@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.39, for Win64 (x86_64)
 --
 -- Host: localhost    Database: Conaldex_Boyaca
 -- ------------------------------------------------------
@@ -125,7 +125,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$870000$7gK5eDRMpDpdXSh0WaA8Nt$DicXr9ilHCxil9fIo8MJN7AS8lbHbnu16G6E3Byym0s=','2024-08-13 21:21:11.111665',1,'Admin','','','boyacaconaldex@gmail.com',1,1,'2024-08-12 19:26:11.524312');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$870000$73NcjRu1jP73iYwN7SYoRa$p0GBiIQN097CyN8TJjj1GW/YK5hK8oNarizk58SYsd8=','2024-08-14 18:18:42.707903',1,'Admin','','','conaldexboyaca@gmail.com',1,1,'2024-08-13 18:21:48.413476');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +198,7 @@ CREATE TABLE `categoria` (
   `descripcion` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,6 +207,7 @@ CREATE TABLE `categoria` (
 
 LOCK TABLES `categoria` WRITE;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+INSERT INTO `categoria` VALUES (3,'jHola jajeje','Lelo marcooo'),(4,'Extintor','Hola estamos graves'),(5,'Chale','Buenas hola'),(6,'Julio Sierra','Caballo homosexual de las montañas.');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +396,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-08-12 19:20:09.831686'),(2,'auth','0001_initial','2024-08-12 19:20:10.577374'),(3,'admin','0001_initial','2024-08-12 19:20:10.778880'),(4,'admin','0002_logentry_remove_auto_add','2024-08-12 19:20:10.788785'),(5,'admin','0003_logentry_add_action_flag_choices','2024-08-12 19:20:10.796932'),(6,'app','0001_initial','2024-08-12 19:20:12.082690'),(7,'contenttypes','0002_remove_content_type_name','2024-08-12 19:20:12.180821'),(8,'auth','0002_alter_permission_name_max_length','2024-08-12 19:20:12.264443'),(9,'auth','0003_alter_user_email_max_length','2024-08-12 19:20:12.293014'),(10,'auth','0004_alter_user_username_opts','2024-08-12 19:20:12.301784'),(11,'auth','0005_alter_user_last_login_null','2024-08-12 19:20:12.369483'),(12,'auth','0006_require_contenttypes_0002','2024-08-12 19:20:12.375987'),(13,'auth','0007_alter_validators_add_error_messages','2024-08-12 19:20:12.384065'),(14,'auth','0008_alter_user_username_max_length','2024-08-12 19:20:12.464026'),(15,'auth','0009_alter_user_last_name_max_length','2024-08-12 19:20:12.553146'),(16,'auth','0010_alter_group_name_max_length','2024-08-12 19:20:12.575736'),(17,'auth','0011_update_proxy_permissions','2024-08-12 19:20:12.588772'),(18,'auth','0012_alter_user_first_name_max_length','2024-08-12 19:20:12.678262'),(19,'inicio','0001_initial','2024-08-12 19:20:12.719596'),(20,'inicio','0002_delete_csrftoken','2024-08-12 19:20:12.737883'),(21,'sessions','0001_initial','2024-08-12 19:20:12.779683');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-08-09 20:30:01.684077'),(2,'auth','0001_initial','2024-08-09 20:30:02.297473'),(3,'admin','0001_initial','2024-08-09 20:30:02.408347'),(4,'admin','0002_logentry_remove_auto_add','2024-08-09 20:30:02.414350'),(5,'admin','0003_logentry_add_action_flag_choices','2024-08-09 20:30:02.421184'),(6,'app','0001_initial','2024-08-09 20:30:03.251779'),(7,'contenttypes','0002_remove_content_type_name','2024-08-09 20:30:03.348298'),(8,'auth','0002_alter_permission_name_max_length','2024-08-09 20:30:03.405793'),(9,'auth','0003_alter_user_email_max_length','2024-08-09 20:30:03.418818'),(10,'auth','0004_alter_user_username_opts','2024-08-09 20:30:03.440840'),(11,'auth','0005_alter_user_last_login_null','2024-08-09 20:30:03.487824'),(12,'auth','0006_require_contenttypes_0002','2024-08-09 20:30:03.488664'),(13,'auth','0007_alter_validators_add_error_messages','2024-08-09 20:30:03.488664'),(14,'auth','0008_alter_user_username_max_length','2024-08-09 20:30:03.538577'),(15,'auth','0009_alter_user_last_name_max_length','2024-08-09 20:30:03.588465'),(16,'auth','0010_alter_group_name_max_length','2024-08-09 20:30:03.601826'),(17,'auth','0011_update_proxy_permissions','2024-08-09 20:30:03.624318'),(18,'auth','0012_alter_user_first_name_max_length','2024-08-09 20:30:03.685285'),(19,'inicio','0001_initial','2024-08-09 20:30:03.707410'),(20,'inicio','0002_delete_csrftoken','2024-08-09 20:30:03.724845'),(21,'sessions','0001_initial','2024-08-09 20:30:03.755561');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,7 +422,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('juvxg5kcmp68xz37q3ldb294wm0ptwm2','.eJxVjEsOAiEQBe_C2hBQoGmX7j0D6eYjowaSYWZlvLtOMgvdvqp6LxFoXWpYR57DlMRZaHH43ZjiI7cNpDu1W5ext2WeWG6K3OmQ157y87K7fweVRv3Wjhy7qJERoGhC49Eay4UZSBMVlY1OWAgV2KMvUTlnLIA3J2SfQYn3B-bgN5A:1sdyx5:95NtQKcpOpjYmlvtHdFGV26gjFhHiRiqF3IAzGs6O7Y','2024-08-27 21:21:11.117579');
+INSERT INTO `django_session` VALUES ('3v3nlw766cezwfdq1108053t1iqb7vvm','.eJxVjDEOwjAMRe-SGUW4MU3CyN4zVI5tSAElUtNOiLtDpQ6w_vfef5mR1iWPa9N5nMScDZjD75aIH1o2IHcqt2q5lmWekt0Uu9Nmhyr6vOzu30Gmlr91dF1_giMJxytHR17ZIQV0PULvfEQN6BURvEoCRGWRjkNHCaIXCOb9Acz9N30:1sdy4H:PnV_KJSET2wpk_SeCF9mJ51t4GrSF5w6HM9LcjO1a2A','2024-08-27 20:24:33.195411'),('xt3ght9rkgq9j6s9cqk5jzw3urjzt408','.eJxVjDEOwjAMRe-SGUW4MU3CyN4zVI5tSAElUtNOiLtDpQ6w_vfef5mR1iWPa9N5nMScDZjD75aIH1o2IHcqt2q5lmWekt0Uu9Nmhyr6vOzu30Gmlr91dF1_giMJxytHR17ZIQV0PULvfEQN6BURvEoCRGWRjkNHCaIXCOb9Acz9N30:1seIa2:pQBkDJbx5zglw2k4ovrSgEE8tnnckNIylNIHGcZbDZ0','2024-08-28 18:18:42.707903');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -645,4 +646,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-08-13 16:21:16
+-- Dump completed on 2024-08-14 13:50:35
