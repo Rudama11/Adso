@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <td><input type="text" class="descripcion" required></td>
             <td><input type="number" class="cantidad" value="1" min="1" required></td>
             <td><input type="number" class="precio-unitario" value="0" min="0" step="0.01" required></td>
+            <td><input type="number" class="iva" value="21" min="0" max="100" step="0.01" required></td> <!-- Campo para IVA -->
             <td class="total">0,00</td>
             <td><button type="button" class="delete-item">Eliminar</button></td>
         `;
@@ -31,14 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateTotals() {
         let subtotal = 0;
+        let totalIva = 0;
         const rows = invoiceItems.querySelectorAll("tr");
 
         rows.forEach(row => {
             const cantidad = parseFloat(row.querySelector(".cantidad").value);
             const precioUnitario = parseFloat(row.querySelector(".precio-unitario").value);
-            const total = cantidad * precioUnitario;
-            row.querySelector(".total").textContent = total.toFixed(2);
-            subtotal += total;
+            const iva = parseFloat(row.querySelector(".iva").value) / 100; // Convertir a decimal
+            const totalSinIva = cantidad * precioUnitario;
+            const totalConIva = totalSinIva * (1 + iva); // Calcular el total con IVA
+            row.querySelector(".total").textContent = totalConIva.toFixed(2);
+            subtotal += totalSinIva;
+            totalIva += totalSinIva * iva; // Acumular el IVA total
         });
 
         document.getElementById("subtotal").textContent = subtotal.toFixed(2);
@@ -47,8 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const subtotalDto = subtotal - descuento;
         document.getElementById("subtotal_dto").textContent = subtotalDto.toFixed(2);
 
-        const iva = parseFloat(document.getElementById("iva").value);
-        const totalIva = subtotalDto * (iva / 100);
         document.getElementById("total_iva").textContent = totalIva.toFixed(2);
 
         const total = subtotalDto + totalIva;

@@ -6,13 +6,14 @@ body {
 }
 
 .invoice-container {
-    max-width: 900px;
+    max-width: 1200px; /* Aumenta el ancho máximo a 1200px */
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Agregado para bordes redondeados */
+    border-radius: 10px; /* Bordes redondeados */
 }
+
 
 header {
     display: flex;
