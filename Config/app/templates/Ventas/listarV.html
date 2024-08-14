@@ -1,5 +1,31 @@
 {% extends 'listar.html' %}
 
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:venta_listar' %}">
+    <div class="form-group">
+        <label for="num_factura">Número de Factura</label>
+        <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
+    </div>
+    <div class="form-group">
+        <label for="fecha_emision">Fecha de Emisión</label>
+        <input type="date" class="form-control" id="fecha_emision" name="fecha_emision" value="{{ request.GET.fecha_emision }}">
+    </div>
+    <div class="form-group">
+        <label for="cliente">Cliente</label>
+        <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente" value="{{ request.GET.cliente }}">
+    </div>
+    <div class="form-group">
+        <label for="persona">Vendedor</label>
+        <input type="text" class="form-control" id="persona" name="persona" placeholder="Ingrese el nombre del vendedor" value="{{ request.GET.persona }}">
+    </div>
+    <div class="form-group">
+        <label for="total">Total de la Factura</label>
+        <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la factura" value="{{ request.GET.total }}">
+    </div>
+
+</form>
+{% endblock %}
+
 {% block columnas %}
 <tr>
     <th scope="col">Id Venta</th>
