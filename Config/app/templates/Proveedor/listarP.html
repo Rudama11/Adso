@@ -22,14 +22,15 @@
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="razon_social">Razón Social</label>
                 <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
             </div>
         </div>
+    </div>
+    
+    <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="tipo_documento">Tipo de Documento</label>
@@ -49,14 +50,15 @@
                 <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Ingrese el número de documento" value="{{ request.GET.numero_documento }}">
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="correo">Correo</label>
                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo" value="{{ request.GET.correo }}">
             </div>
         </div>
+    </div>
+    
+    <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
@@ -69,9 +71,7 @@
                 <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ingrese la ciudad" value="{{ request.GET.ciudad }}">
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="direccion">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la dirección" value="{{ request.GET.direccion }}">
@@ -79,7 +79,7 @@
         </div>
     </div>
     
-    <button type="submit" class="btn btn-primary">Filtrar</button>
+
 </form>
 {% endblock %}
 

@@ -23,6 +23,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -30,8 +31,6 @@
                 <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="tipo_documento">Tipo de Documento</label>
@@ -45,41 +44,48 @@
                 </select>
             </div>
         </div>
+    </div>
+    
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="numero_documento">Número de Documento</label>
                 <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Ingrese el número de documento" value="{{ request.GET.numero_documento }}">
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="correo">Correo</label>
                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo" value="{{ request.GET.correo }}">
             </div>
         </div>
+    </div>
+    
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el teléfono" value="{{ request.GET.telefono }}">
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="ciudad">Ciudad</label>
                 <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ingrese la ciudad" value="{{ request.GET.ciudad }}">
             </div>
         </div>
-        <div class="col-md-6">
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="direccion">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la dirección" value="{{ request.GET.direccion }}">
             </div>
         </div>
     </div>
+
+    <button type="submit" class="btn btn-primary">Filtrar</button>
 </form>
 {% endblock %}
 
