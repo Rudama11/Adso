@@ -43,11 +43,18 @@
             <div class="client-data">
                 <h2>Cliente (Remitente)</h2>
                 <div class="client-details">
-                    <p><strong>Número documento:</strong> <input type="text" id="cliente_cif"></p>
-                    <p><strong>Nombres:</strong> <input type="text" id="cliente_nombre"></p>
-                    <p><strong>Dirección residencia:</strong> <input type="text" id="cliente_direccion"></p>
-                    <p><strong>Correo:</strong> <input type="email" id="cliente_mail"></p>
-                    <p><strong>Celular:</strong> <input type="text" id="cliente_telefono"></p>
+                    <p><strong>Número documento:</strong>
+                        <select class="form-control col-md-6" name="cliente" id="cliente_select">
+                            <option value="" hidden>Seleccione un cliente</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente.numero_documento }} - {{ cliente.nombres|default:cliente.razon_social }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p><strong>Nombres/Razón Social:</strong> <input type="text" id="cliente_nombre" placeholder="Nombres/Razón Social"></p>
+                    <p><strong>Dirección residencia:</strong> <input type="text" id="cliente_direccion" placeholder="Dirección"></p>
+                    <p><strong>Correo:</strong> <input type="email" id="cliente_mail" placeholder="Correo"></p>
+                    <p><strong>Celular:</strong> <input type="text" id="cliente_telefono" placeholder="Celular"></p>
                 </div>
             </div>
         </section>
@@ -74,23 +81,46 @@
         <section class="invoice-totals">
             <div class="totals">
                 <h3>Totales</h3>
-                <p><strong>Subtotal:</strong> <span id="subtotal">0,0</span> $ COP</p>
+                <p><strong>Subtotal:</strong> <span id="subtotal">0.0</span> $ COP</p>
                 <p><strong>Descuento:</strong> <input type="number" id="descuento" value="0" min="0" step="1"> %</p>
-                <p><strong>Subtotal - Dto:</strong> <span id="subtotal_dto">0,0</span> $ COP</p>
-                <p><strong>Total IVA:</strong> <span id="total_iva">0,0</span> $ COP</p>
-                <p><strong>TOTAL:</strong> <span id="total">0,0</span> $ COP</p>
+                <p><strong>Subtotal - Dto:</strong> <span id="subtotal_dto">0.0</span> $ COP</p>
+                <p><strong>Total IVA:</strong> <span id="total_iva">0.0</span> $ COP</p>
+                <p><strong>TOTAL:</strong> <span id="total">0.0</span> $ COP</p>
             </div>
         </section>
 
         <div class="footer-buttons">
             <button type="button" id="print-invoice">Imprimir factura</button>
             <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
-
         </div>
     </div>
 
     <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#cliente_select').on('change', function() {
+                var clienteId = $(this).val();
+                if (clienteId) {
+                    $.ajax({
+                        url: '{% url "app:obtener_datos_cliente" %}',  // Asegúrate de que el nombre de la URL sea correcto
+                        data: {
+                            'cliente_id': clienteId
+                        },
+                        success: function(data) {
+                            $('#cliente_nombre').val(data.nombre);
+                            $('#cliente_direccion').val(data.direccion);
+                            $('#cliente_mail').val(data.correo);
+                            $('#cliente_telefono').val(data.telefono);
+                        },
+                        error: function() {
+                            alert('Error al obtener los datos del cliente.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>    
 </body>
 </html>
