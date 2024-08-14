@@ -82,6 +82,10 @@ h3 {
     width: 80%;
 }
 
+.invoice-details {
+    overflow-x: auto; /* Agrega desplazamiento horizontal si es necesario */
+}
+
 .invoice-details table {
     width: 100%;
     margin-top: 20px;
@@ -92,7 +96,7 @@ h3 {
 }
 
 .invoice-details th, .invoice-details td {
-    padding: 15px;
+    padding: 10px; /* Reduce el padding para evitar que la tabla se desborde */
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
 }
@@ -153,7 +157,7 @@ button#add-item:hover {
 }
 
 button.delete-item {
-    padding: 10px 20px;
+    padding: 5px 10px; /* Reduce el padding del botón */
     background-color: #ff4444;
     color: #fff;
     border: none;
@@ -199,6 +203,22 @@ button.delete-item:hover {
     width: 45%;
 }
 
+#cancel {
+    background-color: #b82b2b; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: 2px solid #a71d1d; /* Borde del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    text-decoration: none; /* Quitar subrayado */
+    transition: background-color 0.3s, border-color 0.3s; /* Transición para efectos */
+}
+
+#cancel:hover {
+    background-color: #a71d1d; /* Color de fondo al pasar el mouse */
+    border-color: #911d1d; /* Cambiar el color del borde al pasar el mouse */
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;
@@ -214,6 +234,14 @@ button.delete-item:hover {
     .footer-buttons {
         flex-direction: column; /* Coloca los botones en columna en pantallas pequeñas */
         align-items: flex-start; /* Alinea los botones hacia la izquierda */
+    }
+
+    .invoice-details table {
+        font-size: 14px; /* Ajusta el tamaño de fuente para pantallas pequeñas */
+    }
+
+    .invoice-details th, .invoice-details td {
+        padding: 8px; /* Ajusta el padding para pantallas pequeñas */
     }
 }
 
@@ -231,6 +259,6 @@ button.delete-item:hover {
     .footer-buttons,
     #add-item,
     .acciones {
-        display: none !important;
+        display: none !important; /* Esto debería ocultar la columna de acciones */
     }
 }

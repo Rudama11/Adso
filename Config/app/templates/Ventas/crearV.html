@@ -1,5 +1,4 @@
 {% load static %}
-
 {% load widget_tweaks %}
 
 <!DOCTYPE html>
@@ -12,40 +11,43 @@
     <link rel="stylesheet" href="{% static 'lib/venta/styles.css' %}">
     <link rel="stylesheet" href="{% static 'lib/jquery/css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
 </head>
 
 <body>
     <div class="invoice-container">
         <header>
-            <div class="company-info">
-                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="logo">
-                <h1>Conaldex-Boyaca</h1>
-                <div class="company-details">
-                    <p><strong>NIT:</strong> 91068006-8</p>
-                    <p><strong>Dirección:</strong> Calle 7 # 14-65</p>
-                    <p><strong>Correo:</strong> conaldexboyaca@gmail.com</p>
-                    <p><strong>Celular:</strong> +57 3124352596</p>
-                </div>
-            </div>
             <div class="invoice-info">
-                <h2>FACTURA</h2>
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="logo">
+                <h2>Datos Factura</h2>
                 <div class="invoice-details">
                     <p><strong>Fecha Emisión:</strong> <input type="date" id="fecha_emision"></p>
                     <p><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha_vencimiento"></p>
                     <p><strong>Número de Factura:</strong> <input type="text" id="num_factura"></p>
                 </div>
             </div>
+            <p></p>
+            <div class="company-info">
+                <div class="company-details">
+                    <h2>Empresa (Emisor)</h2>
+                    <p><strong>Nombre:</strong> Conaldex-Boyaca</p>
+                    <p><strong>NIT:</strong> 91068006-8</p>
+                    <p><strong>Dirección:</strong> Calle 7 # 14-65</p>
+                    <p><strong>Correo:</strong> conaldexboyaca@gmail.com</p>
+                    <p><strong>Celular:</strong> +57 3124352596</p>
+                </div>
+            </div>
         </header>
-
         <section class="client-info">
             <div class="client-data">
-                <h3>Enviar A</h3>
+                <h2>Cliente (Remitente)</h2>
                 <div class="client-details">
-                    <p><strong>Nombre Cliente:</strong> <input type="text" id="cliente_nombre"></p>
-                    <p><strong>Dirección Cliente:</strong> <input type="text" id="cliente_direccion"></p>
-                    <p><strong>CIF/NIF:</strong> <input type="text" id="cliente_cif"></p>
-                    <p><strong>Teléfono:</strong> <input type="text" id="cliente_telefono"></p>
-                    <p><strong>Mail:</strong> <input type="email" id="cliente_mail"></p>
+                    <p><strong>Número documento:</strong> <input type="text" id="cliente_cif"></p>
+                    <p><strong>Nombres:</strong> <input type="text" id="cliente_nombre"></p>
+                    <p><strong>Dirección residencia:</strong> <input type="text" id="cliente_direccion"></p>
+                    <p><strong>Correo:</strong> <input type="email" id="cliente_mail"></p>
+                    <p><strong>Celular:</strong> <input type="text" id="cliente_telefono"></p>
                 </div>
             </div>
         </section>
@@ -54,6 +56,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Item</th> <!-- Nueva columna para el número de ítem -->
                         <th>Descripción</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
@@ -80,26 +83,14 @@
         </section>
 
         <div class="footer-buttons">
-            <button id="print-pdf">Imprimir PDF</button>
-            <a href="{{ listar_url }}" class="button-trash btn-info btn-flat">
-                <i class="fas fa-times"></i> Cancelar
-            </a>
+            <button type="button" id="print-invoice">Imprimir factura</button>
+            <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
+
         </div>
-        <footer>
-            <div class="signatures">
-                <div>
-                    <p>Firma Empresa</p>
-                </div>
-                <div>
-                    <p>Firma Cliente</p>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
 </body>
-
 </html>
