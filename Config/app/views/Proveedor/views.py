@@ -21,7 +21,6 @@ def lista_proveedor(request):
     filtros = {
         'tipo_persona': 'tipo_persona',
         'nombres__icontains': 'nombres',
-        'apellidos__icontains': 'apellidos',
         'razon_social__icontains': 'razon_social',
         'tipo_documento': 'tipo_documento',
         'numero_documento__icontains': 'numero_documento',
@@ -63,7 +62,6 @@ class ProveedorListView(ListView):
         filtros = {
             'tipo_persona': 'tipo_persona',
             'nombres__icontains': 'nombres',
-            'apellidos__icontains': 'apellidos',
             'razon_social__icontains': 'razon_social',
             'tipo_documento': 'tipo_documento',
             'numero_documento__icontains': 'numero_documento',

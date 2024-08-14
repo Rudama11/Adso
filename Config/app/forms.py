@@ -91,7 +91,6 @@ class ClienteForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del cliente'}),
-            'apellidos': forms.TextInput(attrs={'placeholder': 'Ingrese el apellido'}),
             'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social del cliente'}),
             'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
@@ -106,7 +105,6 @@ class ClienteForm(forms.ModelForm):
         self.fields['nombres'].widget.attrs['autofocus'] = True
         if self.instance and self.instance.tipo_persona == 'PJ':
             self.fields['nombres'].widget.attrs['style'] = 'display:block;'
-            self.fields['apellidos'].widget.attrs['style'] = 'display:block;'
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
@@ -124,7 +122,6 @@ class ProveedorForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del Proveedor'}),
-            'apellidos': forms.TextInput(attrs={'placeholder': 'Ingrese el apellido'}),
             'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social'}),
             'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
@@ -139,7 +136,6 @@ class ProveedorForm(forms.ModelForm):
         self.fields['nombres'].widget.attrs['autofocus'] = True
         if self.instance and self.instance.tipo_persona == 'PJ':
             self.fields['nombres'].widget.attrs['style'] = 'display:block;'
-            self.fields['apellidos'].widget.attrs['style'] = 'display:block;'
             self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'

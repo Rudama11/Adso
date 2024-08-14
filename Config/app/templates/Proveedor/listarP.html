@@ -22,12 +22,6 @@
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingrese los apellidos" value="{{ request.GET.apellidos }}">
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-md-4">
@@ -94,7 +88,6 @@
     <th scope="col">Id</th>
     <th scope="col">Tipo de Persona</th>
     <th scope="col">Nombres</th>
-    <th scope="col">Apellidos</th>
     <th scope="col">Razón Social</th>
     <th scope="col">Tipo de Documento</th>
     <th scope="col">Número de Documento</th>
@@ -112,7 +105,6 @@
     <td>{{ p.id }}</td>
     <td>{{ p.get_tipo_persona_display }}</td>
     <td>{{ p.nombres }}</td>
-    <td>{{ p.apellidos }}</td>
     <td>{{ p.razon_social }}</td>
     <td>{{ p.get_tipo_documento_display }}</td>
     <td>{{ p.numero_documento }}</td>
