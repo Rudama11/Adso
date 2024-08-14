@@ -129,3 +129,6 @@ EMAIL_HOST_PASSWORD = 'paco tjrt dyyi irwq'
 # EMAIL_USE_TLS = True
 # EMAIL_HOST_USER = 'boyacaconaldex@gmail.com'
 # EMAIL_HOST_PASSWORD = 'ewfh mhlu txgs cnls'
+ 
+ 
+#Correo Electronico 
