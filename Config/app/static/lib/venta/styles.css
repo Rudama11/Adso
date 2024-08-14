@@ -258,7 +258,8 @@ button.delete-item:hover {
     /* Ocultar elementos no necesarios en impresión */
     .footer-buttons,
     #add-item,
-    .acciones {
-        display: none !important; /* Esto debería ocultar la columna de acciones */
+    th.acciones,
+    td.acciones { /* Oculta la columna de acciones */
+        display: none !important;
     }
 }

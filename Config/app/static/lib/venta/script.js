@@ -63,10 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Agregar evento al botón de imprimir
-    const printButton = document.getElementById("print-invoice"); // Asegúrate de que el ID coincida
+    const printButton = document.getElementById("print-invoice");
     if (printButton) {
         printButton.addEventListener("click", () => {
+            // Ocultar la columna de acciones antes de imprimir
+            const accionesColumnas = document.querySelectorAll('th:last-child, td:last-child');
+            accionesColumnas.forEach(columna => {
+                columna.style.display = 'none';
+            });
+
             window.print(); // Llama a la función de impresión del navegador
+
+            // Volver a mostrar la columna de acciones después de imprimir
+            accionesColumnas.forEach(columna => {
+                columna.style.display = '';
+            });
         });
     } else {
         console.error("Botón de impresión no encontrado");
