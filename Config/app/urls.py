@@ -69,6 +69,7 @@ urlpatterns = [
     path('Ventas/crearV/', VentasCreateView.as_view(), name='venta_crear'),
     path('Ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
     path('Ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
+    path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
 
     #-------------------------------------------------- Persona --------------------------------------------------
     

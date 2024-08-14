@@ -54,6 +54,7 @@ class VentasCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['clientes'] = Cliente.objects.all()
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')
@@ -83,3 +84,17 @@ class VentasDeleteView(DeleteView):
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')
         return context
+    
+def obtener_datos_cliente(request):
+    cliente_id = request.GET.get('cliente_id')
+    try:
+        cliente = Cliente.objects.get(id=cliente_id)
+        data = {
+            'nombre': cliente.nombres if cliente.tipo_persona == 'PN' else cliente.razon_social,
+            'direccion': cliente.direccion,
+            'correo': cliente.correo,
+            'telefono': cliente.telefono,
+        }
+        return JsonResponse(data)
+    except Cliente.DoesNotExist:
+        return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
