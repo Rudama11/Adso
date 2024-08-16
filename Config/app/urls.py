@@ -35,14 +35,14 @@ urlpatterns = [
     path('Proveedor/editar/<int:pk>/', ProveedorUpdateView.as_view(), name='proveedor_editar'),
     path('Proveedor/eliminar/<int:pk>/', ProveedorDeleteView.as_view(), name='proveedor_eliminar'),
 
-    #-------------------------------------------------- Cliente --------------------------------------------------
+    #-------------------------------------------------- Cliente ----------------------------------------------------
     
     path('Cliente/listarC/', ClienteListView.as_view(), name='cliente_listarC'),
     path('Cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('Cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
     path('Cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
 
-    #-------------------------------------------------- Tipos de productos --------------------------------------------------
+    #-------------------------------------------------- Tipos de productos -----------------------------------------
 
     path('Tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
     path('Tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
@@ -56,14 +56,14 @@ urlpatterns = [
     path('Producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editar'),
     path('Producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
 
-    #-------------------------------------------------- Normativa --------------------------------------------------
+    #-------------------------------------------------- Normativa -------------------------------------------------
     
     path('Normativa/listarN/', NormativaListView.as_view(), name='normativa_listar'),
     path('Normativa/crearN/', NormativaCreateView.as_view(), name='normativa_crear'),
     path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
     path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
     
-    #-------------------------------------------------- Ventas --------------------------------------------------
+    #-------------------------------------------------- Ventas ----------------------------------------------------
     
     path('Ventas/listarV/', VentasListView.as_view(), name='venta_listar'),
     path('Ventas/crearV/', VentasCreateView.as_view(), name='venta_crear'),
@@ -72,14 +72,14 @@ urlpatterns = [
     path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
     path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
 
-    #-------------------------------------------------- Persona --------------------------------------------------
+    #-------------------------------------------------- Persona ---------------------------------------------------
     
     path('Persona/listar/', PersonaListView.as_view(), name='persona_listar'),
     path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
     path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
     path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
     
-    #-------------------------------------------------- Backup del sistema --------------------------------------------------
+    #-------------------------------------------------- Backup del sistema ----------------------------------------
     
     path('backup/', backup_view, name='backup'),
     path('backup/create/', backup_database, name='respaldo'),
