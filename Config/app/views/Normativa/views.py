@@ -29,14 +29,12 @@ class NormativaListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
-        # Obtener los parámetros GET
+
         id = self.request.GET.get('id')
         decreto = self.request.GET.get('decreto')
         descripcion = self.request.GET.get('descripcion')
         producto = self.request.GET.get('producto')
-        
-        # Aplicar filtros si los parámetros existen
+
         if id:
             queryset = queryset.filter(id=id)
         if decreto:

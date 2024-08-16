@@ -32,8 +32,7 @@ class PersonaListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
-        # Obtener los parámetros GET
+
         rol = self.request.GET.get('rol')
         nombres = self.request.GET.get('nombres')
         apellidos = self.request.GET.get('apellidos')
@@ -44,7 +43,6 @@ class PersonaListView(ListView):
         usuario = self.request.GET.get('usuario')
         password = self.request.GET.get('password')
 
-        # Aplicar filtros si los parámetros existen
         if rol:
             queryset = queryset.filter(rol=rol)
         if nombres:

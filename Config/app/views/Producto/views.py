@@ -6,49 +6,6 @@ from django.urls import reverse_lazy
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
 
-def lista_producto(request):
-    form = ProductoFilterForm(request.GET)
-    if form.is_valid():
-        nombre = form.cleaned_data.get('nombre')
-        descripcion = form.cleaned_data.get('descripcion')
-        stock_min = form.cleaned_data.get('stock_min')
-        stock_max = form.cleaned_data.get('stock_max')
-        precio_min = form.cleaned_data.get('precio_min')
-        precio_max = form.cleaned_data.get('precio_max')
-        categoria = form.cleaned_data.get('categoria')
-        tipo_pro = form.cleaned_data.get('tipo_pro')
-
-        queryset = Producto.objects.all()
-        
-        if nombre:
-            queryset = queryset.filter(nombre__icontains=nombre)
-        if descripcion:
-            queryset = queryset.filter(descripcion__icontains=descripcion)
-        if stock_min is not None:
-            queryset = queryset.filter(stock__gte=stock_min)
-        if stock_max is not None:
-            queryset = queryset.filter(stock__lte=stock_max)
-        if precio_min is not None:
-            queryset = queryset.filter(precio__gte=precio_min)
-        if precio_max is not None:
-            queryset = queryset.filter(precio__lte=precio_max)
-        if categoria:
-            queryset = queryset.filter(categoria=categoria)
-        if tipo_pro:
-            queryset = queryset.filter(tipo_pro=tipo_pro)
-
-    else:
-        form = ProductoFilterForm()
-
-    context = {
-        'titulo': 'Listado de Productos',
-        'form': form,
-        'productos': queryset,
-        'categorias': Categoria.objects.all(),
-        'tipos': Tipo.objects.all(),
-    }
-    return render(request, 'Producto/listar.html', context)
-
 class ProductoListView(ListView):
     model = Producto
     template_name = 'Producto/listar.html'
@@ -97,8 +54,7 @@ class ProductoListView(ListView):
         context['titulo'] = 'Listado de Productos'
         context['entidad'] = 'Producto'
         context['crear_url'] = reverse_lazy('app:producto_crear')
-        
-        # Agregar categorías y tipos de productos para usarlos en el formulario de filtrado
+
         context['categorias'] = Categoria.objects.all()
         context['tipos'] = Tipo.objects.all()
         context['form'] = ProductoFilterForm(self.request.GET)
