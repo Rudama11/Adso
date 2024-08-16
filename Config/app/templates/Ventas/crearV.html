@@ -73,7 +73,23 @@
                     </tr>
                 </thead>
                 <tbody id="invoice-items">
-                </tbody>               
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <select class="form-control producto_select" name="producto">
+                                <option value="" hidden>Seleccione un producto</option>
+                                {% for producto in productos %}
+                                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><input type="number" name="cantidad" class="form-control cantidad" value="1" min="1"></td>
+                        <td><input type="text" name="precio_unitario" class="form-control precio_unitario" readonly></td>
+                        <td><input type="number" name="iva" class="form-control iva" value="0" min="0" step="0.01"></td>
+                        <td><input type="text" name="total" class="form-control total" readonly></td>
+                        <td><button type="button" class="btn btn-danger eliminar-fila">Eliminar</button></td>
+                    </tr>
+                </tbody>                               
             </table>
             <button type="button" id="add-item">Añadir Producto</button>
         </section>
@@ -98,29 +114,54 @@
     <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/venta/script.js' %}"></script>
+
     <script>
         $(document).ready(function() {
-            $('#cliente_select').on('change', function() {
-                var clienteId = $(this).val();
-                if (clienteId) {
-                    $.ajax({
-                        url: '{% url "app:obtener_datos_cliente" %}',  // Asegúrate de que el nombre de la URL sea correcto
-                        data: {
-                            'cliente_id': clienteId
-                        },
-                        success: function(data) {
-                            $('#cliente_nombre').val(data.nombre);
-                            $('#cliente_direccion').val(data.direccion);
-                            $('#cliente_mail').val(data.correo);
-                            $('#cliente_telefono').val(data.telefono);
-                        },
-                        error: function() {
-                            alert('Error al obtener los datos del cliente.');
-                        }
-                    });
-                }
-            });
+        $('#cliente_select').on('change', function() {
+            var clienteId = $(this).val();
+            if (clienteId) {
+                $.ajax({
+                    url: '{% url "app:obtener_datos_cliente" %}',  // Asegúrate de que el nombre de la URL sea correcto
+                    data: {
+                        'cliente_id': clienteId
+                    },
+                    success: function(data) {
+                        $('#cliente_nombre').val(data.nombre);
+                        $('#cliente_direccion').val(data.direccion);
+                        $('#cliente_mail').val(data.correo);
+                        $('#cliente_telefono').val(data.telefono);
+                    },
+                    error: function() {
+                        alert('Error al obtener los datos del cliente.');
+                    }
+                });
+            }
         });
-    </script>    
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('.producto_select').on('change', function() {
+            var productoId = $(this).val();
+            var $row = $(this).closest('tr');
+    
+            if (productoId) {
+                $.ajax({
+                    url: '{% url "app:obtener_datos_producto" %}',
+                    data: {
+                        'producto_id': productoId
+                    },
+                    success: function(data) {
+                        $row.find('.precio_unitario').val(data.precio);
+                        // Puedes añadir cualquier otro campo que necesites actualizar aquí
+                    },
+                    error: function() {
+                        alert('Error al obtener los datos del producto.');
+                    }
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

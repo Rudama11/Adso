@@ -98,3 +98,18 @@ def obtener_datos_cliente(request):
         return JsonResponse(data)
     except Cliente.DoesNotExist:
         return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
+    
+
+def obtener_datos_producto(request):
+    producto_id = request.GET.get('producto_id')
+    if producto_id:
+        try:
+            producto = Producto.objects.get(id=producto_id)
+            data = {
+                'nombre': producto.nombre,
+                'precio': producto.precio,
+            }
+            return JsonResponse(data)
+        except Producto.DoesNotExist:
+            return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
+    return JsonResponse({'error': 'No se proporcionó un ID de producto.'}, status=400)
