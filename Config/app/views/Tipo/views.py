@@ -29,13 +29,11 @@ class TipoListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
-        # Obtener los parámetros GET
+
         id = self.request.GET.get('id')
         nombre = self.request.GET.get('nombre')
         descripcion = self.request.GET.get('descripcion')
-        
-        # Aplicar filtros si los parámetros existen
+
         if id:
             queryset = queryset.filter(id=id)
         if nombre:
