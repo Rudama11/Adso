@@ -45,6 +45,7 @@ class VentasCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.all()
+        context['productos'] = Producto.objects.all()
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')
@@ -92,14 +93,11 @@ def obtener_datos_cliente(request):
 
 def obtener_datos_producto(request):
     producto_id = request.GET.get('producto_id')
-    if producto_id:
-        try:
-            producto = Producto.objects.get(id=producto_id)
-            data = {
-                'nombre': producto.nombre,
-                'precio': producto.precio,
-            }
-            return JsonResponse(data)
-        except Producto.DoesNotExist:
-            return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
-    return JsonResponse({'error': 'No se proporcionó un ID de producto.'}, status=400)
+    try:
+        producto = Producto.objects.get(id=producto_id)
+        data = {
+            'precio': float(producto.precio),
+        }
+        return JsonResponse(data)
+    except Producto.DoesNotExist:
+        return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
