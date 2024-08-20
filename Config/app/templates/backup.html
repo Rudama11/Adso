@@ -27,16 +27,16 @@
                 <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
                 <button type="button" id="select-file-button">Seleccionar archivo</button>
                 <span id="file-name">Sin archivos seleccionados</span>
-                <button type="submit" class="restore-button">Restaurar Backup</button>
+                <button type="submit" class="restore-button" id="restore-button">Restaurar Backup</button>
             </form>
         </div>
     </div>
 </div>
 
-    <script>
-        const backupUrl = "{% url 'app:respaldo' %}";
-        const restoreUrl = "{% url 'app:restauracion' %}";
-    </script>
+<script>
+    const backupUrl = "{% url 'app:respaldo' %}";
+    const restoreUrl = "{% url 'app:restauracion' %}";
+</script>
 {% endblock %}
 
 {% block javascript %}
@@ -44,7 +44,18 @@
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // No se mostrarán alertas automáticamente al cargar la página
+        const restoreButton = document.getElementById('restore-button');
+        const restoreForm = document.getElementById('restore-form');
+
+        restoreForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío del formulario para demostrar el retraso
+            restoreButton.disabled = true; // Deshabilitar el botón
+
+            setTimeout(function() {
+                restoreButton.disabled = false; // Habilitar el botón después de 3 segundos
+                restoreForm.submit(); // Enviar el formulario después del retraso
+            }, 2000); // 3000 milisegundos = 3 segundos
+        });
     });
 </script>
 {% endblock %}
