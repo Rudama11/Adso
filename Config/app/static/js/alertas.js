@@ -85,7 +85,7 @@ const notificacionConfirm = (
 	allowEnterKey,
 	stopKeydownPropagation,
 	showCancelBut,
-	cancelButtonText,
+	cancelButtonText,               
 	cancelButtonColor,
 	cancelButtonAriaLabel,
 	buttonsStyling,
