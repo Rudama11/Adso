@@ -40,19 +40,22 @@
                 <i class="fas fa-filter"></i> Filtrar
             </button>
         </div>
-    </div>
+    </div>  
     <div class="card-body">
-        <table id="tabla" class="table table-bordered table-striped">
-            <thead>
-                {% block columnas %}
-                {% endblock %}
-            </thead>
-            <tbody>
-                {% block filas %}
-                {% endblock %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="tabla" class="table table-bordered table-striped">
+                <thead>
+                    {% block columnas %}
+                    {% endblock %}
+                </thead>
+                <tbody>
+                    {% block filas %}
+                    {% endblock %}
+                </tbody>
+            </table>
+        </div>
     </div>
+    
     <div class="card-footer">
         <a href="{{ crear_url }}" class="btn btn-flat" style="background-color: #23853a; border: 1px solid #23853a; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
             <i class="fas fa-plus"></i> Agregar
@@ -99,10 +102,10 @@
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
-<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}"></script>
+<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+<script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}?v1.1"></script>
+<script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
 
 <script>
     $(document).ready(function () {
@@ -160,11 +163,9 @@
     });
 
     function clearFilters() {
-        // Limpia los campos del formulario
         document.querySelector('#filtroModal form').reset();
-        // Redirige a la URL actual sin parámetros
         const url = new URL(window.location.href);
-        url.search = ''; // Elimina todos los parámetros de búsqueda
+        url.search = '';
         window.location.href = url.toString();
     }
 

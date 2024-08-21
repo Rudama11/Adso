@@ -1,5 +1,5 @@
 {% extends "listar.html" %}
-
+{% load static %}
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:ubicacion_listarU' %}">
     <div class="form-group">
@@ -45,8 +45,12 @@
   <td>{{ u.get_departamento_display }}</td>  {# Muestra el nombre legible del departamento #}
   <td>{{ u.get_ciudad_display }}</td>        {# Muestra el nombre legible de la ciudad #}
   <td>
-    <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-    <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+    <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm"title="Editar ubicación">
+        <i class="fas fa-edit"></i>
+    </a>
+    <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm"title="Eliminar ubicación">
+        <i class="fas fa-trash"></i>
+    </a>
   </td>
 </tr>
 {% endfor %}

@@ -1,5 +1,5 @@
 {% extends 'listar.html' %}
-
+{% load static %}
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:venta_listar' %}">
     <div class="row">
@@ -61,8 +61,17 @@
     <td>{{v.persona.nombre}}</td>
     <td>{{v.total}}</td>
     <td>
-        <a href="{% url 'app:venta_editar' v.num_factura %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:venta_eliminar' v.num_factura %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:venta_editar' v.num_factura %}" class="btn btn-info btn-sm"title="Editar venta">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:venta_eliminar' v.num_factura %}" class="btn btn-danger btn-sm"title="Eliminar venta">
+            <i class="fas fa-trash"></i>
+        </a>
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        
     </td>
 </tr>
 {% endfor %}

@@ -1,5 +1,5 @@
 {% extends 'listar.html' %}
-
+{% load static %}
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:producto_listar' %}">
     <div class="row">
@@ -116,8 +116,12 @@
     <td>{{ pro.tipo_pro.nombre }}</td>
 
     <td>
-        <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm" title="Edita producto">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm" title="Eliminar producto">
+            <i class="fas fa-trash"></i>
+        </a>
     </td>
 </tr>
 {% endfor %}

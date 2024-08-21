@@ -7,7 +7,7 @@ from django.utils import timezone
 
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=150,validators=[MinLengthValidator(3)],verbose_name='Nombre',unique=True)
+    nombre = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Nombre',unique=True)
     descripcion = models.CharField(max_length=200,validators=[MinLengthValidator(5)],verbose_name='Descripcion',blank=True,null=True)
 
     def __str__(self):
@@ -206,4 +206,56 @@ class DetalleCompra(models.Model):
         verbose_name = 'Detalle de Compra'
         verbose_name_plural = 'Detalles de Compras'
         db_table = 'DetalleCompra'
+        ordering = ['id']
+        
+class Departamentos(models.Model):
+    codigo_departamento = models.CharField(
+        max_length=5,
+        validators=[MinLengthValidator(3)],
+        verbose_name='Codigo departamento',
+        null=False,
+        blank=False,
+        unique=True
+    )
+    nombre = models.CharField(
+        max_length=50,
+        validators=[MinLengthValidator(3)],
+        verbose_name='Departamento',
+        null=False,
+        blank=False,
+        default='Nombre por Defecto'
+    )
+
+    class Meta:
+        verbose_name = 'Departamentos'
+        verbose_name_plural = "Detalle departamentos"
+        db_table = 'departamentos'
+        ordering = ['id']
+
+class Municipios(models.Model):
+    codigo_municipio = models.CharField(
+        max_length=5,
+        validators=[MinLengthValidator(3)],
+        verbose_name='Codigo municipio',
+        null=False,
+        blank=False
+    )
+    nombre = models.CharField(
+        max_length=50,
+        validators=[MinLengthValidator(3)],
+        verbose_name='municipio',
+        null=False,
+        blank=False
+    )
+    cod_departamento = models.ForeignKey(
+        Departamentos,
+        to_field='codigo_departamento',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = 'Municipios'
+        verbose_name_plural = "Detalle municipios"
+        db_table = 'municipios'
         ordering = ['id']
