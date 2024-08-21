@@ -160,11 +160,9 @@
     });
 
     function clearFilters() {
-        // Limpia los campos del formulario
         document.querySelector('#filtroModal form').reset();
-        // Redirige a la URL actual sin parámetros
         const url = new URL(window.location.href);
-        url.search = ''; // Elimina todos los parámetros de búsqueda
+        url.search = '';
         window.location.href = url.toString();
     }
 
