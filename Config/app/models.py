@@ -7,7 +7,7 @@ from django.utils import timezone
 
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=150,validators=[MinLengthValidator(3)],verbose_name='Nombre',unique=True)
+    nombre = models.CharField(max_length=100,validators=[MinLengthValidator(3)],verbose_name='Nombre',unique=True)
     descripcion = models.CharField(max_length=200,validators=[MinLengthValidator(5)],verbose_name='Descripcion',blank=True,null=True)
 
     def __str__(self):
