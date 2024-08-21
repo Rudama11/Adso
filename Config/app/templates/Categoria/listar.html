@@ -30,8 +30,12 @@
     <td>{{ c.nombre }}</td>
     <td>{{ c.descripcion }}</td>
     <td>
-        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm"title="Editar categoría">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm"title="Eliminar categoría">
+            <i class="fas fa-trash"></i>
+        </a>
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>

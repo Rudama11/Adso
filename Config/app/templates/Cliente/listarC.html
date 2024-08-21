@@ -119,8 +119,12 @@
     <td>{{ cl.ciudad }}</td>
     <td>{{ cl.direccion }}</td>
     <td>
-        <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm"title="Editar cliente">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm" title="Eliminar cliente">
+            <i class="fas fa-trash"></i>
+        </a>
     </td>
 </tr>
 {% endfor %}

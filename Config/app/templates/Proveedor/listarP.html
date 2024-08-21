@@ -113,8 +113,8 @@
     <td>{{ p.ciudad }}</td>
     <td>{{ p.direccion }}</td>
     <td>
-        <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"title="Editar proveedor"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"title="Editar proveedor"><i class="fas fa-trash"></i></a>
     </td>
 </tr>
 {% endfor %}
