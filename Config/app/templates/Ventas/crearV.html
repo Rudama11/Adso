@@ -112,26 +112,21 @@
             const $totalIva = $('#total_iva');
             const $total = $('#total');
 
-            $clienteSelect.on('change', function() {
-                const clienteId = $(this).val();
-                if (clienteId) {
-                    $.ajax({
-                        url: '{% url "app:obtener_datos_cliente" %}',
-                        data: { 'cliente_id': clienteId },
-                        success: function(data) {
-                            $clienteNombre.val(data.nombre);
-                            $clienteDireccion.val(data.direccion);
-                            $clienteMail.val(data.correo);
-                            $clienteTelefono.val(data.telefono);
-                        },
-                        error: function() {
-                            alert('Error al obtener los datos del cliente.');
-                        }
-                    });
-                }
-            });
-
-            let itemCount = 0;
+            function updateClientData(clienteId) {
+                $.ajax({
+                    url: '{% url "app:obtener_datos_cliente" %}',
+                    data: { 'cliente_id': clienteId },
+                    success: function(data) {
+                        $clienteNombre.val(data.nombre);
+                        $clienteDireccion.val(data.direccion);
+                        $clienteMail.val(data.correo);
+                        $clienteTelefono.val(data.telefono);
+                    },
+                    error: function() {
+                        alert('Error al obtener los datos del cliente.');
+                    }
+                });
+            }
 
             function updateTotals() {
                 let subtotal = 0;
@@ -141,24 +136,23 @@
                     const $row = $(this);
                     const cantidad = parseFloat($row.find(".cantidad").val()) || 0;
                     const precioUnitario = parseFloat($row.find(".precio-unitario").val()) || 0;
-                    const iva = parseFloat($row.find(".iva").val()) / 100 || 0;
+                    const iva = parseFloat($row.find(".iva").val()) || 0;
 
                     const totalSinIva = cantidad * precioUnitario;
-                    const totalConIva = totalSinIva * (1 + iva);
+                    const totalConIva = totalSinIva * (1 + iva / 100);
 
-                    $row.find(".total").text(totalConIva.toFixed(1));
+                    $row.find(".total").text(totalConIva.toFixed(2));
 
                     subtotal += totalSinIva;
-                    totalIva += totalSinIva * iva;
+                    totalIva += totalSinIva * (iva / 100);
                 });
 
-                $subtotal.text(subtotal.toFixed(1));
                 const descuento = parseFloat($descuento.val()) / 100 || 0;
                 const subtotalDto = subtotal * (1 - descuento);
-                $subtotalDto.text(subtotalDto.toFixed(1));
-                $totalIva.text(totalIva.toFixed(1));
-                const total = subtotalDto + totalIva;
-                $total.text(total.toFixed(1));
+                $subtotal.text(subtotal.toFixed(2));
+                $subtotalDto.text(subtotalDto.toFixed(2));
+                $totalIva.text(totalIva.toFixed(2));
+                $total.text((subtotalDto + totalIva).toFixed(2));
             }
 
             function updateItemNumbers() {
@@ -174,8 +168,7 @@
 
                 $(".producto_select option").each(function() {
                     const $option = $(this);
-                    const optionValue = $option.val();
-                    $option.toggle(!selectedProducts.includes(optionValue));
+                    $option.toggle(!selectedProducts.includes($option.val()));
                 });
             }
 
@@ -196,13 +189,19 @@
                 }
             }
 
+            $('#cliente_select').on('change', function() {
+                const clienteId = $(this).val();
+                if (clienteId) {
+                    updateClientData(clienteId);
+                }
+            });
+
             $('#add-item').on('click', function() {
-                itemCount++;
                 const row = `
                     <tr>
-                        <td>${itemCount}</td>
+                        <td>${$invoiceItems.find('tr').length + 1}</td>
                         <td>
-                            <select class="form-control producto_select" name="producto" data-select-id="${itemCount}">
+                            <select class="form-control producto_select" name="producto">
                                 <option value="" hidden>Seleccione un producto</option>
                                 {% for producto in productos %}
                                     <option value="{{ producto.id }}">{{ producto.nombre }}</option>
@@ -217,24 +216,21 @@
                     </tr>
                 `;
                 $invoiceItems.append(row);
-                updateTotals();
                 updateProductOptions();
 
                 $invoiceItems.off("change", ".producto_select").on("change", ".producto_select", function() {
                     updateProductData(this);
-                    updateProductOptions();
                 });
 
                 $invoiceItems.off("click", ".delete-item").on("click", ".delete-item", function() {
                     $(this).closest('tr').remove();
-                    itemCount--;
                     updateItemNumbers();
                     updateTotals();
                     updateProductOptions();
                 });
-            });
 
-            $invoiceItems.on("input", ".cantidad, .precio-unitario, .iva", updateTotals);
+                $invoiceItems.find(".cantidad, .precio-unitario, .iva").off("input").on("input", updateTotals);
+            });
 
             $('#print-invoice').on('click', function() {
                 const $accionesColumnas = $('th:last-child, td:last-child');
