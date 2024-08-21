@@ -40,20 +40,22 @@
                 <i class="fas fa-filter"></i> Filtrar
             </button>
         </div>
-    </div>
+    </div>  
     <div class="card-body">
-        <div class="table-responsive"></div>
-        <table id="tabla" class="table table-bordered table-striped">
-            <thead>
-                {% block columnas %}
-                {% endblock %}
-            </thead>
-            <tbody>
-                {% block filas %}
-                {% endblock %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table id="tabla" class="table table-bordered table-striped">
+                <thead>
+                    {% block columnas %}
+                    {% endblock %}
+                </thead>
+                <tbody>
+                    {% block filas %}
+                    {% endblock %}
+                </tbody>
+            </table>
+        </div>
     </div>
+    
     <div class="card-footer">
         <a href="{{ crear_url }}" class="btn btn-flat" style="background-color: #23853a; border: 1px solid #23853a; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
             <i class="fas fa-plus"></i> Agregar
