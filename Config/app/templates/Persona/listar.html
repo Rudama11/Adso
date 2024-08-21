@@ -100,8 +100,12 @@
     <td>{{ per.usuario }}</td>
     <td>{{ per.password }}</td>
     <td>
-        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar persona">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar persona">
+            <i class="fas fa-trash"></i>
+        </a>
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
