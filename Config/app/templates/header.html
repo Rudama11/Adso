@@ -3,8 +3,8 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
         <a href="#" class="navbar-brand">
-            <img src="{% static 'img/logo1.png' %}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
-            <span class="brand-text font-weight-light">PosVentas</span>
+            <!-- <img src="{% static 'img/logo1.png' %}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+            <span class="brand-text font-weight-light">PosVentas</span> -->
         </a>
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,17 +38,20 @@
                             <li><a href="{% url 'app:venta_listar' %}" class="dropdown-item">
                                 <i class="fas fa-shopping-cart" style="margin-right: 8px;"></i> Ventas</a></li>
                         </ul>
-                        
-                        
                 </li>
             </ul>
         </div>
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-
-                <a class="nav-link" href="{%url 'logout'%}"title='cerrar sesión'>
-                    <i class="fas fa-power-off" aria-hidden="True"></i>
-                </a>
-            </li>
+            <a class="nav-link" href="{% url 'logout' %}" title='cerrar sesión'>
+                <i class="fas fa-power-off" aria-hidden="True"></i>
+            </a>
         </ul>
     </div>
 </nav>
+
+{% block javascript %}
+<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
+<script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}?V1.1"></script>
+<script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+{% endblock %}
