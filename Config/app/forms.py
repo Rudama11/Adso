@@ -68,10 +68,21 @@ class UbicacionForm(forms.ModelForm):
         model = Ubicacion
         fields = ['departamento', 'municipio']
         widgets = {
-            'departamento': forms.Select(attrs={'class': 'select2', 'placeholder': 'Seleccione el departamento'}),
-            'municipio': forms.Select(attrs={'class': 'select2', 'placeholder': 'Seleccione el municipio'}),
+            'departamento': forms.Select(attrs={'class': 'select2'}),
+            'municipio': forms.Select(attrs={'class': 'select2'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['departamento'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione el departamento'
+        })
+        self.fields['municipio'].widget.attrs.update({
+            'class': 'select2',
+            'placeholder': 'Seleccione el municipio'
+        })
+        
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 
 class ClienteForm(forms.ModelForm):

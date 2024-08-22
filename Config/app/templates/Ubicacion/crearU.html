@@ -52,23 +52,22 @@
             allowClear: true,
             language: {
                 noResults: function() {
-                    return "No se encontraron resultados";  // Personaliza el texto aquí
+                    return "No se encontraron resultados";
                 }
             }
         });
 
-        // Manejar el cambio en el selector de departamentos
         $('#departamento').on('change', function() {
-            var codigoDepartamento = $(this).val();
+            var departamentoId = $(this).val();
             var url = "{% url 'app:municipios_por_departamento' %}";
 
             $.ajax({
                 url: url,
                 data: {
-                    'departamento_id': codigoDepartamento
+                    'departamento_id': departamentoId
                 },
                 success: function(data) {
-                    var $municipioSelect = $('#ciudad');
+                    var $municipioSelect = $('#id_municipio'); // Ajustar el ID del selector si es necesario
                     $municipioSelect.empty(); // Limpiar los municipios actuales
                     $municipioSelect.append('<option value="">Seleccione municipio</option>');
                     $.each(data.municipios, function(index, municipio) {

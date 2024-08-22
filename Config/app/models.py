@@ -64,17 +64,8 @@ class Tipo(models.Model):
 #----------------------------------------------- Ubicación -----------------------------------------------
 
 class Ubicacion(models.Model):
-    departamento = models.ForeignKey(
-        Departamentos,
-        on_delete=models.CASCADE,
-        verbose_name='Departamento'
-    )
-    municipio = models.ForeignKey(
-        Municipios,
-        on_delete=models.CASCADE,
-        verbose_name='Municipio',
-        null=True  # Permite valores nulos temporalmente
-    )
+    departamento = models.ForeignKey(Departamentos,on_delete=models.CASCADE,verbose_name='Departamento')
+    municipio = models.ForeignKey(Municipios,on_delete=models.CASCADE,verbose_name='Municipio',null=True)
 
     def __str__(self):
         return f"{self.departamento} - {self.municipio}"

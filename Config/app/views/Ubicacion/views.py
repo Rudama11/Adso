@@ -90,6 +90,9 @@ class UbicacionDeleteView(DeleteView):
         return context
 
 def municipios_por_departamento(request):
-    codigo_departamento = request.GET.get('departamento_id')
-    municipios = Municipios.objects.filter(cod_departamento_id=codigo_departamento).values('id', 'nombre')
+    departamento_id = request.GET.get('departamento_id')
+    if departamento_id:
+        municipios = Municipios.objects.filter(cod_departamento_id=departamento_id).values('id', 'nombre')
+    else:
+        municipios = []
     return JsonResponse({'municipios': list(municipios)})
