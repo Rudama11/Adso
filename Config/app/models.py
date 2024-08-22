@@ -22,7 +22,6 @@ class Departamentos(models.Model):
 
 #----------------------------------------------- Municipios -----------------------------------------------
 class Municipios(models.Model):
-    codigo_municipio = models.CharField(max_length=5,validators=[RegexValidator(regex=r'^\d{1,5}$', message='El código debe ser de 1 a 5 dígitos numéricos.')],verbose_name='Código municipio',null=False,blank=False)
     nombre = models.CharField(max_length=50,verbose_name='Municipio',null=False,blank=False)
     cod_departamento_id = models.ForeignKey(Departamentos,to_field='codigo_departamento',on_delete=models.CASCADE,verbose_name='Código departamento',null=True,blank=True)
 
