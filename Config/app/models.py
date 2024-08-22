@@ -208,54 +208,31 @@ class DetalleCompra(models.Model):
         db_table = 'DetalleCompra'
         ordering = ['id']
         
+
 class Departamentos(models.Model):
-    codigo_departamento = models.CharField(
-        max_length=5,
-        validators=[MinLengthValidator(3)],
-        verbose_name='Codigo departamento',
-        null=False,
-        blank=False,
-        unique=True
-    )
-    nombre = models.CharField(
-        max_length=50,
-        validators=[MinLengthValidator(3)],
-        verbose_name='Departamento',
-        null=False,
-        blank=False,
-        default='Nombre por Defecto'
-    )
+    codigo_departamento = models.CharField(max_length=2,validators=[RegexValidator(regex=r'^\d{2}$', message='El código debe ser de 2 dígitos numéricos.')],verbose_name='Código departamento',null=False,blank=False,unique=True)
+    nombre = models.CharField(max_length=50,verbose_name='Departamento',null=False,blank=False,)
 
     class Meta:
-        verbose_name = 'Departamentos'
-        verbose_name_plural = "Detalle departamentos"
+        verbose_name = 'Departamento'
+        verbose_name_plural = "Departamentos"
         db_table = 'departamentos'
         ordering = ['id']
 
+    def __str__(self):
+        return f"{self.codigo_departamento} - {self.nombre}"
+
+
 class Municipios(models.Model):
-    codigo_municipio = models.CharField(
-        max_length=5,
-        validators=[MinLengthValidator(3)],
-        verbose_name='Codigo municipio',
-        null=False,
-        blank=False
-    )
-    nombre = models.CharField(
-        max_length=50,
-        validators=[MinLengthValidator(3)],
-        verbose_name='municipio',
-        null=False,
-        blank=False
-    )
-    cod_departamento = models.ForeignKey(
-        Departamentos,
-        to_field='codigo_departamento',
-        on_delete=models.SET_NULL,
-        null=True
-    )
+    codigo_municipio = models.CharField(max_length=5,validators=[RegexValidator(regex=r'^\d{1,5}$', message='El código debe ser de 1 a 5 dígitos numéricos.')],verbose_name='Código municipio',null=False,blank=False)
+    nombre = models.CharField(max_length=50,verbose_name='Municipio',null=False,blank=False)
+    cod_departamento = models.ForeignKey(Departamentos,to_field='codigo_departamento',on_delete=models.CASCADE,verbose_name='Código departamento',null=True,blank=True)
 
     class Meta:
-        verbose_name = 'Municipios'
-        verbose_name_plural = "Detalle municipios"
+        verbose_name = 'Municipio'
+        verbose_name_plural = "Municipios"
         db_table = 'municipios'
         ordering = ['id']
+
+    def __str__(self):
+        return f"{self.codigo_municipio} - {self.nombre}"
