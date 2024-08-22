@@ -27,6 +27,7 @@ urlpatterns = [
     path('Ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('Ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
     path('Ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),
+    path('municipios_por_departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
     #-------------------------------------------------- Proveedor --------------------------------------------------
     

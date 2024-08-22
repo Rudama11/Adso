@@ -1,5 +1,4 @@
 {% extends 'body.html' %}
-
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -57,11 +56,33 @@
                 }
             }
         });
+
+        // Manejar el cambio en el selector de departamentos
+        $('#departamento').on('change', function() {
+            var codigoDepartamento = $(this).val();
+            var url = "{% url 'app:municipios_por_departamento' %}";
+
+            $.ajax({
+                url: url,
+                data: {
+                    'departamento_id': codigoDepartamento
+                },
+                success: function(data) {
+                    var $municipioSelect = $('#ciudad');
+                    $municipioSelect.empty(); // Limpiar los municipios actuales
+                    $municipioSelect.append('<option value="">Seleccione municipio</option>');
+                    $.each(data.municipios, function(index, municipio) {
+                        $municipioSelect.append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
+                    });
+                    $municipioSelect.trigger('change');
+                }
+            });
+        });
     });
 </script>
 
+{% if form.errors %}
 <script>
-    {% if form.errors %}
     var errors = '';
     {% for field in form %}
         {% for error in field.errors %}
@@ -75,6 +96,6 @@
         icon: 'error',
         confirmButtonText: 'Aceptar'
     });
-    {% endif %}
 </script>
+{% endif %}
 {% endblock %}
