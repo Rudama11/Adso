@@ -6,20 +6,13 @@ from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
 import re
 
-# Validación personalizada para nombre (solo letras)
 def validate_nombre(value):
     if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$', value):
         raise ValidationError('El nombre solo puede contener letras y espacios.')
 
-# Validación personalizada para código de departamento (números enteros positivos de 1 o 2 dígitos)
-def validate_codigo_departamento(value):
-    if value <= 0 or value > 99:
-        raise ValidationError('El código de departamento debe ser un número entero positivo de 1 o 2 dígitos.')
-
 #----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):
-    codigo_departamento = models.PositiveIntegerField(validators=[validate_codigo_departamento],unique=True,verbose_name='Código Departamento')
-    nombre = models.CharField(max_length=50,verbose_name='Departamento',null=False,blank=False,validators=[validate_nombre])
+    nombre = models.CharField(max_length=50, verbose_name='Departamento', null=False, blank=False, validators=[validate_nombre])
 
     class Meta:
         verbose_name = 'Departamento'
@@ -28,13 +21,13 @@ class Departamentos(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return f"{self.codigo_departamento} - {self.nombre}"
+        return f"{self.nombre}"
+
 
 # ----------------------------------------------- Municipios -----------------------------------------------
-
 class Municipios(models.Model):
-    nombre = models.CharField(max_length=50,verbose_name='Municipio',null=False,blank=False,validators=[validate_nombre])
-    cod_departamento = models.ForeignKey(Departamentos,to_field='codigo_departamento',on_delete=models.CASCADE,verbose_name='Código Departamento',null=True,blank=True)
+    nombre = models.CharField(max_length=50, verbose_name='Municipio', null=False, blank=False, validators=[validate_nombre])
+    departamento = models.ForeignKey(Departamentos, on_delete=models.CASCADE, related_name='municipios')
 
     class Meta:
         verbose_name = 'Municipio'
@@ -73,8 +66,8 @@ class Tipo(models.Model):
 
 #----------------------------------------------- Ubicación -----------------------------------------------
 class Ubicacion(models.Model):
-    departamento = models.ForeignKey(Departamentos,on_delete=models.CASCADE,verbose_name='Departamento',related_name='ubicaciones')
-    municipio = models.ForeignKey(Municipios,on_delete=models.CASCADE,verbose_name='Municipio',null=True,blank=True,related_name='ubicaciones')
+    departamento = models.ForeignKey(Departamentos, on_delete=models.CASCADE, verbose_name='Departamento', related_name='ubicaciones')
+    municipio = models.ForeignKey(Municipios, on_delete=models.CASCADE, verbose_name='Municipio', null=True, blank=True, related_name='ubicaciones')
 
     def __str__(self):
         return f"{self.departamento} - {self.municipio}"

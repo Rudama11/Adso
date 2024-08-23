@@ -3,7 +3,6 @@ from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput, De
 from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
-
 #---------------------------------------------------------- Categoria ----------------------------------------------------------
 
 class CategoriaForm(ModelForm):
@@ -68,21 +67,24 @@ class UbicacionForm(forms.ModelForm):
         model = Ubicacion
         fields = ['departamento', 'municipio']
         widgets = {
-            'departamento': forms.Select(attrs={'class': 'select2'}),
-            'municipio': forms.Select(attrs={'class': 'select2'}),
+            'departamento': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el departamento'}),
+            'municipio': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el municipio'}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['departamento'].widget.attrs.update({
-            'class': 'select2',
-            'placeholder': 'Seleccione el departamento'
-        })
-        self.fields['municipio'].widget.attrs.update({
-            'class': 'select2',
-            'placeholder': 'Seleccione el municipio'
-        })
-        
+        self.fields['municipio'].queryset = Municipios.objects.none()
+
+        if 'departamento' in self.data:
+            try:
+                departamento_id = int(self.data.get('departamento'))
+                self.fields['municipio'].queryset = Municipios.objects.filter(departamento_id=departamento_id).order_by('nombre')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['municipio'].queryset = Municipios.objects.filter(departamento_id=self.instance.departamento.id).order_by('nombre')
+            
+            
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 
 class ClienteForm(forms.ModelForm):
