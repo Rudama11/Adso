@@ -264,3 +264,18 @@ button.delete-item:hover {
         display: none !important;
     }
 }
+
+  /* Estilo para el botón de eliminar */
+.btn-remove {
+    background-color: #e74c3c; /* Color de fondo rojo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 8px 12px; /* Espaciado interno */
+    cursor: pointer; /* Cursor de puntero al pasar el mouse */
+    font-size: 14px; /* Tamaño de fuente */
+    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+}
+.btn-remove:hover {
+    background-color: #c0392b; /* Color de fondo más oscuro al pasar el mouse */
+}
