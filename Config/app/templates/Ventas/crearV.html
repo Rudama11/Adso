@@ -147,29 +147,30 @@
                 });
             }
     
-            // Función para actualizar los totales de la factura
+             // Función para actualizar los totales de la factura
             function updateTotals() {
                 let subtotal = 0;
                 let totalIva = 0;
-    
-                $invoiceItems.find('tr').each(function() {
-                    const $row = $(this);
-                    const cantidad = parseFloat($row.find(".cantidad").val()) || 0;
-                    const precioUnitario = parseFloat($row.find(".precio-unitario").val()) || 0;
-                    const iva = parseFloat($row.find(".iva").val()) || 19;
+                const rows = $("#invoice-items tr");
+
+                rows.each(function() {
+                    const cantidad = parseFloat($(this).find(".cantidad").val());
+                    const precioUnitario = parseFloat($(this).find(".precio-unitario").val());
+                    const iva = parseFloat($(this).find(".iva").val()) / 100;
                     const totalSinIva = cantidad * precioUnitario;
-                    const totalConIva = totalSinIva * (1 + iva / 100);
-                    $row.find(".total").text(totalConIva.toFixed(2));
+                    const totalConIva = totalSinIva * (1 + iva);
+                    $(this).find(".total").text(totalConIva.toFixed(1));
                     subtotal += totalSinIva;
-                    totalIva += totalSinIva * (iva / 100);
+                    totalIva += totalSinIva * iva;
                 });
-    
-                const descuento = parseFloat($descuento.val()) / 100 || 0;
+
+                $("#subtotal").text(subtotal.toFixed(1));
+                const descuento = parseFloat($("#descuento").val()) / 100;
                 const subtotalDto = subtotal * (1 - descuento);
-                $subtotal.text(subtotal.toFixed(2));
-                $subtotalDto.text(subtotalDto.toFixed(2));
-                $totalIva.text(totalIva.toFixed(2));
-                $total.text((subtotalDto + totalIva).toFixed(2));
+                $("#subtotal_dto").text(subtotalDto.toFixed(1));
+                $("#total_iva").text(totalIva.toFixed(1));
+                const total = subtotalDto + totalIva;
+                $("#total").text(total.toFixed(1));
             }
     
             // Función para actualizar los números de los ítems en la tabla
@@ -314,4 +315,22 @@
             // Inicialización de Select2 para los productos
             initializeSelect2();
         });
+
+     
+          // Maneja el cambio en la cantidad y el precio unitario
+        $("#invoice-items").on("input", ".cantidad, .precio-unitario, .iva", function() {
+            updateTotals();
+        });
+
+          // Maneja el cambio en el descuento
+        $("#descuento").on("input", function() {
+            updateTotals();
+        });
+
+        // Maneja el clic en el botón de imprimir factura
+        $("#print-invoice").on("click", function() {
+            window.print();
+        });
     </script>
+</body>
+</html>
