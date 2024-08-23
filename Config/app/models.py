@@ -72,10 +72,9 @@ class Tipo(models.Model):
         ordering = ['id']
 
 #----------------------------------------------- Ubicación -----------------------------------------------
-
 class Ubicacion(models.Model):
-    departamento = models.ForeignKey(Departamentos,on_delete=models.CASCADE,verbose_name='Departamento')
-    municipio = models.ForeignKey(Municipios,on_delete=models.CASCADE,verbose_name='Municipio',null=True)
+    departamento = models.ForeignKey(Departamentos,on_delete=models.CASCADE,verbose_name='Departamento',related_name='ubicaciones')
+    municipio = models.ForeignKey(Municipios,on_delete=models.CASCADE,verbose_name='Municipio',null=True,blank=True,related_name='ubicaciones')
 
     def __str__(self):
         return f"{self.departamento} - {self.municipio}"
