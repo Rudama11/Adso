@@ -71,17 +71,16 @@
             // Si todos los campos están llenos, muestra la alerta de éxito
             Swal.fire({
                 title: 'Registrado Correctamente',
-                text: '',
+                text: 'Asegúrate de no olvidar tu información',
                 icon: 'success',
                 confirmButtonText: 'Continuar',
                 footer: '<span>Aviso Importante</span>', 
                 width: '25%',
                 padding: '1rem',
                 backdrop: true,
-                timer: 5000,
                 timerProgressBar: true,
                 position: 'center',
-                allowOutsideClick: true,
+                allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,
                 stopKeydownPropagation: false,
@@ -96,15 +95,13 @@
         } else {
             // Si hay campos vacíos, muestra la alerta de error
             Swal.fire({
-                title: '¡¡ERROR!!',
+                title: 'Error',
                 text: 'Debe llenar todos los campos de registro',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 width: '25%',
                 padding: '1rem',
                 backdrop: true,
-                timer: 5000,
-                timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: true,
                 allowEscapeKey: false,
@@ -116,28 +113,6 @@
             });
         }
     });
-
-    // Mostrar alerta si la categoría ya existe
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('exists') === 'true') {
-        Swal.fire({
-            title: '¡¡ERROR!!',
-            text: 'La categoría que intenta registrar ya existe.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            width: '25%',
-            padding: '1rem',
-            backdrop: true,
-            position: 'center',
-            allowOutsideClick: true,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            stopKeydownPropagation: false,
-            buttonsStyling: true,
-            showCloseButton: true,
-            closeButtonAriaLabel: 'Cerrar alerta',
-        });
-    }
 </script>
 
 {% endblock %}
