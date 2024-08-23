@@ -1,7 +1,18 @@
 {% extends 'home.html' %}
 {% block body %}
 {% load static %}
-    <body class="hold-transition sidebar-mini layout-fixed">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenidos</title>
+    <!-- Enlace CSS de sienna-accessibility -->
+    <link rel="stylesheet" href="{% static 'node_modules/sienna-accessibility/custom.css' %}?v1.1" />
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <!-- Header -->
         {% include 'aside/header.html' %}
@@ -18,12 +29,7 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <!-- <li class="breadcrumb-item"><a href="{% url 'index_pr' %}">InicioAside</a></li> -->
-                                <li class="breadcrumb-item"><a href="{{listar_url}}">{{entidad}}</a></li> 
-                                <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
-                                <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
-                                <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
-                                <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?V1.1"></script>
-                                
+                                <li class="breadcrumb-item"><a href="{{listar_url}}">{{ entidad }}</a></li>
                             </ol>
                         </div>
                     </div>
@@ -32,7 +38,6 @@
             <div class="content">
                 <div class="container-fluid">
                     {% block contenido %}
-
                     {% endblock %}
                 </div>
             </div>
@@ -42,8 +47,12 @@
     </div>
     <!-- Block javascript -->
     {% block javascript %}
-
+    <!-- Scripts -->
+    <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+    <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
+    <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
+    <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?V1.1"></script>
     {% endblock %}
-    
-    </body>
+</body>
+</html>
 {% endblock %}
