@@ -64,25 +64,25 @@ class TipoForm(forms.ModelForm):
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
 
 class UbicacionForm(forms.ModelForm):
+    class Meta:
+        model = Ubicacion
+        fields = ['departamento', 'municipio']
+        widgets = {
+            'departamento': forms.Select(attrs={'class': 'select2'}),
+            'municipio': forms.Select(attrs={'class': 'select2'}),
+        }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['departamento'].widget.attrs.update({
             'class': 'select2',
             'placeholder': 'Seleccione el departamento'
         })
-        self.fields['ciudad'].widget.attrs.update({
+        self.fields['municipio'].widget.attrs.update({
             'class': 'select2',
-            'placeholder': 'Seleccione la ciudad'
+            'placeholder': 'Seleccione el municipio'
         })
-
-    class Meta:
-        model = Ubicacion
-        fields = ['departamento', 'ciudad']
-        widgets = {
-            'departamento': forms.Select(attrs={'class': 'select2'}),
-            'ciudad': forms.Select(attrs={'class': 'select2'}),
-        }
-
+        
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 
 class ClienteForm(forms.ModelForm):

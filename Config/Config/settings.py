@@ -105,7 +105,7 @@ STATIC_URL = 'app/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static'),  # Ruta al directorio static principal
-    os.path.join(BASE_DIR, 'app/node_modules/'),  # Ruta al directorio node_modules
+    os.path.join(BASE_DIR, 'app/static/node_modules'),  # Ruta al directorio node_modules
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
