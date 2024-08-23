@@ -2,14 +2,14 @@
 INSERT INTO departamentos(id, codigo_departamento, nombre)
 VALUES
 (
-1, 05, 'Antioquia '
+1, 5, 'Antioquia '
 );
 
 /* INSERT QUERY NO: 2 */
 INSERT INTO departamentos(id, codigo_departamento, nombre)
 VALUES
 (
-2, 08, 'Atlántico '
+2, 8, 'Atlántico '
 );
 
 /* INSERT QUERY NO: 3 */
@@ -228,3 +228,4 @@ VALUES
 (
 33, 99, 'Vichada'
 );
+
