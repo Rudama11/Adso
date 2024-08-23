@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/login/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Iniciar sesión</title>
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 </head>
 
 <body>
@@ -61,6 +62,24 @@
     </div>
     <!-- JavaScript -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if form.errors %}
+            var errors = '';
+            {% for field in form %}
+            {% for error in field.errors %}
+            errors += '{{ error }}\n';
+            {% endfor %}
+            {% endfor %}
+            
+            Swal.fire({
+                title: 'Contraseña Incrorrecta!',
+                text: 'Tu contraseña no coincide \n' + errors,
+                icon: 'error',
+            });
+            {% endif %}
+        });
+    </script>
 </body>
 
 </html>
