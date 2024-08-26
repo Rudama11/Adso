@@ -7,9 +7,10 @@
         <select class="form-control" id="departamento" name="departamento">
             <option value="">Todos</option>
             {% for departamento in departamentos %}
-                <option value="{{ departamento.id }}" {% if request.GET.departamento == departamento.id|stringformat:"s" %}selected{% endif %}>
-                    {{ departamento.nombre }}
-                </option>
+            <option value="{{ departamento.id }}" {% if request.GET.departamento==departamento.id|stringformat:"s"
+                %}selected{% endif %}>
+                {{ departamento.nombre }}
+            </option>
             {% endfor %}
         </select>
     </div>
@@ -19,9 +20,10 @@
         <select class="form-control" id="municipio" name="municipio">
             <option value="">Todos</option>
             {% for municipio in municipios %}
-                <option value="{{ municipio.id }}" {% if request.GET.municipio == municipio.id|stringformat:"s" %}selected{% endif %}>
-                    {{ municipio.nombre }}
-                </option>
+            <option value="{{ municipio.id }}" {% if request.GET.municipio==municipio.id|stringformat:"s" %}selected{%
+                endif %}>
+                {{ municipio.nombre }}
+            </option>
             {% endfor %}
         </select>
     </div>
@@ -32,27 +34,27 @@
 
 {% block columnas %}
 <tr>
-  <th scope="col">Id</th>
-  <th scope="col">Departamento</th>
-  <th scope="col">Municipio</th>
-  <th scope="col">Opciones</th>
+    <th scope="col">Id</th>
+    <th scope="col">Departamento</th>
+    <th scope="col">Municipio</th>
+    <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
 
 {% block filas %}
 {% for u in object_list %}
 <tr>
-  <td>{{ u.id }}</td>
-  <td>{{ u.departamento.nombre }}</td>  {# Muestra el nombre del departamento #}
-  <td>{{ u.ciudad.nombre }}</td>        {# Muestra el nombre del municipio #}
-  <td>
-    <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm"title="Editar ubicación">
-        <i class="fas fa-edit"></i>
-    </a>
-    <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm"title="Eliminar ubicación">
-        <i class="fas fa-trash"></i>
-    </a>
-  </td>
+    <td>{{ u.id }}</td>
+    <td>{{ u.departamento.nombre }}</td>
+    <td>{{ u.municipio.nombre }}</td>
+    <td>
+        <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm" title="Editar ubicación">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm" title="Eliminar ubicación">
+            <i class="fas fa-trash"></i>
+        </a>
+    </td>
 </tr>
 {% endfor %}
 {% endblock %}

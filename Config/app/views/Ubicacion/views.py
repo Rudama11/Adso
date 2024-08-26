@@ -22,11 +22,8 @@ class UbicacionListView(ListView):
         context['titulo'] = 'Listado de Ubicaciones'
         context['entidad'] = 'Ubicacion'
         context['crear_url'] = reverse_lazy('app:ubicacion_crear')
-        
-        # Obtener todos los departamentos y municipios
         context['departamentos'] = Departamentos.objects.all()
         context['municipios'] = Municipios.objects.all()
-        
         return context
 
     def get_queryset(self):
@@ -38,7 +35,7 @@ class UbicacionListView(ListView):
         if departamento_id:
             queryset = queryset.filter(departamento_id=departamento_id)
         if municipio_id:
-            queryset = queryset.filter(ciudad_id=municipio_id)
+            queryset = queryset.filter(municipio_id=municipio_id)
 
         return queryset
 
@@ -50,29 +47,20 @@ class UbicacionCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Ubicacion'
+        context['titulo'] = 'Crear Ubicación'
         context['entidad'] = 'Ubicacion'
         context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
         return context
-
-    def get(self, request, *args, **kwargs):
-        # Verifica si la solicitud es AJAX
-        if 'X-Requested-With' in request.headers and request.headers['X-Requested-With'] == 'XMLHttpRequest':
-            # Lógica para solicitudes AJAX (si es necesario)
-            data = {'message': 'Esta es una respuesta AJAX'}
-            return JsonResponse(data)
-        else:
-            return super().get(request, *args, **kwargs)
 
 class UbicacionUpdateView(UpdateView):
     model = Ubicacion
     form_class = UbicacionForm
     template_name = 'Ubicacion/crearU.html'
     success_url = reverse_lazy('app:ubicacion_listarU')
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Ubicacion'
+        context['titulo'] = 'Actualizar Ubicación'
         context['entidad'] = 'Ubicacion'
         context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
         return context
@@ -84,7 +72,7 @@ class UbicacionDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Ubicacion'
+        context['titulo'] = 'Eliminar Ubicación'
         context['entidad'] = 'Ubicacion'
         context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
         return context
@@ -92,7 +80,7 @@ class UbicacionDeleteView(DeleteView):
 def municipios_por_departamento(request):
     departamento_id = request.GET.get('departamento_id')
     if departamento_id:
-        municipios = Municipios.objects.filter(cod_departamento_id=departamento_id).values('id', 'nombre')
+        municipios = Municipios.objects.filter(departamento_id=departamento_id).values('id', 'nombre')
     else:
         municipios = []
     return JsonResponse({'municipios': list(municipios)})

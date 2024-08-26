@@ -47,8 +47,18 @@
 
 <script>
     $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: 'Selecciona una opción',
+        // Iniciar select2 para los selects
+        $('#id_departamento').select2({
+            placeholder: 'Selecciona un departamento',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                }
+            }
+        });
+        $('#id_municipio').select2({
+            placeholder: 'Selecciona un municipio',
             allowClear: true,
             language: {
                 noResults: function() {
@@ -57,9 +67,10 @@
             }
         });
 
-        $('#departamento').on('change', function() {
+        // Cargar los municipios dinámicamente cuando se seleccione un departamento
+        $('#id_departamento').on('change', function() {
             var departamentoId = $(this).val();
-            var url = "{% url 'app:municipios_por_departamento' %}";
+            var url = "{% url 'app:municipios_por_departamento' %}"; // URL para obtener municipios
 
             $.ajax({
                 url: url,
@@ -67,9 +78,9 @@
                     'departamento_id': departamentoId
                 },
                 success: function(data) {
-                    var $municipioSelect = $('#id_municipio'); // Ajustar el ID del selector si es necesario
-                    $municipioSelect.empty(); // Limpiar los municipios actuales
-                    $municipioSelect.append('<option value="">Seleccione municipio</option>');
+                    var $municipioSelect = $('#id_municipio');
+                    $municipioSelect.empty();
+                    $municipioSelect.append('<option value="">Selecciona un municipio</option>');
                     $.each(data.municipios, function(index, municipio) {
                         $municipioSelect.append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
                     });
