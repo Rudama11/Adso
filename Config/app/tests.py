@@ -79,10 +79,13 @@ from app.models import *
 
 
 # Eliminar todos los productos y confirmar la eliminación
-productos = Producto.objects.all()
-for producto in productos:
-    print(f'Eliminando producto "{producto.nombre}"...')
-    producto.delete()
-    print(f'Producto "{producto.nombre}" eliminado con éxito.')
+# productos = Producto.objects.all()
+# for producto in productos:
+#     print(f'Eliminando producto "{producto.nombre}"...')
+#     producto.delete()
+#     print(f'Producto "{producto.nombre}" eliminado con éxito.')
 
-print('Todos los productos han sido eliminados.')
+# print('Todos los productos han sido eliminados.')
+
+departamento = Departamentos.objects.get(id=9)
+print(departamento.municipios.all())

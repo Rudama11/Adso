@@ -49,30 +49,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Iniciar select2 para los selects
-        $('#id_departamento').select2({
-            placeholder: 'Selecciona un departamento',
-            allowClear: true,
-            language: {
-                noResults: function() {
-                    return "No se encontraron resultados";
-                }
-            }
-        });
-        $('#id_municipio').select2({
-            placeholder: 'Selecciona un municipio',
-            allowClear: true,
-            language: {
-                noResults: function() {
-                    return "No se encontraron resultados";
-                }
-            }
-        });
-
-        // Cargar los municipios dinámicamente cuando se seleccione un departamento
         $('#id_departamento').on('change', function() {
             var departamentoId = $(this).val();
-            var url = "{% url 'app:municipios_por_departamento' %}"; // URL para obtener municipios
+            var url = "{% url 'app:municipios_por_departamento' %}";
 
             $.ajax({
                 url: url,
@@ -80,13 +59,14 @@
                     'departamento_id': departamentoId
                 },
                 success: function(data) {
-                    var $municipioSelect = $('#id_municipio');
-                    $municipioSelect.empty(); // Limpiar el select de municipios
-                    $municipioSelect.append('<option value="">Selecciona un municipio</option>');
+                    console.log("Datos recibidos:", data);
+                    $('#id_municipio').empty().append('<option value="">Selecciona un municipio</option>');
                     $.each(data.municipios, function(index, municipio) {
-                        $municipioSelect.append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
+                        $('#id_municipio').append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
                     });
-                    $municipioSelect.trigger('change'); // Actualizar el select2
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error en la solicitud AJAX:", status, error);
                 }
             });
         });
