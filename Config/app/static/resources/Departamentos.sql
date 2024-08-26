@@ -1,231 +1,223 @@
 /* INSERT QUERY NO: 1 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-1, 5, 'Antioquia '
+1, 'Amazonas'
 );
 
 /* INSERT QUERY NO: 2 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-2, 8, 'Atlántico '
+2, 'Antioquia '
 );
 
 /* INSERT QUERY NO: 3 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-3, 11, 'Bogotá'
+3, 'Arauca'
 );
 
 /* INSERT QUERY NO: 4 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-4, 13, 'Bolívar'
+4, 'Atlántico '
 );
 
 /* INSERT QUERY NO: 5 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-5, 15, 'Boyacá'
+5, 'Bolívar'
 );
 
 /* INSERT QUERY NO: 6 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-6, 17, 'Caldas'
+6, 'Boyacá'
 );
 
 /* INSERT QUERY NO: 7 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-7, 18, 'Caquetá'
+7, 'Caldas'
 );
 
 /* INSERT QUERY NO: 8 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-8, 19, 'Cauca'
+8, 'Caquetá'
 );
 
 /* INSERT QUERY NO: 9 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-9, 20, 'Cesar'
+9, 'Casanare'
 );
 
 /* INSERT QUERY NO: 10 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-10, 23, 'Córdoba'
+10, 'Cauca'
 );
 
 /* INSERT QUERY NO: 11 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-11, 25, 'Cundinamarca'
+11, 'Cesar'
 );
 
 /* INSERT QUERY NO: 12 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-12, 27, 'Chocó'
+12, 'Chocó'
 );
 
 /* INSERT QUERY NO: 13 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-13, 41, 'Huila'
+13, 'Córdoba'
 );
 
 /* INSERT QUERY NO: 14 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-14, 44, 'La Guajira'
+14, 'Cundinamarca'
 );
 
 /* INSERT QUERY NO: 15 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-15, 47, 'Magdalena'
+15, 'Guainía'
 );
 
 /* INSERT QUERY NO: 16 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-16, 50, 'Meta'
+16, 'Guaviare'
 );
 
 /* INSERT QUERY NO: 17 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-17, 52, 'Nariño'
+17, 'Huila'
 );
 
 /* INSERT QUERY NO: 18 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-18, 54, 'Norte de Santander'
+18, 'La Guajira'
 );
 
 /* INSERT QUERY NO: 19 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-19, 63, 'Quindío'
+19, 'Magdalena'
 );
 
 /* INSERT QUERY NO: 20 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-20, 66, 'Risaralda'
+20, 'Meta'
 );
 
 /* INSERT QUERY NO: 21 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-21, 68, 'Santander'
+21, 'Nariño'
 );
 
 /* INSERT QUERY NO: 22 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-22, 70, 'Sucre'
+22, 'Norte de Santander'
 );
 
 /* INSERT QUERY NO: 23 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-23, 73, 'Tolima'
+23, 'Putumayo'
 );
 
 /* INSERT QUERY NO: 24 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-24, 76, 'Valle del Cauca'
+24, 'Quindío'
 );
 
 /* INSERT QUERY NO: 25 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-25, 81, 'Arauca'
+25, 'Risaralda'
 );
 
 /* INSERT QUERY NO: 26 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-26, 85, 'Casanare'
+26, 'San Andrés y Providencia'
 );
 
 /* INSERT QUERY NO: 27 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-27, 86, 'Putumayo'
+27, 'Santander'
 );
 
 /* INSERT QUERY NO: 28 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-28, 88, 'San Andrés y Providencia'
+28, 'Sucre'
 );
 
 /* INSERT QUERY NO: 29 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-29, 91, 'Amazonas'
+29, 'Tolima'
 );
 
 /* INSERT QUERY NO: 30 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-30, 94, 'Guainía'
+30, 'Valle del Cauca'
 );
 
 /* INSERT QUERY NO: 31 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-31, 95, 'Guaviare'
+31, 'Vaupés'
 );
 
 /* INSERT QUERY NO: 32 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
+INSERT INTO departamentos(id, nombre)
 VALUES
 (
-32, 97, 'Vaupés'
+32, 'Vichada'
 );
-
-/* INSERT QUERY NO: 33 */
-INSERT INTO departamentos(id, codigo_departamento, nombre)
-VALUES
-(
-33, 99, 'Vichada'
-);
-

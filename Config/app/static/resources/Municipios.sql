@@ -1,7860 +1,7860 @@
 /* INSERT QUERY NO: 1 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1, 'LETICIA ', 91
+1, 'Abejorral ', 2
 );
 
 /* INSERT QUERY NO: 2 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-2, 'EL ENCANTO ', 91
+2, 'Ábrego ', 22
 );
 
 /* INSERT QUERY NO: 3 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-3, 'LA CHORRERA ', 91
+3, 'Abriaquí ', 2
 );
 
 /* INSERT QUERY NO: 4 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-4, 'LA PEDRERA ', 91
+4, 'Acacías ', 20
 );
 
 /* INSERT QUERY NO: 5 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-5, 'LA VICTORIA ', 91
+5, 'Acandí ', 12
 );
 
 /* INSERT QUERY NO: 6 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-6, 'MIRITÍ – PARANÁ ', 91
+6, 'Acevedo ', 17
 );
 
 /* INSERT QUERY NO: 7 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-7, 'PUERTO ALEGRÍA ', 91
+7, 'Achí ', 5
 );
 
 /* INSERT QUERY NO: 8 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-8, 'PUERTO ARICA ', 91
+8, 'Agrado ', 17
 );
 
 /* INSERT QUERY NO: 9 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-9, 'PUERTO NARIÑO ', 91
+9, 'Agua De Dios ', 14
 );
 
 /* INSERT QUERY NO: 10 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-10, 'PUERTO SANTANDER ', 91
+10, 'Aguachica ', 11
 );
 
 /* INSERT QUERY NO: 11 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-11, 'TARAPACÁ ', 91
+11, 'Aguada ', 27
 );
 
 /* INSERT QUERY NO: 12 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-12, 'MEDELLÍN ', 5
+12, 'Aguadas ', 7
 );
 
 /* INSERT QUERY NO: 13 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-13, 'ABEJORRAL ', 5
+13, 'Aguazul ', 9
 );
 
 /* INSERT QUERY NO: 14 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-14, 'ABRIAQUÍ ', 5
+14, 'Agustín Codazzi ', 11
 );
 
 /* INSERT QUERY NO: 15 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-15, 'ALEJANDRÍA ', 5
+15, 'Aipe ', 17
 );
 
 /* INSERT QUERY NO: 16 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-16, 'AMAGÁ ', 5
+16, 'Albán ', 14
 );
 
 /* INSERT QUERY NO: 17 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-17, 'AMALFI ', 5
+17, 'Albán (San José) ', 21
 );
 
 /* INSERT QUERY NO: 18 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-18, 'ANDES ', 5
+18, 'Albania ', 8
 );
 
 /* INSERT QUERY NO: 19 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-19, 'ANGELÓPOLIS ', 5
+19, 'Albania ', 18
 );
 
 /* INSERT QUERY NO: 20 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-20, 'ANGOSTURA ', 5
+20, 'Albania ', 27
 );
 
 /* INSERT QUERY NO: 21 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-21, 'ANORÍ ', 5
+21, 'Alcalá ', 30
 );
 
 /* INSERT QUERY NO: 22 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-22, 'SANTA FÉ DE ANTIOQUIA ', 5
+22, 'Aldana ', 21
 );
 
 /* INSERT QUERY NO: 23 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-23, 'ANZÁ ', 5
+23, 'Alejandría ', 2
 );
 
 /* INSERT QUERY NO: 24 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-24, 'APARTADÓ ', 5
+24, 'Algarrobo ', 19
 );
 
 /* INSERT QUERY NO: 25 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-25, 'ARBOLETES ', 5
+25, 'Algeciras ', 17
 );
 
 /* INSERT QUERY NO: 26 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-26, 'ARGELIA ', 5
+26, 'Almaguer ', 10
 );
 
 /* INSERT QUERY NO: 27 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-27, 'ARMENIA ', 5
+27, 'Almeida ', 6
 );
 
 /* INSERT QUERY NO: 28 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-28, 'BARBOSA ', 5
+28, 'Alpujarra ', 29
 );
 
 /* INSERT QUERY NO: 29 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-29, 'BELMIRA ', 5
+29, 'Altamira ', 17
 );
 
 /* INSERT QUERY NO: 30 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-30, 'BELLO ', 5
+30, 'Alto Baudó (Pie De Pató) ', 12
 );
 
 /* INSERT QUERY NO: 31 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-31, 'BETANIA ', 5
+31, 'Altos Del Rosario ', 5
 );
 
 /* INSERT QUERY NO: 32 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-32, 'BETULIA ', 5
+32, 'Alvarado ', 29
 );
 
 /* INSERT QUERY NO: 33 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-33, 'CIUDAD BOLÍVAR ', 5
+33, 'Amagá ', 2
 );
 
 /* INSERT QUERY NO: 34 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-34, 'BRICEÑO ', 5
+34, 'Amalfi ', 2
 );
 
 /* INSERT QUERY NO: 35 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-35, 'BURITICÁ ', 5
+35, 'Ambalema ', 29
 );
 
 /* INSERT QUERY NO: 36 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-36, 'CÁCERES ', 5
+36, 'Anapoima ', 14
 );
 
 /* INSERT QUERY NO: 37 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-37, 'CAICEDO ', 5
+37, 'Ancuyá ', 21
 );
 
 /* INSERT QUERY NO: 38 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-38, 'CALDAS ', 5
+38, 'Andalucía ', 30
 );
 
 /* INSERT QUERY NO: 39 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-39, 'CAMPAMENTO ', 5
+39, 'Andes ', 2
 );
 
 /* INSERT QUERY NO: 40 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-40, 'CAÑASGORDAS ', 5
+40, 'Angelópolis ', 2
 );
 
 /* INSERT QUERY NO: 41 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-41, 'CARACOLÍ ', 5
+41, 'Angostura ', 2
 );
 
 /* INSERT QUERY NO: 42 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-42, 'CARAMANTA ', 5
+42, 'Anolaima ', 14
 );
 
 /* INSERT QUERY NO: 43 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-43, 'CAREPA ', 5
+43, 'Anorí ', 2
 );
 
 /* INSERT QUERY NO: 44 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-44, 'EL CARMEN DE VIBORAL ', 5
+44, 'Anserma ', 7
 );
 
 /* INSERT QUERY NO: 45 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-45, 'CAROLINA ', 5
+45, 'Ansermanuevo ', 30
 );
 
 /* INSERT QUERY NO: 46 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-46, 'CAUCASIA ', 5
+46, 'Anzá ', 2
 );
 
 /* INSERT QUERY NO: 47 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-47, 'CHIGORODÓ ', 5
+47, 'Anzoátegui ', 29
 );
 
 /* INSERT QUERY NO: 48 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-48, 'CISNEROS ', 5
+48, 'Apartadó ', 2
 );
 
 /* INSERT QUERY NO: 49 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-49, 'COCORNÁ ', 5
+49, 'Apía ', 25
 );
 
 /* INSERT QUERY NO: 50 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-50, 'CONCEPCIÓN ', 5
+50, 'Apulo ', 14
 );
 
 /* INSERT QUERY NO: 51 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-51, 'CONCORDIA ', 5
+51, 'Aquitania ', 6
 );
 
 /* INSERT QUERY NO: 52 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-52, 'COPACABANA ', 5
+52, 'Aracataca ', 19
 );
 
 /* INSERT QUERY NO: 53 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-53, 'DABEIBA ', 5
+53, 'Aranzazu ', 7
 );
 
 /* INSERT QUERY NO: 54 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-54, 'DONMATÍAS ', 5
+54, 'Aratoca ', 27
 );
 
 /* INSERT QUERY NO: 55 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-55, 'EBÉJICO ', 5
+55, 'Arauca ', 3
 );
 
 /* INSERT QUERY NO: 56 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-56, 'EL BAGRE ', 5
+56, 'Arauquita ', 3
 );
 
 /* INSERT QUERY NO: 57 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-57, 'ENTRERRÍOS ', 5
+57, 'Arbeláez ', 14
 );
 
 /* INSERT QUERY NO: 58 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-58, 'ENVIGADO ', 5
+58, 'Arboleda ', 21
 );
 
 /* INSERT QUERY NO: 59 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-59, 'FREDONIA ', 5
+59, 'Arboledas ', 22
 );
 
 /* INSERT QUERY NO: 60 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-60, 'FRONTINO ', 5
+60, 'Arboletes ', 2
 );
 
 /* INSERT QUERY NO: 61 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-61, 'GIRALDO ', 5
+61, 'Arcabuco ', 6
 );
 
 /* INSERT QUERY NO: 62 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-62, 'GIRARDOTA ', 5
+62, 'Arenal ', 5
 );
 
 /* INSERT QUERY NO: 63 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-63, 'GÓMEZ PLATA ', 5
+63, 'Argelia ', 2
 );
 
 /* INSERT QUERY NO: 64 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-64, 'GRANADA ', 5
+64, 'Argelia ', 10
 );
 
 /* INSERT QUERY NO: 65 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-65, 'GUADALUPE ', 5
+65, 'Argelia ', 30
 );
 
 /* INSERT QUERY NO: 66 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-66, 'GUARNE ', 5
+66, 'Ariguaní ', 19
 );
 
 /* INSERT QUERY NO: 67 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-67, 'GUATAPÉ ', 5
+67, 'Arjona ', 5
 );
 
 /* INSERT QUERY NO: 68 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-68, 'HELICONIA ', 5
+68, 'Armenia ', 2
 );
 
 /* INSERT QUERY NO: 69 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-69, 'HISPANIA ', 5
+69, 'Armenia ', 24
 );
 
 /* INSERT QUERY NO: 70 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-70, 'ITAGÜÍ ', 5
+70, 'Armero (Guayabal) ', 29
 );
 
 /* INSERT QUERY NO: 71 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-71, 'ITUANGO ', 5
+71, 'Arroyohondo ', 5
 );
 
 /* INSERT QUERY NO: 72 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-72, 'JARDÍN ', 5
+72, 'Astrea ', 11
 );
 
 /* INSERT QUERY NO: 73 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-73, 'JERICÓ ', 5
+73, 'Ataco ', 29
 );
 
 /* INSERT QUERY NO: 74 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-74, 'LA CEJA ', 5
+74, 'Atrato (Yuto) ', 12
 );
 
 /* INSERT QUERY NO: 75 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-75, 'LA ESTRELLA ', 5
+75, 'Ayapel ', 13
 );
 
 /* INSERT QUERY NO: 76 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-76, 'LA PINTADA ', 5
+76, 'Bagadó ', 12
 );
 
 /* INSERT QUERY NO: 77 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-77, 'LA UNIÓN ', 5
+77, 'Bahía Solano (Mutis) ', 12
 );
 
 /* INSERT QUERY NO: 78 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-78, 'LIBORINA ', 5
+78, 'Bajo Baudó (Pizarro) ', 12
 );
 
 /* INSERT QUERY NO: 79 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-79, 'MACEO ', 5
+79, 'Balboa ', 10
 );
 
 /* INSERT QUERY NO: 80 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-80, 'MARINILLA ', 5
+80, 'Balboa ', 25
 );
 
 /* INSERT QUERY NO: 81 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-81, 'MONTEBELLO ', 5
+81, 'Baranoa ', 4
 );
 
 /* INSERT QUERY NO: 82 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-82, 'MURINDÓ ', 5
+82, 'Baraya ', 17
 );
 
 /* INSERT QUERY NO: 83 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-83, 'MUTATÁ ', 5
+83, 'Barbacoas ', 21
 );
 
 /* INSERT QUERY NO: 84 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-84, 'NARIÑO ', 5
+84, 'Barbosa ', 2
 );
 
 /* INSERT QUERY NO: 85 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-85, 'NECOCLÍ ', 5
+85, 'Barbosa ', 27
 );
 
 /* INSERT QUERY NO: 86 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-86, 'NECHÍ ', 5
+86, 'Barichara ', 27
 );
 
 /* INSERT QUERY NO: 87 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-87, 'OLAYA ', 5
+87, 'Barranca De Upía ', 20
 );
 
 /* INSERT QUERY NO: 88 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-88, 'PEÑOL ', 5
+88, 'Barrancabermeja ', 27
 );
 
 /* INSERT QUERY NO: 89 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-89, 'PEQUE ', 5
+89, 'Barrancas ', 18
 );
 
 /* INSERT QUERY NO: 90 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-90, 'PUEBLORRICO ', 5
+90, 'Barranco De Loba ', 5
 );
 
 /* INSERT QUERY NO: 91 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-91, 'PUERTO BERRÍO ', 5
+91, 'Barrancominas ', 15
 );
 
 /* INSERT QUERY NO: 92 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-92, 'PUERTO NARE ', 5
+92, 'Barranquilla ', 4
 );
 
 /* INSERT QUERY NO: 93 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-93, 'PUERTO TRIUNFO ', 5
+93, 'Becerril ', 11
 );
 
 /* INSERT QUERY NO: 94 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-94, 'REMEDIOS ', 5
+94, 'Belalcázar ', 7
 );
 
 /* INSERT QUERY NO: 95 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-95, 'RETIRO ', 5
+95, 'Belén ', 6
 );
 
 /* INSERT QUERY NO: 96 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-96, 'RIONEGRO ', 5
+96, 'Belén ', 21
 );
 
 /* INSERT QUERY NO: 97 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-97, 'SABANALARGA ', 5
+97, 'Belén De Los Andaquíes ', 8
 );
 
 /* INSERT QUERY NO: 98 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-98, 'SABANETA ', 5
+98, 'Belén De Umbría ', 25
 );
 
 /* INSERT QUERY NO: 99 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-99, 'SALGAR ', 5
+99, 'Bello ', 2
 );
 
 /* INSERT QUERY NO: 100 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-100, 'SAN ANDRÉS DE CUERQUÍA ', 5
+100, 'Belmira ', 2
 );
 
 /* INSERT QUERY NO: 101 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-101, 'SAN CARLOS ', 5
+101, 'Beltrán ', 14
 );
 
 /* INSERT QUERY NO: 102 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-102, 'SAN FRANCISCO ', 5
+102, 'Berbeo ', 6
 );
 
 /* INSERT QUERY NO: 103 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-103, 'SAN JERÓNIMO ', 5
+103, 'Betania ', 2
 );
 
 /* INSERT QUERY NO: 104 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-104, 'SAN JOSÉ DE LA MONTAÑA ', 5
+104, 'Betéitiva ', 6
 );
 
 /* INSERT QUERY NO: 105 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-105, 'SAN JUAN DE URABÁ ', 5
+105, 'Betulia ', 2
 );
 
 /* INSERT QUERY NO: 106 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-106, 'SAN LUIS ', 5
+106, 'Betulia ', 27
 );
 
 /* INSERT QUERY NO: 107 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-107, 'SAN PEDRO DE LOS MILAGROS ', 5
+107, 'Bituima ', 14
 );
 
 /* INSERT QUERY NO: 108 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-108, 'SAN PEDRO DE URABÁ ', 5
+108, 'Boavita ', 6
 );
 
 /* INSERT QUERY NO: 109 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-109, 'SAN RAFAEL ', 5
+109, 'Bochalema ', 22
 );
 
 /* INSERT QUERY NO: 110 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-110, 'SAN ROQUE ', 5
+110, 'Bogotá D.C. ', 14
 );
 
 /* INSERT QUERY NO: 111 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-111, 'SAN VICENTE FERRER ', 5
+111, 'Bojacá ', 14
 );
 
 /* INSERT QUERY NO: 112 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-112, 'SANTA BÁRBARA ', 5
+112, 'Bojayá (Bella Vista) ', 12
 );
 
 /* INSERT QUERY NO: 113 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-113, 'SANTA ROSA DE OSOS ', 5
+113, 'Bolívar ', 10
 );
 
 /* INSERT QUERY NO: 114 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-114, 'SANTO DOMINGO ', 5
+114, 'Bolívar ', 27
 );
 
 /* INSERT QUERY NO: 115 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-115, 'EL SANTUARIO ', 5
+115, 'Bolívar ', 30
 );
 
 /* INSERT QUERY NO: 116 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-116, 'SEGOVIA ', 5
+116, 'Bosconia ', 11
 );
 
 /* INSERT QUERY NO: 117 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-117, 'SONSÓN ', 5
+117, 'Boyacá ', 6
 );
 
 /* INSERT QUERY NO: 118 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-118, 'SOPETRÁN ', 5
+118, 'Briceño ', 2
 );
 
 /* INSERT QUERY NO: 119 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-119, 'TÁMESIS ', 5
+119, 'Briceño ', 6
 );
 
 /* INSERT QUERY NO: 120 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-120, 'TARAZÁ ', 5
+120, 'Bucaramanga ', 27
 );
 
 /* INSERT QUERY NO: 121 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-121, 'TARSO ', 5
+121, 'Bucarasica ', 22
 );
 
 /* INSERT QUERY NO: 122 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-122, 'TITIRIBÍ ', 5
+122, 'Buenaventura ', 30
 );
 
 /* INSERT QUERY NO: 123 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-123, 'TOLEDO ', 5
+123, 'Buenavista ', 6
 );
 
 /* INSERT QUERY NO: 124 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-124, 'TURBO ', 5
+124, 'Buenavista ', 13
 );
 
 /* INSERT QUERY NO: 125 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-125, 'URAMITA ', 5
+125, 'Buenavista ', 24
 );
 
 /* INSERT QUERY NO: 126 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-126, 'URRAO ', 5
+126, 'Buenavista ', 28
 );
 
 /* INSERT QUERY NO: 127 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-127, 'VALDIVIA ', 5
+127, 'Buenos Aires ', 10
 );
 
 /* INSERT QUERY NO: 128 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-128, 'VALPARAÍSO ', 5
+128, 'Buesaco ', 21
 );
 
 /* INSERT QUERY NO: 129 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-129, 'VEGACHÍ ', 5
+129, 'Bugalagrande ', 30
 );
 
 /* INSERT QUERY NO: 130 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-130, 'VENECIA ', 5
+130, 'Buriticá ', 2
 );
 
 /* INSERT QUERY NO: 131 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-131, 'VIGÍA DEL FUERTE ', 5
+131, 'Busbanzá ', 6
 );
 
 /* INSERT QUERY NO: 132 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-132, 'YALÍ ', 5
+132, 'Cabrera ', 14
 );
 
 /* INSERT QUERY NO: 133 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-133, 'YARUMAL ', 5
+133, 'Cabrera ', 27
 );
 
 /* INSERT QUERY NO: 134 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-134, 'YOLOMBÓ ', 5
+134, 'Cabuyaro ', 20
 );
 
 /* INSERT QUERY NO: 135 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-135, 'YONDÓ ', 5
+135, 'Cacahual ', 15
 );
 
 /* INSERT QUERY NO: 136 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-136, 'ZARAGOZA ', 5
+136, 'Cáceres ', 2
 );
 
 /* INSERT QUERY NO: 137 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-137, 'VENECIA ', 5
+137, 'Cachipay ', 14
 );
 
 /* INSERT QUERY NO: 138 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-138, 'ARAUCA ', 81
+138, 'Cáchira ', 22
 );
 
 /* INSERT QUERY NO: 139 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-139, 'ARAUQUITA ', 81
+139, 'Cácota De Velasco ', 22
 );
 
 /* INSERT QUERY NO: 140 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-140, 'CRAVO NORTE ', 81
+140, 'Caicedo ', 2
 );
 
 /* INSERT QUERY NO: 141 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-141, 'FORTUL ', 81
+141, 'Caicedonia ', 30
 );
 
 /* INSERT QUERY NO: 142 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-142, 'PUERTO RONDÓN ', 81
+142, 'Caimito ', 28
 );
 
 /* INSERT QUERY NO: 143 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-143, 'SARAVENA ', 81
+143, 'Cajamarca ', 29
 );
 
 /* INSERT QUERY NO: 144 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-144, 'TAME ', 81
+144, 'Cajibío ', 10
 );
 
 /* INSERT QUERY NO: 145 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-145, 'SAN ANDRÉS ', 88
+145, 'Cajicá ', 14
 );
 
 /* INSERT QUERY NO: 146 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-146, 'PROVIDENCIA ', 88
+146, 'Calamar ', 5
 );
 
 /* INSERT QUERY NO: 147 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-147, 'BARRANQUILLA ', 8
+147, 'Calamar ', 16
 );
 
 /* INSERT QUERY NO: 148 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-148, 'BARANOA ', 8
+148, 'Calarcá ', 24
 );
 
 /* INSERT QUERY NO: 149 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-149, 'CAMPO DE LA CRUZ ', 8
+149, 'Caldas ', 2
 );
 
 /* INSERT QUERY NO: 150 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-150, 'CANDELARIA ', 8
+150, 'Caldas ', 6
 );
 
 /* INSERT QUERY NO: 151 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-151, 'GALAPA ', 8
+151, 'Caldono ', 10
 );
 
 /* INSERT QUERY NO: 152 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-152, 'JUAN DE ACOSTA ', 8
+152, 'Cali ', 30
 );
 
 /* INSERT QUERY NO: 153 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-153, 'LURUACO ', 8
+153, 'California ', 27
 );
 
 /* INSERT QUERY NO: 154 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-154, 'MALAMBO ', 8
+154, 'Calima (Darien) ', 30
 );
 
 /* INSERT QUERY NO: 155 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-155, 'MANATÍ ', 8
+155, 'Caloto ', 10
 );
 
 /* INSERT QUERY NO: 156 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-156, 'PALMAR DE VARELA ', 8
+156, 'Campamento ', 2
 );
 
 /* INSERT QUERY NO: 157 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-157, 'PIOJÓ ', 8
+157, 'Campo De La Cruz ', 4
 );
 
 /* INSERT QUERY NO: 158 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-158, 'POLONUEVO ', 8
+158, 'Campoalegre ', 17
 );
 
 /* INSERT QUERY NO: 159 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-159, 'PONEDERA ', 8
+159, 'Campohermoso ', 6
 );
 
 /* INSERT QUERY NO: 160 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-160, 'PUERTO COLOMBIA ', 8
+160, 'Canalete ', 13
 );
 
 /* INSERT QUERY NO: 161 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-161, 'REPELÓN ', 8
+161, 'Candelaria ', 4
 );
 
 /* INSERT QUERY NO: 162 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-162, 'SABANAGRANDE ', 8
+162, 'Candelaria ', 30
 );
 
 /* INSERT QUERY NO: 163 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-163, 'SABANALARGA ', 8
+163, 'Cantagallo ', 5
 );
 
 /* INSERT QUERY NO: 164 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-164, 'SANTA LUCÍA ', 8
+164, 'Cañasgordas ', 2
 );
 
 /* INSERT QUERY NO: 165 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-165, 'SANTO TOMÁS ', 8
+165, 'Caparrapí ', 14
 );
 
 /* INSERT QUERY NO: 166 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-166, 'SOLEDAD ', 8
+166, 'Capitanejo ', 27
 );
 
 /* INSERT QUERY NO: 167 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-167, 'SUAN ', 8
+167, 'Cáqueza ', 14
 );
 
 /* INSERT QUERY NO: 168 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-168, 'TUBARÁ ', 8
+168, 'Caracolí ', 2
 );
 
 /* INSERT QUERY NO: 169 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-169, 'USIACURÍ ', 8
+169, 'Caramanta ', 2
 );
 
 /* INSERT QUERY NO: 170 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-170, 'BOGOTÁ D.C. ', 11
+170, 'Carcasí ', 27
 );
 
 /* INSERT QUERY NO: 171 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-171, 'CARTAGENA DE INDIAS ', 13
+171, 'Carepa ', 2
 );
 
 /* INSERT QUERY NO: 172 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-172, 'ACHÍ ', 13
+172, 'Carmen De Apicalá ', 29
 );
 
 /* INSERT QUERY NO: 173 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-173, 'ALTOS DEL ROSARIO ', 13
+173, 'Carmen De Carupa ', 14
 );
 
 /* INSERT QUERY NO: 174 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-174, 'ARENAL ', 13
+174, 'Carmen Del Darién ', 12
 );
 
 /* INSERT QUERY NO: 175 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-175, 'ARJONA ', 13
+175, 'Carolina ', 2
 );
 
 /* INSERT QUERY NO: 176 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-176, 'ARROYOHONDO ', 13
+176, 'Cartagena De Indias ', 5
 );
 
 /* INSERT QUERY NO: 177 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-177, 'BARRANCO DE LOBA ', 13
+177, 'Cartagena Del Chairá ', 8
 );
 
 /* INSERT QUERY NO: 178 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-178, 'CALAMAR ', 13
+178, 'Cartago ', 30
 );
 
 /* INSERT QUERY NO: 179 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-179, 'CANTAGALLO ', 13
+179, 'Carurú ', 31
 );
 
 /* INSERT QUERY NO: 180 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-180, 'CICUCO ', 13
+180, 'Casabianca ', 29
 );
 
 /* INSERT QUERY NO: 181 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-181, 'CÓRDOBA ', 13
+181, 'Castilla La Nueva ', 20
 );
 
 /* INSERT QUERY NO: 182 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-182, 'CLEMENCIA ', 13
+182, 'Caucasia ', 2
 );
 
 /* INSERT QUERY NO: 183 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-183, 'EL CARMEN DE BOLÍVAR ', 13
+183, 'Cepitá ', 27
 );
 
 /* INSERT QUERY NO: 184 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-184, 'EL GUAMO ', 13
+184, 'Cereté ', 13
 );
 
 /* INSERT QUERY NO: 185 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-185, 'EL PEÑÓN ', 13
+185, 'Cerinza ', 6
 );
 
 /* INSERT QUERY NO: 186 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-186, 'HATILLO DE LOBA ', 13
+186, 'Cerrito ', 27
 );
 
 /* INSERT QUERY NO: 187 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-187, 'MAGANGUÉ ', 13
+187, 'Cerro De San Antonio ', 19
 );
 
 /* INSERT QUERY NO: 188 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-188, 'MAHATES ', 13
+188, 'Cértegui ', 12
 );
 
 /* INSERT QUERY NO: 189 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-189, 'MARGARITA ', 13
+189, 'Chachagüí ', 21
 );
 
 /* INSERT QUERY NO: 190 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-190, 'MARÍA LA BAJA ', 13
+190, 'Chaguaní ', 14
 );
 
 /* INSERT QUERY NO: 191 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-191, 'MONTECRISTO ', 13
+191, 'Chalán ', 28
 );
 
 /* INSERT QUERY NO: 192 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-192, 'MOMPÓS ', 13
+192, 'Chámeza ', 9
 );
 
 /* INSERT QUERY NO: 193 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-193, 'MORALES ', 13
+193, 'Chaparral ', 29
 );
 
 /* INSERT QUERY NO: 194 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-194, 'NOROSÍ ', 13
+194, 'Charalá ', 27
 );
 
 /* INSERT QUERY NO: 195 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-195, 'PINILLOS ', 13
+195, 'Charta ', 27
 );
 
 /* INSERT QUERY NO: 196 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-196, 'REGIDOR ', 13
+196, 'Chía ', 14
 );
 
 /* INSERT QUERY NO: 197 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-197, 'RÍO VIEJO ', 13
+197, 'Chibolo ', 19
 );
 
 /* INSERT QUERY NO: 198 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-198, 'SAN CRISTÓBAL ', 13
+198, 'Chigorodó ', 2
 );
 
 /* INSERT QUERY NO: 199 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-199, 'SAN ESTANISLAO ', 13
+199, 'Chima ', 27
 );
 
 /* INSERT QUERY NO: 200 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-200, 'SAN FERNANDO ', 13
+200, 'Chimá ', 13
 );
 
 /* INSERT QUERY NO: 201 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-201, 'SAN JACINTO ', 13
+201, 'Chimichagua ', 11
 );
 
 /* INSERT QUERY NO: 202 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-202, 'SAN JACINTO DEL CAUCA ', 13
+202, 'Chinácota ', 22
 );
 
 /* INSERT QUERY NO: 203 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-203, 'SAN JUAN NEPOMUCENO ', 13
+203, 'Chinavita ', 6
 );
 
 /* INSERT QUERY NO: 204 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-204, 'SAN MARTÍN DE LOBA ', 13
+204, 'Chinchiná ', 7
 );
 
 /* INSERT QUERY NO: 205 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-205, 'SAN PABLO SUR ', 13
+205, 'Chinú ', 13
 );
 
 /* INSERT QUERY NO: 206 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-206, 'SANTA CATALINA ', 13
+206, 'Chipaque ', 14
 );
 
 /* INSERT QUERY NO: 207 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-207, 'SANTA ROSA DE LIMA ', 13
+207, 'Chipatá ', 27
 );
 
 /* INSERT QUERY NO: 208 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-208, 'SANTA ROSA DEL SUR ', 13
+208, 'Chiquinquirá ', 6
 );
 
 /* INSERT QUERY NO: 209 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-209, 'SIMITÍ ', 13
+209, 'Chíquiza ', 6
 );
 
 /* INSERT QUERY NO: 210 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-210, 'SOPLAVIENTO ', 13
+210, 'Chiriguaná ', 11
 );
 
 /* INSERT QUERY NO: 211 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-211, 'TALAIGUA NUEVO ', 13
+211, 'Chiscas ', 6
 );
 
 /* INSERT QUERY NO: 212 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-212, 'TIQUISIO ', 13
+212, 'Chita ', 6
 );
 
 /* INSERT QUERY NO: 213 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-213, 'TURBACO ', 13
+213, 'Chitagá ', 22
 );
 
 /* INSERT QUERY NO: 214 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-214, 'TURBANÁ ', 13
+214, 'Chitaraque ', 6
 );
 
 /* INSERT QUERY NO: 215 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-215, 'VILLANUEVA ', 13
+215, 'Chivatá ', 6
 );
 
 /* INSERT QUERY NO: 216 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-216, 'ZAMBRANO ', 13
+216, 'Chivor ', 6
 );
 
 /* INSERT QUERY NO: 217 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-217, 'TUNJA ', 15
+217, 'Choachí ', 14
 );
 
 /* INSERT QUERY NO: 218 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-218, 'ALMEIDA ', 15
+218, 'Chocontá ', 14
 );
 
 /* INSERT QUERY NO: 219 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-219, 'AQUITANIA ', 15
+219, 'Cicuco ', 5
 );
 
 /* INSERT QUERY NO: 220 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-220, 'ARCABUCO ', 15
+220, 'Ciénaga ', 19
 );
 
 /* INSERT QUERY NO: 221 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-221, 'BELÉN ', 15
+221, 'Ciénaga De Oro ', 13
 );
 
 /* INSERT QUERY NO: 222 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-222, 'BERBEO ', 15
+222, 'Ciénega ', 6
 );
 
 /* INSERT QUERY NO: 223 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-223, 'BETÉITIVA ', 15
+223, 'Cimitarra ', 27
 );
 
 /* INSERT QUERY NO: 224 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-224, 'BOAVITA ', 15
+224, 'Circasia ', 24
 );
 
 /* INSERT QUERY NO: 225 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-225, 'BOYACÁ ', 15
+225, 'Cisneros ', 2
 );
 
 /* INSERT QUERY NO: 226 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-226, 'BRICEÑO ', 15
+226, 'Ciudad Bolívar ', 2
 );
 
 /* INSERT QUERY NO: 227 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-227, 'BUENAVISTA ', 15
+227, 'Clemencia ', 5
 );
 
 /* INSERT QUERY NO: 228 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-228, 'BUSBANZÁ ', 15
+228, 'Cocorná ', 2
 );
 
 /* INSERT QUERY NO: 229 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-229, 'CALDAS ', 15
+229, 'Coello ', 29
 );
 
 /* INSERT QUERY NO: 230 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-230, 'CAMPOHERMOSO ', 15
+230, 'Cogua ', 14
 );
 
 /* INSERT QUERY NO: 231 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-231, 'CERINZA ', 15
+231, 'Colombia ', 17
 );
 
 /* INSERT QUERY NO: 232 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-232, 'CHINAVITA ', 15
+232, 'Colón ', 23
 );
 
 /* INSERT QUERY NO: 233 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-233, 'CHIQUINQUIRÁ ', 15
+233, 'Colón (Génova) ', 21
 );
 
 /* INSERT QUERY NO: 234 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-234, 'CHISCAS ', 15
+234, 'Colosó ', 28
 );
 
 /* INSERT QUERY NO: 235 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-235, 'CHITA ', 15
+235, 'Cómbita ', 6
 );
 
 /* INSERT QUERY NO: 236 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-236, 'CHITARAQUE ', 15
+236, 'Concepción ', 2
 );
 
 /* INSERT QUERY NO: 237 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-237, 'CHIVATÁ ', 15
+237, 'Concepción ', 27
 );
 
 /* INSERT QUERY NO: 238 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-238, 'CIÉNEGA ', 15
+238, 'Concordia ', 2
 );
 
 /* INSERT QUERY NO: 239 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-239, 'CÓMBITA ', 15
+239, 'Concordia ', 19
 );
 
 /* INSERT QUERY NO: 240 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-240, 'COPER ', 15
+240, 'Condoto ', 12
 );
 
 /* INSERT QUERY NO: 241 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-241, 'CORRALES ', 15
+241, 'Confines ', 27
 );
 
 /* INSERT QUERY NO: 242 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-242, 'COVARACHÍA ', 15
+242, 'Consacá ', 21
 );
 
 /* INSERT QUERY NO: 243 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-243, 'CUBARÁ ', 15
+243, 'Contadero ', 21
 );
 
 /* INSERT QUERY NO: 244 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-244, 'CUCAITA ', 15
+244, 'Contratación ', 27
 );
 
 /* INSERT QUERY NO: 245 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-245, 'CUÍTIVA ', 15
+245, 'Convención ', 22
 );
 
 /* INSERT QUERY NO: 246 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-246, 'CHÍQUIZA ', 15
+246, 'Copacabana ', 2
 );
 
 /* INSERT QUERY NO: 247 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-247, 'CHIVOR ', 15
+247, 'Coper ', 6
 );
 
 /* INSERT QUERY NO: 248 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-248, 'DUITAMA ', 15
+248, 'Córdoba ', 5
 );
 
 /* INSERT QUERY NO: 249 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-249, 'EL COCUY ', 15
+249, 'Córdoba ', 21
 );
 
 /* INSERT QUERY NO: 250 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-250, 'EL ESPINO ', 15
+250, 'Córdoba ', 24
 );
 
 /* INSERT QUERY NO: 251 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-251, 'FIRAVITOBA ', 15
+251, 'Corinto ', 10
 );
 
 /* INSERT QUERY NO: 252 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-252, 'FLORESTA ', 15
+252, 'Coromoro ', 27
 );
 
 /* INSERT QUERY NO: 253 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-253, 'GACHANTIVÁ ', 15
+253, 'Corozal ', 28
 );
 
 /* INSERT QUERY NO: 254 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-254, 'GÁMEZA ', 15
+254, 'Corrales ', 6
 );
 
 /* INSERT QUERY NO: 255 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-255, 'GARAGOA ', 15
+255, 'Cota ', 14
 );
 
 /* INSERT QUERY NO: 256 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-256, 'GUACAMAYAS ', 15
+256, 'Cotorra ', 13
 );
 
 /* INSERT QUERY NO: 257 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-257, 'GUATEQUE ', 15
+257, 'Covarachía ', 6
 );
 
 /* INSERT QUERY NO: 258 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-258, 'GUAYATÁ ', 15
+258, 'Coveñas ', 28
 );
 
 /* INSERT QUERY NO: 259 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-259, 'GÜICÁN DE LA SIERRA ', 15
+259, 'Coyaima ', 29
 );
 
 /* INSERT QUERY NO: 260 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-260, 'IZA ', 15
+260, 'Cravo Norte ', 3
 );
 
 /* INSERT QUERY NO: 261 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-261, 'JENESANO ', 15
+261, 'Cuaspúd ', 21
 );
 
 /* INSERT QUERY NO: 262 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-262, 'JERICÓ ', 15
+262, 'Cubará ', 6
 );
 
 /* INSERT QUERY NO: 263 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-263, 'LABRANZAGRANDE ', 15
+263, 'Cubarral ', 20
 );
 
 /* INSERT QUERY NO: 264 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-264, 'LA CAPILLA ', 15
+264, 'Cucaita ', 6
 );
 
 /* INSERT QUERY NO: 265 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-265, 'LA VICTORIA ', 15
+265, 'Cucunubá ', 14
 );
 
 /* INSERT QUERY NO: 266 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-266, 'LA UVITA ', 15
+266, 'Cúcuta ', 22
 );
 
 /* INSERT QUERY NO: 267 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-267, 'VILLA DE LEYVA ', 15
+267, 'Cucutilla ', 22
 );
 
 /* INSERT QUERY NO: 268 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-268, 'MACANAL ', 15
+268, 'Cuítiva ', 6
 );
 
 /* INSERT QUERY NO: 269 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-269, 'MARIPÍ ', 15
+269, 'Cumaral ', 20
 );
 
 /* INSERT QUERY NO: 270 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-270, 'MIRAFLORES ', 15
+270, 'Cumaribo ', 32
 );
 
 /* INSERT QUERY NO: 271 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-271, 'MONGUA ', 15
+271, 'Cumbal ', 21
 );
 
 /* INSERT QUERY NO: 272 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-272, 'MONGUÍ ', 15
+272, 'Cumbitara ', 21
 );
 
 /* INSERT QUERY NO: 273 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-273, 'MONIQUIRÁ ', 15
+273, 'Cunday ', 29
 );
 
 /* INSERT QUERY NO: 274 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-274, 'MOTAVITA ', 15
+274, 'Curillo ', 8
 );
 
 /* INSERT QUERY NO: 275 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-275, 'MUZO ', 15
+275, 'Curití ', 27
 );
 
 /* INSERT QUERY NO: 276 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-276, 'NOBSA ', 15
+276, 'Curumaní ', 11
 );
 
 /* INSERT QUERY NO: 277 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-277, 'NUEVO COLÓN ', 15
+277, 'Dabeiba ', 2
 );
 
 /* INSERT QUERY NO: 278 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-278, 'OICATÁ ', 15
+278, 'Dagua ', 30
 );
 
 /* INSERT QUERY NO: 279 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-279, 'OTANCHE ', 15
+279, 'Dibulla ', 18
 );
 
 /* INSERT QUERY NO: 280 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-280, 'PACHAVITA ', 15
+280, 'Distracción ', 18
 );
 
 /* INSERT QUERY NO: 281 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-281, 'PÁEZ ', 15
+281, 'Dolores ', 29
 );
 
 /* INSERT QUERY NO: 282 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-282, 'PAIPA ', 15
+282, 'Donmatías ', 2
 );
 
 /* INSERT QUERY NO: 283 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-283, 'PAJARITO ', 15
+283, 'Dosquebradas ', 25
 );
 
 /* INSERT QUERY NO: 284 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-284, 'PANQUEBA ', 15
+284, 'Duitama ', 6
 );
 
 /* INSERT QUERY NO: 285 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-285, 'PAUNA ', 15
+285, 'Durania ', 22
 );
 
 /* INSERT QUERY NO: 286 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-286, 'PAYA ', 15
+286, 'Ebéjico ', 2
 );
 
 /* INSERT QUERY NO: 287 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-287, 'PAZ DE RÍO ', 15
+287, 'El Águila ', 30
 );
 
 /* INSERT QUERY NO: 288 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-288, 'PESCA ', 15
+288, 'El Bagre ', 2
 );
 
 /* INSERT QUERY NO: 289 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-289, 'PISBA ', 15
+289, 'El Banco ', 19
 );
 
 /* INSERT QUERY NO: 290 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-290, 'PUERTO BOYACÁ ', 15
+290, 'El Cairo ', 30
 );
 
 /* INSERT QUERY NO: 291 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-291, 'QUÍPAMA ', 15
+291, 'El Calvario ', 20
 );
 
 /* INSERT QUERY NO: 292 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-292, 'RAMIRIQUÍ ', 15
+292, 'El Cantón Del San Pablo ', 12
 );
 
 /* INSERT QUERY NO: 293 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-293, 'RÁQUIRA ', 15
+293, 'El Carmen ', 22
 );
 
 /* INSERT QUERY NO: 294 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-294, 'RONDÓN ', 15
+294, 'El Carmen De Atrato ', 12
 );
 
 /* INSERT QUERY NO: 295 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-295, 'SABOYÁ ', 15
+295, 'El Carmen De Bolívar ', 5
 );
 
 /* INSERT QUERY NO: 296 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-296, 'SÁCHICA ', 15
+296, 'El Carmen De Chucurí ', 27
 );
 
 /* INSERT QUERY NO: 297 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-297, 'SAMACÁ ', 15
+297, 'El Carmen De Viboral ', 2
 );
 
 /* INSERT QUERY NO: 298 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-298, 'SAN EDUARDO ', 15
+298, 'El Castillo ', 20
 );
 
 /* INSERT QUERY NO: 299 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-299, 'SAN JOSÉ DE PARE ', 15
+299, 'El Cerrito ', 30
 );
 
 /* INSERT QUERY NO: 300 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-300, 'SAN LUIS DE GACENO ', 15
+300, 'El Charco ', 21
 );
 
 /* INSERT QUERY NO: 301 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-301, 'SAN MATEO ', 15
+301, 'El Cocuy ', 6
 );
 
 /* INSERT QUERY NO: 302 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-302, 'SAN MIGUEL DE SEMA ', 15
+302, 'El Colegio ', 14
 );
 
 /* INSERT QUERY NO: 303 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-303, 'SAN PABLO DE BORBUR ', 15
+303, 'El Copey ', 11
 );
 
 /* INSERT QUERY NO: 304 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-304, 'SANTANA ', 15
+304, 'El Doncello ', 8
 );
 
 /* INSERT QUERY NO: 305 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-305, 'SANTA MARÍA ', 15
+305, 'El Dorado ', 20
 );
 
 /* INSERT QUERY NO: 306 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-306, 'SANTA ROSA DE VITERBO ', 15
+306, 'El Dovio ', 30
 );
 
 /* INSERT QUERY NO: 307 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-307, 'SANTA SOFÍA ', 15
+307, 'El Encanto ', 1
 );
 
 /* INSERT QUERY NO: 308 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-308, 'SATIVANORTE ', 15
+308, 'El Espino ', 6
 );
 
 /* INSERT QUERY NO: 309 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-309, 'SATIVASUR ', 15
+309, 'El Guacamayo ', 27
 );
 
 /* INSERT QUERY NO: 310 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-310, 'SIACHOQUE ', 15
+310, 'El Guamo ', 5
 );
 
 /* INSERT QUERY NO: 311 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-311, 'SOATÁ ', 15
+311, 'El Litoral Del San Juan ', 12
 );
 
 /* INSERT QUERY NO: 312 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-312, 'SOCOTÁ ', 15
+312, 'El Molino ', 18
 );
 
 /* INSERT QUERY NO: 313 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-313, 'SOCHA ', 15
+313, 'El Paso ', 11
 );
 
 /* INSERT QUERY NO: 314 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-314, 'SOGAMOSO ', 15
+314, 'El Paujíl ', 8
 );
 
 /* INSERT QUERY NO: 315 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-315, 'SOMONDOCO ', 15
+315, 'El Peñol ', 21
 );
 
 /* INSERT QUERY NO: 316 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-316, 'SORA ', 15
+316, 'El Peñón ', 5
 );
 
 /* INSERT QUERY NO: 317 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-317, 'SOTAQUIRÁ ', 15
+317, 'El Peñón ', 14
 );
 
 /* INSERT QUERY NO: 318 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-318, 'SORACÁ ', 15
+318, 'El Peñón ', 27
 );
 
 /* INSERT QUERY NO: 319 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-319, 'SUSACÓN ', 15
+319, 'El Piñón ', 19
 );
 
 /* INSERT QUERY NO: 320 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-320, 'SUTAMARCHÁN ', 15
+320, 'El Playón ', 27
 );
 
 /* INSERT QUERY NO: 321 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-321, 'SUTATENZA ', 15
+321, 'El Retén ', 19
 );
 
 /* INSERT QUERY NO: 322 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-322, 'TASCO ', 15
+322, 'El Retorno ', 16
 );
 
 /* INSERT QUERY NO: 323 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-323, 'TENZA ', 15
+323, 'El Roble ', 28
 );
 
 /* INSERT QUERY NO: 324 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-324, 'TIBANÁ ', 15
+324, 'El Rosal ', 14
 );
 
 /* INSERT QUERY NO: 325 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-325, 'TIBASOSA ', 15
+325, 'El Rosario ', 21
 );
 
 /* INSERT QUERY NO: 326 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-326, 'TINJACÁ ', 15
+326, 'El Santuario ', 2
 );
 
 /* INSERT QUERY NO: 327 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-327, 'TIPACOQUE ', 15
+327, 'El Tablón De Gómez ', 21
 );
 
 /* INSERT QUERY NO: 328 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-328, 'TOCA ', 15
+328, 'El Tambo ', 10
 );
 
 /* INSERT QUERY NO: 329 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-329, 'TOGÜÍ ', 15
+329, 'El Tambo ', 21
 );
 
 /* INSERT QUERY NO: 330 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-330, 'TÓPAGA ', 15
+330, 'El Tarra ', 22
 );
 
 /* INSERT QUERY NO: 331 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-331, 'TOTA ', 15
+331, 'El Zulia ', 22
 );
 
 /* INSERT QUERY NO: 332 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-332, 'TUNUNGUÁ ', 15
+332, 'Elías ', 17
 );
 
 /* INSERT QUERY NO: 333 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-333, 'TURMEQUÉ ', 15
+333, 'Encino ', 27
 );
 
 /* INSERT QUERY NO: 334 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-334, 'TUTA ', 15
+334, 'Enciso ', 27
 );
 
 /* INSERT QUERY NO: 335 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-335, 'TUTAZÁ ', 15
+335, 'Entrerríos ', 2
 );
 
 /* INSERT QUERY NO: 336 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-336, 'ÚMBITA ', 15
+336, 'Envigado ', 2
 );
 
 /* INSERT QUERY NO: 337 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-337, 'VENTAQUEMADA ', 15
+337, 'Espinal ', 29
 );
 
 /* INSERT QUERY NO: 338 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-338, 'VIRACACHÁ ', 15
+338, 'Facatativá ', 14
 );
 
 /* INSERT QUERY NO: 339 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-339, 'ZETAQUIRA ', 15
+339, 'Falan ', 29
 );
 
 /* INSERT QUERY NO: 340 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-340, 'MANIZALES ', 17
+340, 'Filadelfia ', 7
 );
 
 /* INSERT QUERY NO: 341 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-341, 'AGUADAS ', 17
+341, 'Filandia ', 24
 );
 
 /* INSERT QUERY NO: 342 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-342, 'ANSERMA ', 17
+342, 'Firavitoba ', 6
 );
 
 /* INSERT QUERY NO: 343 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-343, 'ARANZAZU ', 17
+343, 'Flandes ', 29
 );
 
 /* INSERT QUERY NO: 344 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-344, 'BELALCÁZAR ', 17
+344, 'Florencia ', 8
 );
 
 /* INSERT QUERY NO: 345 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-345, 'CHINCHINÁ ', 17
+345, 'Florencia ', 10
 );
 
 /* INSERT QUERY NO: 346 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-346, 'FILADELFIA ', 17
+346, 'Floresta ', 6
 );
 
 /* INSERT QUERY NO: 347 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-347, 'LA DORADA ', 17
+347, 'Florián ', 27
 );
 
 /* INSERT QUERY NO: 348 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-348, 'LA MERCED ', 17
+348, 'Florida ', 30
 );
 
 /* INSERT QUERY NO: 349 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-349, 'MANZANARES ', 17
+349, 'Floridablanca ', 27
 );
 
 /* INSERT QUERY NO: 350 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-350, 'MARMATO ', 17
+350, 'Fómeque ', 14
 );
 
 /* INSERT QUERY NO: 351 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-351, 'MARQUETALIA ', 17
+351, 'Fonseca ', 18
 );
 
 /* INSERT QUERY NO: 352 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-352, 'MARULANDA ', 17
+352, 'Fortul ', 3
 );
 
 /* INSERT QUERY NO: 353 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-353, 'NEIRA ', 17
+353, 'Fosca ', 14
 );
 
 /* INSERT QUERY NO: 354 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-354, 'NORCASIA ', 17
+354, 'Francisco Pizarro ', 21
 );
 
 /* INSERT QUERY NO: 355 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-355, 'PÁCORA ', 17
+355, 'Fredonia ', 2
 );
 
 /* INSERT QUERY NO: 356 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-356, 'PALESTINA ', 17
+356, 'Fresno ', 29
 );
 
 /* INSERT QUERY NO: 357 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-357, 'PENSILVANIA ', 17
+357, 'Frontino ', 2
 );
 
 /* INSERT QUERY NO: 358 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-358, 'RIOSUCIO ', 17
+358, 'Fuentedeoro ', 20
 );
 
 /* INSERT QUERY NO: 359 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-359, 'RISARALDA ', 17
+359, 'Fundación ', 19
 );
 
 /* INSERT QUERY NO: 360 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-360, 'SALAMINA ', 17
+360, 'Funes ', 21
 );
 
 /* INSERT QUERY NO: 361 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-361, 'SAMANÁ ', 17
+361, 'Funza ', 14
 );
 
 /* INSERT QUERY NO: 362 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-362, 'SAN JOSÉ ', 17
+362, 'Fúquene ', 14
 );
 
 /* INSERT QUERY NO: 363 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-363, 'SUPÍA ', 17
+363, 'Fusagasugá ', 14
 );
 
 /* INSERT QUERY NO: 364 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-364, 'VICTORIA ', 17
+364, 'Gachalá ', 14
 );
 
 /* INSERT QUERY NO: 365 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-365, 'VILLAMARÍA ', 17
+365, 'Gachancipá ', 14
 );
 
 /* INSERT QUERY NO: 366 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-366, 'VITERBO ', 17
+366, 'Gachantivá ', 6
 );
 
 /* INSERT QUERY NO: 367 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-367, 'FLORENCIA ', 18
+367, 'Gachetá ', 14
 );
 
 /* INSERT QUERY NO: 368 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-368, 'ALBANIA ', 18
+368, 'Galán ', 27
 );
 
 /* INSERT QUERY NO: 369 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-369, 'BELÉN DE LOS ANDAQUÍES ', 18
+369, 'Galapa ', 4
 );
 
 /* INSERT QUERY NO: 370 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-370, 'CARTAGENA DEL CHAIRÁ ', 18
+370, 'Galeras ', 28
 );
 
 /* INSERT QUERY NO: 371 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-371, 'CURILLO ', 18
+371, 'Gama ', 14
 );
 
 /* INSERT QUERY NO: 372 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-372, 'EL DONCELLO ', 18
+372, 'Gamarra ', 11
 );
 
 /* INSERT QUERY NO: 373 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-373, 'EL PAUJÍL ', 18
+373, 'Gámbita ', 27
 );
 
 /* INSERT QUERY NO: 374 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-374, 'LA MONTAÑITA ', 18
+374, 'Gámeza ', 6
 );
 
 /* INSERT QUERY NO: 375 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-375, 'MILÁN ', 18
+375, 'Garagoa ', 6
 );
 
 /* INSERT QUERY NO: 376 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-376, 'MORELIA ', 18
+376, 'Garzón ', 17
 );
 
 /* INSERT QUERY NO: 377 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-377, 'PUERTO RICO ', 18
+377, 'Génova ', 24
 );
 
 /* INSERT QUERY NO: 378 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-378, 'SAN JOSÉ DEL FRAGUA ', 18
+378, 'Gigante ', 17
 );
 
 /* INSERT QUERY NO: 379 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-379, 'SAN VICENTE DEL CAGUÁN ', 18
+379, 'Ginebra ', 30
 );
 
 /* INSERT QUERY NO: 380 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-380, 'SOLANO ', 18
+380, 'Giraldo ', 2
 );
 
 /* INSERT QUERY NO: 381 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-381, 'SOLITA ', 18
+381, 'Girardot ', 14
 );
 
 /* INSERT QUERY NO: 382 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-382, 'VALPARAÍSO ', 18
+382, 'Girardota ', 2
 );
 
 /* INSERT QUERY NO: 383 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-383, 'YOPAL ', 85
+383, 'Girón ', 27
 );
 
 /* INSERT QUERY NO: 384 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-384, 'AGUAZUL ', 85
+384, 'Gómez Plata ', 2
 );
 
 /* INSERT QUERY NO: 385 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-385, 'CHÁMEZA ', 85
+385, 'González ', 11
 );
 
 /* INSERT QUERY NO: 386 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-386, 'HATO COROZAL ', 85
+386, 'Gramalote ', 22
 );
 
 /* INSERT QUERY NO: 387 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-387, 'LA SALINA ', 85
+387, 'Granada ', 2
 );
 
 /* INSERT QUERY NO: 388 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-388, 'MANÍ ', 85
+388, 'Granada ', 14
 );
 
 /* INSERT QUERY NO: 389 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-389, 'MONTERREY ', 85
+389, 'Granada ', 20
 );
 
 /* INSERT QUERY NO: 390 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-390, 'NUNCHÍA ', 85
+390, 'Guaca ', 27
 );
 
 /* INSERT QUERY NO: 391 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-391, 'OROCUÉ ', 85
+391, 'Guacamayas ', 6
 );
 
 /* INSERT QUERY NO: 392 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-392, 'PAZ DE ARIPORO ', 85
+392, 'Guacarí ', 30
 );
 
 /* INSERT QUERY NO: 393 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-393, 'PORE ', 85
+393, 'Guachené ', 10
 );
 
 /* INSERT QUERY NO: 394 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-394, 'RECETOR ', 85
+394, 'Guachetá ', 14
 );
 
 /* INSERT QUERY NO: 395 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-395, 'SABANALARGA ', 85
+395, 'Guachucal ', 21
 );
 
 /* INSERT QUERY NO: 396 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-396, 'SÁCAMA ', 85
+396, 'Guadalajara De Buga ', 30
 );
 
 /* INSERT QUERY NO: 397 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-397, 'SAN LUIS DE PALENQUE ', 85
+397, 'Guadalupe ', 2
 );
 
 /* INSERT QUERY NO: 398 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-398, 'TÁMARA ', 85
+398, 'Guadalupe ', 17
 );
 
 /* INSERT QUERY NO: 399 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-399, 'TAURAMENA ', 85
+399, 'Guadalupe ', 27
 );
 
 /* INSERT QUERY NO: 400 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-400, 'TRINIDAD ', 85
+400, 'Guaduas ', 14
 );
 
 /* INSERT QUERY NO: 401 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-401, 'VILLANUEVA ', 85
+401, 'Guaitarilla ', 21
 );
 
 /* INSERT QUERY NO: 402 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-402, 'POPAYÁN ', 19
+402, 'Gualmatán ', 21
 );
 
 /* INSERT QUERY NO: 403 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-403, 'ALMAGUER ', 19
+403, 'Guamal ', 19
 );
 
 /* INSERT QUERY NO: 404 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-404, 'ARGELIA ', 19
+404, 'Guamal ', 20
 );
 
 /* INSERT QUERY NO: 405 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-405, 'BALBOA ', 19
+405, 'Guamo ', 29
 );
 
 /* INSERT QUERY NO: 406 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-406, 'BOLÍVAR ', 19
+406, 'Guapí ', 10
 );
 
 /* INSERT QUERY NO: 407 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-407, 'BUENOS AIRES ', 19
+407, 'Guapotá ', 27
 );
 
 /* INSERT QUERY NO: 408 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-408, 'CAJIBÍO ', 19
+408, 'Guaranda ', 28
 );
 
 /* INSERT QUERY NO: 409 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-409, 'CALDONO ', 19
+409, 'Guarne ', 2
 );
 
 /* INSERT QUERY NO: 410 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-410, 'CALOTO ', 19
+410, 'Guasca ', 14
 );
 
 /* INSERT QUERY NO: 411 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-411, 'CORINTO ', 19
+411, 'Guatapé ', 2
 );
 
 /* INSERT QUERY NO: 412 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-412, 'EL TAMBO ', 19
+412, 'Guataquí ', 14
 );
 
 /* INSERT QUERY NO: 413 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-413, 'FLORENCIA ', 19
+413, 'Guatavita ', 14
 );
 
 /* INSERT QUERY NO: 414 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-414, 'GUACHENÉ ', 19
+414, 'Guateque ', 6
 );
 
 /* INSERT QUERY NO: 415 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-415, 'GUAPÍ ', 19
+415, 'Guática ', 25
 );
 
 /* INSERT QUERY NO: 416 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-416, 'INZÁ ', 19
+416, 'Guavatá ', 27
 );
 
 /* INSERT QUERY NO: 417 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-417, 'JAMBALÓ ', 19
+417, 'Guayabal De Síquima ', 14
 );
 
 /* INSERT QUERY NO: 418 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-418, 'LA SIERRA ', 19
+418, 'Guayabetal ', 14
 );
 
 /* INSERT QUERY NO: 419 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-419, 'LA VEGA ', 19
+419, 'Guayatá ', 6
 );
 
 /* INSERT QUERY NO: 420 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-420, 'LÓPEZ DE MICAY ', 19
+420, 'Güepsa ', 27
 );
 
 /* INSERT QUERY NO: 421 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-421, 'MERCADERES ', 19
+421, 'Güicán De La Sierra ', 6
 );
 
 /* INSERT QUERY NO: 422 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-422, 'MIRANDA ', 19
+422, 'Gutiérrez ', 14
 );
 
 /* INSERT QUERY NO: 423 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-423, 'MORALES ', 19
+423, 'Hacarí ', 22
 );
 
 /* INSERT QUERY NO: 424 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-424, 'PADILLA ', 19
+424, 'Hatillo De Loba ', 5
 );
 
 /* INSERT QUERY NO: 425 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-425, 'PÁEZ - BELALCAZAR ', 19
+425, 'Hato ', 27
 );
 
 /* INSERT QUERY NO: 426 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-426, 'PATÍA – EL BORDO ', 19
+426, 'Hato Corozal ', 9
 );
 
 /* INSERT QUERY NO: 427 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-427, 'PIAMONTE ', 19
+427, 'Hatonuevo ', 18
 );
 
 /* INSERT QUERY NO: 428 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-428, 'PIENDAMÓ – TUNÍA ', 19
+428, 'Heliconia ', 2
 );
 
 /* INSERT QUERY NO: 429 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-429, 'PUERTO TEJADA ', 19
+429, 'Herrán ', 22
 );
 
 /* INSERT QUERY NO: 430 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-430, 'PURACÉ - COCONUCO ', 19
+430, 'Herveo ', 29
 );
 
 /* INSERT QUERY NO: 431 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-431, 'ROSAS ', 19
+431, 'Hispania ', 2
 );
 
 /* INSERT QUERY NO: 432 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-432, 'SAN SEBASTIÁN ', 19
+432, 'Hobo ', 17
 );
 
 /* INSERT QUERY NO: 433 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-433, 'SANTANDER DE QUILICHAO ', 19
+433, 'Honda ', 29
 );
 
 /* INSERT QUERY NO: 434 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-434, 'SANTA ROSA ', 19
+434, 'Ibagué ', 29
 );
 
 /* INSERT QUERY NO: 435 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-435, 'SILVIA ', 19
+435, 'Icononzo ', 29
 );
 
 /* INSERT QUERY NO: 436 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-436, 'SOTARA ', 19
+436, 'Iles ', 21
 );
 
 /* INSERT QUERY NO: 437 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-437, 'SUÁREZ ', 19
+437, 'Imués ', 21
 );
 
 /* INSERT QUERY NO: 438 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-438, 'SUCRE ', 19
+438, 'Inírida ', 15
 );
 
 /* INSERT QUERY NO: 439 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-439, 'TIMBÍO ', 19
+439, 'Inzá ', 10
 );
 
 /* INSERT QUERY NO: 440 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-440, 'TIMBIQUÍ ', 19
+440, 'Ipiales ', 21
 );
 
 /* INSERT QUERY NO: 441 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-441, 'TORIBÍO ', 19
+441, 'Íquira ', 17
 );
 
 /* INSERT QUERY NO: 442 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-442, 'TOTORÓ ', 19
+442, 'Isnos ', 17
 );
 
 /* INSERT QUERY NO: 443 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-443, 'VILLA RICA ', 19
+443, 'Istmina ', 12
 );
 
 /* INSERT QUERY NO: 444 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-444, 'VALLEDUPAR ', 20
+444, 'Itagüí ', 2
 );
 
 /* INSERT QUERY NO: 445 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-445, 'AGUACHICA ', 20
+445, 'Ituango ', 2
 );
 
 /* INSERT QUERY NO: 446 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-446, 'AGUSTÍN CODAZZI ', 20
+446, 'Iza ', 6
 );
 
 /* INSERT QUERY NO: 447 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-447, 'ASTREA ', 20
+447, 'Jambaló ', 10
 );
 
 /* INSERT QUERY NO: 448 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-448, 'BECERRIL ', 20
+448, 'Jamundí ', 30
 );
 
 /* INSERT QUERY NO: 449 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-449, 'BOSCONIA ', 20
+449, 'Jardín ', 2
 );
 
 /* INSERT QUERY NO: 450 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-450, 'CHIMICHAGUA ', 20
+450, 'Jenesano ', 6
 );
 
 /* INSERT QUERY NO: 451 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-451, 'CHIRIGUANÁ ', 20
+451, 'Jericó ', 2
 );
 
 /* INSERT QUERY NO: 452 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-452, 'CURUMANÍ ', 20
+452, 'Jericó ', 6
 );
 
 /* INSERT QUERY NO: 453 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-453, 'EL COPEY ', 20
+453, 'Jerusalén ', 14
 );
 
 /* INSERT QUERY NO: 454 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-454, 'EL PASO ', 20
+454, 'Jesús María ', 27
 );
 
 /* INSERT QUERY NO: 455 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-455, 'GAMARRA ', 20
+455, 'Jordán ', 27
 );
 
 /* INSERT QUERY NO: 456 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-456, 'GONZÁLEZ ', 20
+456, 'Juan De Acosta ', 4
 );
 
 /* INSERT QUERY NO: 457 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-457, 'LA GLORIA ', 20
+457, 'Junín ', 14
 );
 
 /* INSERT QUERY NO: 458 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-458, 'LA JAGUA DE IBIRICO ', 20
+458, 'Juradó ', 12
 );
 
 /* INSERT QUERY NO: 459 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-459, 'MANAURE BALCÓN DEL CESAR ', 20
+459, 'La Apartada ', 13
 );
 
 /* INSERT QUERY NO: 460 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-460, 'PAILITAS ', 20
+460, 'La Argentina (La Plata Vieja) ', 17
 );
 
 /* INSERT QUERY NO: 461 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-461, 'PELAYA ', 20
+461, 'La Belleza ', 27
 );
 
 /* INSERT QUERY NO: 462 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-462, 'PUEBLO BELLO ', 20
+462, 'La Calera ', 14
 );
 
 /* INSERT QUERY NO: 463 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-463, 'RÍO DE ORO ', 20
+463, 'La Capilla ', 6
 );
 
 /* INSERT QUERY NO: 464 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-464, 'LA PAZ ', 20
+464, 'La Ceja ', 2
 );
 
 /* INSERT QUERY NO: 465 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-465, 'SAN ALBERTO ', 20
+465, 'La Celia ', 25
 );
 
 /* INSERT QUERY NO: 466 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-466, 'SAN DIEGO ', 20
+466, 'La Chorrera ', 1
 );
 
 /* INSERT QUERY NO: 467 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-467, 'SAN MARTÍN ', 20
+467, 'La Cruz ', 21
 );
 
 /* INSERT QUERY NO: 468 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-468, 'TAMALAMEQUE ', 20
+468, 'La Cumbre ', 30
 );
 
 /* INSERT QUERY NO: 469 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-469, 'QUIBDÓ ', 27
+469, 'La Dorada ', 7
 );
 
 /* INSERT QUERY NO: 470 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-470, 'ACANDÍ ', 27
+470, 'La Esperanza ', 22
 );
 
 /* INSERT QUERY NO: 471 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-471, 'ALTO BAUDÓ (PIE DE PATÓ) ', 27
+471, 'La Estrella ', 2
 );
 
 /* INSERT QUERY NO: 472 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-472, 'ATRATO (YUTO) ', 27
+472, 'La Florida ', 21
 );
 
 /* INSERT QUERY NO: 473 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-473, 'BAGADÓ ', 27
+473, 'La Gloria ', 11
 );
 
 /* INSERT QUERY NO: 474 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-474, 'BAHÍA SOLANO (MUTIS) ', 27
+474, 'La Guadalupe ', 15
 );
 
 /* INSERT QUERY NO: 475 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-475, 'BAJO BAUDÓ (PIZARRO) ', 27
+475, 'La Jagua De Ibirico ', 11
 );
 
 /* INSERT QUERY NO: 476 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-476, 'BOJAYÁ (BELLA VISTA) ', 27
+476, 'La Jagua Del Pilar ', 18
 );
 
 /* INSERT QUERY NO: 477 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-477, 'EL CANTÓN DEL SAN PABLO ', 27
+477, 'La Llanada ', 21
 );
 
 /* INSERT QUERY NO: 478 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-478, 'CARMEN DEL DARIÉN ', 27
+478, 'La Macarena ', 20
 );
 
 /* INSERT QUERY NO: 479 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-479, 'CÉRTEGUI ', 27
+479, 'La Merced ', 7
 );
 
 /* INSERT QUERY NO: 480 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-480, 'CONDOTO ', 27
+480, 'La Mesa ', 14
 );
 
 /* INSERT QUERY NO: 481 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-481, 'EL CARMEN DE ATRATO ', 27
+481, 'La Montañita ', 8
 );
 
 /* INSERT QUERY NO: 482 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-482, 'EL LITORAL DEL SAN JUAN ', 27
+482, 'La Palma ', 14
 );
 
 /* INSERT QUERY NO: 483 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-483, 'ISTMINA ', 27
+483, 'La Paz ', 11
 );
 
 /* INSERT QUERY NO: 484 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-484, 'JURADÓ ', 27
+484, 'La Paz ', 27
 );
 
 /* INSERT QUERY NO: 485 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-485, 'LLORÓ ', 27
+485, 'La Pedrera ', 1
 );
 
 /* INSERT QUERY NO: 486 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-486, 'MEDIO ATRATO (BETÉ) ', 27
+486, 'La Peña ', 14
 );
 
 /* INSERT QUERY NO: 487 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-487, 'MEDIO BAUDÓ ', 27
+487, 'La Pintada ', 2
 );
 
 /* INSERT QUERY NO: 488 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-488, 'MEDIO SAN JUAN (ANDAGOYA) ', 27
+488, 'La Plata ', 17
 );
 
 /* INSERT QUERY NO: 489 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-489, 'NÓVITA ', 27
+489, 'La Playa De Belén ', 22
 );
 
 /* INSERT QUERY NO: 490 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-490, 'NUQUÍ ', 27
+490, 'La Primavera ', 32
 );
 
 /* INSERT QUERY NO: 491 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-491, 'RÍO IRÓ (SANTA RITA) ', 27
+491, 'La Salina ', 9
 );
 
 /* INSERT QUERY NO: 492 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-492, 'RÍO QUITO (PAIMADÓ) ', 27
+492, 'La Sierra ', 10
 );
 
 /* INSERT QUERY NO: 493 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-493, 'RIOSUCIO ', 27
+493, 'La Tebaida ', 24
 );
 
 /* INSERT QUERY NO: 494 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-494, 'SAN JOSÉ DEL PALMAR ', 27
+494, 'La Tola ', 21
 );
 
 /* INSERT QUERY NO: 495 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-495, 'SIPÍ ', 27
+495, 'La Unión ', 2
 );
 
 /* INSERT QUERY NO: 496 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-496, 'TADÓ ', 27
+496, 'La Unión ', 21
 );
 
 /* INSERT QUERY NO: 497 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-497, 'UNGUÍA ', 27
+497, 'La Unión ', 28
 );
 
 /* INSERT QUERY NO: 498 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-498, 'UNIÓN PANAMERICANA (LAS ÁNIMAS) ', 27
+498, 'La Unión ', 30
 );
 
 /* INSERT QUERY NO: 499 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-499, 'MONTERÍA ', 23
+499, 'La Uvita ', 6
 );
 
 /* INSERT QUERY NO: 500 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-500, 'AYAPEL ', 23
+500, 'La Vega ', 10
 );
 
 /* INSERT QUERY NO: 501 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-501, 'BUENAVISTA ', 23
+501, 'La Vega ', 14
 );
 
 /* INSERT QUERY NO: 502 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-502, 'CANALETE ', 23
+502, 'La Victoria ', 1
 );
 
 /* INSERT QUERY NO: 503 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-503, 'CERETÉ ', 23
+503, 'La Victoria ', 6
 );
 
 /* INSERT QUERY NO: 504 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-504, 'CHIMÁ ', 23
+504, 'La Victoria ', 30
 );
 
 /* INSERT QUERY NO: 505 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-505, 'CHINÚ ', 23
+505, 'La Virginia ', 25
 );
 
 /* INSERT QUERY NO: 506 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-506, 'CIÉNAGA DE ORO ', 23
+506, 'Labateca ', 22
 );
 
 /* INSERT QUERY NO: 507 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-507, 'COTORRA ', 23
+507, 'Labranzagrande ', 6
 );
 
 /* INSERT QUERY NO: 508 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-508, 'LA APARTADA ', 23
+508, 'Landázuri ', 27
 );
 
 /* INSERT QUERY NO: 509 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-509, 'LORICA ', 23
+509, 'Lebrija ', 27
 );
 
 /* INSERT QUERY NO: 510 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-510, 'LOS CÓRDOBAS ', 23
+510, 'Leiva ', 21
 );
 
 /* INSERT QUERY NO: 511 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-511, 'MOMIL ', 23
+511, 'Lejanías ', 20
 );
 
 /* INSERT QUERY NO: 512 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-512, 'MONTELÍBANO ', 23
+512, 'Lenguazaque ', 14
 );
 
 /* INSERT QUERY NO: 513 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-513, 'MOÑITOS ', 23
+513, 'Lérida ', 29
 );
 
 /* INSERT QUERY NO: 514 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-514, 'PLANETA RICA ', 23
+514, 'Leticia ', 1
 );
 
 /* INSERT QUERY NO: 515 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-515, 'PUEBLO NUEVO ', 23
+515, 'Líbano ', 29
 );
 
 /* INSERT QUERY NO: 516 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-516, 'PUERTO ESCONDIDO ', 23
+516, 'Liborina ', 2
 );
 
 /* INSERT QUERY NO: 517 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-517, 'PUERTO LIBERTADOR ', 23
+517, 'Linares ', 21
 );
 
 /* INSERT QUERY NO: 518 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-518, 'PURÍSIMA DE LA CONCEPCIÓN ', 23
+518, 'Lloró ', 12
 );
 
 /* INSERT QUERY NO: 519 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-519, 'SAHAGÚN ', 23
+519, 'López De Micay ', 10
 );
 
 /* INSERT QUERY NO: 520 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-520, 'SAN ANDRÉS DE SOTAVENTO ', 23
+520, 'Lorica ', 13
 );
 
 /* INSERT QUERY NO: 521 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-521, 'SAN ANTERO ', 23
+521, 'Los Andes (Sotomayor) ', 21
 );
 
 /* INSERT QUERY NO: 522 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-522, 'SAN BERNARDO DEL VIENTO ', 23
+522, 'Los Córdobas ', 13
 );
 
 /* INSERT QUERY NO: 523 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-523, 'SAN CARLOS ', 23
+523, 'Los Palmitos ', 28
 );
 
 /* INSERT QUERY NO: 524 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-524, 'SAN JOSÉ DE URÉ ', 23
+524, 'Los Patios ', 22
 );
 
 /* INSERT QUERY NO: 525 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-525, 'SAN PELAYO ', 23
+525, 'Los Santos ', 27
 );
 
 /* INSERT QUERY NO: 526 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-526, 'TIERRALTA ', 23
+526, 'Lourdes ', 22
 );
 
 /* INSERT QUERY NO: 527 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-527, 'TUCHÍN ', 23
+527, 'Luruaco ', 4
 );
 
 /* INSERT QUERY NO: 528 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-528, 'VALENCIA ', 23
+528, 'Macanal ', 6
 );
 
 /* INSERT QUERY NO: 529 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-529, 'AGUA DE DIOS ', 25
+529, 'Macaravita ', 27
 );
 
 /* INSERT QUERY NO: 530 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-530, 'ALBÁN ', 25
+530, 'Maceo ', 2
 );
 
 /* INSERT QUERY NO: 531 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-531, 'ANAPOIMA ', 25
+531, 'Machetá ', 14
 );
 
 /* INSERT QUERY NO: 532 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-532, 'ANOLAIMA ', 25
+532, 'Madrid ', 14
 );
 
 /* INSERT QUERY NO: 533 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-533, 'ARBELÁEZ ', 25
+533, 'Magangué ', 5
 );
 
 /* INSERT QUERY NO: 534 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-534, 'BELTRÁN ', 25
+534, 'Magüí (Payán) ', 21
 );
 
 /* INSERT QUERY NO: 535 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-535, 'BITUIMA ', 25
+535, 'Mahates ', 5
 );
 
 /* INSERT QUERY NO: 536 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-536, 'BOJACÁ ', 25
+536, 'Maicao ', 18
 );
 
 /* INSERT QUERY NO: 537 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-537, 'CABRERA ', 25
+537, 'Majagual ', 28
 );
 
 /* INSERT QUERY NO: 538 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-538, 'CACHIPAY ', 25
+538, 'Málaga ', 27
 );
 
 /* INSERT QUERY NO: 539 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-539, 'CAJICÁ ', 25
+539, 'Malambo ', 4
 );
 
 /* INSERT QUERY NO: 540 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-540, 'CAPARRAPÍ ', 25
+540, 'Mallama (Piedrancha) ', 21
 );
 
 /* INSERT QUERY NO: 541 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-541, 'CÁQUEZA ', 25
+541, 'Manatí ', 4
 );
 
 /* INSERT QUERY NO: 542 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-542, 'CARMEN DE CARUPA ', 25
+542, 'Manaure ', 18
 );
 
 /* INSERT QUERY NO: 543 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-543, 'CHAGUANÍ ', 25
+543, 'Manaure Balcón Del Cesar ', 11
 );
 
 /* INSERT QUERY NO: 544 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-544, 'CHÍA ', 25
+544, 'Maní ', 9
 );
 
 /* INSERT QUERY NO: 545 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-545, 'CHIPAQUE ', 25
+545, 'Manizales ', 7
 );
 
 /* INSERT QUERY NO: 546 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-546, 'CHOACHÍ ', 25
+546, 'Manta ', 14
 );
 
 /* INSERT QUERY NO: 547 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-547, 'CHOCONTÁ ', 25
+547, 'Manzanares ', 7
 );
 
 /* INSERT QUERY NO: 548 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-548, 'COGUA ', 25
+548, 'Mapiripán ', 20
 );
 
 /* INSERT QUERY NO: 549 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-549, 'COTA ', 25
+549, 'Mapiripana ', 15
 );
 
 /* INSERT QUERY NO: 550 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-550, 'CUCUNUBÁ ', 25
+550, 'Margarita ', 5
 );
 
 /* INSERT QUERY NO: 551 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-551, 'EL COLEGIO ', 25
+551, 'María La Baja ', 5
 );
 
 /* INSERT QUERY NO: 552 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-552, 'EL PEÑÓN ', 25
+552, 'Marinilla ', 2
 );
 
 /* INSERT QUERY NO: 553 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-553, 'EL ROSAL ', 25
+553, 'Maripí ', 6
 );
 
 /* INSERT QUERY NO: 554 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-554, 'FACATATIVÁ ', 25
+554, 'Marmato ', 7
 );
 
 /* INSERT QUERY NO: 555 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-555, 'FÓMEQUE ', 25
+555, 'Marquetalia ', 7
 );
 
 /* INSERT QUERY NO: 556 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-556, 'FOSCA ', 25
+556, 'Marsella ', 25
 );
 
 /* INSERT QUERY NO: 557 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-557, 'FUNZA ', 25
+557, 'Marulanda ', 7
 );
 
 /* INSERT QUERY NO: 558 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-558, 'FÚQUENE ', 25
+558, 'Matanza ', 27
 );
 
 /* INSERT QUERY NO: 559 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-559, 'FUSAGASUGÁ ', 25
+559, 'Medellín ', 2
 );
 
 /* INSERT QUERY NO: 560 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-560, 'GACHALÁ ', 25
+560, 'Medina ', 14
 );
 
 /* INSERT QUERY NO: 561 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-561, 'GACHANCIPÁ ', 25
+561, 'Medio Atrato (Beté) ', 12
 );
 
 /* INSERT QUERY NO: 562 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-562, 'GACHETÁ ', 25
+562, 'Medio Baudó ', 12
 );
 
 /* INSERT QUERY NO: 563 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-563, 'GAMA ', 25
+563, 'Medio San Juan (Andagoya) ', 12
 );
 
 /* INSERT QUERY NO: 564 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-564, 'GIRARDOT ', 25
+564, 'Melgar ', 29
 );
 
 /* INSERT QUERY NO: 565 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-565, 'GRANADA ', 25
+565, 'Mercaderes ', 10
 );
 
 /* INSERT QUERY NO: 566 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-566, 'GUACHETÁ ', 25
+566, 'Mesetas ', 20
 );
 
 /* INSERT QUERY NO: 567 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-567, 'GUADUAS ', 25
+567, 'Milán ', 8
 );
 
 /* INSERT QUERY NO: 568 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-568, 'GUASCA ', 25
+568, 'Miraflores ', 6
 );
 
 /* INSERT QUERY NO: 569 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-569, 'GUATAQUÍ ', 25
+569, 'Miraflores ', 16
 );
 
 /* INSERT QUERY NO: 570 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-570, 'GUATAVITA ', 25
+570, 'Miranda ', 10
 );
 
 /* INSERT QUERY NO: 571 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-571, 'GUAYABAL DE SÍQUIMA ', 25
+571, 'Mirití – Paraná ', 1
 );
 
 /* INSERT QUERY NO: 572 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-572, 'GUAYABETAL ', 25
+572, 'Mistrató ', 25
 );
 
 /* INSERT QUERY NO: 573 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-573, 'GUTIÉRREZ ', 25
+573, 'Mitú ', 31
 );
 
 /* INSERT QUERY NO: 574 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-574, 'JERUSALÉN ', 25
+574, 'Mocoa ', 23
 );
 
 /* INSERT QUERY NO: 575 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-575, 'JUNÍN ', 25
+575, 'Mogotes ', 27
 );
 
 /* INSERT QUERY NO: 576 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-576, 'LA CALERA ', 25
+576, 'Molagavita ', 27
 );
 
 /* INSERT QUERY NO: 577 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-577, 'LA MESA ', 25
+577, 'Momil ', 13
 );
 
 /* INSERT QUERY NO: 578 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-578, 'LA PALMA ', 25
+578, 'Mompós ', 5
 );
 
 /* INSERT QUERY NO: 579 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-579, 'LA PEÑA ', 25
+579, 'Mongua ', 6
 );
 
 /* INSERT QUERY NO: 580 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-580, 'LA VEGA ', 25
+580, 'Monguí ', 6
 );
 
 /* INSERT QUERY NO: 581 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-581, 'LENGUAZAQUE ', 25
+581, 'Moniquirá ', 6
 );
 
 /* INSERT QUERY NO: 582 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-582, 'MACHETÁ ', 25
+582, 'Montebello ', 2
 );
 
 /* INSERT QUERY NO: 583 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-583, 'MADRID ', 25
+583, 'Montecristo ', 5
 );
 
 /* INSERT QUERY NO: 584 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-584, 'MANTA ', 25
+584, 'Montelíbano ', 13
 );
 
 /* INSERT QUERY NO: 585 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-585, 'MEDINA ', 25
+585, 'Montenegro ', 24
 );
 
 /* INSERT QUERY NO: 586 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-586, 'MOSQUERA ', 25
+586, 'Montería ', 13
 );
 
 /* INSERT QUERY NO: 587 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-587, 'NARIÑO ', 25
+587, 'Monterrey ', 9
 );
 
 /* INSERT QUERY NO: 588 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-588, 'NEMOCÓN ', 25
+588, 'Moñitos ', 13
 );
 
 /* INSERT QUERY NO: 589 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-589, 'NILO ', 25
+589, 'Morales ', 5
 );
 
 /* INSERT QUERY NO: 590 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-590, 'NIMAIMA ', 25
+590, 'Morales ', 10
 );
 
 /* INSERT QUERY NO: 591 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-591, 'NOCAIMA ', 25
+591, 'Morelia ', 8
 );
 
 /* INSERT QUERY NO: 592 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-592, 'VENECIA ', 25
+592, 'Morichal Nuevo ', 15
 );
 
 /* INSERT QUERY NO: 593 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-593, 'PACHO ', 25
+593, 'Morroa ', 28
 );
 
 /* INSERT QUERY NO: 594 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-594, 'PAIME ', 25
+594, 'Mosquera ', 14
 );
 
 /* INSERT QUERY NO: 595 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-595, 'PANDI ', 25
+595, 'Mosquera ', 21
 );
 
 /* INSERT QUERY NO: 596 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-596, 'PARATEBUENO ', 25
+596, 'Motavita ', 6
 );
 
 /* INSERT QUERY NO: 597 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-597, 'PASCA ', 25
+597, 'Murillo ', 29
 );
 
 /* INSERT QUERY NO: 598 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-598, 'PUERTO SALGAR ', 25
+598, 'Murindó ', 2
 );
 
 /* INSERT QUERY NO: 599 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-599, 'PULÍ ', 25
+599, 'Mutatá ', 2
 );
 
 /* INSERT QUERY NO: 600 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-600, 'QUEBRADANEGRA ', 25
+600, 'Mutiscua ', 22
 );
 
 /* INSERT QUERY NO: 601 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-601, 'QUETAME ', 25
+601, 'Muzo ', 6
 );
 
 /* INSERT QUERY NO: 602 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-602, 'QUIPILE ', 25
+602, 'Nariño ', 2
 );
 
 /* INSERT QUERY NO: 603 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-603, 'APULO ', 25
+603, 'Nariño ', 14
 );
 
 /* INSERT QUERY NO: 604 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-604, 'RICAURTE ', 25
+604, 'Nariño ', 21
 );
 
 /* INSERT QUERY NO: 605 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-605, 'SAN ANTONIO DEL TEQUENDAMA ', 25
+605, 'Nátaga ', 17
 );
 
 /* INSERT QUERY NO: 606 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-606, 'SAN BERNARDO ', 25
+606, 'Natagaima ', 29
 );
 
 /* INSERT QUERY NO: 607 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-607, 'SAN CAYETANO ', 25
+607, 'Nechí ', 2
 );
 
 /* INSERT QUERY NO: 608 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-608, 'SAN FRANCISCO ', 25
+608, 'Necoclí ', 2
 );
 
 /* INSERT QUERY NO: 609 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-609, 'SAN JUAN DE RIOSECO ', 25
+609, 'Neira ', 7
 );
 
 /* INSERT QUERY NO: 610 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-610, 'SASAIMA ', 25
+610, 'Neiva ', 17
 );
 
 /* INSERT QUERY NO: 611 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-611, 'SESQUILÉ ', 25
+611, 'Nemocón ', 14
 );
 
 /* INSERT QUERY NO: 612 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-612, 'SIBATÉ ', 25
+612, 'Nilo ', 14
 );
 
 /* INSERT QUERY NO: 613 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-613, 'SILVANIA ', 25
+613, 'Nimaima ', 14
 );
 
 /* INSERT QUERY NO: 614 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-614, 'SIMIJACA ', 25
+614, 'Nobsa ', 6
 );
 
 /* INSERT QUERY NO: 615 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-615, 'SOACHA ', 25
+615, 'Nocaima ', 14
 );
 
 /* INSERT QUERY NO: 616 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-616, 'SOPÓ ', 25
+616, 'Norcasia ', 7
 );
 
 /* INSERT QUERY NO: 617 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-617, 'SUBACHOQUE ', 25
+617, 'Norosí ', 5
 );
 
 /* INSERT QUERY NO: 618 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-618, 'SUESCA ', 25
+618, 'Nóvita ', 12
 );
 
 /* INSERT QUERY NO: 619 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-619, 'SUPATÁ ', 25
+619, 'Nueva Granada ', 19
 );
 
 /* INSERT QUERY NO: 620 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-620, 'SUSA ', 25
+620, 'Nuevo Colón ', 6
 );
 
 /* INSERT QUERY NO: 621 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-621, 'SUTATAUSA ', 25
+621, 'Nunchía ', 9
 );
 
 /* INSERT QUERY NO: 622 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-622, 'TABIO ', 25
+622, 'Nuquí ', 12
 );
 
 /* INSERT QUERY NO: 623 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-623, 'TAUSA ', 25
+623, 'Obando ', 30
 );
 
 /* INSERT QUERY NO: 624 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-624, 'TENA ', 25
+624, 'Ocamonte ', 27
 );
 
 /* INSERT QUERY NO: 625 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-625, 'TENJO ', 25
+625, 'Ocaña ', 22
 );
 
 /* INSERT QUERY NO: 626 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-626, 'TIBACUY ', 25
+626, 'Oiba ', 27
 );
 
 /* INSERT QUERY NO: 627 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-627, 'TIBIRITA ', 25
+627, 'Oicatá ', 6
 );
 
 /* INSERT QUERY NO: 628 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-628, 'TOCAIMA ', 25
+628, 'Olaya ', 2
 );
 
 /* INSERT QUERY NO: 629 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-629, 'TOCANCIPÁ ', 25
+629, 'Olaya Herrera ', 21
 );
 
 /* INSERT QUERY NO: 630 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-630, 'TOPAIPÍ ', 25
+630, 'Onzaga ', 27
 );
 
 /* INSERT QUERY NO: 631 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-631, 'UBALÁ ', 25
+631, 'Oporapa ', 17
 );
 
 /* INSERT QUERY NO: 632 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-632, 'UBAQUE ', 25
+632, 'Orito ', 23
 );
 
 /* INSERT QUERY NO: 633 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-633, 'VILLA DE SAN DIEGO DE UBATÉ ', 25
+633, 'Orocué ', 9
 );
 
 /* INSERT QUERY NO: 634 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-634, 'UNE ', 25
+634, 'Ortega ', 29
 );
 
 /* INSERT QUERY NO: 635 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-635, 'ÚTICA ', 25
+635, 'Ospina ', 21
 );
 
 /* INSERT QUERY NO: 636 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-636, 'VERGARA ', 25
+636, 'Otanche ', 6
 );
 
 /* INSERT QUERY NO: 637 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-637, 'VIANÍ ', 25
+637, 'Ovejas ', 28
 );
 
 /* INSERT QUERY NO: 638 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-638, 'VILLAGÓMEZ ', 25
+638, 'Pachavita ', 6
 );
 
 /* INSERT QUERY NO: 639 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-639, 'VILLAPINZÓN ', 25
+639, 'Pacho ', 14
 );
 
 /* INSERT QUERY NO: 640 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-640, 'VILLETA ', 25
+640, 'Pacoa ', 31
 );
 
 /* INSERT QUERY NO: 641 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-641, 'VIOTÁ ', 25
+641, 'Pácora ', 7
 );
 
 /* INSERT QUERY NO: 642 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-642, 'YACOPÍ ', 25
+642, 'Padilla ', 10
 );
 
 /* INSERT QUERY NO: 643 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-643, 'ZIPACÓN ', 25
+643, 'Páez ', 6
 );
 
 /* INSERT QUERY NO: 644 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-644, 'ZIPAQUIRÁ ', 25
+644, 'Páez - Belalcazar ', 10
 );
 
 /* INSERT QUERY NO: 645 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-645, 'INÍRIDA ', 94
+645, 'Paicol ', 17
 );
 
 /* INSERT QUERY NO: 646 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-646, 'BARRANCOMINAS ', 94
+646, 'Pailitas ', 11
 );
 
 /* INSERT QUERY NO: 647 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-647, 'MAPIRIPANA ', 94
+647, 'Paime ', 14
 );
 
 /* INSERT QUERY NO: 648 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-648, 'SAN FELIPE ', 94
+648, 'Paipa ', 6
 );
 
 /* INSERT QUERY NO: 649 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-649, 'PUERTO COLOMBIA ', 94
+649, 'Pajarito ', 6
 );
 
 /* INSERT QUERY NO: 650 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-650, 'LA GUADALUPE ', 94
+650, 'Palermo ', 17
 );
 
 /* INSERT QUERY NO: 651 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-651, 'CACAHUAL ', 94
+651, 'Palestina ', 7
 );
 
 /* INSERT QUERY NO: 652 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-652, 'PANA PANA ', 94
+652, 'Palestina ', 17
 );
 
 /* INSERT QUERY NO: 653 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-653, 'MORICHAL NUEVO ', 94
+653, 'Palmar ', 27
 );
 
 /* INSERT QUERY NO: 654 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-654, 'SAN JOSÉ DEL GUAVIARE ', 95
+654, 'Palmar De Varela ', 4
 );
 
 /* INSERT QUERY NO: 655 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-655, 'CALAMAR ', 95
+655, 'Palmas Del Socorro ', 27
 );
 
 /* INSERT QUERY NO: 656 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-656, 'EL RETORNO ', 95
+656, 'Palmira ', 30
 );
 
 /* INSERT QUERY NO: 657 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-657, 'MIRAFLORES ', 95
+657, 'Palmito ', 28
 );
 
 /* INSERT QUERY NO: 658 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-658, 'NEIVA ', 41
+658, 'Palocabildo ', 29
 );
 
 /* INSERT QUERY NO: 659 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-659, 'ACEVEDO ', 41
+659, 'Pamplona ', 22
 );
 
 /* INSERT QUERY NO: 660 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-660, 'AGRADO ', 41
+660, 'Pamplonita ', 22
 );
 
 /* INSERT QUERY NO: 661 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-661, 'AIPE ', 41
+661, 'Pana Pana ', 15
 );
 
 /* INSERT QUERY NO: 662 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-662, 'ALGECIRAS ', 41
+662, 'Pandi ', 14
 );
 
 /* INSERT QUERY NO: 663 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-663, 'ALTAMIRA ', 41
+663, 'Panqueba ', 6
 );
 
 /* INSERT QUERY NO: 664 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-664, 'BARAYA ', 41
+664, 'Papunahua ', 31
 );
 
 /* INSERT QUERY NO: 665 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-665, 'CAMPOALEGRE ', 41
+665, 'Páramo ', 27
 );
 
 /* INSERT QUERY NO: 666 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-666, 'COLOMBIA ', 41
+666, 'Paratebueno ', 14
 );
 
 /* INSERT QUERY NO: 667 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-667, 'ELÍAS ', 41
+667, 'Pasca ', 14
 );
 
 /* INSERT QUERY NO: 668 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-668, 'GARZÓN ', 41
+668, 'Pasto ', 21
 );
 
 /* INSERT QUERY NO: 669 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-669, 'GIGANTE ', 41
+669, 'Patía – El Bordo ', 10
 );
 
 /* INSERT QUERY NO: 670 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-670, 'GUADALUPE ', 41
+670, 'Pauna ', 6
 );
 
 /* INSERT QUERY NO: 671 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-671, 'HOBO ', 41
+671, 'Paya ', 6
 );
 
 /* INSERT QUERY NO: 672 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-672, 'ÍQUIRA ', 41
+672, 'Paz De Ariporo ', 9
 );
 
 /* INSERT QUERY NO: 673 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-673, 'ISNOS ', 41
+673, 'Paz De Río ', 6
 );
 
 /* INSERT QUERY NO: 674 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-674, 'LA ARGENTINA (LA PLATA VIEJA) ', 41
+674, 'Pedraza ', 19
 );
 
 /* INSERT QUERY NO: 675 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-675, 'LA PLATA ', 41
+675, 'Pelaya ', 11
 );
 
 /* INSERT QUERY NO: 676 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-676, 'NÁTAGA ', 41
+676, 'Pensilvania ', 7
 );
 
 /* INSERT QUERY NO: 677 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-677, 'OPORAPA ', 41
+677, 'Peñol ', 2
 );
 
 /* INSERT QUERY NO: 678 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-678, 'PAICOL ', 41
+678, 'Peque ', 2
 );
 
 /* INSERT QUERY NO: 679 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-679, 'PALERMO ', 41
+679, 'Pereira ', 25
 );
 
 /* INSERT QUERY NO: 680 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-680, 'PALESTINA ', 41
+680, 'Pesca ', 6
 );
 
 /* INSERT QUERY NO: 681 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-681, 'PITAL ', 41
+681, 'Piamonte ', 10
 );
 
 /* INSERT QUERY NO: 682 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-682, 'PITALITO ', 41
+682, 'Piedecuesta ', 27
 );
 
 /* INSERT QUERY NO: 683 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-683, 'RIVERA ', 41
+683, 'Piedras ', 29
 );
 
 /* INSERT QUERY NO: 684 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-684, 'SALADOBLANCO ', 41
+684, 'Piendamó – Tunía ', 10
 );
 
 /* INSERT QUERY NO: 685 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-685, 'SAN AGUSTÍN ', 41
+685, 'Pijao ', 24
 );
 
 /* INSERT QUERY NO: 686 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-686, 'SANTA MARÍA ', 41
+686, 'Pijiño Del Carmen ', 19
 );
 
 /* INSERT QUERY NO: 687 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-687, 'SUAZA ', 41
+687, 'Pinchote ', 27
 );
 
 /* INSERT QUERY NO: 688 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-688, 'TARQUI ', 41
+688, 'Pinillos ', 5
 );
 
 /* INSERT QUERY NO: 689 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-689, 'TESALIA (CARNICERÍAS) ', 41
+689, 'Piojó ', 4
 );
 
 /* INSERT QUERY NO: 690 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-690, 'TELLO ', 41
+690, 'Pisba ', 6
 );
 
 /* INSERT QUERY NO: 691 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-691, 'TERUEL ', 41
+691, 'Pital ', 17
 );
 
 /* INSERT QUERY NO: 692 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-692, 'TIMANÁ ', 41
+692, 'Pitalito ', 17
 );
 
 /* INSERT QUERY NO: 693 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-693, 'VILLAVIEJA ', 41
+693, 'Pivijay ', 19
 );
 
 /* INSERT QUERY NO: 694 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-694, 'YAGUARÁ ', 41
+694, 'Planadas ', 29
 );
 
 /* INSERT QUERY NO: 695 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-695, 'RIOHACHA ', 44
+695, 'Planeta Rica ', 13
 );
 
 /* INSERT QUERY NO: 696 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-696, 'ALBANIA ', 44
+696, 'Plato ', 19
 );
 
 /* INSERT QUERY NO: 697 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-697, 'BARRANCAS ', 44
+697, 'Policarpa ', 21
 );
 
 /* INSERT QUERY NO: 698 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-698, 'DIBULLA ', 44
+698, 'Polonuevo ', 4
 );
 
 /* INSERT QUERY NO: 699 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-699, 'DISTRACCIÓN ', 44
+699, 'Ponedera ', 4
 );
 
 /* INSERT QUERY NO: 700 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-700, 'EL MOLINO ', 44
+700, 'Popayán ', 10
 );
 
 /* INSERT QUERY NO: 701 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-701, 'FONSECA ', 44
+701, 'Pore ', 9
 );
 
 /* INSERT QUERY NO: 702 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-702, 'HATONUEVO ', 44
+702, 'Potosí ', 21
 );
 
 /* INSERT QUERY NO: 703 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-703, 'LA JAGUA DEL PILAR ', 44
+703, 'Pradera ', 30
 );
 
 /* INSERT QUERY NO: 704 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-704, 'MAICAO ', 44
+704, 'Prado ', 29
 );
 
 /* INSERT QUERY NO: 705 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-705, 'MANAURE ', 44
+705, 'Providencia ', 26
 );
 
 /* INSERT QUERY NO: 706 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-706, 'SAN JUAN DEL CESAR ', 44
+706, 'Providencia ', 21
 );
 
 /* INSERT QUERY NO: 707 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-707, 'URIBIA ', 44
+707, 'Pueblo Bello ', 11
 );
 
 /* INSERT QUERY NO: 708 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-708, 'URUMITA ', 44
+708, 'Pueblo Nuevo ', 13
 );
 
 /* INSERT QUERY NO: 709 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-709, 'VILLANUEVA ', 44
+709, 'Pueblo Rico ', 25
 );
 
 /* INSERT QUERY NO: 710 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-710, 'SANTA MARTA ', 47
+710, 'Pueblorrico ', 2
 );
 
 /* INSERT QUERY NO: 711 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-711, 'ALGARROBO ', 47
+711, 'Puebloviejo ', 19
 );
 
 /* INSERT QUERY NO: 712 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-712, 'ARACATACA ', 47
+712, 'Puente Nacional ', 27
 );
 
 /* INSERT QUERY NO: 713 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-713, 'ARIGUANÍ ', 47
+713, 'Puerres ', 21
 );
 
 /* INSERT QUERY NO: 714 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-714, 'CERRO DE SAN ANTONIO ', 47
+714, 'Puerto Alegría ', 1
 );
 
 /* INSERT QUERY NO: 715 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-715, 'CHIBOLO ', 47
+715, 'Puerto Arica ', 1
 );
 
 /* INSERT QUERY NO: 716 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-716, 'CIÉNAGA ', 47
+716, 'Puerto Asís ', 23
 );
 
 /* INSERT QUERY NO: 717 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-717, 'CONCORDIA ', 47
+717, 'Puerto Berrío ', 2
 );
 
 /* INSERT QUERY NO: 718 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-718, 'EL BANCO ', 47
+718, 'Puerto Boyacá ', 6
 );
 
 /* INSERT QUERY NO: 719 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-719, 'EL PIÑÓN ', 47
+719, 'Puerto Caicedo ', 23
 );
 
 /* INSERT QUERY NO: 720 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-720, 'EL RETÉN ', 47
+720, 'Puerto Carreño ', 32
 );
 
 /* INSERT QUERY NO: 721 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-721, 'FUNDACIÓN ', 47
+721, 'Puerto Colombia ', 4
 );
 
 /* INSERT QUERY NO: 722 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-722, 'GUAMAL ', 47
+722, 'Puerto Colombia ', 15
 );
 
 /* INSERT QUERY NO: 723 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-723, 'NUEVA GRANADA ', 47
+723, 'Puerto Concordia ', 20
 );
 
 /* INSERT QUERY NO: 724 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-724, 'PEDRAZA ', 47
+724, 'Puerto Escondido ', 13
 );
 
 /* INSERT QUERY NO: 725 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-725, 'PIJIÑO DEL CARMEN ', 47
+725, 'Puerto Gaitán ', 20
 );
 
 /* INSERT QUERY NO: 726 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-726, 'PIVIJAY ', 47
+726, 'Puerto Guzmán ', 23
 );
 
 /* INSERT QUERY NO: 727 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-727, 'PLATO ', 47
+727, 'Puerto Leguízamo ', 23
 );
 
 /* INSERT QUERY NO: 728 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-728, 'PUEBLOVIEJO ', 47
+728, 'Puerto Libertador ', 13
 );
 
 /* INSERT QUERY NO: 729 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-729, 'REMOLINO ', 47
+729, 'Puerto Lleras ', 20
 );
 
 /* INSERT QUERY NO: 730 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-730, 'SABANAS DE SAN ÁNGEL ', 47
+730, 'Puerto López ', 20
 );
 
 /* INSERT QUERY NO: 731 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-731, 'SALAMINA ', 47
+731, 'Puerto Nare ', 2
 );
 
 /* INSERT QUERY NO: 732 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-732, 'SAN SEBASTIÁN DE BUENAVISTA ', 47
+732, 'Puerto Nariño ', 1
 );
 
 /* INSERT QUERY NO: 733 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-733, 'SAN ZENÓN ', 47
+733, 'Puerto Parra ', 27
 );
 
 /* INSERT QUERY NO: 734 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-734, 'SANTA ANA ', 47
+734, 'Puerto Rico ', 8
 );
 
 /* INSERT QUERY NO: 735 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-735, 'SANTA BÁRBARA DE PINTO ', 47
+735, 'Puerto Rico ', 20
 );
 
 /* INSERT QUERY NO: 736 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-736, 'SITIONUEVO ', 47
+736, 'Puerto Rondón ', 3
 );
 
 /* INSERT QUERY NO: 737 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-737, 'TENERIFE ', 47
+737, 'Puerto Salgar ', 14
 );
 
 /* INSERT QUERY NO: 738 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-738, 'ZAPAYÁN ', 47
+738, 'Puerto Santander ', 1
 );
 
 /* INSERT QUERY NO: 739 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-739, 'ZONA BANANERA ', 47
+739, 'Puerto Santander ', 22
 );
 
 /* INSERT QUERY NO: 740 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-740, 'VILLAVICENCIO ', 50
+740, 'Puerto Tejada ', 10
 );
 
 /* INSERT QUERY NO: 741 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-741, 'ACACÍAS ', 50
+741, 'Puerto Triunfo ', 2
 );
 
 /* INSERT QUERY NO: 742 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-742, 'BARRANCA DE UPÍA ', 50
+742, 'Puerto Wilches ', 27
 );
 
 /* INSERT QUERY NO: 743 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-743, 'CABUYARO ', 50
+743, 'Pulí ', 14
 );
 
 /* INSERT QUERY NO: 744 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-744, 'CASTILLA LA NUEVA ', 50
+744, 'Pupiales ', 21
 );
 
 /* INSERT QUERY NO: 745 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-745, 'CUBARRAL ', 50
+745, 'Puracé - Coconuco ', 10
 );
 
 /* INSERT QUERY NO: 746 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-746, 'CUMARAL ', 50
+746, 'Purificación ', 29
 );
 
 /* INSERT QUERY NO: 747 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-747, 'EL CALVARIO ', 50
+747, 'Purísima De La Concepción ', 13
 );
 
 /* INSERT QUERY NO: 748 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-748, 'EL CASTILLO ', 50
+748, 'Quebradanegra ', 14
 );
 
 /* INSERT QUERY NO: 749 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-749, 'EL DORADO ', 50
+749, 'Quetame ', 14
 );
 
 /* INSERT QUERY NO: 750 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-750, 'FUENTEDEORO ', 50
+750, 'Quibdó ', 12
 );
 
 /* INSERT QUERY NO: 751 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-751, 'GRANADA ', 50
+751, 'Quimbaya ', 24
 );
 
 /* INSERT QUERY NO: 752 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-752, 'GUAMAL ', 50
+752, 'Quinchía ', 25
 );
 
 /* INSERT QUERY NO: 753 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-753, 'MAPIRIPÁN ', 50
+753, 'Quípama ', 6
 );
 
 /* INSERT QUERY NO: 754 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-754, 'MESETAS ', 50
+754, 'Quipile ', 14
 );
 
 /* INSERT QUERY NO: 755 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-755, 'LA MACARENA ', 50
+755, 'Ragonvalia ', 22
 );
 
 /* INSERT QUERY NO: 756 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-756, 'URIBE ', 50
+756, 'Ramiriquí ', 6
 );
 
 /* INSERT QUERY NO: 757 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-757, 'LEJANÍAS ', 50
+757, 'Ráquira ', 6
 );
 
 /* INSERT QUERY NO: 758 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-758, 'PUERTO CONCORDIA ', 50
+758, 'Recetor ', 9
 );
 
 /* INSERT QUERY NO: 759 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-759, 'PUERTO GAITÁN ', 50
+759, 'Regidor ', 5
 );
 
 /* INSERT QUERY NO: 760 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-760, 'PUERTO LÓPEZ ', 50
+760, 'Remedios ', 2
 );
 
 /* INSERT QUERY NO: 761 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-761, 'PUERTO LLERAS ', 50
+761, 'Remolino ', 19
 );
 
 /* INSERT QUERY NO: 762 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-762, 'PUERTO RICO ', 50
+762, 'Repelón ', 4
 );
 
 /* INSERT QUERY NO: 763 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-763, 'RESTREPO ', 50
+763, 'Restrepo ', 20
 );
 
 /* INSERT QUERY NO: 764 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-764, 'SAN CARLOS DE GUAROA ', 50
+764, 'Restrepo ', 30
 );
 
 /* INSERT QUERY NO: 765 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-765, 'SAN JUAN DE ARAMA ', 50
+765, 'Retiro ', 2
 );
 
 /* INSERT QUERY NO: 766 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-766, 'SAN JUANITO ', 50
+766, 'Ricaurte ', 14
 );
 
 /* INSERT QUERY NO: 767 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-767, 'SAN MARTÍN DE LOS LLANOS ', 50
+767, 'Ricaurte ', 21
 );
 
 /* INSERT QUERY NO: 768 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-768, 'VISTAHERMOSA ', 50
+768, 'Río De Oro ', 11
 );
 
 /* INSERT QUERY NO: 769 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-769, 'PASTO ', 52
+769, 'Río Iró (Santa Rita) ', 12
 );
 
 /* INSERT QUERY NO: 770 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-770, 'ALBÁN (SAN JOSÉ) ', 52
+770, 'Río Quito (Paimadó) ', 12
 );
 
 /* INSERT QUERY NO: 771 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-771, 'ALDANA ', 52
+771, 'Río Viejo ', 5
 );
 
 /* INSERT QUERY NO: 772 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-772, 'ANCUYÁ ', 52
+772, 'Rioblanco ', 29
 );
 
 /* INSERT QUERY NO: 773 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-773, 'ARBOLEDA ', 52
+773, 'Riofrío ', 30
 );
 
 /* INSERT QUERY NO: 774 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-774, 'BARBACOAS ', 52
+774, 'Riohacha ', 18
 );
 
 /* INSERT QUERY NO: 775 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-775, 'BELÉN ', 52
+775, 'Rionegro ', 2
 );
 
 /* INSERT QUERY NO: 776 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-776, 'BUESACO ', 52
+776, 'Rionegro ', 27
 );
 
 /* INSERT QUERY NO: 777 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-777, 'COLÓN (GÉNOVA) ', 52
+777, 'Riosucio ', 7
 );
 
 /* INSERT QUERY NO: 778 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-778, 'CONSACÁ ', 52
+778, 'Riosucio ', 12
 );
 
 /* INSERT QUERY NO: 779 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-779, 'CONTADERO ', 52
+779, 'Risaralda ', 7
 );
 
 /* INSERT QUERY NO: 780 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-780, 'CÓRDOBA ', 52
+780, 'Rivera ', 17
 );
 
 /* INSERT QUERY NO: 781 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-781, 'CUASPÚD ', 52
+781, 'Roberto Payán (San José) ', 21
 );
 
 /* INSERT QUERY NO: 782 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-782, 'CUMBAL ', 52
+782, 'Roldanillo ', 30
 );
 
 /* INSERT QUERY NO: 783 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-783, 'CUMBITARA ', 52
+783, 'Roncesvalles ', 29
 );
 
 /* INSERT QUERY NO: 784 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-784, 'CHACHAGÜÍ ', 52
+784, 'Rondón ', 6
 );
 
 /* INSERT QUERY NO: 785 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-785, 'EL CHARCO ', 52
+785, 'Rosas ', 10
 );
 
 /* INSERT QUERY NO: 786 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-786, 'EL PEÑOL ', 52
+786, 'Rovira ', 29
 );
 
 /* INSERT QUERY NO: 787 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-787, 'EL ROSARIO ', 52
+787, 'Sabana De Torres ', 27
 );
 
 /* INSERT QUERY NO: 788 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-788, 'EL TABLÓN DE GÓMEZ ', 52
+788, 'Sabanagrande ', 4
 );
 
 /* INSERT QUERY NO: 789 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-789, 'EL TAMBO ', 52
+789, 'Sabanalarga ', 2
 );
 
 /* INSERT QUERY NO: 790 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-790, 'FUNES ', 52
+790, 'Sabanalarga ', 4
 );
 
 /* INSERT QUERY NO: 791 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-791, 'GUACHUCAL ', 52
+791, 'Sabanalarga ', 9
 );
 
 /* INSERT QUERY NO: 792 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-792, 'GUAITARILLA ', 52
+792, 'Sabanas De San Ángel ', 19
 );
 
 /* INSERT QUERY NO: 793 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-793, 'GUALMATÁN ', 52
+793, 'Sabaneta ', 2
 );
 
 /* INSERT QUERY NO: 794 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-794, 'ILES ', 52
+794, 'Saboyá ', 6
 );
 
 /* INSERT QUERY NO: 795 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-795, 'IMUÉS ', 52
+795, 'Sácama ', 9
 );
 
 /* INSERT QUERY NO: 796 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-796, 'IPIALES ', 52
+796, 'Sáchica ', 6
 );
 
 /* INSERT QUERY NO: 797 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-797, 'LA CRUZ ', 52
+797, 'Sahagún ', 13
 );
 
 /* INSERT QUERY NO: 798 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-798, 'LA FLORIDA ', 52
+798, 'Saladoblanco ', 17
 );
 
 /* INSERT QUERY NO: 799 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-799, 'LA LLANADA ', 52
+799, 'Salamina ', 7
 );
 
 /* INSERT QUERY NO: 800 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-800, 'LA TOLA ', 52
+800, 'Salamina ', 19
 );
 
 /* INSERT QUERY NO: 801 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-801, 'LA UNIÓN ', 52
+801, 'Salazar De Las Palmas ', 22
 );
 
 /* INSERT QUERY NO: 802 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-802, 'LEIVA ', 52
+802, 'Saldaña ', 29
 );
 
 /* INSERT QUERY NO: 803 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-803, 'LINARES ', 52
+803, 'Salento ', 24
 );
 
 /* INSERT QUERY NO: 804 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-804, 'LOS ANDES (SOTOMAYOR) ', 52
+804, 'Salgar ', 2
 );
 
 /* INSERT QUERY NO: 805 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-805, 'MAGÜÍ (PAYÁN) ', 52
+805, 'Samacá ', 6
 );
 
 /* INSERT QUERY NO: 806 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-806, 'MALLAMA (PIEDRANCHA) ', 52
+806, 'Samaná ', 7
 );
 
 /* INSERT QUERY NO: 807 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-807, 'MOSQUERA ', 52
+807, 'Samaniego ', 21
 );
 
 /* INSERT QUERY NO: 808 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-808, 'NARIÑO ', 52
+808, 'Sampués ', 28
 );
 
 /* INSERT QUERY NO: 809 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-809, 'OLAYA HERRERA ', 52
+809, 'San Agustín ', 17
 );
 
 /* INSERT QUERY NO: 810 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-810, 'OSPINA ', 52
+810, 'San Alberto ', 11
 );
 
 /* INSERT QUERY NO: 811 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-811, 'FRANCISCO PIZARRO ', 52
+811, 'San Andrés ', 26
 );
 
 /* INSERT QUERY NO: 812 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-812, 'POLICARPA ', 52
+812, 'San Andrés ', 27
 );
 
 /* INSERT QUERY NO: 813 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-813, 'POTOSÍ ', 52
+813, 'San Andrés De Cuerquía ', 2
 );
 
 /* INSERT QUERY NO: 814 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-814, 'PROVIDENCIA ', 52
+814, 'San Andrés De Sotavento ', 13
 );
 
 /* INSERT QUERY NO: 815 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-815, 'PUERRES ', 52
+815, 'San Andrés De Tumaco ', 21
 );
 
 /* INSERT QUERY NO: 816 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-816, 'PUPIALES ', 52
+816, 'San Antero ', 13
 );
 
 /* INSERT QUERY NO: 817 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-817, 'RICAURTE ', 52
+817, 'San Antonio ', 29
 );
 
 /* INSERT QUERY NO: 818 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-818, 'ROBERTO PAYÁN (SAN JOSÉ) ', 52
+818, 'San Antonio Del Tequendama ', 14
 );
 
 /* INSERT QUERY NO: 819 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-819, 'SAMANIEGO ', 52
+819, 'San Benito ', 27
 );
 
 /* INSERT QUERY NO: 820 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-820, 'SANDONÁ ', 52
+820, 'San Benito Abad ', 28
 );
 
 /* INSERT QUERY NO: 821 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-821, 'SAN BERNARDO ', 52
+821, 'San Bernardo ', 14
 );
 
 /* INSERT QUERY NO: 822 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-822, 'SAN LORENZO ', 52
+822, 'San Bernardo ', 21
 );
 
 /* INSERT QUERY NO: 823 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-823, 'SAN PABLO ', 52
+823, 'San Bernardo Del Viento ', 13
 );
 
 /* INSERT QUERY NO: 824 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-824, 'SAN PEDRO DE CARTAGO ', 52
+824, 'San Calixto ', 22
 );
 
 /* INSERT QUERY NO: 825 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-825, 'SANTA BÁRBARA ', 52
+825, 'San Carlos ', 2
 );
 
 /* INSERT QUERY NO: 826 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-826, 'SANTACRUZ ', 52
+826, 'San Carlos ', 13
 );
 
 /* INSERT QUERY NO: 827 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-827, 'SAPUYES ', 52
+827, 'San Carlos De Guaroa ', 20
 );
 
 /* INSERT QUERY NO: 828 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-828, 'TAMINANGO ', 52
+828, 'San Cayetano ', 14
 );
 
 /* INSERT QUERY NO: 829 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-829, 'TANGUA ', 52
+829, 'San Cayetano ', 22
 );
 
 /* INSERT QUERY NO: 830 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-830, 'SAN ANDRÉS DE TUMACO ', 52
+830, 'San Cristóbal ', 5
 );
 
 /* INSERT QUERY NO: 831 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-831, 'TÚQUERRES ', 52
+831, 'San Diego ', 11
 );
 
 /* INSERT QUERY NO: 832 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-832, 'YACUANQUER ', 52
+832, 'San Eduardo ', 6
 );
 
 /* INSERT QUERY NO: 833 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-833, 'CÚCUTA ', 54
+833, 'San Estanislao ', 5
 );
 
 /* INSERT QUERY NO: 834 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-834, 'ÁBREGO ', 54
+834, 'San Felipe ', 15
 );
 
 /* INSERT QUERY NO: 835 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-835, 'ARBOLEDAS ', 54
+835, 'San Fernando ', 5
 );
 
 /* INSERT QUERY NO: 836 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-836, 'BOCHALEMA ', 54
+836, 'San Francisco ', 2
 );
 
 /* INSERT QUERY NO: 837 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-837, 'BUCARASICA ', 54
+837, 'San Francisco ', 14
 );
 
 /* INSERT QUERY NO: 838 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-838, 'CÁCOTA DE VELASCO ', 54
+838, 'San Francisco ', 23
 );
 
 /* INSERT QUERY NO: 839 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-839, 'CÁCHIRA ', 54
+839, 'San Gil ', 27
 );
 
 /* INSERT QUERY NO: 840 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-840, 'CHINÁCOTA ', 54
+840, 'San Jacinto ', 5
 );
 
 /* INSERT QUERY NO: 841 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-841, 'CHITAGÁ ', 54
+841, 'San Jacinto Del Cauca ', 5
 );
 
 /* INSERT QUERY NO: 842 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-842, 'CONVENCIÓN ', 54
+842, 'San Jerónimo ', 2
 );
 
 /* INSERT QUERY NO: 843 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-843, 'CUCUTILLA ', 54
+843, 'San Joaquín ', 27
 );
 
 /* INSERT QUERY NO: 844 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-844, 'DURANIA ', 54
+844, 'San José ', 7
 );
 
 /* INSERT QUERY NO: 845 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-845, 'EL CARMEN ', 54
+845, 'San José De La Montaña ', 2
 );
 
 /* INSERT QUERY NO: 846 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-846, 'EL TARRA ', 54
+846, 'San José De Miranda ', 27
 );
 
 /* INSERT QUERY NO: 847 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-847, 'EL ZULIA ', 54
+847, 'San José De Pare ', 6
 );
 
 /* INSERT QUERY NO: 848 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-848, 'GRAMALOTE ', 54
+848, 'San José De Uré ', 13
 );
 
 /* INSERT QUERY NO: 849 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-849, 'HACARÍ ', 54
+849, 'San José Del Fragua ', 8
 );
 
 /* INSERT QUERY NO: 850 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-850, 'HERRÁN ', 54
+850, 'San José Del Guaviare ', 16
 );
 
 /* INSERT QUERY NO: 851 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-851, 'LABATECA ', 54
+851, 'San José Del Palmar ', 12
 );
 
 /* INSERT QUERY NO: 852 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-852, 'LA ESPERANZA ', 54
+852, 'San Juan De Arama ', 20
 );
 
 /* INSERT QUERY NO: 853 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-853, 'LA PLAYA DE BELÉN ', 54
+853, 'San Juan De Betulia ', 28
 );
 
 /* INSERT QUERY NO: 854 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-854, 'LOS PATIOS ', 54
+854, 'San Juan De Rioseco ', 14
 );
 
 /* INSERT QUERY NO: 855 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-855, 'LOURDES ', 54
+855, 'San Juan De Urabá ', 2
 );
 
 /* INSERT QUERY NO: 856 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-856, 'MUTISCUA ', 54
+856, 'San Juan Del Cesar ', 18
 );
 
 /* INSERT QUERY NO: 857 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-857, 'OCAÑA ', 54
+857, 'San Juan Nepomuceno ', 5
 );
 
 /* INSERT QUERY NO: 858 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-858, 'PAMPLONA ', 54
+858, 'San Juanito ', 20
 );
 
 /* INSERT QUERY NO: 859 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-859, 'PAMPLONITA ', 54
+859, 'San Lorenzo ', 21
 );
 
 /* INSERT QUERY NO: 860 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-860, 'PUERTO SANTANDER ', 54
+860, 'San Luis ', 2
 );
 
 /* INSERT QUERY NO: 861 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-861, 'RAGONVALIA ', 54
+861, 'San Luis ', 29
 );
 
 /* INSERT QUERY NO: 862 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-862, 'SALAZAR DE LAS PALMAS ', 54
+862, 'San Luis De Gaceno ', 6
 );
 
 /* INSERT QUERY NO: 863 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-863, 'SAN CALIXTO ', 54
+863, 'San Luis De Palenque ', 9
 );
 
 /* INSERT QUERY NO: 864 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-864, 'SAN CAYETANO ', 54
+864, 'San Luis De Sincé ', 28
 );
 
 /* INSERT QUERY NO: 865 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-865, 'SANTIAGO ', 54
+865, 'San Marcos ', 28
 );
 
 /* INSERT QUERY NO: 866 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-866, 'SARDINATA ', 54
+866, 'San Martín ', 11
 );
 
 /* INSERT QUERY NO: 867 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-867, 'SANTO DOMINGO DE SILOS ', 54
+867, 'San Martín De Loba ', 5
 );
 
 /* INSERT QUERY NO: 868 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-868, 'TEORAMA ', 54
+868, 'San Martín De Los Llanos ', 20
 );
 
 /* INSERT QUERY NO: 869 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-869, 'TIBÚ ', 54
+869, 'San Mateo ', 6
 );
 
 /* INSERT QUERY NO: 870 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-870, 'TOLEDO ', 54
+870, 'San Miguel ', 23
 );
 
 /* INSERT QUERY NO: 871 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-871, 'VILLA CARO ', 54
+871, 'San Miguel ', 27
 );
 
 /* INSERT QUERY NO: 872 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-872, 'VILLA DEL ROSARIO ', 54
+872, 'San Miguel De Sema ', 6
 );
 
 /* INSERT QUERY NO: 873 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-873, 'MOCOA ', 86
+873, 'San Onofre ', 28
 );
 
 /* INSERT QUERY NO: 874 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-874, 'COLÓN ', 86
+874, 'San Pablo ', 21
 );
 
 /* INSERT QUERY NO: 875 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-875, 'ORITO ', 86
+875, 'San Pablo De Borbur ', 6
 );
 
 /* INSERT QUERY NO: 876 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-876, 'PUERTO ASÍS ', 86
+876, 'San Pablo Sur ', 5
 );
 
 /* INSERT QUERY NO: 877 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-877, 'PUERTO CAICEDO ', 86
+877, 'San Pedro ', 28
 );
 
 /* INSERT QUERY NO: 878 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-878, 'PUERTO GUZMÁN ', 86
+878, 'San Pedro ', 30
 );
 
 /* INSERT QUERY NO: 879 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-879, 'PUERTO LEGUÍZAMO ', 86
+879, 'San Pedro De Cartago ', 21
 );
 
 /* INSERT QUERY NO: 880 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-880, 'SIBUNDOY ', 86
+880, 'San Pedro De Los Milagros ', 2
 );
 
 /* INSERT QUERY NO: 881 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-881, 'SAN FRANCISCO ', 86
+881, 'San Pedro De Urabá ', 2
 );
 
 /* INSERT QUERY NO: 882 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-882, 'SAN MIGUEL ', 86
+882, 'San Pelayo ', 13
 );
 
 /* INSERT QUERY NO: 883 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-883, 'SANTIAGO ', 86
+883, 'San Rafael ', 2
 );
 
 /* INSERT QUERY NO: 884 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-884, 'VALLE DEL GUAMUEZ ', 86
+884, 'San Roque ', 2
 );
 
 /* INSERT QUERY NO: 885 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-885, 'VILLAGARZÓN ', 86
+885, 'San Sebastián ', 10
 );
 
 /* INSERT QUERY NO: 886 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-886, 'ARMENIA ', 63
+886, 'San Sebastián De Buenavista ', 19
 );
 
 /* INSERT QUERY NO: 887 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-887, 'BUENAVISTA ', 63
+887, 'San Sebastián De Mariquita ', 29
 );
 
 /* INSERT QUERY NO: 888 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-888, 'CALARCÁ ', 63
+888, 'San Vicente De Chucurí ', 27
 );
 
 /* INSERT QUERY NO: 889 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-889, 'CIRCASIA ', 63
+889, 'San Vicente Del Caguán ', 8
 );
 
 /* INSERT QUERY NO: 890 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-890, 'CÓRDOBA ', 63
+890, 'San Vicente Ferrer ', 2
 );
 
 /* INSERT QUERY NO: 891 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-891, 'FILANDIA ', 63
+891, 'San Zenón ', 19
 );
 
 /* INSERT QUERY NO: 892 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-892, 'GÉNOVA ', 63
+892, 'Sandoná ', 21
 );
 
 /* INSERT QUERY NO: 893 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-893, 'LA TEBAIDA ', 63
+893, 'Santa Ana ', 19
 );
 
 /* INSERT QUERY NO: 894 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-894, 'MONTENEGRO ', 63
+894, 'Santa Bárbara ', 2
 );
 
 /* INSERT QUERY NO: 895 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-895, 'PIJAO ', 63
+895, 'Santa Bárbara ', 21
 );
 
 /* INSERT QUERY NO: 896 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-896, 'QUIMBAYA ', 63
+896, 'Santa Bárbara ', 27
 );
 
 /* INSERT QUERY NO: 897 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-897, 'SALENTO ', 63
+897, 'Santa Bárbara De Pinto ', 19
 );
 
 /* INSERT QUERY NO: 898 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-898, 'PEREIRA ', 66
+898, 'Santa Catalina ', 5
 );
 
 /* INSERT QUERY NO: 899 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-899, 'APÍA ', 66
+899, 'Santa Fé De Antioquia ', 2
 );
 
 /* INSERT QUERY NO: 900 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-900, 'BALBOA ', 66
+900, 'Santa Helena Del Opón ', 27
 );
 
 /* INSERT QUERY NO: 901 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-901, 'BELÉN DE UMBRÍA ', 66
+901, 'Santa Isabel ', 29
 );
 
 /* INSERT QUERY NO: 902 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-902, 'DOSQUEBRADAS ', 66
+902, 'Santa Lucía ', 4
 );
 
 /* INSERT QUERY NO: 903 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-903, 'GUÁTICA ', 66
+903, 'Santa María ', 6
 );
 
 /* INSERT QUERY NO: 904 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-904, 'LA CELIA ', 66
+904, 'Santa María ', 17
 );
 
 /* INSERT QUERY NO: 905 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-905, 'LA VIRGINIA ', 66
+905, 'Santa Marta ', 19
 );
 
 /* INSERT QUERY NO: 906 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-906, 'MARSELLA ', 66
+906, 'Santa Rosa ', 10
 );
 
 /* INSERT QUERY NO: 907 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-907, 'MISTRATÓ ', 66
+907, 'Santa Rosa De Cabal ', 25
 );
 
 /* INSERT QUERY NO: 908 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-908, 'PUEBLO RICO ', 66
+908, 'Santa Rosa De Lima ', 5
 );
 
 /* INSERT QUERY NO: 909 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-909, 'QUINCHÍA ', 66
+909, 'Santa Rosa De Osos ', 2
 );
 
 /* INSERT QUERY NO: 910 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-910, 'SANTA ROSA DE CABAL ', 66
+910, 'Santa Rosa De Viterbo ', 6
 );
 
 /* INSERT QUERY NO: 911 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-911, 'SANTUARIO ', 66
+911, 'Santa Rosa Del Sur ', 5
 );
 
 /* INSERT QUERY NO: 912 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-912, 'BUCARAMANGA ', 68
+912, 'Santa Rosalía ', 32
 );
 
 /* INSERT QUERY NO: 913 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-913, 'AGUADA ', 68
+913, 'Santa Sofía ', 6
 );
 
 /* INSERT QUERY NO: 914 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-914, 'ALBANIA ', 68
+914, 'Santacruz ', 21
 );
 
 /* INSERT QUERY NO: 915 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-915, 'ARATOCA ', 68
+915, 'Santana ', 6
 );
 
 /* INSERT QUERY NO: 916 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-916, 'BARBOSA ', 68
+916, 'Santander De Quilichao ', 10
 );
 
 /* INSERT QUERY NO: 917 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-917, 'BARICHARA ', 68
+917, 'Santiago ', 22
 );
 
 /* INSERT QUERY NO: 918 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-918, 'BARRANCABERMEJA ', 68
+918, 'Santiago ', 23
 );
 
 /* INSERT QUERY NO: 919 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-919, 'BETULIA ', 68
+919, 'Santiago De Tolú ', 28
 );
 
 /* INSERT QUERY NO: 920 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-920, 'BOLÍVAR ', 68
+920, 'Santo Domingo ', 2
 );
 
 /* INSERT QUERY NO: 921 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-921, 'CABRERA ', 68
+921, 'Santo Domingo De Silos ', 22
 );
 
 /* INSERT QUERY NO: 922 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-922, 'CALIFORNIA ', 68
+922, 'Santo Tomás ', 4
 );
 
 /* INSERT QUERY NO: 923 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-923, 'CAPITANEJO ', 68
+923, 'Santuario ', 25
 );
 
 /* INSERT QUERY NO: 924 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-924, 'CARCASÍ ', 68
+924, 'Sapuyes ', 21
 );
 
 /* INSERT QUERY NO: 925 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-925, 'CEPITÁ ', 68
+925, 'Saravena ', 3
 );
 
 /* INSERT QUERY NO: 926 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-926, 'CERRITO ', 68
+926, 'Sardinata ', 22
 );
 
 /* INSERT QUERY NO: 927 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-927, 'CHARALÁ ', 68
+927, 'Sasaima ', 14
 );
 
 /* INSERT QUERY NO: 928 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-928, 'CHARTA ', 68
+928, 'Sativanorte ', 6
 );
 
 /* INSERT QUERY NO: 929 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-929, 'CHIMA ', 68
+929, 'Sativasur ', 6
 );
 
 /* INSERT QUERY NO: 930 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-930, 'CHIPATÁ ', 68
+930, 'Segovia ', 2
 );
 
 /* INSERT QUERY NO: 931 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-931, 'CIMITARRA ', 68
+931, 'Sesquilé ', 14
 );
 
 /* INSERT QUERY NO: 932 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-932, 'CONCEPCIÓN ', 68
+932, 'Sevilla ', 30
 );
 
 /* INSERT QUERY NO: 933 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-933, 'CONFINES ', 68
+933, 'Siachoque ', 6
 );
 
 /* INSERT QUERY NO: 934 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-934, 'CONTRATACIÓN ', 68
+934, 'Sibaté ', 14
 );
 
 /* INSERT QUERY NO: 935 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-935, 'COROMORO ', 68
+935, 'Sibundoy ', 23
 );
 
 /* INSERT QUERY NO: 936 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-936, 'CURITÍ ', 68
+936, 'Silvania ', 14
 );
 
 /* INSERT QUERY NO: 937 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-937, 'EL CARMEN DE CHUCURÍ ', 68
+937, 'Silvia ', 10
 );
 
 /* INSERT QUERY NO: 938 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-938, 'EL GUACAMAYO ', 68
+938, 'Simacota ', 27
 );
 
 /* INSERT QUERY NO: 939 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-939, 'EL PEÑÓN ', 68
+939, 'Simijaca ', 14
 );
 
 /* INSERT QUERY NO: 940 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-940, 'EL PLAYÓN ', 68
+940, 'Simití ', 5
 );
 
 /* INSERT QUERY NO: 941 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-941, 'ENCINO ', 68
+941, 'Sincelejo ', 28
 );
 
 /* INSERT QUERY NO: 942 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-942, 'ENCISO ', 68
+942, 'Sipí ', 12
 );
 
 /* INSERT QUERY NO: 943 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-943, 'FLORIÁN ', 68
+943, 'Sitionuevo ', 19
 );
 
 /* INSERT QUERY NO: 944 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-944, 'FLORIDABLANCA ', 68
+944, 'Soacha ', 14
 );
 
 /* INSERT QUERY NO: 945 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-945, 'GALÁN ', 68
+945, 'Soatá ', 6
 );
 
 /* INSERT QUERY NO: 946 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-946, 'GÁMBITA ', 68
+946, 'Socha ', 6
 );
 
 /* INSERT QUERY NO: 947 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-947, 'GIRÓN ', 68
+947, 'Socorro ', 27
 );
 
 /* INSERT QUERY NO: 948 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-948, 'GUACA ', 68
+948, 'Socotá ', 6
 );
 
 /* INSERT QUERY NO: 949 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-949, 'GUADALUPE ', 68
+949, 'Sogamoso ', 6
 );
 
 /* INSERT QUERY NO: 950 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-950, 'GUAPOTÁ ', 68
+950, 'Solano ', 8
 );
 
 /* INSERT QUERY NO: 951 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-951, 'GUAVATÁ ', 68
+951, 'Soledad ', 4
 );
 
 /* INSERT QUERY NO: 952 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-952, 'GÜEPSA ', 68
+952, 'Solita ', 8
 );
 
 /* INSERT QUERY NO: 953 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-953, 'HATO ', 68
+953, 'Somondoco ', 6
 );
 
 /* INSERT QUERY NO: 954 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-954, 'JESÚS MARÍA ', 68
+954, 'Sonsón ', 2
 );
 
 /* INSERT QUERY NO: 955 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-955, 'JORDÁN ', 68
+955, 'Sopetrán ', 2
 );
 
 /* INSERT QUERY NO: 956 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-956, 'LA BELLEZA ', 68
+956, 'Soplaviento ', 5
 );
 
 /* INSERT QUERY NO: 957 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-957, 'LANDÁZURI ', 68
+957, 'Sopó ', 14
 );
 
 /* INSERT QUERY NO: 958 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-958, 'LA PAZ ', 68
+958, 'Sora ', 6
 );
 
 /* INSERT QUERY NO: 959 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-959, 'LEBRIJA ', 68
+959, 'Soracá ', 6
 );
 
 /* INSERT QUERY NO: 960 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-960, 'LOS SANTOS ', 68
+960, 'Sotaquirá ', 6
 );
 
 /* INSERT QUERY NO: 961 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-961, 'MACARAVITA ', 68
+961, 'Sotara ', 10
 );
 
 /* INSERT QUERY NO: 962 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-962, 'MÁLAGA ', 68
+962, 'Suaita ', 27
 );
 
 /* INSERT QUERY NO: 963 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-963, 'MATANZA ', 68
+963, 'Suan ', 4
 );
 
 /* INSERT QUERY NO: 964 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-964, 'MOGOTES ', 68
+964, 'Suárez ', 10
 );
 
 /* INSERT QUERY NO: 965 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-965, 'MOLAGAVITA ', 68
+965, 'Suárez ', 29
 );
 
 /* INSERT QUERY NO: 966 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-966, 'OCAMONTE ', 68
+966, 'Suaza ', 17
 );
 
 /* INSERT QUERY NO: 967 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-967, 'OIBA ', 68
+967, 'Subachoque ', 14
 );
 
 /* INSERT QUERY NO: 968 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-968, 'ONZAGA ', 68
+968, 'Sucre ', 10
 );
 
 /* INSERT QUERY NO: 969 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-969, 'PALMAR ', 68
+969, 'Sucre ', 27
 );
 
 /* INSERT QUERY NO: 970 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-970, 'PALMAS DEL SOCORRO ', 68
+970, 'Sucre ', 28
 );
 
 /* INSERT QUERY NO: 971 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-971, 'PÁRAMO ', 68
+971, 'Suesca ', 14
 );
 
 /* INSERT QUERY NO: 972 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-972, 'PIEDECUESTA ', 68
+972, 'Supatá ', 14
 );
 
 /* INSERT QUERY NO: 973 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-973, 'PINCHOTE ', 68
+973, 'Supía ', 7
 );
 
 /* INSERT QUERY NO: 974 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-974, 'PUENTE NACIONAL ', 68
+974, 'Suratá ', 27
 );
 
 /* INSERT QUERY NO: 975 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-975, 'PUERTO PARRA ', 68
+975, 'Susa ', 14
 );
 
 /* INSERT QUERY NO: 976 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-976, 'PUERTO WILCHES ', 68
+976, 'Susacón ', 6
 );
 
 /* INSERT QUERY NO: 977 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-977, 'RIONEGRO ', 68
+977, 'Sutamarchán ', 6
 );
 
 /* INSERT QUERY NO: 978 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-978, 'SABANA DE TORRES ', 68
+978, 'Sutatausa ', 14
 );
 
 /* INSERT QUERY NO: 979 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-979, 'SAN ANDRÉS ', 68
+979, 'Sutatenza ', 6
 );
 
 /* INSERT QUERY NO: 980 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-980, 'SAN BENITO ', 68
+980, 'Tabio ', 14
 );
 
 /* INSERT QUERY NO: 981 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-981, 'SAN GIL ', 68
+981, 'Tadó ', 12
 );
 
 /* INSERT QUERY NO: 982 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-982, 'SAN JOAQUÍN ', 68
+982, 'Talaigua Nuevo ', 5
 );
 
 /* INSERT QUERY NO: 983 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-983, 'SAN JOSÉ DE MIRANDA ', 68
+983, 'Tamalameque ', 11
 );
 
 /* INSERT QUERY NO: 984 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-984, 'SAN MIGUEL ', 68
+984, 'Támara ', 9
 );
 
 /* INSERT QUERY NO: 985 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-985, 'SAN VICENTE DE CHUCURÍ ', 68
+985, 'Tame ', 3
 );
 
 /* INSERT QUERY NO: 986 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-986, 'SANTA BÁRBARA ', 68
+986, 'Támesis ', 2
 );
 
 /* INSERT QUERY NO: 987 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-987, 'SANTA HELENA DEL OPÓN ', 68
+987, 'Taminango ', 21
 );
 
 /* INSERT QUERY NO: 988 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-988, 'SIMACOTA ', 68
+988, 'Tangua ', 21
 );
 
 /* INSERT QUERY NO: 989 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-989, 'SOCORRO ', 68
+989, 'Taraira ', 31
 );
 
 /* INSERT QUERY NO: 990 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-990, 'SUAITA ', 68
+990, 'Tarapacá ', 1
 );
 
 /* INSERT QUERY NO: 991 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-991, 'SUCRE ', 68
+991, 'Tarazá ', 2
 );
 
 /* INSERT QUERY NO: 992 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-992, 'SURATÁ ', 68
+992, 'Tarqui ', 17
 );
 
 /* INSERT QUERY NO: 993 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-993, 'TONA ', 68
+993, 'Tarso ', 2
 );
 
 /* INSERT QUERY NO: 994 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-994, 'VALLE DE SAN JOSÉ ', 68
+994, 'Tasco ', 6
 );
 
 /* INSERT QUERY NO: 995 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-995, 'VÉLEZ ', 68
+995, 'Tauramena ', 9
 );
 
 /* INSERT QUERY NO: 996 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-996, 'VETAS ', 68
+996, 'Tausa ', 14
 );
 
 /* INSERT QUERY NO: 997 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-997, 'VILLANUEVA ', 68
+997, 'Tello ', 17
 );
 
 /* INSERT QUERY NO: 998 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-998, 'ZAPATOCA ', 68
+998, 'Tena ', 14
 );
 
 /* INSERT QUERY NO: 999 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-999, 'SINCELEJO ', 70
+999, 'Tenerife ', 19
 );
 
 /* INSERT QUERY NO: 1000 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1000, 'BUENAVISTA ', 70
+1000, 'Tenjo ', 14
 );
 
 /* INSERT QUERY NO: 1001 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1001, 'CAIMITO ', 70
+1001, 'Tenza ', 6
 );
 
 /* INSERT QUERY NO: 1002 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1002, 'COLOSÓ ', 70
+1002, 'Teorama ', 22
 );
 
 /* INSERT QUERY NO: 1003 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1003, 'COROZAL ', 70
+1003, 'Teruel ', 17
 );
 
 /* INSERT QUERY NO: 1004 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1004, 'COVEÑAS ', 70
+1004, 'Tesalia (Carnicerías) ', 17
 );
 
 /* INSERT QUERY NO: 1005 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1005, 'CHALÁN ', 70
+1005, 'Tibacuy ', 14
 );
 
 /* INSERT QUERY NO: 1006 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1006, 'EL ROBLE ', 70
+1006, 'Tibaná ', 6
 );
 
 /* INSERT QUERY NO: 1007 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1007, 'GALERAS ', 70
+1007, 'Tibasosa ', 6
 );
 
 /* INSERT QUERY NO: 1008 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1008, 'GUARANDA ', 70
+1008, 'Tibirita ', 14
 );
 
 /* INSERT QUERY NO: 1009 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1009, 'LA UNIÓN ', 70
+1009, 'Tibú ', 22
 );
 
 /* INSERT QUERY NO: 1010 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1010, 'LOS PALMITOS ', 70
+1010, 'Tierralta ', 13
 );
 
 /* INSERT QUERY NO: 1011 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1011, 'MAJAGUAL ', 70
+1011, 'Timaná ', 17
 );
 
 /* INSERT QUERY NO: 1012 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1012, 'MORROA ', 70
+1012, 'Timbío ', 10
 );
 
 /* INSERT QUERY NO: 1013 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1013, 'OVEJAS ', 70
+1013, 'Timbiquí ', 10
 );
 
 /* INSERT QUERY NO: 1014 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1014, 'PALMITO ', 70
+1014, 'Tinjacá ', 6
 );
 
 /* INSERT QUERY NO: 1015 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1015, 'SAMPUÉS ', 70
+1015, 'Tipacoque ', 6
 );
 
 /* INSERT QUERY NO: 1016 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1016, 'SAN BENITO ABAD ', 70
+1016, 'Tiquisio ', 5
 );
 
 /* INSERT QUERY NO: 1017 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1017, 'SAN JUAN DE BETULIA ', 70
+1017, 'Titiribí ', 2
 );
 
 /* INSERT QUERY NO: 1018 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1018, 'SAN MARCOS ', 70
+1018, 'Toca ', 6
 );
 
 /* INSERT QUERY NO: 1019 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1019, 'SAN ONOFRE ', 70
+1019, 'Tocaima ', 14
 );
 
 /* INSERT QUERY NO: 1020 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1020, 'SAN PEDRO ', 70
+1020, 'Tocancipá ', 14
 );
 
 /* INSERT QUERY NO: 1021 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1021, 'SAN LUIS DE SINCÉ ', 70
+1021, 'Togüí ', 6
 );
 
 /* INSERT QUERY NO: 1022 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1022, 'SUCRE ', 70
+1022, 'Toledo ', 2
 );
 
 /* INSERT QUERY NO: 1023 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1023, 'SANTIAGO DE TOLÚ ', 70
+1023, 'Toledo ', 22
 );
 
 /* INSERT QUERY NO: 1024 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1024, 'TOLÚ VIEJO ', 70
+1024, 'Tolú Viejo ', 28
 );
 
 /* INSERT QUERY NO: 1025 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1025, 'IBAGUÉ ', 73
+1025, 'Tona ', 27
 );
 
 /* INSERT QUERY NO: 1026 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1026, 'ALPUJARRA ', 73
+1026, 'Tópaga ', 6
 );
 
 /* INSERT QUERY NO: 1027 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1027, 'ALVARADO ', 73
+1027, 'Topaipí ', 14
 );
 
 /* INSERT QUERY NO: 1028 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1028, 'AMBALEMA ', 73
+1028, 'Toribío ', 10
 );
 
 /* INSERT QUERY NO: 1029 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1029, 'ANZOÁTEGUI ', 73
+1029, 'Toro ', 30
 );
 
 /* INSERT QUERY NO: 1030 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1030, 'ARMERO (GUAYABAL) ', 73
+1030, 'Tota ', 6
 );
 
 /* INSERT QUERY NO: 1031 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1031, 'ATACO ', 73
+1031, 'Totoró ', 10
 );
 
 /* INSERT QUERY NO: 1032 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1032, 'CAJAMARCA ', 73
+1032, 'Trinidad ', 9
 );
 
 /* INSERT QUERY NO: 1033 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1033, 'CARMEN DE APICALÁ ', 73
+1033, 'Trujillo ', 30
 );
 
 /* INSERT QUERY NO: 1034 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1034, 'CASABIANCA ', 73
+1034, 'Tubará ', 4
 );
 
 /* INSERT QUERY NO: 1035 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1035, 'CHAPARRAL ', 73
+1035, 'Tuchín ', 13
 );
 
 /* INSERT QUERY NO: 1036 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1036, 'COELLO ', 73
+1036, 'Tuluá ', 30
 );
 
 /* INSERT QUERY NO: 1037 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1037, 'COYAIMA ', 73
+1037, 'Tunja ', 6
 );
 
 /* INSERT QUERY NO: 1038 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1038, 'CUNDAY ', 73
+1038, 'Tununguá ', 6
 );
 
 /* INSERT QUERY NO: 1039 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1039, 'DOLORES ', 73
+1039, 'Túquerres ', 21
 );
 
 /* INSERT QUERY NO: 1040 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1040, 'ESPINAL ', 73
+1040, 'Turbaco ', 5
 );
 
 /* INSERT QUERY NO: 1041 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1041, 'FALAN ', 73
+1041, 'Turbaná ', 5
 );
 
 /* INSERT QUERY NO: 1042 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1042, 'FLANDES ', 73
+1042, 'Turbo ', 2
 );
 
 /* INSERT QUERY NO: 1043 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1043, 'FRESNO ', 73
+1043, 'Turmequé ', 6
 );
 
 /* INSERT QUERY NO: 1044 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1044, 'GUAMO ', 73
+1044, 'Tuta ', 6
 );
 
 /* INSERT QUERY NO: 1045 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1045, 'HERVEO ', 73
+1045, 'Tutazá ', 6
 );
 
 /* INSERT QUERY NO: 1046 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1046, 'HONDA ', 73
+1046, 'Ubalá ', 14
 );
 
 /* INSERT QUERY NO: 1047 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1047, 'ICONONZO ', 73
+1047, 'Ubaque ', 14
 );
 
 /* INSERT QUERY NO: 1048 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1048, 'LÉRIDA ', 73
+1048, 'Ulloa ', 30
 );
 
 /* INSERT QUERY NO: 1049 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1049, 'LÍBANO ', 73
+1049, 'Úmbita ', 6
 );
 
 /* INSERT QUERY NO: 1050 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1050, 'SAN SEBASTIÁN DE MARIQUITA ', 73
+1050, 'Une ', 14
 );
 
 /* INSERT QUERY NO: 1051 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1051, 'MELGAR ', 73
+1051, 'Unguía ', 12
 );
 
 /* INSERT QUERY NO: 1052 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1052, 'MURILLO ', 73
+1052, 'Unión Panamericana (Las Ánimas) ', 12
 );
 
 /* INSERT QUERY NO: 1053 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1053, 'NATAGAIMA ', 73
+1053, 'Uramita ', 2
 );
 
 /* INSERT QUERY NO: 1054 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1054, 'ORTEGA ', 73
+1054, 'Uribe ', 20
 );
 
 /* INSERT QUERY NO: 1055 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1055, 'PALOCABILDO ', 73
+1055, 'Uribia ', 18
 );
 
 /* INSERT QUERY NO: 1056 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1056, 'PIEDRAS ', 73
+1056, 'Urrao ', 2
 );
 
 /* INSERT QUERY NO: 1057 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1057, 'PLANADAS ', 73
+1057, 'Urumita ', 18
 );
 
 /* INSERT QUERY NO: 1058 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1058, 'PRADO ', 73
+1058, 'Usiacurí ', 4
 );
 
 /* INSERT QUERY NO: 1059 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1059, 'PURIFICACIÓN ', 73
+1059, 'Útica ', 14
 );
 
 /* INSERT QUERY NO: 1060 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1060, 'RIOBLANCO ', 73
+1060, 'Valdivia ', 2
 );
 
 /* INSERT QUERY NO: 1061 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1061, 'RONCESVALLES ', 73
+1061, 'Valencia ', 13
 );
 
 /* INSERT QUERY NO: 1062 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1062, 'ROVIRA ', 73
+1062, 'Valle De San José ', 27
 );
 
 /* INSERT QUERY NO: 1063 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1063, 'SALDAÑA ', 73
+1063, 'Valle De San Juan ', 29
 );
 
 /* INSERT QUERY NO: 1064 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1064, 'SAN ANTONIO ', 73
+1064, 'Valle Del Guamuez ', 23
 );
 
 /* INSERT QUERY NO: 1065 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1065, 'SAN LUIS ', 73
+1065, 'Valledupar ', 11
 );
 
 /* INSERT QUERY NO: 1066 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1066, 'SANTA ISABEL ', 73
+1066, 'Valparaíso ', 2
 );
 
 /* INSERT QUERY NO: 1067 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1067, 'SUÁREZ ', 73
+1067, 'Valparaíso ', 8
 );
 
 /* INSERT QUERY NO: 1068 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1068, 'VALLE DE SAN JUAN ', 73
+1068, 'Vegachí ', 2
 );
 
 /* INSERT QUERY NO: 1069 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1069, 'VENADILLO ', 73
+1069, 'Vélez ', 27
 );
 
 /* INSERT QUERY NO: 1070 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1070, 'VILLAHERMOSA ', 73
+1070, 'Venadillo ', 29
 );
 
 /* INSERT QUERY NO: 1071 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1071, 'VILLARRICA ', 73
+1071, 'Venecia ', 2
 );
 
 /* INSERT QUERY NO: 1072 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1072, 'CALI ', 76
+1072, 'Venecia ', 2
 );
 
 /* INSERT QUERY NO: 1073 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1073, 'ALCALÁ ', 76
+1073, 'Venecia ', 14
 );
 
 /* INSERT QUERY NO: 1074 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1074, 'ANDALUCÍA ', 76
+1074, 'Ventaquemada ', 6
 );
 
 /* INSERT QUERY NO: 1075 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1075, 'ANSERMANUEVO ', 76
+1075, 'Vergara ', 14
 );
 
 /* INSERT QUERY NO: 1076 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1076, 'ARGELIA ', 76
+1076, 'Versalles ', 30
 );
 
 /* INSERT QUERY NO: 1077 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1077, 'BOLÍVAR ', 76
+1077, 'Vetas ', 27
 );
 
 /* INSERT QUERY NO: 1078 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1078, 'BUENAVENTURA ', 76
+1078, 'Vianí ', 14
 );
 
 /* INSERT QUERY NO: 1079 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1079, 'GUADALAJARA DE BUGA ', 76
+1079, 'Victoria ', 7
 );
 
 /* INSERT QUERY NO: 1080 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1080, 'BUGALAGRANDE ', 76
+1080, 'Vigía Del Fuerte ', 2
 );
 
 /* INSERT QUERY NO: 1081 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1081, 'CAICEDONIA ', 76
+1081, 'Vijes ', 30
 );
 
 /* INSERT QUERY NO: 1082 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1082, 'CALIMA (DARIEN) ', 76
+1082, 'Villa Caro ', 22
 );
 
 /* INSERT QUERY NO: 1083 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1083, 'CANDELARIA ', 76
+1083, 'Villa De Leyva ', 6
 );
 
 /* INSERT QUERY NO: 1084 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1084, 'CARTAGO ', 76
+1084, 'Villa De San Diego De Ubaté ', 14
 );
 
 /* INSERT QUERY NO: 1085 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1085, 'DAGUA ', 76
+1085, 'Villa Del Rosario ', 22
 );
 
 /* INSERT QUERY NO: 1086 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1086, 'EL ÁGUILA ', 76
+1086, 'Villa Rica ', 10
 );
 
 /* INSERT QUERY NO: 1087 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1087, 'EL CAIRO ', 76
+1087, 'Villagarzón ', 23
 );
 
 /* INSERT QUERY NO: 1088 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1088, 'EL CERRITO ', 76
+1088, 'Villagómez ', 14
 );
 
 /* INSERT QUERY NO: 1089 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1089, 'EL DOVIO ', 76
+1089, 'Villahermosa ', 29
 );
 
 /* INSERT QUERY NO: 1090 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1090, 'FLORIDA ', 76
+1090, 'Villamaría ', 7
 );
 
 /* INSERT QUERY NO: 1091 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1091, 'GINEBRA ', 76
+1091, 'Villanueva ', 5
 );
 
 /* INSERT QUERY NO: 1092 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1092, 'GUACARÍ ', 76
+1092, 'Villanueva ', 9
 );
 
 /* INSERT QUERY NO: 1093 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1093, 'JAMUNDÍ ', 76
+1093, 'Villanueva ', 18
 );
 
 /* INSERT QUERY NO: 1094 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1094, 'LA CUMBRE ', 76
+1094, 'Villanueva ', 27
 );
 
 /* INSERT QUERY NO: 1095 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1095, 'LA UNIÓN ', 76
+1095, 'Villapinzón ', 14
 );
 
 /* INSERT QUERY NO: 1096 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1096, 'LA VICTORIA ', 76
+1096, 'Villarrica ', 29
 );
 
 /* INSERT QUERY NO: 1097 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1097, 'OBANDO ', 76
+1097, 'Villavicencio ', 20
 );
 
 /* INSERT QUERY NO: 1098 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1098, 'PALMIRA ', 76
+1098, 'Villavieja ', 17
 );
 
 /* INSERT QUERY NO: 1099 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1099, 'PRADERA ', 76
+1099, 'Villeta ', 14
 );
 
 /* INSERT QUERY NO: 1100 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1100, 'RESTREPO ', 76
+1100, 'Viotá ', 14
 );
 
 /* INSERT QUERY NO: 1101 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1101, 'RIOFRÍO ', 76
+1101, 'Viracachá ', 6
 );
 
 /* INSERT QUERY NO: 1102 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1102, 'ROLDANILLO ', 76
+1102, 'Vistahermosa ', 20
 );
 
 /* INSERT QUERY NO: 1103 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1103, 'SAN PEDRO ', 76
+1103, 'Viterbo ', 7
 );
 
 /* INSERT QUERY NO: 1104 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1104, 'SEVILLA ', 76
+1104, 'Yacopí ', 14
 );
 
 /* INSERT QUERY NO: 1105 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1105, 'TORO ', 76
+1105, 'Yacuanquer ', 21
 );
 
 /* INSERT QUERY NO: 1106 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1106, 'TRUJILLO ', 76
+1106, 'Yaguará ', 17
 );
 
 /* INSERT QUERY NO: 1107 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1107, 'TULUÁ ', 76
+1107, 'Yalí ', 2
 );
 
 /* INSERT QUERY NO: 1108 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1108, 'ULLOA ', 76
+1108, 'Yarumal ', 2
 );
 
 /* INSERT QUERY NO: 1109 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1109, 'VERSALLES ', 76
+1109, 'Yavaraté ', 31
 );
 
 /* INSERT QUERY NO: 1110 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1110, 'VIJES ', 76
+1110, 'Yolombó ', 2
 );
 
 /* INSERT QUERY NO: 1111 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1111, 'YOTOCO ', 76
+1111, 'Yondó ', 2
 );
 
 /* INSERT QUERY NO: 1112 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1112, 'YUMBO ', 76
+1112, 'Yopal ', 9
 );
 
 /* INSERT QUERY NO: 1113 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1113, 'ZARZAL ', 76
+1113, 'Yotoco ', 30
 );
 
 /* INSERT QUERY NO: 1114 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1114, 'MITÚ ', 97
+1114, 'Yumbo ', 30
 );
 
 /* INSERT QUERY NO: 1115 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1115, 'CARURÚ ', 97
+1115, 'Zambrano ', 5
 );
 
 /* INSERT QUERY NO: 1116 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1116, 'PACOA ', 97
+1116, 'Zapatoca ', 27
 );
 
 /* INSERT QUERY NO: 1117 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1117, 'TARAIRA ', 97
+1117, 'Zapayán ', 19
 );
 
 /* INSERT QUERY NO: 1118 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1118, 'PAPUNAHUA ', 97
+1118, 'Zaragoza ', 2
 );
 
 /* INSERT QUERY NO: 1119 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1119, 'YAVARATÉ ', 97
+1119, 'Zarzal ', 30
 );
 
 /* INSERT QUERY NO: 1120 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1120, 'PUERTO CARREÑO ', 99
+1120, 'Zetaquira ', 6
 );
 
 /* INSERT QUERY NO: 1121 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1121, 'LA PRIMAVERA ', 99
+1121, 'Zipacón ', 14
 );
 
 /* INSERT QUERY NO: 1122 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1122, 'SANTA ROSALÍA ', 99
+1122, 'Zipaquirá ', 14
 );
 
 /* INSERT QUERY NO: 1123 */
-INSERT INTO municipios(id, nombre, cod_departamento_id)
+INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
 (
-1123, 'CUMARIBO ', 99
+1123, 'Zona Bananera ', 19
 );
