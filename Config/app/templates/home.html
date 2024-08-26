@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{titulo}}</title>
-
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
     <link href="{% static 'lib/select2/css/select2.min.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
@@ -16,7 +16,7 @@
     <script src="{% static 'lib/adminlte-3.0.4/js/adminlte.min.js' %}"></script>
     <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'lib/datatables-1.10.20/plugins/Spanish.json ' %}"></script>
-
+    <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
     {% block head %}
     
     {% endblock  %}

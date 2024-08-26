@@ -61,10 +61,6 @@ class TipoForm(forms.ModelForm):
         }
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
-
-from django.core.exceptions import ValidationError
-from app.models import Ubicacion
-
 class UbicacionForm(forms.ModelForm):
     class Meta:
         model = Ubicacion
@@ -78,6 +74,10 @@ class UbicacionForm(forms.ModelForm):
         cleaned_data = super().clean()
         departamento = cleaned_data.get('departamento')
         municipio = cleaned_data.get('municipio')
+
+        # Validar que se haya seleccionado un municipio
+        if not municipio:
+            raise ValidationError('Debe seleccionar un municipio.')
 
         # Verificar si ya existe una ubicación con el mismo departamento y municipio
         if Ubicacion.objects.filter(departamento=departamento, municipio=municipio).exists():

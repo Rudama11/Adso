@@ -14,17 +14,6 @@
         <div class="card-body">
             {% csrf_token %}
             {% if form.errors %}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear una ubicación.</h5>
-                <ul>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
             {% endif %}
             {% for field in form.visible_fields %}
             <div class="form-group">
@@ -44,7 +33,6 @@
         </div>
     </div>
 </form>
-
 <script>
     $(document).ready(function() {
         // Iniciar select2 para los selects
