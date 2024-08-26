@@ -45,6 +45,8 @@
     </div>
 </form>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
         // Iniciar select2 para los selects
@@ -79,12 +81,12 @@
                 },
                 success: function(data) {
                     var $municipioSelect = $('#id_municipio');
-                    $municipioSelect.empty();
+                    $municipioSelect.empty(); // Limpiar el select de municipios
                     $municipioSelect.append('<option value="">Selecciona un municipio</option>');
                     $.each(data.municipios, function(index, municipio) {
                         $municipioSelect.append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
                     });
-                    $municipioSelect.trigger('change');
+                    $municipioSelect.trigger('change'); // Actualizar el select2
                 }
             });
         });

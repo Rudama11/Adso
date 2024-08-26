@@ -1,5 +1,6 @@
 {% extends "listar.html" %}
 {% load static %}
+
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:ubicacion_listarU' %}">
     <div class="form-group">
@@ -7,8 +8,7 @@
         <select class="form-control" id="departamento" name="departamento">
             <option value="">Todos</option>
             {% for departamento in departamentos %}
-            <option value="{{ departamento.id }}" {% if request.GET.departamento==departamento.id|stringformat:"s"
-                %}selected{% endif %}>
+            <option value="{{ departamento.id }}" {% if request.GET.departamento == departamento.id|stringformat:"s" %}selected{% endif %}>
                 {{ departamento.nombre }}
             </option>
             {% endfor %}
@@ -20,8 +20,7 @@
         <select class="form-control" id="municipio" name="municipio">
             <option value="">Todos</option>
             {% for municipio in municipios %}
-            <option value="{{ municipio.id }}" {% if request.GET.municipio==municipio.id|stringformat:"s" %}selected{%
-                endif %}>
+            <option value="{{ municipio.id }}" {% if request.GET.municipio == municipio.id|stringformat:"s" %}selected{% endif %}>
                 {{ municipio.nombre }}
             </option>
             {% endfor %}
