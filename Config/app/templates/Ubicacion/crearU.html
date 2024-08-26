@@ -45,10 +45,30 @@
     </div>
 </form>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        // Iniciar select2 para los selects
+        $('#id_departamento').select2({
+            placeholder: 'Selecciona un departamento',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                }
+            }
+        });
+        
+        $('#id_municipio').select2({
+            placeholder: 'Selecciona un municipio',
+            allowClear: true,
+            language: {
+                noResults: function() {
+                    return "No se encontraron resultados";
+                }
+            }
+        });
+
+        // Cargar los municipios dinámicamente cuando se seleccione un departamento
         $('#id_departamento').on('change', function() {
             var departamentoId = $(this).val();
             var url = "{% url 'app:municipios_por_departamento' %}";
@@ -60,10 +80,14 @@
                 },
                 success: function(data) {
                     console.log("Datos recibidos:", data);
-                    $('#id_municipio').empty().append('<option value="">Selecciona un municipio</option>');
+                    var $municipioSelect = $('#id_municipio');
+                    $municipioSelect.empty().append('<option value="">Selecciona un municipio</option>');
+                    
                     $.each(data.municipios, function(index, municipio) {
-                        $('#id_municipio').append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
+                        $municipioSelect.append('<option value="' + municipio.id + '">' + municipio.nombre + '</option>');
                     });
+
+                    $municipioSelect.trigger('change');
                 },
                 error: function(xhr, status, error) {
                     console.log("Error en la solicitud AJAX:", status, error);
