@@ -62,6 +62,9 @@ class TipoForm(forms.ModelForm):
         
 #---------------------------------------------------------- Ubicacion ----------------------------------------------------------
 
+from django.core.exceptions import ValidationError
+from app.models import Ubicacion
+
 class UbicacionForm(forms.ModelForm):
     class Meta:
         model = Ubicacion
@@ -71,19 +74,16 @@ class UbicacionForm(forms.ModelForm):
             'municipio': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el municipio'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['municipio'].queryset = Municipios.objects.none()
+    def clean(self):
+        cleaned_data = super().clean()
+        departamento = cleaned_data.get('departamento')
+        municipio = cleaned_data.get('municipio')
 
-        if 'departamento' in self.data:
-            try:
-                departamento_id = int(self.data.get('departamento'))
-                self.fields['municipio'].queryset = Municipios.objects.filter(departamento_id=departamento_id).order_by('nombre')
-            except (ValueError, TypeError):
-                pass
-        elif self.instance.pk:
-            self.fields['municipio'].queryset = Municipios.objects.filter(departamento_id=self.instance.departamento.id).order_by('nombre')
-            
+        # Verificar si ya existe una ubicación con el mismo departamento y municipio
+        if Ubicacion.objects.filter(departamento=departamento, municipio=municipio).exists():
+            raise ValidationError('Esta combinación de departamento y municipio ya existe.')
+
+        return cleaned_data
             
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 

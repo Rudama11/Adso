@@ -45,12 +45,11 @@ class UbicacionCreateView(CreateView):
     template_name = 'Ubicacion/crearU.html'
     success_url = reverse_lazy('app:ubicacion_listarU')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Ubicación'
-        context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
-        return context
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        if form.non_field_errors():
+            print("Error no relacionado con los campos: ", form.non_field_errors())
+        return response
 
 class UbicacionUpdateView(UpdateView):
     model = Ubicacion

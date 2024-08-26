@@ -99,19 +99,14 @@
 
 {% if form.errors %}
 <script>
-    var errors = '';
-    {% for field in form %}
-        {% for error in field.errors %}
-            errors += '{{ error }}\n';
-        {% endfor %}
-    {% endfor %}
-
+    var errorMessage = '{{ form.non_field_errors|first }}';
     Swal.fire({
         title: 'Error',
-        text: 'Ha ocurrido un error al intentar guardar una ubicación',
+        text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Aceptar'
     });
 </script>
-{% endif %}
+{% endif %}.96*
+
 {% endblock %}
