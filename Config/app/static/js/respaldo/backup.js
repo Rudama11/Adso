@@ -10,10 +10,25 @@ document.addEventListener('DOMContentLoaded', function() {
         fileInput.click();
     });
 
-    // Actualizar el nombre del archivo seleccionado
+    // Actualizar el nombre del archivo seleccionado y validar la extensión
     fileInput.addEventListener('change', function() {
-        const fileName = fileInput.files[0] ? fileInput.files[0].name : 'Sin archivos seleccionados';
+        const file = fileInput.files[0];
+        const fileName = file ? file.name : 'Sin archivos seleccionados';
         fileNameDisplay.textContent = fileName;
+
+        // Validar la extensión del archivo
+        const validExtensions = ['sql'];
+        const fileExtension = fileName.split('.').pop().toLowerCase();
+
+        if (!validExtensions.includes(fileExtension)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Archivo inválido',
+                text: 'Por favor, seleccione un archivo .sql'
+            });
+            fileInput.value = ''; // Limpiar el input si el archivo no es válido
+            fileNameDisplay.textContent = 'Sin archivos seleccionados'; // Resetear el nombre mostrado
+        }
     });
 
     // Manejar el envío del formulario de backup
@@ -58,7 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Manejar el envío del formulario de restauración
     restoreForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+        const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+        const validExtensions = ['sql'];
+        const fileExtension = fileName.split('.').pop().toLowerCase();
+
+        if (!validExtensions.includes(fileExtension)) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Archivo inválido',
+                text: 'Por favor, seleccione un archivo .sql antes de continuar.'
+            });
+            return;
+        }
+
         const formData = new FormData(restoreForm);
 
         fetch(restoreUrl, {

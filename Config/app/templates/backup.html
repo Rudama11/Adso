@@ -4,7 +4,7 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
     <title>Backup de Base de Datos</title>
-    <link rel="stylesheet" href="{% static 'css/respaldo/sweetalert2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{% static 'js/respaldo/sweetalert2.all.min.js' %}"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {

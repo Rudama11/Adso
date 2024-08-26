@@ -41,8 +41,12 @@ def backup_database(request):
             return JsonResponse({'status': 'error', 'message': f"Error al crear la copia de seguridad: {e}"})
 
 def restore_database(request):
-    if request.method == 'POST' and request.FILES['backup_file']:
+    if request.method == 'POST' and request.FILES.get('backup_file'):
         backup_file = request.FILES['backup_file']
+
+        # Validar la extensión del archivo
+        if not backup_file.name.endswith('.sql'):
+            return JsonResponse({'status': 'error', 'message': 'Por favor, suba un archivo con extensión .sql.'})
 
         try:
             db_name = settings.DATABASES['default']['NAME']
