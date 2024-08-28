@@ -232,61 +232,70 @@ class VentaForm(ModelForm):
 #------------------------- Persona --------------------------------------------
 
 class PersonaForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombres'].widget.attrs['autofocus'] = True
-
     class Meta:
         model = Persona
-        fields = '__all__'
+        fields = ['rol', 'nombres', 'tipo_documento', 'correo', 'telefono', 'numero_documento', 'usuario', 'password']
         widgets = {
+            'rol': Select(
+                attrs={
+                    'placeholder': 'Seleccione el rol del usuario',
+                }
+            ),
             'nombres': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese el nombre del empleado',
+                    'placeholder': 'Ingrese el nombre completo del empleado',
+                    'autofocus': 'autofocus',
                 }
             ),
-            'apellido': TextInput(
+            'tipo_documento': Select(
                 attrs={
-                    'placeholder': 'Ingrese el apellido del empleado',
+                    'placeholder': 'Seleccione el tipo de documento',
                 }
             ),
-            'cedula': TextInput(
+            'correo': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese la cedula del empleado',
+                    'placeholder': 'Ingrese el correo electrónico',
+                    'type': 'email',
                 }
             ),
-            'fecha_registro': forms.DateInput(
+            'telefono': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese la fecha de registro',
-                    'type': 'date'
+                    'placeholder': 'Ingrese el número de celular',
+                    'type': 'tel',
                 }
             ),
-            'edad': TextInput(
+            'numero_documento': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese la edad del empleado',
+                    'placeholder': 'Ingrese el número de documento',
                 }
             ),
-            'salario': TextInput(
+            'usuario': TextInput(
                 attrs={
-                    'placeholder': 'Ingrese el salario del empleado',
+                    'placeholder': 'Ingrese el nombre de usuario',
                 }
             ),
-            'estado': Select(
+            'password': TextInput(
                 attrs={
-                    'placeholder': 'Seleccione el estado del empleado',
-                }
-            ),
-            'tipo': Select(
-                attrs={
-                    'placeholder': 'Seleccione el tipo de empleado',
-                }
-            ),
-            'categ': Select(
-                attrs={
-                    'placeholder': 'Seleccione la categoría del empleado',
+                    'placeholder': 'Ingrese la contraseña',
+                    'type': 'password',
                 }
             ),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        correo = cleaned_data.get('correo')
+        numero_documento = cleaned_data.get('numero_documento')
+
+        # Validar correo
+        if Persona.objects.filter(correo=correo).exists():
+            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
+
+        # Validar número de documento
+        if Persona.objects.filter(numero_documento=numero_documento).exists():
+            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
+
+        return cleaned_data
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 
