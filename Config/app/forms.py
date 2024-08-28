@@ -5,25 +5,44 @@ from django_select2.forms import Select2Widget
 from app.models import *
 #---------------------------------------------------------- Categoria ----------------------------------------------------------
 
-class CategoriaForm(ModelForm):
+from django import forms
+from django.core.exceptions import ValidationError
+from .models import Categoria
+
+class CategoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
+        # Guardamos una copia de los datos iniciales para compararlos después
+        self.initial_data = self.instance.nombre, self.instance.descripcion
+
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        descripcion = cleaned_data.get('descripcion')
+
+        # Comparamos los datos actuales con los iniciales
+        if (nombre, descripcion) == self.initial_data:
+            raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
+
+        return cleaned_data
 
     class Meta:
         model = Categoria
         fields = '__all__'
         widgets = {
-            'nombre': TextInput(
+            'nombre': forms.TextInput(
                 attrs={
-                    'placeholder': 'Ingrese un nombre'
+                    'placeholder': 'Ingrese un nombre',
+                    'class': 'form-control'
                 }
             ),
-            'descripcion': Textarea(
+            'descripcion': forms.Textarea(
                 attrs={
                     'placeholder': 'Ingrese la descripción',
                     'rows': 1,
-                    'cols': 50
+                    'cols': 50,
+                    'class': 'form-control'
                 }
             ),
         }

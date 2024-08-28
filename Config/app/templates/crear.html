@@ -19,8 +19,12 @@
                     ×
                 </button>
                 <h5>
-                    <i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar
-                    crear {{ titulo }}
+                    <i class="icon fas fa-ban"></i> 
+                    {% if form.instance.pk %}
+                        Ha ocurrido un error al intentar {{ titulo }}.
+                    {% else %}
+                        Ha ocurrido un error al intentar crear {{ titulo }}.
+                    {% endif %}
                 </h5>
                 <ul>
                     {% for field in form %}
