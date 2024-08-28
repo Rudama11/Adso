@@ -97,7 +97,7 @@ class ClienteForm(forms.ModelForm):
             'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
-            'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
             'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
