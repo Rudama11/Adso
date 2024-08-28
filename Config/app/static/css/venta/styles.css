@@ -6,18 +6,17 @@ body {
 }
 
 .invoice-container {
-    max-width: 1200px; /* Aumenta el ancho máximo a 1200px */
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px; /* Bordes redondeados */
+    border-radius: 10px;
 }
-
 
 header {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+    flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 2px solid #1f5a96;
     padding-bottom: 20px;
@@ -84,7 +83,7 @@ h3 {
 }
 
 .invoice-details {
-    overflow-x: auto; /* Agrega desplazamiento horizontal si es necesario */
+    overflow-x: auto;
 }
 
 .invoice-details table {
@@ -97,7 +96,7 @@ h3 {
 }
 
 .invoice-details th, .invoice-details td {
-    padding: 10px; /* Reduce el padding para evitar que la tabla se desborde */
+    padding: 10px;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
 }
@@ -158,7 +157,7 @@ button#add-item:hover {
 }
 
 button.delete-item {
-    padding: 5px 10px; /* Reduce el padding del botón */
+    padding: 5px 10px;
     background-color: #ff4444;
     color: #fff;
     border: none;
@@ -173,12 +172,20 @@ button.delete-item:hover {
 
 .footer-buttons {
     display: flex;
-    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    justify-content: space-between; /* Alinea los botones a los extremos */
     margin-top: 20px;
 }
 
+.footer-buttons .left-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+}
+
+.footer-buttons .right-buttons {
+    margin-left: auto; /* Empuja los botones a la derecha */
+}
+
 .footer-buttons button {
-    margin-right: 10px;
     padding: 10px 20px;
     background-color: #1f5a96;
     color: #fff;
@@ -191,91 +198,91 @@ button.delete-item:hover {
     background-color: #155a80;
 }
 
-.signatures {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #ccc;
+.footer-buttons a#cancel {
+    background-color: #b82b2b;
+    color: white;
+    border: 2px solid #a71d1d;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-.signatures div {
-    text-align: center;
-    width: 45%;
+.footer-buttons a#cancel:hover {
+    background-color: #a71d1d;
+    border-color: #911d1d;
 }
 
-#cancel {
-    background-color: #b82b2b; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: 2px solid #a71d1d; /* Borde del botón */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de fuente */
-    text-decoration: none; /* Quitar subrayado */
-    transition: background-color 0.3s, border-color 0.3s; /* Transición para efectos */
+#add-invoice {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-#cancel:hover {
-    background-color: #a71d1d; /* Color de fondo al pasar el mouse */
-    border-color: #911d1d; /* Cambiar el color del borde al pasar el mouse */
+#add-invoice:hover {
+    background-color: #218838;
 }
 
 @media (max-width: 600px) {
     header {
         flex-direction: column;
-        align-items: flex-start; /* Alinea el contenido hacia la izquierda en pantallas pequeñas */
+        align-items: flex-start;
     }
 
     .invoice-info,
     .client-data,
     .totals {
-        width: 100%; /* Asegura que los contenedores ocupen el 100% del ancho */
+        width: 100%;
     }
 
     .footer-buttons {
-        flex-direction: column; /* Coloca los botones en columna en pantallas pequeñas */
-        align-items: flex-start; /* Alinea los botones hacia la izquierda */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .invoice-details table {
-        font-size: 14px; /* Ajusta el tamaño de fuente para pantallas pequeñas */
+        font-size: 14px;
     }
 
     .invoice-details th, .invoice-details td {
-        padding: 8px; /* Ajusta el padding para pantallas pequeñas */
+        padding: 8px;
     }
 }
 
 @media print {
     .invoice-container {
-        color: black; /* Asegura que el texto sea visible en impresión */
+        color: black;
     }
 
-    /* Asegura que el encabezado "Totales" sea visible */
     .invoice-totals h3 {
         color: black !important;
     }
 
-    /* Ocultar elementos no necesarios en impresión */
     .footer-buttons,
     #add-item,
     th.acciones,
-    td.acciones { /* Oculta la columna de acciones */
+    td.acciones {
         display: none !important;
     }
 }
 
-  /* Estilo para el botón de eliminar */
 .btn-remove {
-    background-color: #e74c3c; /* Color de fondo rojo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 8px 12px; /* Espaciado interno */
-    cursor: pointer; /* Cursor de puntero al pasar el mouse */
-    font-size: 14px; /* Tamaño de fuente */
-    transition: background-color 0.3s; /* Transición suave para el color de fondo */
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
+
 .btn-remove:hover {
-    background-color: #c0392b; /* Color de fondo más oscuro al pasar el mouse */
+    background-color: #c0392b;
 }
