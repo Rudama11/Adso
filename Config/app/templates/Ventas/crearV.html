@@ -25,8 +25,7 @@
                 <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="logo">
                 <h2>Datos Factura</h2>
                 <div class="invoice-details">
-                    <p><strong>Fecha Emisión:</strong> <input type="date" id="fecha_emision"></p>
-                    <p><strong>Fecha Vencimiento:</strong> <input type="date" id="fecha_vencimiento"></p>
+                    <p><strong>Fecha Emisión:</strong> <input type="datetime-local" id="fecha_emision"></p>
                     <p><strong>Número de Factura:</strong> <input type="text" id="num_factura"></p>
                 </div>
             </div>
@@ -90,8 +89,13 @@
 
         <!-- Botones en la parte inferior de la factura -->
         <div class="footer-buttons">
-            <button type="button" id="print-invoice">Imprimir factura</button>
-            <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
+            <div class="left-buttons">
+                <button type="button" id="print-invoice">Imprimir factura</button>
+                <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
+            </div>
+            <div class="right-buttons">
+                <button type="button" id="add-invoice">Guardar factura</button>
+            </div>
         </div>
     </div>
 
@@ -343,6 +347,26 @@
             window.print();
         });
     });
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const fechaEmision = document.getElementById('fecha_emision');
+        
+        // Función para obtener la fecha y hora actuales en el formato de `datetime-local`
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Meses de 0 a 11
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+        
+        // Configura el valor del campo `datetime-local`
+        fechaEmision.value = getCurrentDateTime();
+    });
 </script>
+
 </body>
 </html>
