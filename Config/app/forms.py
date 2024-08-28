@@ -234,7 +234,7 @@ class VentaForm(ModelForm):
 class PersonaForm(ModelForm):
     class Meta:
         model = Persona
-        fields = ['rol', 'nombres', 'tipo_documento', 'correo', 'telefono', 'numero_documento', 'usuario', 'password']
+        fields = ['rol', 'nombres', 'tipo_documento','numero_documento', 'correo', 'telefono', 'usuario', 'password']
         widgets = {
             'rol': Select(
                 attrs={
@@ -252,6 +252,11 @@ class PersonaForm(ModelForm):
                     'placeholder': 'Seleccione el tipo de documento',
                 }
             ),
+            'numero_documento': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el número de documento',
+                }
+            ),
             'correo': TextInput(
                 attrs={
                     'placeholder': 'Ingrese el correo electrónico',
@@ -262,11 +267,6 @@ class PersonaForm(ModelForm):
                 attrs={
                     'placeholder': 'Ingrese el número de celular',
                     'type': 'tel',
-                }
-            ),
-            'numero_documento': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el número de documento',
                 }
             ),
             'usuario': TextInput(

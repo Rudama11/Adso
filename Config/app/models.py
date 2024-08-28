@@ -100,9 +100,9 @@ class Persona(models.Model):
     rol = models.CharField(max_length=1,choices=Roles,default='1',verbose_name='Rol de usuario')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres')
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
+    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
     correo = models.EmailField(max_length=100,validators=[EmailValidator()],verbose_name='Correo')
     telefono = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')],verbose_name='Número de celular',null=True,blank=True)
-    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
     usuario = models.CharField(max_length=150,unique=True,verbose_name='Usuario')
     password = models.CharField(max_length=128,verbose_name='Contraseña')
 
