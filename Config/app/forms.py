@@ -115,6 +115,21 @@ class ClienteForm(forms.ModelForm):
             self.fields['razon_social'].widget.attrs['style'] = 'display:block;'
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        correo = cleaned_data.get('correo')
+        numero_documento = cleaned_data.get('numero_documento')
+
+        # Validar correo
+        if Cliente.objects.filter(correo=correo).exists():
+            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
+
+        # Validar número de documento
+        if Cliente.objects.filter(numero_documento=numero_documento).exists():
+            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
+
+        return cleaned_data
             
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
 
@@ -147,6 +162,20 @@ class ProveedorForm(forms.ModelForm):
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
+    def clean(self):
+        cleaned_data = super().clean()
+        correo = cleaned_data.get('correo')
+        numero_documento = cleaned_data.get('numero_documento')
+
+        # Validar correo
+        if Proveedor.objects.filter(correo=correo).exists():
+            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
+
+        # Validar número de documento
+        if Proveedor.objects.filter(numero_documento=numero_documento).exists():
+            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
+
+        return cleaned_data
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
 
