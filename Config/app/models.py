@@ -26,7 +26,7 @@ class Departamentos(models.Model):
 # ----------------------------------------------- Municipios -----------------------------------------------
 class Municipios(models.Model):
     nombre = models.CharField(max_length=50,verbose_name='Municipio',null=False,blank=False,validators=[validate_nombre])
-    departamento_id = models.ForeignKey(Departamentos,on_delete=models.CASCADE,related_name='municipios')
+    departamento = models.ForeignKey(Departamentos,on_delete=models.CASCADE,related_name='municipios')
 
     class Meta:
         verbose_name = 'Municipio'
@@ -156,7 +156,6 @@ class Venta(models.Model):
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
 
-
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
@@ -193,47 +192,21 @@ class Normativa(models.Model):
         
 #----------------------------------------------- Compras -----------------------------------------------
 
-class Compra(models.Model):
-    cantidad = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1)],verbose_name='Cantidad')
-    precio_unitario = models.DecimalField(max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)],verbose_name='Precio Unitario')
-    precio_total = models.DecimalField(max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)],verbose_name='Precio Total',editable=False)
-    fecha_ingreso = models.DateField(default=datetime.now,verbose_name='Fecha de Ingreso')
-    producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
-    persona = models.ForeignKey(Persona,on_delete=models.CASCADE)
-    proveedor = models.ForeignKey(Proveedor,on_delete=models.CASCADE)
+# class Venta(models.Model):
+#     num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
+#     nombre_producto = models.ForeignKey(Producto, on_delete=models.
+#     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+#     impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+#     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+#     fecha_emision = models.DateTimeField(auto_now_add=True)
+#     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+#     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+#     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
-    def save(self, *args, **kwargs):
-        self.precio_total = self.cantidad * self.precio_unitario
-        super().save(*args, **kwargs)
+#     def __str__(self):
+#         return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
 
-    def __str__(self):
-        return f'Compra de {self.cantidad} unidades de {self.producto.nombre}'
-
-    class Meta:
-        verbose_name = 'Compra'
-        verbose_name_plural = 'Compras'
-        db_table = 'Compra'
-        ordering = ['id']
-
-#----------------------------------------------- Detalles de Compras -----------------------------------------------
-
-class DetalleCompra(models.Model):
-    cantidad = models.PositiveIntegerField(default=1,validators=[MinValueValidator(1)],verbose_name='Cantidad')
-    precio_unitario = models.DecimalField(max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)],verbose_name='Precio Unitario')
-    precio_total = models.DecimalField(max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)],verbose_name='Precio Total',editable=False)
-    fecha_ingreso = models.DateField(default=datetime.now,verbose_name='Fecha de Ingreso')
-    producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
-    compra = models.ForeignKey(Compra,on_delete=models.CASCADE)
-
-    def save(self, *args, **kwargs):
-        self.precio_total = self.cantidad * self.precio_unitario
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'Detalle de Compra: {self.cantidad} unidades de {self.producto.nombre}'
-
-    class Meta:
-        verbose_name = 'Detalle de Compra'
-        verbose_name_plural = 'Detalles de Compras'
-        db_table = 'DetalleCompra'
-        ordering = ['id']
+#     class Meta:
+#         verbose_name = 'Venta'
+#         verbose_name_plural = 'Ventas'
+#         db_table = 'Venta'

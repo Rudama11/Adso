@@ -1,3 +1,5 @@
+use conaldex_boyaca;
+
 /* INSERT QUERY NO: 1 */
 INSERT INTO municipios(id, nombre, departamento_id)
 VALUES
