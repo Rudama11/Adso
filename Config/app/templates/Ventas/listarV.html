@@ -45,7 +45,9 @@
     <th scope="col">Id Venta</th>
     <th scope="col">Fecha factura</th>
     <th scope="col">Cliente</th>
-    <th scope="col">Vendedor</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Subtotal</th>
+    <th scope="col">IVA</th>
     <th scope="col">Total factura</th>
     <th scope="col">Opciones</th>
 
@@ -58,7 +60,9 @@
     <td>{{v.num_factura}}</td>
     <td>{{v.fecha_emision}}</td>
     <td>{{v.cliente.nombre}}</td>
-    <td>{{v.persona.nombre}}</td>
+    <td>{{v.producto.nombre}}</td>
+    <th>{{v.subtotal}}</th>
+    <th>{{v.impuestos}}</th>
     <td>{{v.total}}</td>
     <td>
         <a href="{% url 'app:venta_editar' v.num_factura %}" class="btn btn-info btn-sm"title="Editar venta">
