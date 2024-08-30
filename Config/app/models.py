@@ -144,7 +144,6 @@ class Venta(models.Model):
     impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     fecha_emision = models.DateTimeField(auto_now_add=True)
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
