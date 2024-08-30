@@ -3,17 +3,13 @@ from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput, De
 from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
-#---------------------------------------------------------- Categoria ----------------------------------------------------------
-
-from django import forms
 from django.core.exceptions import ValidationError
-from .models import Categoria
 
+#---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
-        # Guardamos una copia de los datos iniciales para compararlos después
         self.initial_data = self.instance.nombre, self.instance.descripcion
 
     def clean(self):
@@ -21,7 +17,6 @@ class CategoriaForm(forms.ModelForm):
         nombre = cleaned_data.get('nombre')
         descripcion = cleaned_data.get('descripcion')
 
-        # Comparamos los datos actuales con los iniciales
         if (nombre, descripcion) == self.initial_data:
             raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
 
@@ -53,7 +48,6 @@ class TipoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
-        # Agregar estilos y placeholders a los campos
         self.fields['nombre'].widget.attrs.update({
             'placeholder': 'Ingrese el nombre del Tipo de producto',
             'class': 'form-control'
@@ -79,7 +73,7 @@ class TipoForm(forms.ModelForm):
             ),
         }
         
-#---------------------------------------------------------- Ubicacion ----------------------------------------------------------
+#---------------------------------------------------------- Ubicación ----------------------------------------------------------
 class UbicacionForm(forms.ModelForm):
     class Meta:
         model = Ubicacion
@@ -94,18 +88,15 @@ class UbicacionForm(forms.ModelForm):
         departamento = cleaned_data.get('departamento')
         municipio = cleaned_data.get('municipio')
 
-        # Validar que se haya seleccionado un municipio
         if not municipio:
             raise ValidationError('Debe seleccionar un municipio.')
 
-        # Verificar si ya existe una ubicación con el mismo departamento y municipio
         if Ubicacion.objects.filter(departamento=departamento, municipio=municipio).exists():
             raise ValidationError('Esta combinación de departamento y municipio ya existe.')
 
         return cleaned_data
             
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
-
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
@@ -140,18 +131,15 @@ class ClienteForm(forms.ModelForm):
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        # Validar correo
         if Cliente.objects.filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        # Validar número de documento
         if Cliente.objects.filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data
             
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
-
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -186,18 +174,15 @@ class ProveedorForm(forms.ModelForm):
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        # Validar correo
         if Proveedor.objects.filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        # Validar número de documento
         if Proveedor.objects.filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data
 
 #---------------------------------------------------------- Producto ----------------------------------------------------------
-
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -230,7 +215,6 @@ class ProductoForm(forms.ModelForm):
         fields = '__all__'
 
 #---------------------------------------------------------- Normativa ----------------------------------------------------------
-
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -259,8 +243,7 @@ class NormativaForm(ModelForm):
             ),
         }
 
-#------------------------- ventas --------------------------------------------
-
+#---------------------------------------------------------- Ventas ----------------------------------------------------------
 class VentaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -277,8 +260,7 @@ class VentaForm(ModelForm):
             ),
         }
 
-#------------------------- Persona --------------------------------------------
-
+#---------------------------------------------------------- Persona ----------------------------------------------------------
 class PersonaForm(ModelForm):
     class Meta:
         model = Persona
@@ -335,18 +317,15 @@ class PersonaForm(ModelForm):
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        # Validar correo
         if Persona.objects.filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        # Validar número de documento
         if Persona.objects.filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
-
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
         required=False,
