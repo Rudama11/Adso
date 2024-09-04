@@ -144,29 +144,18 @@ class Proveedor(models.Model):
 #----------------------------------------------- Compras -----------------------------------------------
 
 class Compras(models.Model):
-    num_factura = models.CharField(max_length=20, primary_key=True, editable=False)
-    fecha_compra = models.DateTimeField(auto_now_add=True)
+    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
+    fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     nombre_producto = models.CharField(max_length=50, validators=[MinLengthValidator(3)], verbose_name='Nombre')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)], verbose_name='Cantidades')
-    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
-    impuestos = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
-    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
+    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
+    iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
+    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        if not self.num_factura:
-            last_purchase = Compras.objects.order_by('-num_factura').first()
-            if last_purchase:
-                last_num_str = last_purchase.num_factura.split('-')[-1]
-                last_num = int(last_num_str)
-            else:
-                last_num = 0
-
-            new_num = last_num + 1
-            num_factura_str = f'COBA-{new_num:05d}'
-            
-            self.num_factura = num_factura_str
-        
+        # Calcula el valor total antes de guardar
+        self.total = (self.precio * self.cantidad) + ((self.precio * self.cantidad) * (self.iva / 100))
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -176,6 +165,7 @@ class Compras(models.Model):
         verbose_name = 'Compra'
         verbose_name_plural = 'Compras'
         db_table = 'Compras'
+        ordering = ['id']
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):

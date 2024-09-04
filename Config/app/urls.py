@@ -9,6 +9,7 @@ from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
 from app.views.Persona.views import *
+from app.views.Compras.views import *
 
 app_name = 'app'
 
@@ -79,6 +80,14 @@ urlpatterns = [
     path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
     path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
     path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
+    
+    #-------------------------------------------------- Compras ----------------------------------------------------
+    
+    path('Compras/listar/', ComprasListView.as_view(), name='compras_listar'),
+    path('Compras/crear/', ComprasCreateView.as_view(), name='compras_crear'),
+    path('Compras/editar/<int:pk>/', ComprasUpdateView.as_view(), name='compras_editar'),
+    path('Compras/eliminar/<int:pk>/', ComprasDeleteView.as_view(), name='compras_eliminar'),
+    path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
     #-------------------------------------------------- Backup del sistema ----------------------------------------
     
