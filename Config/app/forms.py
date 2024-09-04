@@ -366,21 +366,23 @@ class ProductoFilterForm(forms.Form):
     )
     
 #---------------------------------------------------------- Compras ----------------------------------------------------------
-class ComprasForm(ModelForm):
+class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
+        if self.instance and self.instance.pk:
+            self.fields['total'].widget = forms.HiddenInput()
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'nombre_producto', 'cantidad', 'precio', 'impuestos', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'nombre_producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
             'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
             'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
-            'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
-            'total': forms.NumberInput(attrs={'placeholder': 'Ingrese el total'}),
+            'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
+            'total': forms.HiddenInput(),
             'proveedor': forms.Select(attrs={'autofocus': True}),
         }

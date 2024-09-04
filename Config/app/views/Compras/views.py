@@ -41,9 +41,14 @@ class ComprasCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        print(form.cleaned_data)
-        return response
+        # Calcular el total antes de guardar
+        cantidad = form.cleaned_data['cantidad']
+        precio = form.cleaned_data['precio']
+        iva = form.cleaned_data['iva']
+        total = (precio * cantidad) * (1 + iva / 100)
+        form.instance.total = total
+        print(form.errors)
+        return super().form_valid(form)
 
 class ComprasUpdateView(UpdateView):
     model = Compras
@@ -57,6 +62,15 @@ class ComprasUpdateView(UpdateView):
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
         return context
+
+    def form_valid(self, form):
+        # Calcular el total antes de guardar
+        cantidad = form.cleaned_data['cantidad']
+        precio = form.cleaned_data['precio']
+        iva = form.cleaned_data['iva']
+        total = (precio * cantidad) * (1 + iva / 100)
+        form.instance.total = total
+        return super().form_valid(form)
 
 class ComprasDeleteView(DeleteView):
     model = Compras

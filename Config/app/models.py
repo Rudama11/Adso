@@ -148,10 +148,15 @@ class Compras(models.Model):
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     nombre_producto = models.CharField(max_length=50, validators=[MinLengthValidator(3)], verbose_name='Nombre')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)], verbose_name='Cantidades')
-    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
-    impuestos = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
-    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
+    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
+    iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
+    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        # Calcula el valor total antes de guardar
+        self.total = (self.precio * self.cantidad) + ((self.precio * self.cantidad) * (self.iva / 100))
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Factura {self.num_factura} - Proveedor: {self.proveedor.nombre}'

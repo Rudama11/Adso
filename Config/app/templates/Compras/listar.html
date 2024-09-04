@@ -46,7 +46,7 @@
     <th scope="col">Producto</th>
     <th scope="col">Cantidad</th>
     <th scope="col">Precio</th>
-    <th scope="col">Impuestos</th>
+    <th scope="col">IVA (%)</th>
     <th scope="col">Total</th>
     <th scope="col">Opciones</th>
 </tr>
@@ -61,7 +61,7 @@
     <td>{{ com.nombre_producto }}</td>
     <td>{{ com.cantidad }}</td>
     <td>{{ com.precio }}</td>
-    <td>{{ com.impuestos }}</td>
+    <td>{{ com.iva }}</td>
     <td>{{ com.total }}</td>
     <td>
         <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
