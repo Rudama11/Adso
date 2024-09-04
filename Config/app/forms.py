@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput, DecimalField
+from django.forms import ModelForm, TextInput, Select, DateTimeInput, NumberInput
 from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
@@ -10,14 +10,17 @@ class CategoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombre'].widget.attrs['autofocus'] = True
-        self.initial_data = self.instance.nombre, self.instance.descripcion
+        self.initial_data = {
+            'nombre': self.instance.nombre,
+            'descripcion': self.instance.descripcion,
+        }
 
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')
         descripcion = cleaned_data.get('descripcion')
 
-        if (nombre, descripcion) == self.initial_data:
+        if nombre == self.initial_data['nombre'] and descripcion == self.initial_data['descripcion']:
             raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
 
         return cleaned_data
@@ -56,17 +59,31 @@ class TipoForm(forms.ModelForm):
             'placeholder': 'Ingrese la descripción del Tipo',
             'class': 'form-control'
         })
+        self.initial_data = {
+            'nombre': self.instance.nombre,
+            'descripcion': self.instance.descripcion,
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        descripcion = cleaned_data.get('descripcion')
+
+        if nombre == self.initial_data['nombre'] and descripcion == self.initial_data['descripcion']:
+            raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
+
+        return cleaned_data
 
     class Meta:
         model = Tipo
         fields = '__all__'
         widgets = {
-            'nombre': TextInput(
+            'nombre': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese el nombre del Tipo de producto'
                 }
             ),
-            'descripcion': TextInput(
+            'descripcion': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese la descripción del Tipo de producto'
                 }
@@ -100,45 +117,27 @@ class UbicacionForm(forms.ModelForm):
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = '__all__'
-        widgets = {
-            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del cliente'}),
-            'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social del cliente'}),
-            'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
-            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
-            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
-            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
-        }
+        fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
 
     def __init__(self, *args, **kwargs):
+        self.instance_id = kwargs.pop('instance_id', None)
         super().__init__(*args, **kwargs)
-        self.fields['nombres'].widget.attrs['autofocus'] = True
-        if self.instance and self.instance.tipo_persona == 'PJ':
-            self.fields['nombres'].widget.attrs['style'] = 'display:block;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
+
+    def clean_numero_documento(self):
+        numero_documento = self.cleaned_data.get('numero_documento')
+        if self.instance_id:
+            # Permitir el mismo número de documento si es la instancia actual
+            if Cliente.objects.exclude(pk=self.instance_id).filter(numero_documento=numero_documento).exists():
+                raise ValidationError("Ya existe una persona con ese número de documento.")
         else:
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:block;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
-    
+            if Cliente.objects.filter(numero_documento=numero_documento).exists():
+                raise ValidationError("Ya existe una persona con ese número de documento.")
+        return numero_documento
+
     def clean(self):
         cleaned_data = super().clean()
-        correo = cleaned_data.get('correo')
-        numero_documento = cleaned_data.get('numero_documento')
-
-        if Cliente.objects.filter(correo=correo).exists():
-            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
-
-        if Cliente.objects.filter(numero_documento=numero_documento).exists():
-            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
-
+        # Validación adicional si es necesario
         return cleaned_data
-            
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
 class ProveedorForm(forms.ModelForm):
     class Meta:
@@ -365,3 +364,21 @@ class ProductoFilterForm(forms.Form):
         queryset=Tipo.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+    
+#---------------------------------------------------------- Compras ----------------------------------------------------------
+class ComprasForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['proveedor'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Compras
+        fields = ['nombre_producto', 'cantidad', 'precio', 'impuestos', 'total', 'proveedor']
+        widgets = {
+            'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
+            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
+            'impuestos': forms.NumberInput(attrs={'placeholder': 'Ingrese los impuestos'}),
+            'total': forms.NumberInput(attrs={'placeholder': 'Ingrese el total'}),
+            'proveedor': forms.Select(attrs={'autofocus': True}),
+        }

@@ -4,6 +4,8 @@ from .choices import Roles,Tipo_Documento_Choices,Tipo_Persona_Choices
 from django.core.validators import *
 from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+
 import re
 
 def validate_nombre(value):
@@ -76,24 +78,6 @@ class Ubicacion(models.Model):
         verbose_name_plural = 'Ubicaciones'
         db_table = 'ubicacion'
         ordering = ['id']
-
-#----------------------------------------------- Producto -----------------------------------------------
-class Producto(models.Model):
-    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3)],verbose_name='Nombre',unique=True)
-    descripcion = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Descripcion',blank=True,null=True)
-    stock = models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(10000)],verbose_name='Stock')
-    precio = models.DecimalField(default=0.00,max_digits=9,decimal_places=2,validators=[MinValueValidator(0.00)])
-    categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
-    tipo_pro = models.ForeignKey(Tipo,on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.nombre
-
-    class Meta:
-        verbose_name = 'Producto'
-        verbose_name_plural = 'Productos'
-        db_table = 'Producto'
-        ordering = ['id']
         
 #----------------------------------------------- Persona -----------------------------------------------
 class Persona(models.Model):
@@ -136,25 +120,6 @@ class Cliente(models.Model):
         db_table = 'Cliente'
         ordering = ['id']
 
-#----------------------------------------------- Venta -----------------------------------------------
-
-class Venta(models.Model):
-    num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
-    subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    fecha_emision = models.DateTimeField(auto_now_add=True)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
-
-    class Meta:
-        verbose_name = 'Venta'
-        verbose_name_plural = 'Ventas'
-        db_table = 'Venta'
-
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
@@ -175,7 +140,77 @@ class Proveedor(models.Model):
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
+                
+#----------------------------------------------- Compras -----------------------------------------------
+
+class Compras(models.Model):
+    num_factura = models.CharField(max_length=20, primary_key=True, editable=False)
+    fecha_compra = models.DateTimeField(auto_now_add=True)
+    nombre_producto = models.CharField(max_length=50, validators=[MinLengthValidator(3)], verbose_name='Nombre')
+    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)], verbose_name='Cantidades')
+    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
+    impuestos = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
+    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=1)
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.num_factura:
+            last_purchase = Compras.objects.order_by('-num_factura').first()
+            if last_purchase:
+                last_num_str = last_purchase.num_factura.split('-')[-1]
+                last_num = int(last_num_str)
+            else:
+                last_num = 0
+
+            new_num = last_num + 1
+            num_factura_str = f'COBA-{new_num:05d}'
+            
+            self.num_factura = num_factura_str
         
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Factura {self.num_factura} - Proveedor: {self.proveedor.nombre}'
+
+    class Meta:
+        verbose_name = 'Compra'
+        verbose_name_plural = 'Compras'
+        db_table = 'Compras'
+
+#----------------------------------------------- Producto -----------------------------------------------
+class Producto(models.Model):
+    producto = models.ForeignKey(Compras, on_delete=models.CASCADE)
+    descripcion = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Descripción', blank=True, null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = 'Producto'
+        verbose_name_plural = 'Productos'
+        db_table = 'Producto'
+        ordering = ['id']
+
+#----------------------------------------------- Venta -----------------------------------------------
+class Venta(models.Model):
+    num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
+    subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    fecha_emision = models.DateTimeField(auto_now_add=True)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
+
+    class Meta:
+        verbose_name = 'Venta'
+        verbose_name_plural = 'Ventas'
+        db_table = 'Venta'
+
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
     decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3)],verbose_name='Decreto')
@@ -188,24 +223,3 @@ class Normativa(models.Model):
         verbose_name = 'Normativa'
         verbose_name_plural = 'Normativas'
         db_table = 'Normativa'
-        
-#----------------------------------------------- Compras -----------------------------------------------
-
-# class Venta(models.Model):
-#     num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
-#     nombre_producto = models.ForeignKey(Producto, on_delete=models.
-#     subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-#     impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-#     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-#     fecha_emision = models.DateTimeField(auto_now_add=True)
-#     persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
-#     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-#     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
-
-#     class Meta:
-#         verbose_name = 'Venta'
-#         verbose_name_plural = 'Ventas'
-#         db_table = 'Venta'

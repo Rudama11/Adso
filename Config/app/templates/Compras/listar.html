@@ -1,0 +1,72 @@
+{% extends 'listar.html' %}
+{% load static %}
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:compras_listar' %}">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="num_compra">Número de compra</label>
+                <input type="text" class="form-control" id="num_compra" name="num_compra" placeholder="Ingrese el número de compra" value="{{ request.GET.num_compra }}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="fecha_emision">Fecha de Emisión</label>
+                <input type="date" class="form-control" id="fecha_emision" name="fecha_emision" value="{{ request.GET.fecha_emision }}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="proveedor">Proveedor</label>
+                <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="total">Total de la Factura</label>
+                <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la compra" value="{{ request.GET.total }}">
+            </div>
+        </div>
+    </div>
+
+</form>
+{% endblock %}
+{% block columnas %}
+<tr>
+    <th scope="col">Id Compra</th>
+    <th scope="col">Fecha compra</th>
+    <th scope="col">Proveedor</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Opciones</th>
+
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for com in object_list %}
+<tr>
+    <td>{{com.num_factura}}</td>
+    <td>{{com.fecha_compra}}</td>
+    <td>{{com.proveedor.nombre}}</td>
+    <td>{{com.nombre_producto}}</td>
+    <td>
+        <a href="{% url 'app:compras_editar' com.nombre_producto %}" class="btn btn-info btn-sm"title="Editar venta">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:compras_eliminar' com.nombre_producto %}" class="btn btn-danger btn-sm"title="Eliminar venta">
+            <i class="fas fa-trash"></i>
+        </a>
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+    </td>
+</tr>
+{% endfor %}
+
+{% endblock %}
