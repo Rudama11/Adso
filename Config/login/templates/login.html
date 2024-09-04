@@ -64,22 +64,47 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            {% if form.errors %}
-            var errors = '';
-            {% for field in form %}
-            {% for error in field.errors %}
-            errors += '{{ error }}\n';
-            {% endfor %}
-            {% endfor %}
-            
-            Swal.fire({
-                title: 'Contraseña Incrorrecta!',
-                text: 'Tu contraseña no coincide \n' + errors,
-                icon: 'error',
-            });
+            {% if form.non_field_errors %}
+                Swal.fire({
+                    title: 'Error de Inicio de Sesión',
+                    text: 'Los datos ingresados no coinciden con nuestros registros. Por favor, verifica tus credenciales e intenta nuevamente.',
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar'
+                });
+            {% elif form.errors %}
+                var errors = '';
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        errors += '{{ error }}\n';
+                    {% endfor %}
+                {% endfor %}
+                Swal.fire({
+                    title: 'Error de Datos',
+                    text: 'Parece que hubo un problema con los datos ingresados. Por favor, revisa y corrige los errores a continuación:\n' + errors,
+                    icon: 'warning',  
+                    confirmButtonText: 'Aceptar'
+                });
             {% endif %}
         });
     </script>
 </body>
 
+</html>
+
+
+    <script>
+        const requirements = document.querySelectorAll('.requirement-item');
+        const passwordInput = document.querySelector('#id_new_password1');
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+
+            requirements[0].classList.toggle('checked', password.length >= 8);
+            requirements[1].classList.toggle('checked', /[A-Z]/.test(password));
+            requirements[2].classList.toggle('checked', /[a-z]/.test(password));
+            requirements[3].classList.toggle('checked', /[0-9]/.test(password));
+            requirements[4].classList.toggle('checked', /[!@#$%^&*]/.test(password));
+        });
+    </script>
+</body>
 </html>
