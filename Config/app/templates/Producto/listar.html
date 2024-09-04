@@ -1,18 +1,25 @@
 {% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
 {% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:producto_listar' %}">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
+                {# Campo de texto para ingresar el nombre del producto #}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="descripcion">Descripción</label>
                 <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
+                {# Campo de texto para ingresar la descripción del producto #}
             </div>
         </div>
     </div>
@@ -21,12 +28,14 @@
             <div class="form-group">
                 <label for="stock_min">Stock Mínimo</label>
                 <input type="number" class="form-control" id="stock_min" name="stock_min" value="{{ request.GET.stock_min }}">
+                {# Campo para ingresar el stock mínimo del producto #}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="stock_max">Stock Máximo</label>
                 <input type="number" class="form-control" id="stock_max" name="stock_max" value="{{ request.GET.stock_max }}">
+                {# Campo para ingresar el stock máximo del producto #}
             </div>
         </div>
     </div>
@@ -35,12 +44,14 @@
             <div class="form-group">
                 <label for="precio_min">Precio Mínimo</label>
                 <input type="number" class="form-control" id="precio_min" name="precio_min" value="{{ request.GET.precio_min }}">
+                {# Campo para ingresar el precio mínimo del producto #}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="precio_max">Precio Máximo</label>
                 <input type="number" class="form-control" id="precio_max" name="precio_max" value="{{ request.GET.precio_max }}">
+                {# Campo para ingresar el precio máximo del producto #}
             </div>
         </div>
     </div>
@@ -50,6 +61,7 @@
                 <label for="categoria">Categoría</label>
                 <select class="form-control" id="categoria" name="categoria">
                     <option value="">Todas</option>
+                    {# Opciones para seleccionar la categoría del producto, con opción predeterminada "Todas" #}
                     {% for cat in categorias %}
                         <option value="{{ cat.id }}" {% if request.GET.categoria == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.nombre }}</option>
                     {% endfor %}
@@ -61,6 +73,7 @@
                 <label for="tipo_pro">Tipo de Producto</label>
                 <select class="form-control" id="tipo_pro" name="tipo_pro">
                     <option value="">Todos</option>
+                    {# Opciones para seleccionar el tipo de producto, con opción predeterminada "Todos" #}
                     {% for tipo in tipos %}
                         <option value="{{ tipo.id }}" {% if request.GET.tipo_pro == tipo.id|stringformat:"s" %}selected{% endif %}>{{ tipo.nombre }}</option>
                     {% endfor %}
@@ -68,11 +81,11 @@
             </div>
         </div>
     </div>
-
 </form>
 {% endblock %}
 
 {% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
 <tr>
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
@@ -105,6 +118,7 @@
 {% endblock %}
 
 {% block filas %}
+{# Bloque para definir las filas de la tabla #}
 {% for pro in object_list %}
 <tr>
     <td>{{ pro.id }}</td>
@@ -119,9 +133,11 @@
         <a href="{% url 'app:producto_editar' pro.id %}" class="btn btn-info btn-sm" title="Edita producto">
             <i class="fas fa-edit"></i>
         </a>
+        {# Enlace para editar el producto #}
         <a href="{% url 'app:producto_eliminar' pro.id %}" class="btn btn-danger btn-sm" title="Eliminar producto">
             <i class="fas fa-trash"></i>
         </a>
+        {# Enlace para eliminar el producto #}
     </td>
 </tr>
 {% endfor %}

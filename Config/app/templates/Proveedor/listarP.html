@@ -1,6 +1,11 @@
 {% extends "listar.html" %}
+{# Extiende la plantilla base 'listar.html' #}
+
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
 {% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:proveedor_listarP' %}">
     <div class="row">
         <div class="col-md-4">
@@ -14,18 +19,21 @@
                         </option>
                     {% endfor %}
                 </select>
+                {# Desplegable para seleccionar el tipo de persona (e.g., Jurídica, Natural) #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="nombres">Nombres</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
+                {# Campo de texto para ingresar los nombres del proveedor #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="razon_social">Razón Social</label>
                 <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
+                {# Campo de texto para ingresar la razón social del proveedor #}
             </div>
         </div>
     </div>
@@ -42,18 +50,21 @@
                         </option>
                     {% endfor %}
                 </select>
+                {# Desplegable para seleccionar el tipo de documento (e.g., DNI, RUC) #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="numero_documento">Número de Documento</label>
                 <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Ingrese el número de documento" value="{{ request.GET.numero_documento }}">
+                {# Campo de texto para ingresar el número de documento del proveedor #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="correo">Correo</label>
                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo" value="{{ request.GET.correo }}">
+                {# Campo de texto para ingresar el correo electrónico del proveedor #}
             </div>
         </div>
     </div>
@@ -63,27 +74,30 @@
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el teléfono" value="{{ request.GET.telefono }}">
+                {# Campo de texto para ingresar el teléfono del proveedor #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="ciudad">Ciudad</label>
                 <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ingrese la ciudad" value="{{ request.GET.ciudad }}">
+                {# Campo de texto para ingresar la ciudad del proveedor #}
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="direccion">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la dirección" value="{{ request.GET.direccion }}">
+                {# Campo de texto para ingresar la dirección del proveedor #}
             </div>
         </div>
     </div>
     
-
 </form>
 {% endblock %}
 
 {% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Tipo de Persona</th>
@@ -100,6 +114,7 @@
 {% endblock %}
 
 {% block filas %}
+{# Bloque para definir las filas de la tabla #}
 {% for p in object_list %}
 <tr>
     <td>{{ p.id }}</td>
@@ -113,8 +128,14 @@
     <td>{{ p.ciudad }}</td>
     <td>{{ p.direccion }}</td>
     <td>
-        <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm"title="Editar proveedor"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm"title="Editar proveedor"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm" title="Editar proveedor">
+            <i class="fas fa-edit"></i>
+        </a>
+        {# Enlace para editar el proveedor #}
+        <a href="{% url 'app:proveedor_eliminar' p.id %}" class="btn btn-danger btn-sm" title="Eliminar proveedor">
+            <i class="fas fa-trash"></i>
+        </a>
+        {# Enlace para eliminar el proveedor #}
     </td>
 </tr>
 {% endfor %}

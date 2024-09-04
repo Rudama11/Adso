@@ -1,6 +1,11 @@
 {% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
 {% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
 <tr>
     <td colspan="200">
         <div class="d-flex justify-content-start flex-wrap">
@@ -10,6 +15,7 @@
                 onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
                 <i class="fas fa-box fa-xs"></i> Producto
             </a>
+            {# Botón para acceder a la lista de productos #}
         </div>
     </td>
 </tr>
@@ -19,33 +25,42 @@
     <th scope="col">Nombre</th>
     <th scope="col">Descripción</th>
     <th scope="col">Opciones</th>
-
 </tr>
 {% endblock %}
 
 {% block filas %}
+{# Bloque para definir las filas de la tabla #}
 {% for t in object_list %}
 <tr>
     <td>{{ t.id }}</td>
     <td>{{ t.nombre }}</td>
     <td>{{ t.descripcion }}</td>
     <td>
-        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm" title="Editar tipo"><i class="fas fa-edit"></i></a>
-        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm" title="Eliminar tipo"><i class="fas fa-trash"></i></a>
+        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm" title="Editar tipo">
+            <i class="fas fa-edit"></i>
+        </a>
+        {# Enlace para editar el tipo de producto #}
+        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm" title="Eliminar tipo">
+            <i class="fas fa-trash"></i>
+        </a>
+        {# Enlace para eliminar el tipo de producto #}
     </td>
 </tr>
 {% endfor %}
 {% endblock %}
 
 {% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:tipo_listar' %}">
     <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
+        {# Campo de texto para ingresar el nombre del tipo #}
     </div>
     <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
+        {# Campo de texto para ingresar la descripción del tipo #}
     </div>
     
 </form>
