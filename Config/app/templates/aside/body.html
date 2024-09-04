@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Definiendo la codificación de caracteres y configurando la página para que sea responsive -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- Título de la página que se muestra en la pestaña del navegador -->
     <title>Bienvenidos</title>
     <!-- Enlace CSS de sienna-accessibility -->
     <link rel="stylesheet" href="{% static 'node_modules/sienna-accessibility/custom.css' %}?v1.1" />
@@ -13,28 +15,31 @@
     {% endblock %}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+    <!-- El bloque principal de la plantilla, que se extiende desde la base -->
     <div class="wrapper">
-        <!-- Header -->
+        <!-- Incluyendo el header desde un archivo separado para mantener la estructura modular y reutilizable -->
         {% include 'aside/header.html' %}
-        <!-- Sidebar -->
+        <!-- Incluyendo la barra lateral (sidebar) desde un archivo separado -->
         {% include 'aside/sidebar.html' %}
-        <!-- Content -->
+        <!-- Contenedor principal para el contenido de la página -->
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
+                            <!-- Título de la página con una referencia al módulo actual y una variable 'entidad' que probablemente representa el nombre del módulo o sección -->
                             <h1 class="m-0 text-dark"> Bienvenidos: <small> Módulo | {{ entidad }}</small></h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <!-- <li class="breadcrumb-item"><a href="{% url 'index_pr' %}">InicioAside</a></li> -->
+                                <!-- Barra de navegación (breadcrumbs) que ayuda a los usuarios a conocer su ubicación en el sitio -->
                                 <li class="breadcrumb-item"><a href="{{listar_url}}">{{ entidad }}</a></li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Área donde se inyectará el contenido específico de la página -->
             <div class="content">
                 <div class="container-fluid">
                     {% block contenido %}
@@ -42,10 +47,10 @@
                 </div>
             </div>
         </div>
-        <!-- Footer -->
+        <!-- Incluyendo el pie de página desde un archivo separado -->
         {% include 'footer.html' %}
     </div>
-    <!-- Block javascript -->
+    <!-- Bloque reservado para incluir scripts adicionales -->
     {% block javascript %}
     <!-- Scripts -->
     <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>

@@ -1,34 +1,38 @@
-{% load static %}
+{% load static %}  # Carga los archivos estáticos en la plantilla.
+
 <aside class="main-sidebar sidebar-light-primary elevation-4" style="background: linear-gradient(135deg, #003366, #3399FF);">
-<!-- Brand Logo -->
-<a href="#" class="brand-link d-flex align-items-center" style="height: 120px; padding-left: 0; justify-content: flex-start;">
-    <img src="{% static 'img/logoConaldex.jfif' %}" alt="Conaldex Logo" class="brand-image img-circle elevation-3" style="opacity: .9; border-radius: 50%; height: 120px; width: 120px; margin-right: 20px;">
-    <span class="brand-text font-weight-bold" style="color: #fff; font-size: 1.3rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: normal; display: flex; align-items: center; margin-left: 0;">Conaldex Boyacá</span>
-</a>
+    <!-- Panel lateral principal con un fondo degradado. -->
+    
+    <!-- Logo de la marca -->
+    <a href="#" class="brand-link d-flex align-items-center" style="height: 120px; padding-left: 0; justify-content: flex-start;">
+        <img src="{% static 'img/logoConaldex.jfif' %}" alt="Conaldex Logo" class="brand-image img-circle elevation-3" style="opacity: .9; border-radius: 50%; height: 120px; width: 120px; margin-right: 20px;">
+        <!-- Logo de la empresa Conaldex con formato circular. -->
+        
+        <span class="brand-text font-weight-bold" style="color: #fff; font-size: 1.3rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: normal; display: flex; align-items: center; margin-left: 0;">Conaldex Boyacá</span>
+        <!-- Texto de la marca con estilo personalizado. -->
+    </a>
 
-
-
-    <!-- Sidebar -->
+    <!-- Panel lateral -->
     <div class="sidebar">
-        <!-- Removed User Panel -->
-
-        <!-- Sidebar Menu -->
+        <!-- Menú lateral -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Header -->
+                <!-- Encabezado de la sección -->
                 <li class="nav-header" style="color: #fff;">Módulos</li>
-
-                <!-- Menu Items -->
+                
+                <!-- Elementos del menú -->
                 <li class="nav-item">
                     <a href="{% url 'app:categoria_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-layer-group" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Categoría</p></b>
+                        <!-- Enlace al módulo de categorías con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:cliente_listarC' %}" class="nav-link">
                         <i class="nav-icon fas fa-user-tie" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Clientes</p></b>
+                        <!-- Enlace al módulo de clientes con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
@@ -41,45 +45,54 @@
                     <a href="{% url 'app:normativa_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Normativas</p></b>
+                        <!-- Enlace al módulo de normativas con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:persona_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-users" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Persona</p></b>
+                        <!-- Enlace al módulo de personas con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:producto_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-hard-hat" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Productos</p></b>
+                        <!-- Enlace al módulo de productos con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:proveedor_listarP' %}" class="nav-link">
                         <i class="nav-icon fas fa-truck" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Proveedor</p></b>
+                        <!-- Enlace al módulo de proveedores con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:tipo_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-tags" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Tipo</p></b>
+                        <!-- Enlace al módulo de tipos con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:ubicacion_listarU' %}" class="nav-link">
                         <i class="nav-icon fas fa-map-marker-alt" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Ubicación</p></b>
+                        <!-- Enlace al módulo de ubicaciones con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:venta_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Ventas</p></b>
+                        <!-- Enlace al módulo de ventas con icono. -->
                     </a>
                 </li>                
             </ul>
         </nav>
+        <!-- Fin del menú lateral -->
     </div>
+    <!-- Fin del panel lateral -->
 </aside>
