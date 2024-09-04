@@ -1,46 +1,65 @@
-{% extends 'listar.html' %}
-{% load static %}
-{% block filtro_form_contenido %}
+{% extends 'listar.html' %} 
+{# Extiende la plantilla base 'listar.html' #}
+
+{% load static %} 
+{# Carga la biblioteca de archivos estáticos para incluir archivos como CSS o JS #}
+
+{% block filtro_form_contenido %} 
+{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:categoria_listar' %}">
+    {# Formulario que envía datos por GET a la vista 'categoria_listar' #}
+    
     <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
+        {# Campo para filtrar por nombre #}
     </div>
 
     <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
+        {# Campo para filtrar por descripción #}
     </div>
 </form>
 {% endblock %}
 
-{% block columnas %}
+{% block columnas %} 
+{# Bloque para los encabezados de la tabla #}
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
     <th scope="col">Descripción</th>
     <th scope="col">Opciones</th>
+    {# Encabezados de las columnas #}
 </tr>
 {% endblock %}
 
-{% block filas %}
+{% block filas %} 
+{# Bloque para las filas de la tabla #}
 {% for c in object_list %}
 <tr>
     <td>{{ c.id }}</td>
     <td>{{ c.nombre }}</td>
     <td>{{ c.descripcion }}</td>
     <td>
-        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm"title="Editar categoría">
+        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm"title="Eliminar categoría">
+        {# Enlace para editar la categoría #}
+        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm" title="Eliminar categoría">
             <i class="fas fa-trash"></i>
         </a>
+        {# Enlace para eliminar la categoría #}
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        {# Script para accesibilidad #}
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
+        {# Script personalizado de accesibilidad #}
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
+        {# Script demo de AdminLTE #}
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        {# Script principal de AdminLTE #}
     </td>
 </tr>
 {% endfor %}
+{# Itera sobre la lista de categorías y muestra los datos en cada fila #}
 {% endblock %}
