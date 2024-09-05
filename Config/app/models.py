@@ -148,14 +148,15 @@ class Compras(models.Model):
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     nombre_producto = models.CharField(max_length=50, validators=[MinLengthValidator(3)], verbose_name='Nombre')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)], verbose_name='Cantidades')
-    precio = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')  # Guardar el precio en céntimos para evitar decimales
     iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.DecimalField(default=0.0, max_digits=9, decimal_places=2)
+    total = models.IntegerField(default=0, verbose_name='Total (céntimos)')  # Total en céntimos también
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        # Calcula el valor total antes de guardar
-        self.total = (self.precio * self.cantidad) + ((self.precio * self.cantidad) * (self.iva / 100))
+        # Calcular el total usando enteros
+        subtotal = self.precio * self.cantidad
+        self.total = subtotal + (subtotal * self.iva // 100)  # División entera para evitar decimales
         super().save(*args, **kwargs)
 
     def __str__(self):

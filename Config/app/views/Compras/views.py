@@ -5,6 +5,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.http import JsonResponse
 from app.models import Compras, Proveedor
 from app.forms import ComprasForm
+from decimal import Decimal
 
 class ComprasListView(ListView):
     model = Compras
@@ -32,6 +33,20 @@ class ComprasCreateView(CreateView):
     template_name = 'Compras/crear.html'
     success_url = reverse_lazy('app:compras_listar')
 
+    def form_valid(self, form):
+        # Convertir los valores a Decimal para realizar las operaciones
+        cantidad = Decimal(form.cleaned_data['cantidad'])
+        precio = Decimal(form.cleaned_data['precio'])
+        iva = Decimal(form.cleaned_data['iva'])
+    
+        # Calcular el total utilizando Decimal
+        total = (precio * cantidad) * (1 + iva / Decimal(100))
+    
+        # Asignar el valor calculado al campo 'total'
+        form.instance.total = total
+        return super().form_valid(form)
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['proveedores'] = Proveedor.objects.all()
@@ -40,15 +55,6 @@ class ComprasCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:compras_listar')
         return context
 
-    def form_valid(self, form):
-        # Calcular el total antes de guardar
-        cantidad = form.cleaned_data['cantidad']
-        precio = form.cleaned_data['precio']
-        iva = form.cleaned_data['iva']
-        total = (precio * cantidad) * (1 + iva / 100)
-        form.instance.total = total
-        print(form.errors)
-        return super().form_valid(form)
 
 class ComprasUpdateView(UpdateView):
     model = Compras
@@ -64,13 +70,18 @@ class ComprasUpdateView(UpdateView):
         return context
 
     def form_valid(self, form):
-        # Calcular el total antes de guardar
-        cantidad = form.cleaned_data['cantidad']
-        precio = form.cleaned_data['precio']
-        iva = form.cleaned_data['iva']
-        total = (precio * cantidad) * (1 + iva / 100)
+        # Convertir los valores a Decimal para realizar las operaciones
+        cantidad = Decimal(form.cleaned_data['cantidad'])
+        precio = Decimal(form.cleaned_data['precio'])
+        iva = Decimal(form.cleaned_data['iva'])
+    
+        # Calcular el total utilizando Decimal
+        total = (precio * cantidad) * (1 + iva / Decimal(100))
+    
+        # Asignar el valor calculado al campo 'total'
         form.instance.total = total
         return super().form_valid(form)
+
 
 class ComprasDeleteView(DeleteView):
     model = Compras

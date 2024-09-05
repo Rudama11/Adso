@@ -366,12 +366,12 @@ class ProductoFilterForm(forms.Form):
     )
     
 #---------------------------------------------------------- Compras ----------------------------------------------------------
+
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
-        if self.instance and self.instance.pk:
-            self.fields['total'].widget = forms.HiddenInput()
+        self.fields['total'].widget.attrs['readonly'] = True
 
     class Meta:
         model = Compras
@@ -381,8 +381,8 @@ class ComprasForm(forms.ModelForm):
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
             'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
+            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),  # Indicar que es en céntimos
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.HiddenInput(),
+            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),  # Campo total como solo lectura
             'proveedor': forms.Select(attrs={'autofocus': True}),
         }
