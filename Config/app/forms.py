@@ -3,7 +3,6 @@ from django.forms import ModelForm, TextInput, Select, DateTimeInput, NumberInpu
 from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
-from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
@@ -115,18 +114,24 @@ class UbicacionForm(forms.ModelForm):
         return cleaned_data
             
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
-class ClienteForm(ModelForm):
+class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
 
+    def __init__(self, *args, **kwargs):
+        self.instance_id = kwargs.pop('instance_id', None)
+        super().__init__(*args, **kwargs)
+
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get('numero_documento')
-
-        # Permitir el mismo número de documento si es la instancia actual (es decir, si se está editando)
-        if Cliente.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-            raise ValidationError("Ya existe una persona con ese número de documento.")
-        
+        if self.instance_id:
+            # Permitir el mismo número de documento si es la instancia actual
+            if Cliente.objects.exclude(pk=self.instance_id).filter(numero_documento=numero_documento).exists():
+                raise ValidationError("Ya existe una persona con ese número de documento.")
+        else:
+            if Cliente.objects.filter(numero_documento=numero_documento).exists():
+                raise ValidationError("Ya existe una persona con ese número de documento.")
         return numero_documento
 
     def clean(self):
@@ -134,8 +139,6 @@ class ClienteForm(ModelForm):
         # Validación adicional si es necesario
         return cleaned_data
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
-from django.core.exceptions import ValidationError
-
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -165,49 +168,26 @@ class ProveedorForm(forms.ModelForm):
             self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
             self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
-    def clean_numero_documento(self):
-        numero_documento = self.cleaned_data.get('numero_documento')
-
-        # Solo validar duplicado si no es la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-            raise ValidationError("Ya existe un proveedor con este número de documento.")
-
-        return numero_documento
-
-    def clean_correo(self):
-        correo = self.cleaned_data.get('correo')
-
-        # Solo validar duplicado si no es la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(correo=correo).exists():
-            raise ValidationError("Ya existe un proveedor con este correo electrónico.")
-
-        return correo
-
     def clean(self):
         cleaned_data = super().clean()
-        # Otras validaciones adicionales pueden ir aquí si es necesario
+        correo = cleaned_data.get('correo')
+        numero_documento = cleaned_data.get('numero_documento')
+
+        if Proveedor.objects.filter(correo=correo).exists():
+            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
+
+        if Proveedor.objects.filter(numero_documento=numero_documento).exists():
+            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
+
         return cleaned_data
 
-
-#---------------------------------------------------------- Producto ----------------------------------------------------------
+#--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
         self.fields['nombre'].widget.attrs.update({
+            'autofocus': True,
             'placeholder': 'Ingrese el nombre del producto',
-            'class': 'form-control'
-        })
-        self.fields['descripcion'].widget.attrs.update({
-            'placeholder': 'Ingrese la descripción del producto',
-            'class': 'form-control'
-        })
-        self.fields['stock'].widget.attrs.update({
-            'placeholder': 'Ingrese el stock del producto',
-            'class': 'form-control'
-        })
-        self.fields['precio'].widget.attrs.update({
-            'placeholder': 'Ingrese el precio del producto',
             'class': 'form-control'
         })
         self.fields['categoria'].widget.attrs.update({
@@ -216,12 +196,17 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo_pro'].widget.attrs.update({
             'class': 'form-control'
         })
-        
+
     class Meta:
         model = Producto
-        fields = '__all__'
+        fields = ['nombre', 'categoria', 'tipo_pro']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_pro': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-#---------------------------------------------------------- Normativa ----------------------------------------------------------
+#------------------------------------------------------- Normativa----------------------------------------------------------
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -383,11 +368,11 @@ class ComprasForm(forms.ModelForm):
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'nombre_producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),  # Cambiado a Select para productos
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
             'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),  # Indicar que es en céntimos
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),

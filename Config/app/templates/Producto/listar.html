@@ -15,45 +15,6 @@
                 {# Campo de texto para ingresar el nombre del producto #}
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
-                {# Campo de texto para ingresar la descripción del producto #}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="stock_min">Stock Mínimo</label>
-                <input type="number" class="form-control" id="stock_min" name="stock_min" value="{{ request.GET.stock_min }}">
-                {# Campo para ingresar el stock mínimo del producto #}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="stock_max">Stock Máximo</label>
-                <input type="number" class="form-control" id="stock_max" name="stock_max" value="{{ request.GET.stock_max }}">
-                {# Campo para ingresar el stock máximo del producto #}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="precio_min">Precio Mínimo</label>
-                <input type="number" class="form-control" id="precio_min" name="precio_min" value="{{ request.GET.precio_min }}">
-                {# Campo para ingresar el precio mínimo del producto #}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="precio_max">Precio Máximo</label>
-                <input type="number" class="form-control" id="precio_max" name="precio_max" value="{{ request.GET.precio_max }}">
-                {# Campo para ingresar el precio máximo del producto #}
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -108,9 +69,6 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
-    <th scope="col">Descripción</th>
-    <th scope="col">Stock</th>
-    <th scope="col">Precio</th>
     <th scope="col">Categoría</th>
     <th scope="col">Tipo de producto</th>
     <th scope="col">Opciones</th>
@@ -123,9 +81,6 @@
 <tr>
     <td>{{ pro.id }}</td>
     <td>{{ pro.nombre }}</td>
-    <td>{{ pro.descripcion }}</td>
-    <td>{{ pro.stock }}</td>
-    <td>{{ pro.precio }}</td>
     <td>{{ pro.categoria.nombre }}</td>
     <td>{{ pro.tipo_pro.nombre }}</td>
 
