@@ -181,25 +181,13 @@ class ProveedorForm(forms.ModelForm):
 
         return cleaned_data
 
-#---------------------------------------------------------- Producto ----------------------------------------------------------
+#--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
         self.fields['nombre'].widget.attrs.update({
+            'autofocus': True,
             'placeholder': 'Ingrese el nombre del producto',
-            'class': 'form-control'
-        })
-        self.fields['descripcion'].widget.attrs.update({
-            'placeholder': 'Ingrese la descripción del producto',
-            'class': 'form-control'
-        })
-        self.fields['stock'].widget.attrs.update({
-            'placeholder': 'Ingrese el stock del producto',
-            'class': 'form-control'
-        })
-        self.fields['precio'].widget.attrs.update({
-            'placeholder': 'Ingrese el precio del producto',
             'class': 'form-control'
         })
         self.fields['categoria'].widget.attrs.update({
@@ -208,12 +196,17 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo_pro'].widget.attrs.update({
             'class': 'form-control'
         })
-        
+
     class Meta:
         model = Producto
-        fields = '__all__'
+        fields = ['nombre', 'categoria', 'tipo_pro']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_pro': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-#---------------------------------------------------------- Normativa ----------------------------------------------------------
+#------------------------------------------------------- Normativa----------------------------------------------------------
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -375,11 +368,11 @@ class ComprasForm(forms.ModelForm):
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'nombre_producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),  # Cambiado a Select para productos
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
             'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),  # Indicar que es en céntimos
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),

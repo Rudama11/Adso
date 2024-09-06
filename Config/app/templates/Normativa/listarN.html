@@ -10,11 +10,10 @@
     <td colspan="200">
         {# Celda que ocupa varias columnas para el botón de acceso a productos #}
         <div class="d-flex justify-content-start flex-wrap">
-            <a href="{% url 'app:producto_listar' %}" 
-               class="btn btn-primary btn-sm mx-1"
-               style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
-               onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
-               onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
+            <a href="{% url 'app:producto_listar' %}" class="btn btn-primary btn-sm mx-1"
+                style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
+                onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
+                onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
                 <i class="fas fa-box fa-xs"></i> Producto
             </a>
             {# Botón para redirigir a la lista de productos, con estilos personalizados y efectos al pasar el ratón #}
@@ -68,7 +67,8 @@
     </div>
     <div class="form-group">
         <label for="descripcion">Descripción</label>
-        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese la descripción">
+        <input type="text" class="form-control" id="descripcion" name="descripcion"
+            placeholder="Ingrese la descripción">
         {# Campo para ingresar la descripción de la normativa #}
     </div>
     <div class="form-group">

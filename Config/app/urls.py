@@ -10,6 +10,7 @@ from app.views.Normativa.views import *
 from app.views.Ventas.views import *
 from app.views.Persona.views import *
 from app.views.Compras.views import *
+from app.views.Stock.views import *
 
 app_name = 'app'
 
@@ -94,4 +95,8 @@ urlpatterns = [
     path('backup/', backup_view, name='backup'),
     path('backup/create/', backup_database, name='respaldo'),
     path('backup/restore/', restore_database, name='restauracion'),
+
+    #-------------------------------------------------- Stock ----------------------------------------
+    
+    path('Stock/listar',StockListView.as_view(), name='listar_stock'),
 ]

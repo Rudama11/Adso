@@ -8,9 +8,16 @@ from django.utils.text import slugify
 
 import re
 
+import re
+from django.core.exceptions import ValidationError
+
+import re
+from django.core.exceptions import ValidationError
+
 def validate_nombre(value):
-    if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$', value):
-        raise ValidationError('El nombre solo puede contener letras y espacios.')
+    # Permite letras, espacios y puntos en cualquier parte de la cadena
+    if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.]+$', value):
+        raise ValidationError('El nombre solo puede contener letras, espacios y puntos.')
 
 # ----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):
@@ -140,41 +147,14 @@ class Proveedor(models.Model):
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
-                
-#----------------------------------------------- Compras -----------------------------------------------
 
-class Compras(models.Model):
-    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
-    fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
-    nombre_producto = models.CharField(max_length=50, validators=[MinLengthValidator(3)], verbose_name='Nombre')
-    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(1000)], verbose_name='Cantidades')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')  # Guardar el precio en céntimos para evitar decimales
-    iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.IntegerField(default=0, verbose_name='Total (céntimos)')  # Total en céntimos también
-    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
-
-    def save(self, *args, **kwargs):
-        # Calcular el total usando enteros
-        subtotal = self.precio * self.cantidad
-        self.total = subtotal + (subtotal * self.iva // 100)  # División entera para evitar decimales
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'Factura {self.num_factura} - Proveedor: {self.proveedor.nombre}'
-
-    class Meta:
-        verbose_name = 'Compra'
-        verbose_name_plural = 'Compras'
-        db_table = 'Compras'
-        ordering = ['id']
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    producto = models.ForeignKey(Compras, on_delete=models.CASCADE)
-    descripcion = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Descripción', blank=True, null=True)
+    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Nombre')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return self.nombre
 
@@ -184,6 +164,52 @@ class Producto(models.Model):
         db_table = 'Producto'
         ordering = ['id']
 
+#----------------------------------------------- Compras -----------------------------------------------
+class Compras(models.Model):
+    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
+    fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compras')
+    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
+    iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
+    total = models.IntegerField(default=0, verbose_name='Total (céntimos)')
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        # Calcular el total usando enteros
+        subtotal = self.precio * self.cantidad
+        self.total = subtotal + (subtotal * self.iva // 100)  # División entera para evitar decimales
+        super().save(*args, **kwargs)
+
+        # Actualizar el stock del producto
+        stock, created = Stock.objects.get_or_create(producto=self.producto)
+        stock.cantidad += self.cantidad
+        stock.precio = self.precio  # Actualizar el precio si es necesario
+        stock.save()
+
+    def __str__(self):
+        return f'Factura {self.num_factura} - Producto: {self.producto.nombre}'
+
+    class Meta:
+        verbose_name = 'Compras'
+        verbose_name_plural = 'Compras'
+        db_table = 'Compras'
+        ordering = ['id']
+
+#----------------------------------------------- Stock -----------------------------------------------
+class Stock(models.Model):
+    nombre_pro = models.OneToOneField(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad en Stock')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
+
+    def __str__(self):
+        return f'{self.producto.nombre} - Stock: {self.cantidad}'
+
+    class Meta:
+        verbose_name = 'Stock'
+        verbose_name_plural = 'Stocks'
+        db_table = 'Stock'
+        ordering = ['id']
 #----------------------------------------------- Venta -----------------------------------------------
 class Venta(models.Model):
     num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
