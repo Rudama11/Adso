@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.models import Proveedor
 from app.forms import ProveedorForm
+from django.contrib import messages
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Importa tus choices
 
 @login_required
@@ -98,7 +99,11 @@ class ProveedorUpdateView(UpdateView):
     form_class = ProveedorForm
     template_name = 'Proveedor/crearP.html'
     success_url = reverse_lazy('app:proveedor_listarP')
-    
+
+    def form_valid(self, form):
+        messages.success(self.request, 'El proveedor ha sido actualizado exitosamente.')
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
