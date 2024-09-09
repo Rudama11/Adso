@@ -1,4 +1,4 @@
-{% extends 'body.html' %}
+{% extends 'listar.html' %}
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -27,10 +27,6 @@
                 </ul>
             </div>
             {% endif %}
-            <div class="alert alert-danger alert-dismissible">
-                <h5><i class="icon fas fa-ban"></i> Advertencia!</h5>
-                Deseas eliminar el registro #{{object.id}}?
-            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmDelete">
