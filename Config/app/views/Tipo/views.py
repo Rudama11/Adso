@@ -22,7 +22,7 @@ class TipoListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Tipos'
+        context['titulo'] = 'Listado Tipos de producto'
         context['entidad'] = 'Tipos'
         context['crear_url'] = reverse_lazy('app:tipo_crear')
         return context
@@ -51,7 +51,7 @@ class TipoCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Tipos'
+        context['titulo'] = 'Crear Tipos de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
@@ -64,7 +64,7 @@ class TipoUpdateView(UpdateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Tipo'
+        context['titulo'] = 'Actualizar Tipo de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
@@ -76,7 +76,7 @@ class TipoDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Tipo'
+        context['titulo'] = 'Eliminar Tipo de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
