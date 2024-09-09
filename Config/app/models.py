@@ -125,7 +125,7 @@ class Cliente(models.Model):
     direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_Usuarios == 'PN' else self.razon_social} - {self.get_tipo_Usuarios_display()}"
+        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
 
     class Meta:
         verbose_name = 'Cliente'
@@ -147,7 +147,7 @@ class Proveedor(models.Model):
     direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_Usuarios == 'PN' else self.razon_social} - {self.get_tipo_Usuarios_display()}"
+        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
 
     class Meta:
         verbose_name = 'Proveedor'
