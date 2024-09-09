@@ -182,7 +182,7 @@ class Compras(models.Model):
         super().save(*args, **kwargs)
 
         # Actualizar el stock del producto
-        stock, created = Stock.objects.get_or_create(producto=self.producto)
+        stock, created = Stock.objects.get_or_create(nombre_pro=self.producto)
         stock.cantidad += self.cantidad
         stock.precio = self.precio  # Actualizar el precio si es necesario
         stock.save()
@@ -203,7 +203,7 @@ class Stock(models.Model):
     precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
 
     def __str__(self):
-        return f'{self.producto.nombre} - Stock: {self.cantidad}'
+        return f'{self.nombre_pro.nombre} - Stock: {self.cantidad}'
 
     class Meta:
         verbose_name = 'Stock'
