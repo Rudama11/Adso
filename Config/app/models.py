@@ -14,9 +14,16 @@ from django.core.exceptions import ValidationError
 import re
 from django.core.exceptions import ValidationError
 
+# Validación de campos con letras, espacios y puntos
 def validate_nombre(value):
     if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.]+$', value):
         raise ValidationError('El nombre solo puede contener letras, espacios y puntos.')
+
+# Validación de campos con letras, números, espacios y puntos.
+def validate_campos(value):
+    if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.\d]+$', value):
+        raise ValidationError('El nombre solo puede contener letras, espacios, puntos y números.')
+
 
 # ----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):
@@ -47,7 +54,7 @@ class Municipios(models.Model):
 
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombre',unique=True)
+    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3),validate_campos],verbose_name='Nombre',unique=True)
     descripcion = models.CharField(max_length=200,validators=[MinLengthValidator(5),validate_nombre],verbose_name='Descripcion',blank=True,null=True)
 
     def __str__(self):
@@ -61,7 +68,7 @@ class Categoria(models.Model):
 
 #----------------------------------------------- Tipo de Producto -----------------------------------------------
 class Tipo(models.Model):
-    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombre',unique=True)
+    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3),validate_campos],verbose_name='Nombre',unique=True)
     descripcion = models.CharField(max_length=200,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Descripción',blank=True,null=True)
     def __str__(self):
         return self.nombre
@@ -129,7 +136,7 @@ class Cliente(models.Model):
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
-    tipo_Usuarios = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Usuarios')
+    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Usuarios')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres',null=True, blank=True)
     razon_social = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
@@ -150,9 +157,9 @@ class Proveedor(models.Model):
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Nombre')
+    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3),validate_campos], verbose_name='Nombre')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE)
+    tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE, verbose_name='Tipo de producto')
 
     def __str__(self):
         return self.nombre
@@ -199,7 +206,7 @@ class Compras(models.Model):
 class Stock(models.Model):
     nombre_pro = models.OneToOneField(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad en Stock')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio(Cop)')
 
     def __str__(self):
         return f'{self.producto.nombre} - Stock: {self.cantidad}'
@@ -229,7 +236,7 @@ class Venta(models.Model):
 
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
-    decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3)],verbose_name='Decreto')
+    decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3),validate_campos],verbose_name='Decreto')
     descripcion=models.CharField(max_length=200,validators=[MinLengthValidator(10),validate_nombre],verbose_name='Descripción')
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE,)
     
