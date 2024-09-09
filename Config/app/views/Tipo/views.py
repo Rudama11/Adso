@@ -9,7 +9,7 @@ from app.models import Tipo
 from app.forms import TipoForm
 
 class TipoListView(ListView):
-    model = Tipo
+    model = Tipo 
     template_name = 'Tipo/listarT.html'
     
     @method_decorator(login_required)
@@ -23,7 +23,7 @@ class TipoListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado Tipos de producto'
-        context['entidad'] = 'Tipos'
+        context['entidad'] = 'Tipos '
         context['crear_url'] = reverse_lazy('app:tipo_crear')
         return context
 
