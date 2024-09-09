@@ -253,9 +253,9 @@ class VentaForm(ModelForm):
         }
 
 #---------------------------------------------------------- Persona ----------------------------------------------------------
-class PersonaForm(ModelForm):
+class UsuarioForm(ModelForm):
     class Meta:
-        model = Persona
+        model = Usuario
         fields = ['rol', 'nombres', 'tipo_documento','numero_documento', 'correo', 'telefono', 'usuario', 'password']
         widgets = {
             'rol': Select(
@@ -309,10 +309,10 @@ class PersonaForm(ModelForm):
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        if Persona.objects.filter(correo=correo).exists():
+        if Usuario.objects.filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        if Persona.objects.filter(numero_documento=numero_documento).exists():
+        if Usuario.objects.filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data

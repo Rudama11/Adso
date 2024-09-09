@@ -8,7 +8,7 @@ from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
-from app.views.Persona.views import *
+from app.views.Usuario.views import *
 from app.views.Compras.views import *
 from app.views.Stock.views import *
 
@@ -45,12 +45,12 @@ urlpatterns = [
     path('Normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
     path('Normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
     
-    #-------------------------------------------------- Persona ---------------------------------------------------
+    #-------------------------------------------------- Usuario ---------------------------------------------------
     
-    path('Persona/listar/', PersonaListView.as_view(), name='persona_listar'),
-    path('Persona/crear/', PersonaCreateView.as_view(), name='persona_crear'),
-    path('Persona/editar/<int:pk>/', PersonaUpdateView.as_view(), name='persona_editar'),
-    path('Persona/eliminar/<int:pk>/', PersonaDeleteView.as_view(), name='persona_eliminar'),
+    path('Usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
+    path('Usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
+    path('Usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
+    path('Usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 

@@ -15,7 +15,6 @@ import re
 from django.core.exceptions import ValidationError
 
 def validate_nombre(value):
-    # Permite letras, espacios y puntos en cualquier parte de la cadena
     if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.]+$', value):
         raise ValidationError('El nombre solo puede contener letras, espacios y puntos.')
 
@@ -86,8 +85,8 @@ class Ubicacion(models.Model):
         db_table = 'ubicacion'
         ordering = ['id']
         
-#----------------------------------------------- Persona -----------------------------------------------
-class Persona(models.Model):
+#----------------------------------------------- Usuarios -----------------------------------------------
+class Usuario(models.Model):
     rol = models.CharField(max_length=1,choices=Roles,default='1',verbose_name='Rol de usuario')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres')
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
@@ -101,14 +100,14 @@ class Persona(models.Model):
         return f'{self.nombres} {self.apellidos}'
 
     class Meta:
-        verbose_name = 'Persona'
-        verbose_name_plural = 'Personas'
-        db_table = 'Persona'
+        verbose_name = 'Usurio'
+        verbose_name_plural = 'Usuarios'
+        db_table = 'Usuario'
         ordering = ['id']
         
 #----------------------------------------------- Cliente -----------------------------------------------
 class Cliente(models.Model):
-    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
+    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Usuarios')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres',null=True, blank=True)
     razon_social = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
@@ -119,7 +118,7 @@ class Cliente(models.Model):
     direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
+        return f"{self.nombres if self.tipo_Usuarios == 'PN' else self.razon_social} - {self.get_tipo_Usuarios_display()}"
 
     class Meta:
         verbose_name = 'Cliente'
@@ -130,7 +129,7 @@ class Cliente(models.Model):
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
-    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Persona')
+    tipo_Usuarios = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Usuarios')
     nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres',null=True, blank=True)
     razon_social = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Razon Social',null=True,blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
@@ -141,7 +140,7 @@ class Proveedor(models.Model):
     direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
+        return f"{self.nombres if self.tipo_Usuarios == 'PN' else self.razon_social} - {self.get_tipo_Usuarios_display()}"
 
     class Meta:
         verbose_name = 'Proveedor'

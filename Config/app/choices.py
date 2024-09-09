@@ -1,4 +1,3 @@
-#Hola
 Roles = [
         ('1', 'Admin'),
         ('2', 'Usuario')

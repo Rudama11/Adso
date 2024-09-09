@@ -6,7 +6,7 @@
 
 {% block filtro_form_contenido %}
 {# Bloque para el formulario de filtrado #}
-<form method="GET" action="{% url 'app:persona_listar' %}">
+<form method="GET" action="{% url 'app:usuario_listar' %}">
     <div class="row">
         <div class="form-group col-md-6">
             <label for="rol">Rol de usuario</label>
@@ -95,25 +95,25 @@
 
 {% block filas %}
 {# Bloque para definir las filas de la tabla #}
-{% for per in object_list %}
+{% for user in object_list %}
 <tr>
-    <td>{{ per.id }}</td>
-    <td>{{ per.get_rol_display }}</td>
-    <td>{{ per.usuario }}</td>
-    <td>{{ per.nombres }}</td>
-    <td>{{ per.tipo_documento }}</td>
-    <td>{{ per.numero_documento }}</td>
-    <td>{{ per.correo }}</td>
-    <td>{{ per.telefono }}</td>
+    <td>{{ user.id }}</td>
+    <td>{{ user.get_rol_display }}</td>
+    <td>{{ user.usuario }}</td>
+    <td>{{ user.nombres }}</td>
+    <td>{{ user.tipo_documento }}</td>
+    <td>{{ user.numero_documento }}</td>
+    <td>{{ user.correo }}</td>
+    <td>{{ user.telefono }}</td>
     <td>
-        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar persona">
+        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar usuario">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar la persona #}
-        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar persona">
+        {# Enlace para editar la usuario #}
+        <a href="{% url 'app:usuario_eliminar' user.id %}" class="btn btn-danger btn-sm" title="Eliminar usuario">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar la persona #}
+        {# Enlace para eliminar la usuario #}
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
