@@ -97,7 +97,7 @@ class Usuario(models.Model):
     password = models.CharField(max_length=20,verbose_name='Contraseña')
 
     def __str__(self):
-        return f'{self.nombres} {self.apellidos}'
+        return f'{self.nombres}'
 
     class Meta:
         verbose_name = 'Usurio'
