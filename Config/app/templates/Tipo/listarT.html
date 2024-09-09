@@ -36,11 +36,11 @@
     <td>{{ t.nombre }}</td>
     <td>{{ t.descripcion }}</td>
     <td>
-        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm" title="Editar tipo">
+        <a href="{% url 'app:tipo_editar' t.id %}" class="btn btn-info btn-sm" title="Editar tipo producto">
             <i class="fas fa-edit"></i>
         </a>
         {# Enlace para editar el tipo de producto #}
-        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm" title="Eliminar tipo">
+        <a href="{% url 'app:tipo_eliminar' t.id %}" class="btn btn-danger btn-sm" title="Eliminar tipo producto">
             <i class="fas fa-trash"></i>
         </a>
         {# Enlace para eliminar el tipo de producto #}
