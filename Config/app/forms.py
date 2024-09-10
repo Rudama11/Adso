@@ -5,6 +5,19 @@ from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
+
+#---------------------------------------------------------- Usuario ----------------------------------------------------------
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
@@ -252,23 +265,6 @@ class VentaForm(ModelForm):
                 }
             ),
         }
-
-#---------------------------------------------------------- Persona ----------------------------------------------------------
-class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(), required=False)
-    usuario = forms.CharField(max_length=20)
-    correo = forms.EmailField(max_length=50)
-
-    class Meta:
-        model = Usuario
-        fields = ['rol', 'nombres', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'usuario', 'password']
-    
-    def clean_password(self):
-        # Si la contraseña no se modifica, no hacer nada
-        password = self.cleaned_data.get('password')
-        if password:
-            return password
-        return None
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):

@@ -8,9 +8,9 @@ from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
-from app.views.Usuario.views import *
 from app.views.Compras.views import *
 from app.views.Stock.views import *
+from app.views.Usuario.views import *
 
 app_name = 'app'
 
@@ -47,10 +47,11 @@ urlpatterns = [
     
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
-    path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
-    path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
-    path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
-    path('usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
+    path('usuario/register/', register, name='register'),
+    path('usuario/profile/', profile, name='profile'),
+    path('usuario/edit_profile/', edit_profile, name='edit_profile'),
+    path('usuario/users/', user_list, name='user_list'),
+    path('usuario/users/<int:user_id>/', user_detail, name='user_detail'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
