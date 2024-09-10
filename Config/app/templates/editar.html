@@ -40,7 +40,7 @@
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButtonEdit">
-                <i class="fas fa-save"></i> Editar
+                <i class="fas fa-save"></i> Confirmar
             </button>
             <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
@@ -73,9 +73,8 @@
                 text: 'La categoría ha sido modificada exitosamente.',
                 icon: 'success',
                 confirmButtonText: 'Continuar',
-                width: '25%',
-                padding: '1rem',
                 backdrop: true,
+                timer:3000,
                 timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: false,
@@ -94,9 +93,9 @@
                 text: 'Debe llenar todos los campos de registro',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
-                width: '25%',
-                padding: '1rem',
                 backdrop: true,
+                timer:3000,
+                timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: true,
                 allowEscapeKey: false,

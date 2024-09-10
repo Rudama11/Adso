@@ -56,7 +56,7 @@ class CategoriaCreateView(CreateView):
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
-    template_name = 'Categoria/editar.html'
+    template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
 
     def form_valid(self, form):

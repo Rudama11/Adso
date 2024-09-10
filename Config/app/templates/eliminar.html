@@ -69,7 +69,7 @@
                 text: '¿Estás seguro de que deseas crear esta categoría?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Sí, crear',
+                confirmButtonText: 'Sí, Eliminar',
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -79,6 +79,8 @@
                         title: 'Eliminado Correctamente',
                         text: 'La categoría ha sido Eliminada con éxito.',
                         icon: 'success',
+                        timer:3000,
+                        timerProgressBar: true,
                         confirmButtonText: 'Continuar'
                     }).then(() => {
                         document.getElementById('createForm').submit();
@@ -91,6 +93,8 @@
                 title: 'Error',
                 text: 'Por favor, complete todos los campos correctamente.',
                 icon: 'error',
+                timer:3000,
+                timerProgressBar: true,
                 confirmButtonText: 'Aceptar'
             });
         }
