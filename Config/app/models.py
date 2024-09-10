@@ -5,14 +5,9 @@ from django.core.validators import *
 from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
-
+from django.contrib.auth.models import User
 import re
 
-import re
-from django.core.exceptions import ValidationError
-
-import re
-from django.core.exceptions import ValidationError
 
 # Validación de campos con letras, espacios y puntos
 def validate_nombre(value):
@@ -93,23 +88,25 @@ class Ubicacion(models.Model):
         ordering = ['id']
         
 #----------------------------------------------- Usuarios -----------------------------------------------
+
 class Usuario(models.Model):
-    rol = models.CharField(max_length=1,choices=Roles,default='1',verbose_name='Rol de usuario')
-    nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres')
-    tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
-    correo = models.EmailField(max_length=50,validators=[EmailValidator()],verbose_name='Correo')
-    telefono = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')],verbose_name='Número de celular',null=True,blank=True)
-    usuario = models.CharField(max_length=20,unique=True,verbose_name='Usuario')
-    password = models.CharField(max_length=20,verbose_name='Contraseña')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')
+    rol = models.CharField(max_length=1, choices=Roles, default='1', verbose_name='Rol de usuario')
+    nombres = models.CharField(max_length=100, validators=[MinLengthValidator(3), validate_nombre], verbose_name='Nombres')
+    tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
+    numero_documento = models.CharField(max_length=10, validators=[MinLengthValidator(8), RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')], verbose_name='Número de Documento', null=True, blank=True)
+    correo = models.EmailField(max_length=50, validators=[EmailValidator()], verbose_name='Correo')
+    telefono = models.CharField(max_length=10, validators=[MinLengthValidator(8), RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')], verbose_name='Número de celular', null=True, blank=True)
+    usuario = models.CharField(max_length=20, unique=True, verbose_name='Usuario')
+    password = models.CharField(max_length=20, verbose_name='Contraseña')
 
     def __str__(self):
         return f'{self.nombres}'
 
     class Meta:
-        verbose_name = 'Usurio'
+        verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
-        db_table = 'Usuario'
+        db_table = 'usuario'
         ordering = ['id']
         
 #----------------------------------------------- Cliente -----------------------------------------------
@@ -176,9 +173,9 @@ class Compras(models.Model):
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compras')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio $(Cop)')
     iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.IntegerField(default=0, verbose_name='Total (céntimos)')
+    total = models.IntegerField(default=0, verbose_name='Total $(Cop)')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):

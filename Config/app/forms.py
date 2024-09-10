@@ -253,69 +253,21 @@ class VentaForm(ModelForm):
         }
 
 #---------------------------------------------------------- Persona ----------------------------------------------------------
-class UsuarioForm(ModelForm):
+class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    usuario = forms.CharField(max_length=20)
+    correo = forms.EmailField(max_length=50)
+
     class Meta:
         model = Usuario
-        fields = ['rol', 'nombres', 'tipo_documento','numero_documento', 'correo', 'telefono', 'usuario', 'password']
-        widgets = {
-            'rol': Select(
-                attrs={
-                    'placeholder': 'Seleccione el rol del usuario',
-                }
-            ),
-            'nombres': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre completo del empleado',
-                    'autofocus': 'autofocus',
-                }
-            ),
-            'tipo_documento': Select(
-                attrs={
-                    'placeholder': 'Seleccione el tipo de documento',
-                }
-            ),
-            'numero_documento': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el número de documento',
-                }
-            ),
-            'correo': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el correo electrónico',
-                    'type': 'email',
-                }
-            ),
-            'telefono': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el número de celular',
-                    'type': 'tel',
-                }
-            ),
-            'usuario': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre de usuario',
-                }
-            ),
-            'password': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la contraseña',
-                    'type': 'password',
-                }
-            ),
-        }
-
-    def clean(self):
-        cleaned_data = super().clean()
-        correo = cleaned_data.get('correo')
-        numero_documento = cleaned_data.get('numero_documento')
-
-        if Usuario.objects.filter(correo=correo).exists():
-            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
-
-        if Usuario.objects.filter(numero_documento=numero_documento).exists():
-            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
-
-        return cleaned_data
+        fields = ['rol', 'nombres', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'usuario', 'password']
+    
+    def clean_password(self):
+        # Si la contraseña no se modifica, no hacer nada
+        password = self.cleaned_data.get('password')
+        if password:
+            return password
+        return None
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
