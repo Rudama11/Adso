@@ -4,7 +4,7 @@
 {% block filtro_form_contenido %} 
 {# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:cliente_listarC' %}">
-    {# Formulario que envía datos por GET a la vista 'cliente_listarC' #}
+    {# Formulario que envía datos por GET a la vista 'cliente_listar' #}
     
     <div class="row">
         <div class="col-md-6">
@@ -17,7 +17,6 @@
                         <option value="{{ key }}" {% if request.GET.tipo_persona == key %}selected{% endif %}>
                             {{ value }}
                         </option>
-                        {# Marca la opción seleccionada según el valor del GET #}
                     {% endfor %}
                 </select>
             </div>
@@ -27,7 +26,6 @@
             <div class="form-group">
                 <label for="nombres">Nombres</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
-                {# Campo para ingresar nombres #}
             </div>
         </div>
     </div>
@@ -37,7 +35,6 @@
             <div class="form-group">
                 <label for="razon_social">Razón Social</label>
                 <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
-                {# Campo para ingresar razón social #}
             </div>
         </div>
         
@@ -46,12 +43,10 @@
                 <label for="tipo_documento">Tipo de Documento</label>
                 <select class="form-control" id="tipo_documento" name="tipo_documento">
                     <option value="">Todos</option>
-                    {# Opción para mostrar todos los tipos de documento #}
                     {% for key, value in tipo_documento %}
                         <option value="{{ key }}" {% if request.GET.tipo_documento == key %}selected{% endif %}>
                             {{ value }}
                         </option>
-                        {# Marca la opción seleccionada según el valor del GET #}
                     {% endfor %}
                 </select>
             </div>
@@ -63,7 +58,6 @@
             <div class="form-group">
                 <label for="numero_documento">Número de Documento</label>
                 <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Ingrese el número de documento" value="{{ request.GET.numero_documento }}">
-                {# Campo para ingresar número de documento #}
             </div>
         </div>
         
@@ -71,7 +65,6 @@
             <div class="form-group">
                 <label for="correo">Correo</label>
                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo" value="{{ request.GET.correo }}">
-                {# Campo para ingresar correo electrónico #}
             </div>
         </div>
     </div>
@@ -81,7 +74,6 @@
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el teléfono" value="{{ request.GET.telefono }}">
-                {# Campo para ingresar teléfono #}
             </div>
         </div>
         
@@ -89,7 +81,6 @@
             <div class="form-group">
                 <label for="ciudad">Ciudad</label>
                 <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ingrese la ciudad" value="{{ request.GET.ciudad }}">
-                {# Campo para ingresar ciudad #}
             </div>
         </div>
     </div>
@@ -99,13 +90,11 @@
             <div class="form-group">
                 <label for="direccion">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la dirección" value="{{ request.GET.direccion }}">
-                {# Campo para ingresar dirección #}
             </div>
         </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Filtrar</button>
-    {# Botón para enviar el formulario de filtrado #}
 </form>
 {% endblock %}
 
@@ -123,7 +112,6 @@
     <th scope="col">Ciudad</th>
     <th scope="col">Dirección</th>
     <th scope="col">Opciones</th>
-    {# Encabezados de las columnas #}
 </tr>
 {% endblock %}
 
@@ -145,13 +133,10 @@
         <a href="{% url 'app:cliente_editar' cl.id %}" class="btn btn-info btn-sm" title="Editar cliente">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar el cliente #}
         <a href="{% url 'app:cliente_eliminar' cl.id %}" class="btn btn-danger btn-sm" title="Eliminar cliente">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar el cliente #}
     </td>
 </tr>
 {% endfor %}
-{# Itera sobre la lista de clientes y muestra los datos en cada fila #}
 {% endblock %}
