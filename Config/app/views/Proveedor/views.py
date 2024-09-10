@@ -37,11 +37,11 @@ def lista_proveedor(request):
             proveedores = proveedores.filter(**{filtro: valor})
 
     context['proveedores'] = proveedores
-    return render(request, 'Proveedor/listarP.html', context)
+    return render(request, 'Proveedor/listar.html', context)
 
 class ProveedorListView(ListView):
     model = Proveedor
-    template_name = 'Proveedor/listarP.html'
+    template_name = 'Proveedor/listar.html'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -82,23 +82,23 @@ class ProveedorListView(ListView):
 class ProveedorCreateView(CreateView):
     model = Proveedor
     form_class = ProveedorForm
-    template_name = 'Proveedor/crearP.html'
-    success_url = reverse_lazy('app:proveedor_listarP')
+    template_name = 'Proveedor/crear.html'
+    success_url = reverse_lazy('app:proveedor_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
             'titulo': 'Crear Proveedor',
             'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listarP')
+            'listar_url': reverse_lazy('app:proveedor_listar')
         })
         return context
 
 class ProveedorUpdateView(UpdateView):
     model = Proveedor
     form_class = ProveedorForm
-    template_name = 'Proveedor/crearP.html'
-    success_url = reverse_lazy('app:proveedor_listarP')
+    template_name = 'Proveedor/crear.html'
+    success_url = reverse_lazy('app:proveedor_listar')
 
     def form_valid(self, form):
         messages.success(self.request, 'El proveedor ha sido actualizado exitosamente.')
@@ -109,20 +109,20 @@ class ProveedorUpdateView(UpdateView):
         context.update({
             'titulo': 'Actualizar Proveedor',
             'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listarP')
+            'listar_url': reverse_lazy('app:proveedor_listar')
         })
         return context
 
 class ProveedorDeleteView(DeleteView):
     model = Proveedor
-    template_name = 'Proveedor/eliminarP.html'
-    success_url = reverse_lazy('app:proveedor_listarP')
+    template_name = 'Proveedor/eliminar.html'
+    success_url = reverse_lazy('app:proveedor_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
             'titulo': 'Eliminar Proveedor',
             'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listarP')
+            'listar_url': reverse_lazy('app:proveedor_listar')
         })
         return context

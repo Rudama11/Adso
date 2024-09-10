@@ -11,7 +11,7 @@ from app.forms import VentaForm
 # Vista para listar ventas
 class VentasListView(ListView):
     model = Venta
-    template_name = 'Ventas/listarV.html'
+    template_name = 'Ventas/listar.html'
     
     @method_decorator(login_required)  # Requiere autenticación para acceder
     def dispatch(self, request, *args, **kwargs):
@@ -39,7 +39,7 @@ class VentasListView(ListView):
 class VentasCreateView(CreateView):
     model = Venta
     form_class = VentaForm
-    template_name = 'Ventas/crearV.html'
+    template_name = 'Ventas/crear.html'
     success_url = reverse_lazy('app:venta_listar')  # URL para redirigir tras la creación
 
     def get_context_data(self, **kwargs):
@@ -58,7 +58,7 @@ class VentasCreateView(CreateView):
 class VentasUpdateView(UpdateView):
     model = Venta
     form_class = VentaForm
-    template_name = 'Ventas/crearV.html'
+    template_name = 'Ventas/crear.html'
     success_url = reverse_lazy('app:venta_listar')  # URL para redirigir tras la actualización
     
     def get_context_data(self, **kwargs):
@@ -74,7 +74,7 @@ class VentasUpdateView(UpdateView):
 # Vista para eliminar una venta
 class VentasDeleteView(DeleteView):
     model = Venta
-    template_name = 'Ventas/eliminarV.html'
+    template_name = 'Ventas/eliminar.html'
     success_url = reverse_lazy('app:venta_listar')  # URL para redirigir tras la eliminación
 
     def get_context_data(self, **kwargs):
