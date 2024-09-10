@@ -4,6 +4,7 @@ from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
@@ -365,6 +366,9 @@ class ComprasForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
         self.fields['total'].widget.attrs['readonly'] = True
+        # Establecer la fecha actual por defecto si no se ha proporcionado
+        if not self.instance.pk:  # Solo si es una nueva instancia
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
@@ -372,10 +376,10 @@ class ComprasForm(forms.ModelForm):
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),  # Cambiado a Select para productos
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),  # Indicar que es en céntimos
+            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),  # Campo total como solo lectura
+            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
             'proveedor': forms.Select(attrs={'autofocus': True}),
         }
