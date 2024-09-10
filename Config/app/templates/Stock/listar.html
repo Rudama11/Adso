@@ -16,18 +16,16 @@
 
 {% block filas %}
 {# Bloque para definir las filas de la tabla #}
-{% for no in object_list %}
+{% for stock in object_list %}
 <tr>
-        <td>{{ stock.id }}</td>
-        <td>{{ stock.producto }}</td>
-        <td>{{ stock.cantidad }}</td>
-        <td>{{ stock.precio }}</td>
-    </td>
+    <td>{{ stock.id }}</td>
+    <td>{{ stock.nombre_pro }}</td>
+    <td>{{ stock.cantidad }}</td>
+    <td>{{ stock.precio }}</td>
 </tr>
 {% endfor %}
 {% endblock %}
 
 {% block filtro_form_contenido %}
 {# Bloque para el formulario de filtrado #}
-
 {% endblock %}
