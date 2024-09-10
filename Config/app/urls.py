@@ -43,7 +43,7 @@ urlpatterns = [
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
     path('normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
     path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
-    path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
+    path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminarN'),
     
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
