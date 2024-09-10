@@ -176,9 +176,9 @@ class Compras(models.Model):
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compras')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio (céntimos)')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio $(Cop)')
     iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.IntegerField(default=0, verbose_name='Total (céntimos)')
+    total = models.IntegerField(default=0, verbose_name='Total $(Cop)')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
