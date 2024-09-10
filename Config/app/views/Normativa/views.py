@@ -10,7 +10,7 @@ from app.forms import NormativaForm
 
 class NormativaListView(ListView):
     model = Normativa
-    template_name = 'Normativa/listarN.html'
+    template_name = 'Normativa/listar.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -62,7 +62,7 @@ class NormativaCreateView(CreateView):
 class NormativaUpdateView(UpdateView):
     model = Normativa
     form_class = NormativaForm
-    template_name = 'Normativa/crearN.html'
+    template_name = 'Normativa/crear.html'
     success_url = reverse_lazy('app:normativa_listar')
     
     def get_context_data(self, **kwargs):
