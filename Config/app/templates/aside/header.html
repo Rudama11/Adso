@@ -32,8 +32,6 @@
                                 <i class="fas fa-user-tie" style="margin-right: 8px;"></i> Clientes</a></li>
                             <li><a href="{% url 'app:compras_listar' %}" class="dropdown-item">
                                 <i class="fas fa-credit-card" style="margin-right: 8px;"></i> Compras</a></li>
-                            <li><a href="{% url 'app:usuario_listar' %}" class="dropdown-item">
-                                <i class="fas fa-users" style="margin-right: 8px;"></i> Usuarios</a></li>
                             <li><a href="{% url 'app:normativa_listar' %}" class="dropdown-item">
                                 <i class="fas fa-balance-scale" style="margin-right: 8px;"></i> Normativas</a></li>
                             <li><a href="{% url 'app:producto_listar' %}" class="dropdown-item">
@@ -69,8 +67,8 @@
                 </span>
                 <div class="dropdown-divider"></div>
                 <!-- Opción para editar perfil -->
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-edit mr-2"></i> Editar perfil
+                <a href="{% url 'app:usuario_listar' %}" class="dropdown-item">
+                    <i class="fas fa-users" style="margin-right: 10px;"></i> Editar perfiles
                     <span class="float-right text-muted text-sm">3 mins</span>
                 </a>
                 <div class="dropdown-divider"></div>
