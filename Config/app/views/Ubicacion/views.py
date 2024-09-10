@@ -11,7 +11,7 @@ from app.forms import UbicacionForm
 
 class UbicacionListView(ListView):
     model = Ubicacion
-    template_name = 'Ubicacion/listarU.html'
+    template_name = 'Ubicacion/listar.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -42,8 +42,8 @@ class UbicacionListView(ListView):
 class UbicacionCreateView(CreateView):
     model = Ubicacion
     form_class = UbicacionForm
-    template_name = 'Ubicacion/crearU.html'
-    success_url = reverse_lazy('app:ubicacion_listarU')
+    template_name = 'Ubicacion/crear.html'
+    success_url = reverse_lazy('app:ubicacion_listar')
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
@@ -54,26 +54,26 @@ class UbicacionCreateView(CreateView):
 class UbicacionUpdateView(UpdateView):
     model = Ubicacion
     form_class = UbicacionForm
-    template_name = 'Ubicacion/crearU.html'
-    success_url = reverse_lazy('app:ubicacion_listarU')
+    template_name = 'Ubicacion/crear.html'
+    success_url = reverse_lazy('app:ubicacion_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Ubicación'
         context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
+        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
         return context
 
 class UbicacionDeleteView(DeleteView):
     model = Ubicacion
-    template_name = 'Ubicacion/eliminarU.html'
-    success_url = reverse_lazy('app:ubicacion_listarU')
+    template_name = 'Ubicacion/eliminar.html'
+    success_url = reverse_lazy('app:ubicacion_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Eliminar Ubicación'
         context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listarU')
+        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
         return context
 
 def municipios_por_departamento(request):
