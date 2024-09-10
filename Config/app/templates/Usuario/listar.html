@@ -1,13 +1,18 @@
 {% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
 
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
 {% block filtro_form_contenido %}
-<form method="GET" action="{% url 'app:persona_listar' %}">
+{# Bloque para el formulario de filtrado #}
+<form method="GET" action="{% url 'app:usuario_listar' %}">
     <div class="row">
         <div class="form-group col-md-6">
             <label for="rol">Rol de usuario</label>
             <select class="form-control" id="rol" name="rol">
                 <option value="">Todos</option>
+                {# Opciones para seleccionar el rol de usuario, con opción predeterminada "Todos" #}
                 {% for key, value in roles %}
                     <option value="{{ key }}" {% if request.GET.rol == key %}selected{% endif %}>
                         {{ value }}
@@ -18,6 +23,7 @@
         <div class="form-group col-md-6">
             <label for="nombres">Nombres</label>
             <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
+            {# Campo de texto para ingresar los nombres #}
         </div>
     </div>
     
@@ -26,6 +32,7 @@
             <label for="tipo_documento">Tipo de Documento</label>
             <select class="form-control" id="tipo_documento" name="tipo_documento">
                 <option value="">Todos</option>
+                {# Opciones para seleccionar el tipo de documento, con opción predeterminada "Todos" #}
                 {% for key, value in tipo_documento %}
                     <option value="{{ key }}" {% if request.GET.tipo_documento == key %}selected{% endif %}>
                         {{ value }}
@@ -39,10 +46,12 @@
         <div class="form-group col-md-6">
             <label for="correo">Correo</label>
             <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo" value="{{ request.GET.correo }}">
+            {# Campo para ingresar el correo electrónico #}
         </div>
         <div class="form-group col-md-6">
             <label for="telefono">Teléfono</label>
             <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el teléfono" value="{{ request.GET.telefono }}">
+            {# Campo para ingresar el número de teléfono #}
         </div>
     </div>
     
@@ -50,10 +59,12 @@
         <div class="form-group col-md-6">
             <label for="numero_documento">Número de Documento</label>
             <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Ingrese el número de documento" value="{{ request.GET.numero_documento }}">
+            {# Campo para ingresar el número de documento #}
         </div>
         <div class="form-group col-md-6">
             <label for="usuario">Usuario</label>
             <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese el usuario" value="{{ request.GET.usuario }}">
+            {# Campo para ingresar el nombre de usuario #}
         </div>
     </div>
     
@@ -61,11 +72,14 @@
         <div class="form-group col-md-6">
             <label for="password">Contraseña</label>
             <input type="text" class="form-control" id="password" name="password" placeholder="Ingrese la contraseña" value="{{ request.GET.password }}">
+            {# Campo para ingresar la contraseña #}
         </div>
     </div>
 </form>
 {% endblock %}
+
 {% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Rol de usuario</th>
@@ -80,26 +94,31 @@
 {% endblock %}
 
 {% block filas %}
-{% for per in object_list %}
+{# Bloque para definir las filas de la tabla #}
+{% for user in object_list %}
 <tr>
-    <td>{{ per.id }}</td>
-    <td>{{ per.get_rol_display }}</td>
-    <td>{{ per.nombres }}</td>
-    <td>{{ per.tipo_documento }}</td>
-    <td>{{ per.correo }}</td>
-    <td>{{ per.telefono }}</td>
-    <td>{{ per.numero_documento }}</td>
-    <td>{{ per.usuario }}</td>
+    <td>{{ user.id }}</td>
+    <td>{{ user.get_rol_display }}</td>
+    <td>{{ user.usuario }}</td>
+    <td>{{ user.nombres }}</td>
+    <td>{{ user.tipo_documento }}</td>
+    <td>{{ user.numero_documento }}</td>
+    <td>{{ user.correo }}</td>
+    <td>{{ user.telefono }}</td>
     <td>
-        <a href="{% url 'app:persona_editar' per.id %}" class="btn btn-info btn-sm" title="Editar persona"><i class="fas fa-edit"></i>
+        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar usuario">
+            <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:persona_eliminar' per.id %}" class="btn btn-danger btn-sm" title="Eliminar persona"><i class="fas fa-trash"></i>
+        {# Enlace para editar la usuario #}
+        <a href="{% url 'app:usuario_eliminar' user.id %}" class="btn btn-danger btn-sm" title="Eliminar usuario">
+            <i class="fas fa-trash"></i>
         </a>
+        {# Enlace para eliminar la usuario #}
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
-        
+        {# Scripts para funcionalidades adicionales #}
     </td>
 </tr>
 {% endfor %}

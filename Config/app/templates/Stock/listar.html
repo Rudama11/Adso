@@ -1,0 +1,31 @@
+{% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
+{% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
+{% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Precio</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{# Bloque para definir las filas de la tabla #}
+{% for stock in object_list %}
+<tr>
+    <td>{{ stock.id }}</td>
+    <td>{{ stock.nombre_pro }}</td>
+    <td>{{ stock.cantidad }}</td>
+    <td>{{ stock.precio }}</td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
+{% endblock %}

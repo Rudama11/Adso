@@ -9,8 +9,8 @@ from app.models import Tipo
 from app.forms import TipoForm
 
 class TipoListView(ListView):
-    model = Tipo
-    template_name = 'Tipo/listarT.html'
+    model = Tipo 
+    template_name = 'Tipo/listar.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -22,8 +22,8 @@ class TipoListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Tipos'
-        context['entidad'] = 'Tipos'
+        context['titulo'] = 'Listado Tipos de producto'
+        context['entidad'] = 'Tipos de producto'
         context['crear_url'] = reverse_lazy('app:tipo_crear')
         return context
 
@@ -46,12 +46,12 @@ class TipoListView(ListView):
 class TipoCreateView(CreateView):
     model = Tipo
     form_class = TipoForm
-    template_name = 'Tipo/crearT.html'
+    template_name = 'Tipo/crear.html'
     success_url = reverse_lazy('app:tipo_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Tipos'
+        context['titulo'] = 'Crear Tipos de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
@@ -59,24 +59,24 @@ class TipoCreateView(CreateView):
 class TipoUpdateView(UpdateView):
     model = Tipo
     form_class = TipoForm
-    template_name = 'Tipo/crearT.html'
+    template_name = 'Tipo/crear.html'
     success_url = reverse_lazy('app:tipo_listar')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Tipo'
+        context['titulo'] = 'Actualizar Tipo de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
 
 class TipoDeleteView(DeleteView):
     model = Tipo
-    template_name = 'Tipo/eliminarT.html'
+    template_name = 'Tipo/eliminar.html'
     success_url = reverse_lazy('app:tipo_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Tipo'
+        context['titulo'] = 'Eliminar Tipo de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context

@@ -5,13 +5,13 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from app.models import Persona
-from app.forms import PersonaForm
+from app.models import Usuario
+from app.forms import UsuarioForm
 from app.choices import Roles, Tipo_Documento_Choices  # Asegúrate de importar tus choices aquí
 
-class PersonaListView(ListView):
-    model = Persona
-    template_name = 'Persona/listar.html'
+class UsuarioListView(ListView):
+    model = Usuario
+    template_name = 'Usuario/listar.html'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -23,9 +23,9 @@ class PersonaListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Personas'
-        context['entidad'] = 'Persona'
-        context['crear_url'] = reverse_lazy('app:persona_crear')
+        context['titulo'] = 'Listado de Usuarios'
+        context['entidad'] = 'Usuario'
+        context['crear_url'] = reverse_lazy('app:usuario_crear')
         context['roles'] = Roles
         context['tipo_documento'] = Tipo_Documento_Choices
         return context
@@ -64,40 +64,57 @@ class PersonaListView(ListView):
 
         return queryset
 
-class PersonaCreateView(CreateView):
-    model = Persona
-    form_class = PersonaForm
-    template_name = 'Persona/crear.html'
-    success_url = reverse_lazy('app:persona_listar')
+class UsuarioCreateView(CreateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'Usuario/crear.html'
+    success_url = reverse_lazy('app:usuario_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear Persona'
-        context['entidad'] = 'Persona'
-        context['listar_url'] = reverse_lazy('app:persona_listar')
+        context['titulo'] = 'Crear Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
 
-class PersonaUpdateView(UpdateView):
-    model = Persona
-    form_class = PersonaForm
-    template_name = 'Persona/crear.html'
-    success_url = reverse_lazy('app:persona_listar')
+class UsuarioUpdateView(UpdateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'Usuario/crear.html'
+    success_url = reverse_lazy('app:usuario_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Persona'
-        context['entidad'] = 'Persona'
-        context['listar_url'] = reverse_lazy('app:persona_listar')
+        context['titulo'] = 'Actualizar Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
 
-class PersonaDeleteView(DeleteView):
-    model = Persona
-    template_name = 'Persona/eliminar.html'
-    success_url = reverse_lazy('app:persona_listar')
+    def form_valid(self, form):
+        # Guardar el formulario del modelo Usuario
+        response = super().form_valid(form)
+        
+        # Obtener el usuario relacionado
+        usuario = self.get_object()
+        user = usuario.user
+        
+        # Actualizar el modelo User con los datos del formulario
+        user.username = form.cleaned_data['usuario']
+        user.email = form.cleaned_data['correo']
+        if form.cleaned_data.get('password'):
+            user.set_password(form.cleaned_data['password'])
+        user.save()
+        
+        return response
+
+class UsuarioDeleteView(DeleteView):
+    model = Usuario
+    template_name = 'Usuario/eliminar.html'
+    success_url = reverse_lazy('app:usuario_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Persona'
-        context['entidad'] = 'Persona'
-        context['listar_url'] = reverse_lazy('app:persona_listar')
+        context['titulo'] = 'Eliminar Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context

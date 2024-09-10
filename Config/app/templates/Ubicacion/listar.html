@@ -1,8 +1,12 @@
 {% extends "listar.html" %}
+{# Extiende la plantilla base 'listar.html' #}
+
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
 
 {% block filtro_form_contenido %}
-<form method="GET" action="{% url 'app:ubicacion_listarU' %}">
+{# Bloque para el formulario de filtrado #}
+<form method="GET" action="{% url 'app:ubicacion_listar' %}">
     <div class="form-group">
         <label for="departamento">Departamento</label>
         <select class="form-control" id="departamento" name="departamento">
@@ -13,6 +17,7 @@
             </option>
             {% endfor %}
         </select>
+        {# Selector para filtrar por departamento #}
     </div>
 
     <div class="form-group">
@@ -25,13 +30,16 @@
             </option>
             {% endfor %}
         </select>
+        {# Selector para filtrar por municipio #}
     </div>
 
     <button type="submit" class="btn btn-primary">Filtrar</button>
+    {# Botón para enviar el formulario de filtrado #}
 </form>
 {% endblock %}
 
 {% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Departamento</th>
@@ -41,6 +49,7 @@
 {% endblock %}
 
 {% block filas %}
+{# Bloque para definir las filas de la tabla #}
 {% for u in object_list %}
 <tr>
     <td>{{ u.id }}</td>
@@ -50,9 +59,11 @@
         <a href="{% url 'app:ubicacion_editar' u.id %}" class="btn btn-info btn-sm" title="Editar ubicación">
             <i class="fas fa-edit"></i>
         </a>
+        {# Enlace para editar la ubicación #}
         <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm" title="Eliminar ubicación">
             <i class="fas fa-trash"></i>
         </a>
+        {# Enlace para eliminar la ubicación #}
     </td>
 </tr>
 {% endfor %}

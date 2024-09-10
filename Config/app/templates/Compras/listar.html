@@ -1,44 +1,59 @@
 {% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
 {% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
 {% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:compras_listar' %}">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="num_factura">Número de Factura</label>
                 <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
+                {# Campo para ingresar el número de factura #}
             </div>
         </div>
+        
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_compra">Fecha de Compra</label>
                 <input type="date" class="form-control" id="fecha_compra" name="fecha_compra" value="{{ request.GET.fecha_compra }}">
+                {# Campo para seleccionar la fecha de compra #}
             </div>
         </div>
+        
         <div class="col-md-4">
             <div class="form-group">
                 <label for="proveedor">Proveedor</label>
                 <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
+                {# Campo para ingresar el nombre del proveedor #}
             </div>
         </div>
     </div>
     
     <div class="row">
         <div class="col-md-6">
+            {# Espacio vacío para alinear el formulario #}
         </div>
+        
         <div class="col-md-6">
             <div class="form-group">
                 <label for="total">Total de la Factura</label>
                 <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la compra" value="{{ request.GET.total }}">
+                {# Campo para ingresar el total de la factura #}
             </div>
         </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Filtrar</button>
+    {# Botón para enviar el formulario de filtrado #}
 </form>
 {% endblock %}
 
 {% block columnas %}
+{# Bloque para los encabezados de la tabla #}
 <tr>
     <th scope="col">Número de Factura</th>
     <th scope="col">Fecha de Compra</th>
@@ -53,12 +68,13 @@
 {% endblock %}
 
 {% block filas %}
+{# Bloque para las filas de la tabla #}
 {% for com in object_list %}
 <tr>
     <td>{{ com.num_factura }}</td>
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
-    <td>{{ com.nombre_producto }}</td>
+    <td>{{ com.producto }}</td>
     <td>{{ com.cantidad }}</td>
     <td>{{ com.precio }}</td>
     <td>{{ com.iva }}</td>
@@ -67,10 +83,13 @@
         <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
+        {# Enlace para editar la compra #}
         <a href="{% url 'app:compras_eliminar' com.pk %}" class="btn btn-danger btn-sm" title="Eliminar compra">
             <i class="fas fa-trash"></i>
         </a>
+        {# Enlace para eliminar la compra #}
     </td>
 </tr>
 {% endfor %}
+{# Itera sobre la lista de compras y muestra los datos en cada fila #}
 {% endblock %}

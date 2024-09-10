@@ -4,6 +4,7 @@ from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
@@ -149,7 +150,7 @@ class ProveedorForm(forms.ModelForm):
             'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
             'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
             'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
-            'telefono': forms.NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
             'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
@@ -181,25 +182,13 @@ class ProveedorForm(forms.ModelForm):
 
         return cleaned_data
 
-#---------------------------------------------------------- Producto ----------------------------------------------------------
+#--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
         self.fields['nombre'].widget.attrs.update({
+            'autofocus': True,
             'placeholder': 'Ingrese el nombre del producto',
-            'class': 'form-control'
-        })
-        self.fields['descripcion'].widget.attrs.update({
-            'placeholder': 'Ingrese la descripción del producto',
-            'class': 'form-control'
-        })
-        self.fields['stock'].widget.attrs.update({
-            'placeholder': 'Ingrese el stock del producto',
-            'class': 'form-control'
-        })
-        self.fields['precio'].widget.attrs.update({
-            'placeholder': 'Ingrese el precio del producto',
             'class': 'form-control'
         })
         self.fields['categoria'].widget.attrs.update({
@@ -208,12 +197,17 @@ class ProductoForm(forms.ModelForm):
         self.fields['tipo_pro'].widget.attrs.update({
             'class': 'form-control'
         })
-        
+
     class Meta:
         model = Producto
-        fields = '__all__'
+        fields = ['nombre', 'categoria', 'tipo_pro']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'tipo_pro': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-#---------------------------------------------------------- Normativa ----------------------------------------------------------
+#------------------------------------------------------- Normativa----------------------------------------------------------
 class NormativaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -260,69 +254,21 @@ class VentaForm(ModelForm):
         }
 
 #---------------------------------------------------------- Persona ----------------------------------------------------------
-class PersonaForm(ModelForm):
+class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), required=False)
+    usuario = forms.CharField(max_length=20)
+    correo = forms.EmailField(max_length=50)
+
     class Meta:
-        model = Persona
-        fields = ['rol', 'nombres', 'tipo_documento','numero_documento', 'correo', 'telefono', 'usuario', 'password']
-        widgets = {
-            'rol': Select(
-                attrs={
-                    'placeholder': 'Seleccione el rol del usuario',
-                }
-            ),
-            'nombres': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre completo del empleado',
-                    'autofocus': 'autofocus',
-                }
-            ),
-            'tipo_documento': Select(
-                attrs={
-                    'placeholder': 'Seleccione el tipo de documento',
-                }
-            ),
-            'numero_documento': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el número de documento',
-                }
-            ),
-            'correo': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el correo electrónico',
-                    'type': 'email',
-                }
-            ),
-            'telefono': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el número de celular',
-                    'type': 'tel',
-                }
-            ),
-            'usuario': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre de usuario',
-                }
-            ),
-            'password': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la contraseña',
-                    'type': 'password',
-                }
-            ),
-        }
-
-    def clean(self):
-        cleaned_data = super().clean()
-        correo = cleaned_data.get('correo')
-        numero_documento = cleaned_data.get('numero_documento')
-
-        if Persona.objects.filter(correo=correo).exists():
-            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
-
-        if Persona.objects.filter(numero_documento=numero_documento).exists():
-            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
-
-        return cleaned_data
+        model = Usuario
+        fields = ['rol', 'nombres', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'usuario', 'password']
+    
+    def clean_password(self):
+        # Si la contraseña no se modifica, no hacer nada
+        password = self.cleaned_data.get('password')
+        if password:
+            return password
+        return None
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
@@ -366,23 +312,26 @@ class ProductoFilterForm(forms.Form):
     )
     
 #---------------------------------------------------------- Compras ----------------------------------------------------------
+
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
-        if self.instance and self.instance.pk:
-            self.fields['total'].widget = forms.HiddenInput()
+        self.fields['total'].widget.attrs['readonly'] = True
+        # Establecer la fecha actual por defecto si no se ha proporcionado
+        if not self.instance.pk:  # Solo si es una nueva instancia
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'nombre_producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'nombre_producto': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
+            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.HiddenInput(),
+            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
             'proveedor': forms.Select(attrs={'autofocus': True}),
         }

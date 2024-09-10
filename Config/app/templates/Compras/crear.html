@@ -1,1 +1,61 @@
 {% extends 'crear.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div>
+        <label for="id_precio">Precio:</label>
+        <input type="number" id="id_precio" name="precio" placeholder="Ingrese el precio en céntimos" value="{{ form.precio.value|default_if_none:'' }}" oninput="calculateTotal()" required>
+        <span id="precio_format">{{ form.precio.value|default_if_none:0|floatformat:0 }} COP</span>
+    </div>
+
+    <div>
+        <label for="id_iva">IVA (%):</label>
+        {{ form.iva }}
+    </div>
+
+    <div>
+        <label for="id_total">Total:</label>
+        <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly>
+        <span id="total_format">{{ form.total.value|default_if_none:0|floatformat:0 }} COP</span>
+    </div>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<script>
+function formatCurrency(value) {
+    return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP'
+    }).format(value);
+}
+
+function calculateTotal() {
+    var precio = parseInt(document.getElementById("id_precio").value) || 0;
+    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
+    var iva = parseInt(document.getElementById("id_iva").value) || 0;
+
+    // Calcular total
+    var subtotal = precio * cantidad;
+    var total = subtotal + (subtotal * iva / 100);
+
+    // Actualizar el campo de total en el formulario
+    document.getElementById("id_total").value = total;
+
+    // Mostrar el total formateado con la moneda
+    document.getElementById("total_format").textContent = formatCurrency(total);
+
+    // Formatear precio también
+    document.getElementById("precio_format").textContent = formatCurrency(precio);
+}
+
+// Inicializar la función cuando la página carga
+window.onload = function() {
+    calculateTotal();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,295 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Encabezado del documento HTML -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    
+    <!-- Enlaces a hojas de estilo -->
+    <link rel="stylesheet" href="{% static 'css/venta/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/jquery/css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
+</head>
+<body>
+    <!-- Contenedor principal de la factura -->
+    <div class="invoice-container">
+       
+        <!-- Encabezado de la factura -->
+        <header>
+            <div class="invoice-info">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo de la Empresa" class="logo">
+                <h2>Datos Factura</h2>
+                <div class="invoice-details">
+                    <p><strong>Fecha Emisión:</strong> <input type="datetime-local" id="fecha_emision"></p>
+                    <p><strong>Número de Factura:</strong> <input type="text" id="num_factura"></p>
+                </div>
+            </div>
+            <div class="company-info">
+                <h2>Empresa (Emisor)</h2>
+                <p><strong>Nombre:</strong> Conaldex-Boyaca</p>
+                <p><strong>NIT:</strong> 91068006-8</p>
+                <p><strong>Dirección:</strong> Calle 7 # 14-65</p>
+                <p><strong>Correo:</strong> conaldexboyaca@gmail.com</p>
+                <p><strong>Celular:</strong> +57 3124352596</p>
+            </div>
+        </header>
+
+        <!-- Información del cliente -->
+        <section class="client-info">
+            <h2>Cliente (Remitente)</h2>
+            <div class="client-details">
+                <p><strong>Número documento:</strong>
+                    <select class="form-control col-md-6" id="cliente_select">
+                        <option value="" hidden>Seleccione un cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.numero_documento }} - {{ cliente.nombres|default:cliente.razon_social }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p><strong>Nombres/Razón Social:</strong> <input type="text" id="cliente_nombre" placeholder="Nombres/Razón Social" readonly></p>
+                <p><strong>Dirección residencia:</strong> <input type="text" id="cliente_direccion" placeholder="Dirección" readonly></p>
+                <p><strong>Correo:</strong> <input type="email" id="cliente_mail" placeholder="Correo" readonly></p>
+                <p><strong>Celular:</strong> <input type="text" id="cliente_telefono" placeholder="Celular" readonly></p>
+            </div>
+        </section>
+
+        <!-- Detalles de la factura -->
+        <section class="invoice-details">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Iva (%)</th>
+                        <th>Total</th>
+                        <th class="acciones">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="invoice-items"></tbody>
+            </table>
+            <button type="button" id="add-item">Añadir Producto</button>
+        </section>
+
+        <!-- Totales de la factura -->
+        <section class="invoice-totals">
+            <h3>Totales</h3>
+            <p><strong>Subtotal:</strong> <span id="subtotal">0.0</span> $ COP</p>
+            <p><strong>Descuento:</strong> <input type="number" id="descuento" value="0" min="0" step="1"> %</p>
+            <p><strong>Subtotal - Dto:</strong> <span id="subtotal_dto">0.0</span> $ COP</p>
+            <p><strong>Total IVA:</strong> <span id="total_iva">0.0</span> $ COP</p>
+            <p><strong>TOTAL:</strong> <span id="total">0.0</span> $ COP</p>
+        </section>
+
+        <!-- Botones en la parte inferior de la factura -->
+        <div class="footer-buttons">
+            <div class="left-buttons">
+                <button type="button" id="print-invoice">Imprimir factura</button>
+                <a href="{{ listar_url }}" id="cancel">Cancelar factura</a>
+            </div>
+            <div class="right-buttons">
+                <button type="button" id="add-invoice">Guardar factura</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de la página -->
+    <script src="{% static 'lib/jquery/js/jquery-3.7.1.js' %}"></script>
+    <script src="{% static 'lib/select2/js/select2.min.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            const $clienteSelect = $('#cliente_select');
+            const $clienteNombre = $('#cliente_nombre');
+            const $clienteDireccion = $('#cliente_direccion');
+            const $clienteMail = $('#cliente_mail');
+            const $clienteTelefono = $('#cliente_telefono');
+            const $invoiceItems = $('#invoice-items');
+            const $subtotal = $('#subtotal');
+            const $descuento = $('#descuento');
+            const $subtotalDto = $('#subtotal_dto');
+            const $totalIva = $('#total_iva');
+            const $total = $('#total');
+            
+            let selectedProducts = new Set();
+    
+            // Función para actualizar datos del cliente o producto mediante AJAX
+            function fetchData(url, data, successCallback, errorMessage) {
+                $.ajax({
+                    url: url,
+                    data: data,
+                    success: successCallback,
+                    error: function() {
+                        alert(errorMessage);
+                    }
+                });
+            }
+    
+            // Función para actualizar los detalles del cliente
+            function updateClientData(clienteId) {
+                fetchData(
+                    '{% url "app:obtener_datos_cliente" %}',
+                    { 'cliente_id': clienteId },
+                    function(data) {
+                        $clienteNombre.val(data.nombre);
+                        $clienteDireccion.val(data.direccion);
+                        $clienteMail.val(data.correo);
+                        $clienteTelefono.val(data.telefono);
+                    },
+                    'Error al obtener los datos del cliente.'
+                );
+            }
+    
+            // Función para actualizar los detalles del producto
+            function updateProductDetails(productId, $row) {
+                fetchData(
+                    '{% url "app:obtener_datos_producto" %}',
+                    { 'producto_id': productId },
+                    function(data) {
+                        $row.find('.precio-unitario').val(data.precio);
+                        $row.find('.iva').val(data.iva || 19);
+                        updateTotals();
+                    },
+                    'Error al obtener los datos del producto.'
+                );
+            }
+    
+            // Función para actualizar los totales de la factura
+            function updateTotals() {
+                let subtotal = 0, totalIva = 0;
+    
+                $("#invoice-items tr").each(function() {
+                    const cantidad = parseFloat($(this).find(".cantidad").val()) || 0;
+                    const precioUnitario = parseFloat($(this).find(".precio-unitario").val()) || 0;
+                    const iva = parseFloat($(this).find(".iva").val()) / 100 || 0;
+                    const totalSinIva = cantidad * precioUnitario;
+                    const totalConIva = totalSinIva * (1 + iva);
+                    $(this).find(".total").text(totalConIva.toFixed(2));
+                    subtotal += totalSinIva;
+                    totalIva += totalSinIva * iva;
+                });
+    
+                $subtotal.text(subtotal.toFixed(2));
+                const descuento = parseFloat($descuento.val()) / 100 || 0;
+                const subtotalDto = subtotal * (1 - descuento);
+                $subtotalDto.text(subtotalDto.toFixed(2));
+                $totalIva.text(totalIva.toFixed(2));
+                $total.text((subtotalDto + totalIva).toFixed(2));
+            }
+    
+            // Función para inicializar Select2 y gestionar la selección de productos
+            function initializeSelect2() {
+                $(".producto_select").select2({
+                    placeholder: "Seleccione un producto",
+                    allowClear: true,
+                    language: { noResults: () => "No se encontraron resultados" }
+                }).on('select2:unselect', function() {
+                    handleProductSelection($(this));
+                });
+            }
+    
+            // Función para manejar la selección de productos
+            function handleProductSelection($select) {
+                const productoId = $select.val();
+                const previousValue = $select.data('previous-value');
+    
+                if (productoId && !selectedProducts.has(productoId)) {
+                    selectedProducts.add(productoId);
+                } else if (productoId) {
+                    $select.val(null).trigger('change');
+                } else if (previousValue) {
+                    selectedProducts.delete(previousValue);
+                }
+    
+                $select.data('previous-value', productoId);
+                updateProductSelection();
+            }
+    
+            // Función para actualizar el estado de bloqueo de productos
+            function updateProductSelection() {
+                $(".producto_select").each(function() {
+                    const $select = $(this);
+                    const currentSelection = $select.val();
+                    $select.find('option').each(function() {
+                        const $option = $(this);
+                        $option.prop('disabled', selectedProducts.has($option.val()) && $option.val() !== currentSelection);
+                    });
+                    $select.trigger('change.select2');
+                });
+            }
+    
+            // Función para añadir un nuevo ítem a la factura
+            function addItem() {
+                const newItemRow = `
+                    <tr>
+                        <td class="item-number"></td>
+                        <td>
+                            <select class="form-control producto_select">
+                                <option value="" hidden>Seleccione un producto</option>
+                                {% for producto in productos %}
+                                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><input type="number" class="form-control cantidad" min="0" value="1"></td>
+                        <td><input type="number" class="form-control precio-unitario" min="0" step="0.01" readonly></td>
+                        <td><input type="number" class="form-control iva" min="0" step="1" value="19"></td>
+                        <td class="total">0.00</td>
+                        <td class="acciones"><button type="button" class="remove-item btn-remove">Eliminar</button></td>
+                    </tr>
+                `;
+                $invoiceItems.append(newItemRow);
+                initializeSelect2();
+                updateItemNumbers();
+                updateProductSelection();
+                preventNegativeInputs();
+            }
+    
+            // Función para validar entradas negativas
+            function preventNegativeInputs() {
+                $('.cantidad, .iva, #descuento').on('input', function() {
+                    if ($(this).val() < 0) $(this).val(0);
+                });
+            }
+    
+            // Actualizar números de ítems y manejar eventos comunes
+            function updateItemNumbers() {
+                $invoiceItems.find('tr').each((index, row) => $(row).find(".item-number").text(index + 1));
+            }
+    
+            $clienteSelect.change(() => updateClientData($clienteSelect.val() || ''));
+            $invoiceItems.on('change', '.producto_select', function() {
+                handleProductSelection($(this));
+                updateProductDetails($(this).val(), $(this).closest('tr'));
+                updateTotals();
+            });
+    
+            $invoiceItems.on('input', '.cantidad, .precio-unitario, .iva', updateTotals);
+            $descuento.on("input", updateTotals);
+            $('#add-item').click(addItem);
+            $invoiceItems.on('click', '.remove-item', function() {
+                selectedProducts.delete($(this).closest('tr').find('.producto_select').val());
+                $(this).closest('tr').remove();
+                updateItemNumbers();
+                updateTotals();
+                updateProductSelection();
+            });
+    
+            initializeSelect2();
+            preventNegativeInputs();
+            $("#print-invoice").click(() => window.print());
+        });
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const fechaEmision = document.getElementById('fecha_emision');
+            fechaEmision.value = new Date().toISOString().slice(0, 16);
+        });
+    </script>
+
+</body>
+</html>

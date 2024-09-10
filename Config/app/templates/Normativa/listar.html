@@ -1,0 +1,80 @@
+{% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
+{% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
+{% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
+<tr>
+    <td colspan="200">
+        {# Celda que ocupa varias columnas para el botón de acceso a productos #}
+        <div class="d-flex justify-content-start flex-wrap">
+            <a href="{% url 'app:producto_listar' %}" class="btn btn-primary btn-sm mx-1"
+                style="background-color: #4a8193; border: 1px solid #4a8193; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-decoration: none;"
+                onmouseover="this.style.backgroundColor='#214d8c'; this.style.borderColor='#4a8193';"
+                onmouseout="this.style.backgroundColor='#4a8193'; this.style.borderColor='#4a8193';">
+                <i class="fas fa-box fa-xs"></i> Producto
+            </a>
+            {# Botón para redirigir a la lista de productos, con estilos personalizados y efectos al pasar el ratón #}
+        </div>
+    </td>
+</tr>
+
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Numero de decreto</th>
+    <th scope="col">Descripción</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{# Bloque para definir las filas de la tabla #}
+{% for no in object_list %}
+<tr>
+    <td>{{ no.id }}</td>
+    <td>{{ no.decreto }}</td>
+    <td>{{ no.descripcion }}</td>
+    <td>{{ no.producto }}</td>
+    <td>
+        <a href="{% url 'app:normativa_editar' no.id %}" class="btn btn-info btn-sm" title="Editar normativa">
+            <i class="fas fa-edit"></i>
+        </a>
+        {# Enlace para editar la normativa #}
+        <a href="{% url 'app:normativa_eliminar' no.id %}" class="btn btn-danger btn-sm" title="Eliminar normativa">
+            <i class="fas fa-trash"></i>
+        </a>
+        {# Enlace para eliminar la normativa #}
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
+<form method="GET" action="{% url 'app:normativa_listar' %}">
+    <div class="form-group">
+        <label for="id">Id</label>
+        <input type="text" class="form-control" id="id" name="id" placeholder="Ingrese el ID">
+        {# Campo para ingresar el ID de la normativa #}
+    </div>
+    <div class="form-group">
+        <label for="decreto">Número de decreto</label>
+        <input type="text" class="form-control" id="decreto" name="decreto" placeholder="Ingrese el número de decreto">
+        {# Campo para ingresar el número de decreto #}
+    </div>
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion"
+            placeholder="Ingrese la descripción">
+        {# Campo para ingresar la descripción de la normativa #}
+    </div>
+    <div class="form-group">
+        <label for="producto">Producto</label>
+        <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el producto">
+        {# Campo para ingresar el producto asociado a la normativa #}
+    </div>
+</form>
+{% endblock %}

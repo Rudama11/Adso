@@ -1,4 +1,5 @@
-{% load static %}  # Carga los archivos estáticos en la plantilla.
+{% load static %}  
+<!-- Carga los archivos estáticos en la plantilla. -->
 
 <aside class="main-sidebar sidebar-light-primary elevation-4" style="background: linear-gradient(135deg, #003366, #3399FF);">
     <!-- Panel lateral principal con un fondo degradado. -->
@@ -29,7 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'app:cliente_listarC' %}" class="nav-link">
+                    <a href="{% url 'app:cliente_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-user-tie" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Clientes</p></b>
                         <!-- Enlace al módulo de clientes con icono. -->
@@ -37,7 +38,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'app:compras_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart" style="color: #fff;"></i>
+                        <i class="nav-icon fas fa-credit-card" style="color: hsl(53, 82%, 67%);"></i>
                         <b><p style="color: #fff;">Compras</p></b>
                     </a>
                 </li>
@@ -49,13 +50,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'app:persona_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-users" style="color: #fff;"></i>
-                        <b><p style="color: #fff;">Persona</p></b>
-                        <!-- Enlace al módulo de personas con icono. -->
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{% url 'app:producto_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-hard-hat" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Productos</p></b>
@@ -63,21 +57,28 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'app:proveedor_listarP' %}" class="nav-link">
+                    <a href="{% url 'app:proveedor_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-truck" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Proveedor</p></b>
                         <!-- Enlace al módulo de proveedores con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{% url 'app:listar_stock' %}" class="nav-link">
+                        <i class="nav-icon fas fa-cubes" style="color: #fff; margin-right: 5px;"></i>
+                        <b><p style="color: #fff; display: inline;">Stock</p></b>
+                        <!-- Enlace al módulo de stock con icono. -->
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{% url 'app:tipo_listar' %}" class="nav-link">
-                        <i class="nav-icon fas fa-tags" style="color: #fff;"></i>
-                        <b><p style="color: #fff;">Tipo</p></b>
+                        <i class="nav-icon fas fa-clipboard-list" style="color: #fff;"></i>
+                        <b><p style="color: #fff;">Tipo producto</p></b>
                         <!-- Enlace al módulo de tipos con icono. -->
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'app:ubicacion_listarU' %}" class="nav-link">
+                    <a href="{% url 'app:ubicacion_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-map-marker-alt" style="color: #fff;"></i>
                         <b><p style="color: #fff;">Ubicación</p></b>
                         <!-- Enlace al módulo de ubicaciones con icono. -->
