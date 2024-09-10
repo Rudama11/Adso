@@ -90,6 +90,23 @@ class UsuarioUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
 
+    def form_valid(self, form):
+        # Guardar el formulario del modelo Usuario
+        response = super().form_valid(form)
+        
+        # Obtener el usuario relacionado
+        usuario = self.get_object()
+        user = usuario.user
+        
+        # Actualizar el modelo User con los datos del formulario
+        user.username = form.cleaned_data['usuario']
+        user.email = form.cleaned_data['correo']
+        if form.cleaned_data.get('password'):
+            user.set_password(form.cleaned_data['password'])
+        user.save()
+        
+        return response
+
 class UsuarioDeleteView(DeleteView):
     model = Usuario
     template_name = 'Usuario/eliminar.html'
