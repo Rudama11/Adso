@@ -42,7 +42,7 @@
     <td>{{ c.nombre }}</td>
     <td>{{ c.descripcion }}</td>
     <td>
-        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
+        <a href="{% url 'app:categoria_editarC' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
         {# Enlace para editar la categoría #}
@@ -61,5 +61,4 @@
     </td>
 </tr>
 {% endfor %}
-{# Itera sobre la lista de categorías y muestra los datos en cada fila #}
 {% endblock %}
