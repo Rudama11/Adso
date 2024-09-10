@@ -87,11 +87,10 @@
             {% endif %}
         });
     </script>
-</body>
-
-</html>
-
-
+    <!-- Scripts de Accesibilidad y Otros -->
+    <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+    <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+    <script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}?v1.1"></script>
     <script>
         const requirements = document.querySelectorAll('.requirement-item');
         const passwordInput = document.querySelector('#id_new_password1');
@@ -107,4 +106,5 @@
         });
     </script>
 </body>
+
 </html>
