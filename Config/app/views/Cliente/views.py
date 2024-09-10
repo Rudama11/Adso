@@ -11,7 +11,7 @@ from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúra
 
 class ClienteListView(ListView):
     model = Cliente
-    template_name = 'Cliente/listarC.html'
+    template_name = 'Cliente/listar.html'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -62,7 +62,7 @@ class ClienteListView(ListView):
 class ClienteCreateView(CreateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/crearC.html'
+    template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def form_valid(self, form):
@@ -83,7 +83,7 @@ class ClienteCreateView(CreateView):
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/crearC.html'
+    template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def form_valid(self, form):
@@ -103,7 +103,7 @@ class ClienteUpdateView(UpdateView):
     
 class ClienteDeleteView(DeleteView):
     model = Cliente
-    template_name = 'Cliente/eliminarC.html'
+    template_name = 'Cliente/eliminar.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def get_context_data(self, **kwargs):
