@@ -83,7 +83,7 @@ class ClienteCreateView(CreateView):
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/crear.html'
+    template_name = 'Cliente/editarCli.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def form_valid(self, form):
