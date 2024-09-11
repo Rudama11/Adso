@@ -76,7 +76,7 @@
                 <!-- Opción para editar perfil -->
                 <a href="{% url 'app:usuario_listar' %}" class="dropdown-item">
                     <i class="fas fa-users" style="margin-right: 10px;"></i> Usuarios
-                    <span class="float-right text-muted text-sm">3 mins</span>
+                    <span class="float-right text-muted text-sm">Registrados: {{ user_count }}</span>
                 </a>
                 
                 <div class="dropdown-divider"></div>
