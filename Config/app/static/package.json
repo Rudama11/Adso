@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/node": "^22.3.0",
+    "bootstrap-icons": "^1.11.3",
     "sienna-accessibility": "^1.0.0"
   }
 }

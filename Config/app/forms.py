@@ -4,6 +4,20 @@ from django import forms
 from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
+
+#---------------------------------------------------------- Usuario ----------------------------------------------------------
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
@@ -252,23 +266,6 @@ class VentaForm(ModelForm):
             ),
         }
 
-#---------------------------------------------------------- Persona ----------------------------------------------------------
-class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(), required=False)
-    usuario = forms.CharField(max_length=20)
-    correo = forms.EmailField(max_length=50)
-
-    class Meta:
-        model = Usuario
-        fields = ['rol', 'nombres', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'usuario', 'password']
-    
-    def clean_password(self):
-        # Si la contraseña no se modifica, no hacer nada
-        password = self.cleaned_data.get('password')
-        if password:
-            return password
-        return None
-
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
@@ -317,6 +314,9 @@ class ComprasForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
         self.fields['total'].widget.attrs['readonly'] = True
+        # Establecer la fecha actual por defecto si no se ha proporcionado
+        if not self.instance.pk:  # Solo si es una nueva instancia
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
@@ -324,10 +324,10 @@ class ComprasForm(forms.ModelForm):
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),  # Cambiado a Select para productos
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),  # Indicar que es en céntimos
+            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),  # Campo total como solo lectura
+            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
             'proveedor': forms.Select(attrs={'autofocus': True}),
         }

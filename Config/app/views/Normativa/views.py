@@ -49,7 +49,7 @@ class NormativaListView(ListView):
 class NormativaCreateView(CreateView):
     model = Normativa
     form_class = NormativaForm
-    template_name = 'Normativa/crearN.html'
+    template_name = 'Normativa/crear.html'
     success_url = reverse_lazy('app:normativa_listar')
 
     def get_context_data(self, **kwargs):
@@ -74,7 +74,7 @@ class NormativaUpdateView(UpdateView):
 
 class NormativaDeleteView(DeleteView):
     model = Normativa
-    template_name = 'Normativa/eliminarN.html'
+    template_name = 'Normativa/eliminar.html'
     success_url = reverse_lazy('app:normativa_listar')
 
     def get_context_data(self, **kwargs):

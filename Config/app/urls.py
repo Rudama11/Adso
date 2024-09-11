@@ -8,9 +8,9 @@ from app.views.Tipo.views import *
 from app.views.Producto.views import *
 from app.views.Normativa.views import *
 from app.views.Ventas.views import *
-from app.views.Usuario.views import *
 from app.views.Compras.views import *
 from app.views.Stock.views import *
+from app.views.Usuario.views import *
 
 app_name = 'app'
 
@@ -20,14 +20,14 @@ urlpatterns = [
     
     path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'),
     path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
-    path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editarC'),
+    path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editar'),
     path('categoria/eliminar/<int:pk>/', CategoriaDeleteView.as_view(), name='categoria_eliminar'), 
     
     #-------------------------------------------------- Cliente ----------------------------------------------------
     
-    path('cliente/listar/', ClienteListView.as_view(), name='cliente_listarC'),
+    path('cliente/listar/', ClienteListView.as_view(), name='cliente_listar'),
     path('cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
-    path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editarCli'),
+    path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
     path('cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
     
     #-------------------------------------------------- Compras ----------------------------------------------------
@@ -42,25 +42,27 @@ urlpatterns = [
     
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
     path('normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
-    path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editarN'),
+    path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
     path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
+    
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
-    path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
-    path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
-    path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
-    path('usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
+    path('usuario/register/', register, name='register'),
+    path('usuario/profile/', profile, name='profile'),
+    path('usuario/edit_profile/', edit_profile, name='edit_profile'),
+    path('usuario/users/', user_list, name='user_list'),
+    path('usuario/users/<int:user_id>/', user_detail, name='user_detail'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
     path('producto/listar/', ProductoListView.as_view(), name='producto_listar'),
     path('producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
-    path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editarP'),
+    path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editar'),
     path('producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
     
     #-------------------------------------------------- Proveedor --------------------------------------------------
     
-    path('proveedor/listar/', ProveedorListView.as_view(), name='proveedor_listarP'),
+    path('proveedor/listar/', ProveedorListView.as_view(), name='proveedor_listar'),
     path('proveedor/crear/', ProveedorCreateView.as_view(), name='proveedor_crear'),
     path('proveedor/editar/<int:pk>/', ProveedorUpdateView.as_view(), name='proveedor_editar'),
     path('proveedor/eliminar/<int:pk>/', ProveedorDeleteView.as_view(), name='proveedor_eliminar'),
@@ -69,12 +71,12 @@ urlpatterns = [
 
     path('tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
     path('tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
-    path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editarTP'),
+    path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editar'),
     path('tipo/eliminar/<int:pk>/', TipoDeleteView.as_view(), name='tipo_eliminar'),
 
     #-------------------------------------------------- Ubicación --------------------------------------------------
     
-    path('ubicacion/listar/', UbicacionListView.as_view(), name='ubicacion_listarU'),
+    path('ubicacion/listar/', UbicacionListView.as_view(), name='ubicacion_listar'),
     path('ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
     path('ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),

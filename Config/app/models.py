@@ -5,9 +5,12 @@ from django.core.validators import *
 from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
-from django.contrib.auth.models import User
 import re
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
+from django.utils import timezone
 
+
+# ----------------------------------------------- Validaciones -----------------------------------------------
 
 # Validación de campos con letras, espacios y puntos
 def validate_nombre(value):
@@ -19,6 +22,40 @@ def validate_campos(value):
     if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.\d]+$', value):
         raise ValidationError('El nombre solo puede contener letras, espacios, puntos y números.')
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, password=None, **extra_fields):
+        if not username:
+            raise ValueError('El campo Nombre de usuario debe estar configurado')
+        user = self.model(username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(username, password, **extra_fields)
+
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    id = models.AutoField(primary_key=True)
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(null=True, blank=True)
+    is_superuser = models.BooleanField(default=False)
+    username = models.CharField(max_length=150, unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    email = models.EmailField(unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    def __str__(self):
+        return self.username
+    
 
 # ----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):
@@ -86,29 +123,7 @@ class Ubicacion(models.Model):
         verbose_name_plural = 'Ubicaciones'
         db_table = 'ubicacion'
         ordering = ['id']
-        
-#----------------------------------------------- Usuarios -----------------------------------------------
 
-class Usuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='usuario')
-    rol = models.CharField(max_length=1, choices=Roles, default='1', verbose_name='Rol de usuario')
-    nombres = models.CharField(max_length=100, validators=[MinLengthValidator(3), validate_nombre], verbose_name='Nombres')
-    tipo_documento = models.CharField(max_length=3, choices=Tipo_Documento_Choices, default='CC', verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10, validators=[MinLengthValidator(8), RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')], verbose_name='Número de Documento', null=True, blank=True)
-    correo = models.EmailField(max_length=50, validators=[EmailValidator()], verbose_name='Correo')
-    telefono = models.CharField(max_length=10, validators=[MinLengthValidator(8), RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')], verbose_name='Número de celular', null=True, blank=True)
-    usuario = models.CharField(max_length=20, unique=True, verbose_name='Usuario')
-    password = models.CharField(max_length=20, verbose_name='Contraseña')
-
-    def __str__(self):
-        return f'{self.nombres}'
-
-    class Meta:
-        verbose_name = 'Usuario'
-        verbose_name_plural = 'Usuarios'
-        db_table = 'usuario'
-        ordering = ['id']
-        
 #----------------------------------------------- Cliente -----------------------------------------------
 class Cliente(models.Model):
     tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Usuarios')

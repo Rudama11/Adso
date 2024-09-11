@@ -10,7 +10,7 @@ from app.forms import TipoForm
 
 class TipoListView(ListView):
     model = Tipo 
-    template_name = 'Tipo/listarT.html'
+    template_name = 'Tipo/listar.html'
     
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -46,7 +46,7 @@ class TipoListView(ListView):
 class TipoCreateView(CreateView):
     model = Tipo
     form_class = TipoForm
-    template_name = 'Tipo/crearT.html'
+    template_name = 'Tipo/crear.html'
     success_url = reverse_lazy('app:tipo_listar')
 
     def get_context_data(self, **kwargs):
@@ -59,7 +59,7 @@ class TipoCreateView(CreateView):
 class TipoUpdateView(UpdateView):
     model = Tipo
     form_class = TipoForm
-    template_name = 'Tipo/editarTP.html'
+    template_name = 'Tipo/crear.html'
     success_url = reverse_lazy('app:tipo_listar')
     
     def get_context_data(self, **kwargs):
@@ -71,7 +71,7 @@ class TipoUpdateView(UpdateView):
 
 class TipoDeleteView(DeleteView):
     model = Tipo
-    template_name = 'Tipo/eliminarT.html'
+    template_name = 'Tipo/eliminar.html'
     success_url = reverse_lazy('app:tipo_listar')
 
     def get_context_data(self, **kwargs):

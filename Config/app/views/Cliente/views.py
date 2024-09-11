@@ -11,7 +11,7 @@ from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúra
 
 class ClienteListView(ListView):
     model = Cliente
-    template_name = 'Cliente/listarC.html'
+    template_name = 'Cliente/listar.html'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -62,8 +62,8 @@ class ClienteListView(ListView):
 class ClienteCreateView(CreateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/crearC.html'
-    success_url = reverse_lazy('app:cliente_listarC')
+    template_name = 'Cliente/crear.html'
+    success_url = reverse_lazy('app:cliente_listar')
 
     def form_valid(self, form):
         messages.success(self.request, 'Cliente creado exitosamente.')
@@ -77,13 +77,13 @@ class ClienteCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Cliente'
         context['entidad'] = 'Cliente'
-        context['listar_url'] = reverse_lazy('app:cliente_listarC')
+        context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
 
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/editarCli.html'
+    template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def form_valid(self, form):
@@ -98,17 +98,17 @@ class ClienteUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Cliente'
         context['entidad'] = 'Cliente'
-        context['listar_url'] = reverse_lazy('app:cliente_listarC')
+        context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
     
 class ClienteDeleteView(DeleteView):
     model = Cliente
-    template_name = 'Cliente/eliminarC.html'
-    success_url = reverse_lazy('app:cliente_listarC')
+    template_name = 'Cliente/eliminar.html'
+    success_url = reverse_lazy('app:cliente_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Eliminar Cliente'
         context['entidad'] = 'Cliente'
-        context['listar_url'] = reverse_lazy('app:cliente_listarC')
+        context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
