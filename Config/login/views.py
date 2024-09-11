@@ -11,10 +11,11 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib import messages
 from .forms import PasswordResetForm, SetPasswordForm
-from django.contrib.auth.models import User
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import get_user_model
 
+UserModel = get_user_model()
 class LoginFormView(LoginView):
     template_name="login.html"
     
@@ -48,7 +49,7 @@ class PasswordResetView(FormView):
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        user = User.objects.get(email=email)
+        user = UserModel.objects.get(email=email)
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         reset_url = self.request.build_absolute_uri(
@@ -71,8 +72,8 @@ class PasswordResetConfirmView(FormView):
     def get_user(self, uidb64):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = UserModel.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
             user = None
         return user
 
@@ -102,5 +103,3 @@ class PasswordResetCompleteView(FormView):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Restablecer Contraseña"
         return context       
-    
-    
