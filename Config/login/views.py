@@ -14,6 +14,7 @@ from .forms import PasswordResetForm, SetPasswordForm
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
+from django.views.generic import TemplateView
 
 UserModel = get_user_model()
 class LoginFormView(LoginView):
@@ -67,7 +68,7 @@ class PasswordResetView(FormView):
 class PasswordResetConfirmView(FormView):
     template_name = 'register/password_reset_confirm.html'
     form_class = SetPasswordForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('password_reset_complete')
 
     def get_user(self, uidb64):
         try:
@@ -95,11 +96,10 @@ class PasswordResetConfirmView(FormView):
             context['title'] = 'Restablecimiento de contraseña fallido'
         return context
 
-class PasswordResetCompleteView(FormView):
+class PasswordResetCompleteView(TemplateView):
     template_name = "register/password_reset_complete.html"
-    # success_url = reverse_lazy('login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titulo"] = "Restablecer Contraseña"
-        return context       
+        context["titulo"] = "Restablecimiento Completo"
+        return context
