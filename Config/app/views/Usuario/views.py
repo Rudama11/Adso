@@ -1,42 +1,120 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from app.forms import CustomUserCreationForm, CustomUserChangeForm
-from app.models import CustomUser
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.utils.decorators import method_decorator
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from app.models import Usuario
+from app.forms import UsuarioForm
+from app.choices import Roles, Tipo_Documento_Choices  # Asegúrate de importar tus choices aquí
 
-def register(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('usuario/profile')  # Redirige a la página de perfil o cualquier otra página
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'usuario/register.html', {'form': form})
+class UsuarioListView(ListView):
+    model = Usuario
+    template_name = 'Usuario/listar.html'
 
-@login_required
-def profile(request):
-    return render(request, 'usuario/profile.html')
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-    else:
-        form = CustomUserChangeForm(instance=request.user)
-    return render(request, 'usuario/edit_profile.html', {'form': form})
+    def post(self, request, *args, **kwargs):
+        data = {'Nombre': 'Lorena'}
+        return JsonResponse(data)
 
-@login_required
-def user_list(request):
-    users = CustomUser.objects.all()
-    return render(request, 'usuario/user_list.html', {'users': users})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Listado de Usuarios'
+        context['entidad'] = 'Usuario'
+        context['crear_url'] = reverse_lazy('app:usuario_crear')
+        context['roles'] = Roles
+        context['tipo_documento'] = Tipo_Documento_Choices
+        return context
 
-@login_required
-def user_detail(request, user_id):
-    user = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'usuario/user_detail.html', {'user': user})
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        rol = self.request.GET.get('rol')
+        nombres = self.request.GET.get('nombres')
+        apellidos = self.request.GET.get('apellidos')
+        tipo_documento = self.request.GET.get('tipo_documento')
+        correo = self.request.GET.get('correo')
+        telefono = self.request.GET.get('telefono')
+        numero_documento = self.request.GET.get('numero_documento')
+        usuario = self.request.GET.get('usuario')
+        password = self.request.GET.get('password')
+
+        if rol:
+            queryset = queryset.filter(rol=rol)
+        if nombres:
+            queryset = queryset.filter(nombres__icontains=nombres)
+        if apellidos:
+            queryset = queryset.filter(apellidos__icontains=apellidos)
+        if tipo_documento:
+            queryset = queryset.filter(tipo_documento=tipo_documento)
+        if correo:
+            queryset = queryset.filter(correo__icontains=correo)
+        if telefono:
+            queryset = queryset.filter(telefono__icontains=telefono)
+        if numero_documento:
+            queryset = queryset.filter(numero_documento__icontains=numero_documento)
+        if usuario:
+            queryset = queryset.filter(usuario__icontains=usuario)
+        if password:
+            queryset = queryset.filter(password__icontains=password)
+
+        return queryset
+
+class UsuarioCreateView(CreateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'Usuario/crear.html'
+    success_url = reverse_lazy('app:usuario_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
+        return context
+
+class UsuarioUpdateView(UpdateView):
+    model = Usuario
+    form_class = UsuarioForm
+    template_name = 'Usuario/editarUsu.html'
+    success_url = reverse_lazy('app:usuario_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Actualizar Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
+        return context
+
+    def form_valid(self, form):
+        # Guardar el formulario del modelo Usuario
+        response = super().form_valid(form)
+        
+        # Obtener el usuario relacionado
+        usuario = self.get_object()
+        user = usuario.user
+        
+        # Actualizar el modelo User con los datos del formulario
+        user.username = form.cleaned_data['usuario']
+        user.email = form.cleaned_data['correo']
+        if form.cleaned_data.get('password'):
+            user.set_password(form.cleaned_data['password'])
+        user.save()
+        
+        return response
+
+class UsuarioDeleteView(DeleteView):
+    model = Usuario
+    template_name = 'Usuario/eliminar.html'
+    success_url = reverse_lazy('app:usuario_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Eliminar Usuario'
+        context['entidad'] = 'Usuario'
+        context['listar_url'] = reverse_lazy('app:usuario_listar')
+        return context

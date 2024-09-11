@@ -133,26 +133,27 @@ class ClienteForm(forms.ModelForm):
         model = Cliente
         fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
 
-    def __init__(self, *args, **kwargs):
-        self.instance_id = kwargs.pop('instance_id', None)
-        super().__init__(*args, **kwargs)
-
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get('numero_documento')
-        if self.instance_id:
-            # Permitir el mismo número de documento si es la instancia actual
-            if Cliente.objects.exclude(pk=self.instance_id).filter(numero_documento=numero_documento).exists():
+        # Verificamos si estamos en el modo de edición (si existe una instancia)
+        if self.instance and self.instance.pk:
+            # Si estamos editando, verificamos que el número de documento no exista en otro cliente
+            if Cliente.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
                 raise ValidationError("Ya existe una persona con ese número de documento.")
         else:
+            # Si estamos creando uno nuevo, verificamos que no exista ya el número de documento
             if Cliente.objects.filter(numero_documento=numero_documento).exists():
                 raise ValidationError("Ya existe una persona con ese número de documento.")
         return numero_documento
 
     def clean(self):
         cleaned_data = super().clean()
-        # Validación adicional si es necesario
+        # Puedes añadir más validaciones si es necesario
         return cleaned_data
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
+from django import forms
+from .models import Proveedor
+
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -171,29 +172,22 @@ class ProveedorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombres'].widget.attrs['autofocus'] = True
-        if self.instance and self.instance.tipo_persona == 'PJ':
-            self.fields['nombres'].widget.attrs['style'] = 'display:block;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
-        else:
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:block;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
     def clean(self):
         cleaned_data = super().clean()
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        if Proveedor.objects.filter(correo=correo).exists():
+        # Validación para correo, ignorando la instancia actual
+        if Proveedor.objects.exclude(pk=self.instance.pk).filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        if Proveedor.objects.filter(numero_documento=numero_documento).exists():
+        # Validación para número de documento, ignorando la instancia actual
+        if Proveedor.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data
+
 
 #--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):

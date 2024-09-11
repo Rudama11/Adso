@@ -54,7 +54,7 @@ class UbicacionCreateView(CreateView):
 class UbicacionUpdateView(UpdateView):
     model = Ubicacion
     form_class = UbicacionForm
-    template_name = 'Ubicacion/crear.html'
+    template_name = 'Ubicacion/editarUbi.html'
     success_url = reverse_lazy('app:ubicacion_listar')
 
     def get_context_data(self, **kwargs):
