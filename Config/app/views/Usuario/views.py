@@ -2,6 +2,17 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView
 from app.models import CustomUser
 from app.forms import UsuarioForm
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def perfil_view(request):
+    user = request.user
+    last_login = user.last_login
+    context = {
+        'last_login': last_login,
+    }
+    return render(request, 'perfil.html', context)
 
 class UsuarioListView(ListView):
     model = CustomUser
