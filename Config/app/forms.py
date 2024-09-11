@@ -9,15 +9,51 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = CustomUser
-        fields = ('username','nombres', 'email')
+from django import forms
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from .models import CustomUser
 
-class CustomUserChangeForm(UserChangeForm):
+class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
+                message=(
+                    'La contraseña debe tener entre 8 y 20 caracteres, '
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
+                ),
+            )
+        ]
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirma tu contraseña'
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'nombres','email', 'is_active', 'is_staff')
+        fields = ['username', 'nombres', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise ValidationError('Las contraseñas no coinciden.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
