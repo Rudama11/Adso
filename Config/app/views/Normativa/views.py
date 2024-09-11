@@ -62,7 +62,7 @@ class NormativaCreateView(CreateView):
 class NormativaUpdateView(UpdateView):
     model = Normativa
     form_class = NormativaForm
-    template_name = 'Normativa/crear.html'
+    template_name = 'Normativa/editarN.html'
     success_url = reverse_lazy('app:normativa_listar')
     
     def get_context_data(self, **kwargs):
