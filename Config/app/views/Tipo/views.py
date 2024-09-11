@@ -59,11 +59,7 @@ class TipoCreateView(CreateView):
 class TipoUpdateView(UpdateView):
     model = Tipo
     form_class = TipoForm
-<<<<<<< Updated upstream
-    template_name = 'Tipo/crearT.html'
-=======
     template_name = 'Tipo/editarTP.html'
->>>>>>> Stashed changes
     success_url = reverse_lazy('app:tipo_listar')
     
     def get_context_data(self, **kwargs):

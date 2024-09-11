@@ -42,14 +42,8 @@ urlpatterns = [
     
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
     path('normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
-<<<<<<< Updated upstream
-    path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
-    path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminarN'),
-=======
     path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editarN'),
     path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
->>>>>>> Stashed changes
-    
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
     path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),

@@ -83,13 +83,8 @@ class ClienteCreateView(CreateView):
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-<<<<<<< Updated upstream
-    template_name = 'Cliente/crearC.html'
-    success_url = reverse_lazy('app:cliente_listarC')
-=======
     template_name = 'Cliente/editarCli.html'
     success_url = reverse_lazy('app:cliente_listar')
->>>>>>> Stashed changes
 
     def form_valid(self, form):
         messages.success(self.request, 'Cliente actualizado exitosamente.')
