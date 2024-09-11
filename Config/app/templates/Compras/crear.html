@@ -1,30 +1,90 @@
-{% extends 'crear.html' %}
+{% extends 'listar.html' %}
+{% load widget_tweaks %}
 
-{% block content %}
+{% block contenido %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <div>
-        <label for="id_precio">Precio:</label>
-        <input type="number" id="id_precio" name="precio" placeholder="Ingrese el precio en céntimos" value="{{ form.precio.value|default_if_none:'' }}" oninput="calculateTotal()" required>
-        <span id="precio_format">{{ form.precio.value|default_if_none:0|floatformat:0 }} COP</span>
+<form method="post" action="." id="createForm">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>
+                {{titulo}}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    ×
+                </button>
+                <h5>
+                    <i class="icon fas fa-ban"></i> 
+                    {% if form.instance.pk %}
+                        Ha ocurrido un error al intentar {{ titulo }}.
+                    {% else %}
+                        Ha ocurrido un error al intentar crear {{ titulo }}.
+                    {% endif %}
+                </h5>
+                <ul>
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="id_num_factura">{{ form.num_factura.label }}</label>
+                {{ form.num_factura|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group">
+                <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
+                {{ form.fecha_compra|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group">
+                <label for="id_producto">{{ form.producto.label }}</label>
+                {{ form.producto|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group">
+                <label for="id_proveedor">{{ form.proveedor.label }}</label>
+                {{ form.proveedor|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            <div class="form-group">
+                <label for="id_cantidad">{{ form.cantidad.label }}</label>
+                {{ form.cantidad|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_cantidad'}}
+            </div>
+            <div class="form-group">
+                <label for="id_precio">{{ form.precio.label }}</label>
+                {{ form.precio|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_precio'}}
+            </div>
+            <div class="form-group">
+                <label for="id_iva">{{ form.iva.label }}</label>
+                {{ form.iva|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_iva'}}
+            </div>
+            <!-- Campo total con texto personalizado -->
+            <div class="form-group">
+                <label for="id_total">Total $(COP)</label>
+                <div class="input-group">
+                    <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly class="form-control">
+                    <div class="input-group-append">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
     </div>
-
-    <div>
-        <label for="id_iva">IVA (%):</label>
-        {{ form.iva }}
-    </div>
-
-    <div>
-        <label for="id_total">Total:</label>
-        <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly>
-        <span id="total_format">{{ form.total.value|default_if_none:0|floatformat:0 }} COP</span>
-    </div>
-
-    <button type="submit">Guardar</button>
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 function formatCurrency(value) {
@@ -35,27 +95,86 @@ function formatCurrency(value) {
 }
 
 function calculateTotal() {
-    var precio = parseInt(document.getElementById("id_precio").value) || 0;
-    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
-    var iva = parseInt(document.getElementById("id_iva").value) || 0;
+    var precio = parseFloat(document.getElementById("id_precio").value) || 0;
+    var cantidad = parseFloat(document.getElementById("id_cantidad").value) || 0;
+    var iva = parseFloat(document.getElementById("id_iva").value) || 0;
 
     // Calcular total
     var subtotal = precio * cantidad;
     var total = subtotal + (subtotal * iva / 100);
 
     // Actualizar el campo de total en el formulario
-    document.getElementById("id_total").value = total;
-
-    // Mostrar el total formateado con la moneda
-    document.getElementById("total_format").textContent = formatCurrency(total);
-
-    // Formatear precio también
-    document.getElementById("precio_format").textContent = formatCurrency(precio);
+    document.getElementById("id_total").value = formatCurrency(total);
 }
+
+// Añadir eventos a los campos
+document.getElementById("id_cantidad").addEventListener('input', calculateTotal);
+document.getElementById("id_precio").addEventListener('input', calculateTotal);
+document.getElementById("id_iva").addEventListener('input', calculateTotal);
 
 // Inicializar la función cuando la página carga
 window.onload = function() {
     calculateTotal();
 }
+
+document.getElementById('confirmButton').addEventListener('click', function(e) {
+    e.preventDefault(); 
+    
+    // Validar que los campos no estén vacíos
+    let isValid = true;
+    let formFields = document.querySelectorAll('#createForm .form-control');
+    
+    formFields.forEach(function(field) {
+        if (field.value.trim() === '') {
+            isValid = false;
+            field.classList.add('is-invalid');
+        } else {
+            field.classList.remove('is-invalid');
+        }
+    });
+
+    if (isValid) {
+        // Mostrar alerta de éxito y luego enviar el formulario
+        Swal.fire({
+            title: 'Registrado Correctamente',
+            text: 'La compra ha sido registrada exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'Continuar',
+            backdrop: true,
+            timer:3000,
+            timerProgressBar: true,
+            position: 'center',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            stopKeydownPropagation: false,
+            buttonsStyling: true,
+            showCloseButton: true,
+            closeButtonAriaLabel: 'Cerrar alerta',
+        }).then(() => {
+            document.getElementById('createForm').submit();
+        });
+    } else {
+        // Si hay campos vacíos, muestra la alerta de error
+        Swal.fire({
+            title: 'Error',
+            text: 'Debe llenar todos los campos de registro',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            backdrop: true,
+            timer:3000,
+            timerProgressBar:true,
+            position: 'center',
+            allowOutsideClick: true,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            stopKeydownPropagation: false,
+            buttonsStyling: true,
+            showCloseButton: true,
+            closeButtonAriaLabel: 'Cerrar alerta',
+        });
+    }
+});
 </script>
+
 {% endblock %}
