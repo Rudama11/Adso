@@ -6,10 +6,10 @@
     
     <!-- Logo de la marca -->
     <a href="#" class="brand-link d-flex align-items-center" style="height: 120px; padding-left: 0; justify-content: flex-start;">
-        <img src="{% static 'img/logoConaldex.jfif' %}" alt="Conaldex Logo" class="brand-image img-circle elevation-3" style="opacity: .9; border-radius: 50%; height: 120px; width: 120px; margin-right: 20px;">
+        <img src="{% static 'img/logoConaldex.jfif' %}" alt="Conaldex Logo" class="brand-image img-circle elevation-3" style="opacity: .9; border-radius: 50%; height: 120px; width: 120px; margin-right: 10px;">
         <!-- Logo de la empresa Conaldex con formato circular. -->
         
-        <span class="brand-text font-weight-bold" style="color: #fff; font-size: 1.3rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: normal; display: flex; align-items: center; margin-left: 0;">Conaldex Boyacá</span>
+        <span class="brand-text font-weight-bold" style="color: #fff; font-size: 1.3rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-style: normal;">Conaldex Boyacá</span>
         <!-- Texto de la marca con estilo personalizado. -->
     </a>
 
@@ -19,77 +19,76 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Encabezado de la sección -->
-                <li class="nav-header" style="color: #fff;">Módulos</li>
+                <li class="nav-header" style="color: #fff; padding: 10px 15px; font-size: 1rem; font-weight: bold;">Módulos</li>
                 
                 <!-- Elementos del menú -->
                 <li class="nav-item">
                     <a href="{% url 'app:categoria_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-layer-group" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Categoría</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Categoría</b></p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{% url 'app:ubicacion_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-map-marker-alt" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Ubicación</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Ubicación</b></p>
                     </a>
                 </li>
                 
                 <li class="nav-item">
                     <a href="{% url 'app:cliente_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-user-tie" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Clientes</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Clientes</b></p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{% url 'app:proveedor_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-truck" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Proveedor</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Proveedor</b></p>
                     </a>
                 </li>
-
 
                 <li class="nav-item">
                     <a href="{% url 'app:tipo_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-clipboard-list" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Tipo producto</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Tipo producto</b></p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{% url 'app:producto_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-hard-hat" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Productos</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Productos</b></p>
                     </a>
                 </li>
 
-                <li class="nav-item"></li>
+                <li class="nav-item">
                     <a href="{% url 'app:compras_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-credit-card" style="color: hsl(53, 82%, 67%);"></i>
-                        <p style="color: #fff;"><b>Compras</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Compras</b></p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{% url 'app:normativa_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-balance-scale" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Normativas</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Normativas</b></p>
                     </a>
                 </li>
                 
                 <li class="nav-item">
                     <a href="{% url 'app:listar_stock' %}" class="nav-link">
-                        <i class="nav-icon fas fa-cubes" style="color: #fff; margin-right: 5px;"></i>
-                        <p style="color: #fff;"><b>Stock</b></p>
+                        <i class="nav-icon fas fa-cubes" style="color: #fff;"></i>
+                        <p style="color: #fff; margin-left: 10px;"><b>Stock</b></p>
                     </a>
                 </li>
                 
                 <li class="nav-item">
                     <a href="{% url 'app:venta_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart" style="color: #fff;"></i>
-                        <p style="color: #fff;"><b>Ventas</b></p>
+                        <p style="color: #fff; margin-left: 10px;"><b>Ventas</b></p>
                     </a>
                 </li>
             </ul>

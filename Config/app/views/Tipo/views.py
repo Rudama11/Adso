@@ -59,7 +59,7 @@ class TipoCreateView(CreateView):
 class TipoUpdateView(UpdateView):
     model = Tipo
     form_class = TipoForm
-    template_name = 'Tipo/editarTi.html'
+    template_name = 'Tipo/editarTP.html'
     success_url = reverse_lazy('app:tipo_listar')
     
     def get_context_data(self, **kwargs):
