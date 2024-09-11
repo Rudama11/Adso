@@ -49,10 +49,9 @@ urlpatterns = [
     
     path('usuario/register/', register, name='register'),
     path('usuario/profile/', profile, name='profile'),
-    path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='edit_user'),
-    path('usuario/users/', UserListView.as_view(), name='user_list'),
+    path('usuario/edit_profile/', edit_profile, name='edit_profile'),
+    path('usuario/users/', user_list, name='user_list'),
     path('usuario/users/<int:user_id>/', user_detail, name='user_detail'),
-    path('usuario/eliminar/<int:pk>/', UserDeleteView.as_view(), name='delete_user'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
