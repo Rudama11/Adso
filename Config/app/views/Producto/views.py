@@ -77,7 +77,7 @@ class ProductoCreateView(CreateView):
 class ProductoUpdateView(UpdateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'Producto/crear.html'
+    template_name = 'Producto/editarPro.html'
     success_url = reverse_lazy('app:producto_listar')
     
     def get_context_data(self, **kwargs):

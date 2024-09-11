@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from app.models import Proveedor
 from app.forms import ProveedorForm
 from django.contrib import messages
+from django.views.generic import UpdateView
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Importa tus choices
 
 @login_required
@@ -97,12 +98,16 @@ class ProveedorCreateView(CreateView):
 class ProveedorUpdateView(UpdateView):
     model = Proveedor
     form_class = ProveedorForm
-    template_name = 'Proveedor/crear.html'
+    template_name = 'Proveedor/editarProv.html'
     success_url = reverse_lazy('app:proveedor_listar')
 
     def form_valid(self, form):
         messages.success(self.request, 'El proveedor ha sido actualizado exitosamente.')
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'No se pudo actualizar el proveedor. Verifica los errores.')
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -112,7 +117,7 @@ class ProveedorUpdateView(UpdateView):
             'listar_url': reverse_lazy('app:proveedor_listar')
         })
         return context
-
+    
 class ProveedorDeleteView(DeleteView):
     model = Proveedor
     template_name = 'Proveedor/eliminar.html'

@@ -1,4 +1,4 @@
-{% extends 'listar.html' %}
+{% extends 'listar.html' %}  <!-- Cambiar a la plantilla base de tu proyecto -->
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -8,7 +8,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-edit"></i>
-                {{ titulo }}
+                {{ titulo }} <!-- Cambiar según el módulo -->
             </h3>
         </div>
         <div class="card-body">
@@ -33,7 +33,7 @@
             {% endif %}
             {% for field in form.visible_fields %}
             <div class="form-group">
-                <label for="email">{{ field.label }} </label>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
             </div>
             {% endfor %}
@@ -69,12 +69,12 @@
 
         if (isValid) {
             Swal.fire({
-                title: 'Artículo Modificado',
-                text: 'La categoría ha sido modificada exitosamente.',
+                title: 'Modificación Exitosa',
+                text: '{{ titulo }} ha sido modificada exitosamente.',
                 icon: 'success',
                 confirmButtonText: 'Continuar',
                 backdrop: true,
-                timer:3000,
+                timer: 3000,
                 timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: false,
@@ -94,7 +94,7 @@
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 backdrop: true,
-                timer:3000,
+                timer: 3000,
                 timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: true,

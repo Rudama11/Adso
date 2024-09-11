@@ -80,7 +80,7 @@ class UsuarioCreateView(CreateView):
 class UsuarioUpdateView(UpdateView):
     model = Usuario
     form_class = UsuarioForm
-    template_name = 'Usuario/crear.html'
+    template_name = 'Usuario/editarUsu.html'
     success_url = reverse_lazy('app:usuario_listar')
 
     def get_context_data(self, **kwargs):
