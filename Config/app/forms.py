@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 class UsuarioForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput,
+        label='Contraseña',
         validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
