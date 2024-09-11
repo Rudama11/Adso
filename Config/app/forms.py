@@ -5,100 +5,19 @@ from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
-from django import forms
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
-class UsuarioCreateForm(forms.ModelForm):
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        label='Contraseña'
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        label='Confirmar Contraseña'
-    )
-
+class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'first_name', 'last_name')
 
-    def clean_password1(self):
-        password = self.cleaned_data.get('password1')
-        if not self.validate_password(password):
-            raise ValidationError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.")
-        return password
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-        if password1 != password2:
-            raise ValidationError("Las contraseñas no coinciden.")
-        return password2
-
-    def validate_password(self, password):
-        if len(password) < 8:
-            return False
-        if not re.search(r'[A-Z]', password):
-            return False
-        if not re.search(r'[a-z]', password):
-            return False
-        if not re.search(r'[0-9]', password):
-            return False
-        if not re.search(r'[!@#$%^&*()+-]', password):
-            return False
-        return True
-
-class UsuarioChangeForm(forms.ModelForm):
-    password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        label='Nueva Contraseña',
-        required=False
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
-        label='Confirmar Contraseña',
-        required=False
-    )
-
+class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'is_active')
-
-    def clean_password1(self):
-        password = self.cleaned_data.get('password1')
-        if password and not self.validate_password(password):
-            raise ValidationError("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.")
-        return password
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-        if password1 and password1 != password2:
-            raise ValidationError("Las contraseñas no coinciden.")
-        return password2
-
-    def validate_password(self, password):
-        if len(password) < 8:
-            return False
-        if not re.search(r'[A-Z]', password):
-            return False
-        if not re.search(r'[a-z]', password):
-            return False
-        if not re.search(r'[0-9]', password):
-            return False
-        if not re.search(r'[!@#$%^&*()+-]', password):
-            return False
-        return True
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        password = self.cleaned_data.get('password1')
-        if password:
-            user.set_password(password)
-        if commit:
-            user.save()
-        return user
+        fields = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
