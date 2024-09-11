@@ -1,4 +1,4 @@
-{% extends 'listar.html' %}
+{% extends 'body.html' %}
 
 {% load widget_tweaks %}
 
@@ -58,7 +58,6 @@
                 <label for="id_numero_documento">Numero documento</label>
                 {{ form.numero_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_numero_documento'}}
             </div>
-
             {% for field in form.visible_fields %}
             {% if field.name not in "tipo_persona,nombres,razon_social,tipo_documento,numero_documento" %}
             <div class="form-group">
