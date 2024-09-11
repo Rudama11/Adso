@@ -27,7 +27,7 @@ urlpatterns = [
     
     path('cliente/listar/', ClienteListView.as_view(), name='cliente_listar'),
     path('cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
-    path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editar'),
+    path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editarCli'),
     path('cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
     
     #-------------------------------------------------- Compras ----------------------------------------------------
@@ -47,17 +47,17 @@ urlpatterns = [
     
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
-    path('usuario/register/', register, name='register'),
-    path('usuario/profile/', profile, name='profile'),
-    path('usuario/edit_profile/', edit_profile, name='edit_profile'),
-    path('usuario/users/', user_list, name='user_list'),
-    path('usuario/users/<int:user_id>/', user_detail, name='user_detail'),
+    path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
+    path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
+    path('usuario/editar/<int:pk>/',UsuarioUpdateView.as_view(), name='usuario_editar'),
+    path('usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
+    path('perfil/', perfil_view, name='perfil'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
     path('producto/listar/', ProductoListView.as_view(), name='producto_listar'),
     path('producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
-    path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editar'),
+    path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editarP'),
     path('producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
     
     #-------------------------------------------------- Proveedor --------------------------------------------------
@@ -71,7 +71,7 @@ urlpatterns = [
 
     path('tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
     path('tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
-    path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editar'),
+    path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editarTP'),
     path('tipo/eliminar/<int:pk>/', TipoDeleteView.as_view(), name='tipo_eliminar'),
 
     #-------------------------------------------------- Ubicación --------------------------------------------------

@@ -1,18 +1,11 @@
-{% extends 'body.html' %}
+{% extends 'listar.html' %}
 
 {% load widget_tweaks %}
 
 {% block contenido %}
 {% load static %}
 
-<!-- Mostrar mensajes de éxito o error -->
-{% if messages %}
-    <div class="alert alert-success" role="alert">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    </div>
-{% endif %}
+
 
 <form method="post" action=".">
     <div class="card card-default">

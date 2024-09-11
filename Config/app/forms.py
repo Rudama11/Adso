@@ -9,15 +9,51 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name')
+from django import forms
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+from .models import CustomUser
 
-class CustomUserChangeForm(UserChangeForm):
+class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
+                message=(
+                    'La contraseña debe tener entre 8 y 20 caracteres, '
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
+                ),
+            )
+        ]
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirma tu contraseña'
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff')
+        fields = ['username', 'nombres', 'email', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise ValidationError('Las contraseñas no coinciden.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
@@ -133,26 +169,27 @@ class ClienteForm(forms.ModelForm):
         model = Cliente
         fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
 
-    def __init__(self, *args, **kwargs):
-        self.instance_id = kwargs.pop('instance_id', None)
-        super().__init__(*args, **kwargs)
-
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get('numero_documento')
-        if self.instance_id:
-            # Permitir el mismo número de documento si es la instancia actual
-            if Cliente.objects.exclude(pk=self.instance_id).filter(numero_documento=numero_documento).exists():
+        # Verificamos si estamos en el modo de edición (si existe una instancia)
+        if self.instance and self.instance.pk:
+            # Si estamos editando, verificamos que el número de documento no exista en otro cliente
+            if Cliente.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
                 raise ValidationError("Ya existe una persona con ese número de documento.")
         else:
+            # Si estamos creando uno nuevo, verificamos que no exista ya el número de documento
             if Cliente.objects.filter(numero_documento=numero_documento).exists():
                 raise ValidationError("Ya existe una persona con ese número de documento.")
         return numero_documento
 
     def clean(self):
         cleaned_data = super().clean()
-        # Validación adicional si es necesario
+        # Puedes añadir más validaciones si es necesario
         return cleaned_data
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
+from django import forms
+from .models import Proveedor
+
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -171,29 +208,22 @@ class ProveedorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombres'].widget.attrs['autofocus'] = True
-        if self.instance and self.instance.tipo_persona == 'PJ':
-            self.fields['nombres'].widget.attrs['style'] = 'display:block;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
-        else:
-            self.fields['razon_social'].widget.attrs['style'] = 'display:none;'
-            self.fields['razon_social'].widget.attrs['style'] = 'display:block;'
-            self.fields['tipo_documento'].widget.attrs['style'] = 'display:block;'
-            self.fields['numero_documento'].widget.attrs['style'] = 'display:block;'
 
     def clean(self):
         cleaned_data = super().clean()
         correo = cleaned_data.get('correo')
         numero_documento = cleaned_data.get('numero_documento')
 
-        if Proveedor.objects.filter(correo=correo).exists():
+        # Validación para correo, ignorando la instancia actual
+        if Proveedor.objects.exclude(pk=self.instance.pk).filter(correo=correo).exists():
             self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
 
-        if Proveedor.objects.filter(numero_documento=numero_documento).exists():
+        # Validación para número de documento, ignorando la instancia actual
+        if Proveedor.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
             self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
 
         return cleaned_data
+
 
 #--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):

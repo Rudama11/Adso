@@ -1,0 +1,41 @@
+{% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
+{% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
+{% block columnas %}
+{# Bloque para definir las columnas de la tabla #}
+
+<tr>
+    <th scope="col">Id</th>
+    <th scope="col">Nombre de Usuario</th>
+    <th scope="col">Nombres</th>
+    <th scope="col">Correo</th>
+    <th scope="col">Estado</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{# Bloque para definir las filas de la tabla #}
+{% for user in object_list %}
+<tr>
+    <td>{{ user.id }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.nombres }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.is_active }}</td>
+    <td>
+        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
+            <i class="fas fa-edit"></i>
+        </a>
+        {# Enlace para editar la normativa #}
+        <a href="{% url 'app:usuario_eliminar' user.id %}" class="btn btn-danger btn-sm" title="Eliminar normativa">
+            <i class="fas fa-trash"></i>
+        </a>
+        {# Enlace para eliminar la normativa #}
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

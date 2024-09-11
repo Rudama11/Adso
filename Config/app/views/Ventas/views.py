@@ -58,7 +58,7 @@ class VentasCreateView(CreateView):
 class VentasUpdateView(UpdateView):
     model = Venta
     form_class = VentaForm
-    template_name = 'Ventas/crear.html'
+    template_name = 'Ventas/editarVen.html'
     success_url = reverse_lazy('app:venta_listar')  # URL para redirigir tras la actualización
     
     def get_context_data(self, **kwargs):
