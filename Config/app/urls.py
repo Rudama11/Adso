@@ -47,11 +47,10 @@ urlpatterns = [
     
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
-    path('usuario/register/', register, name='register'),
-    path('usuario/profile/', profile, name='profile'),
-    path('usuario/edit_profile/', edit_profile, name='edit_profile'),
-    path('usuario/users/', user_list, name='user_list'),
-    path('usuario/users/<int:user_id>/', user_detail, name='user_detail'),
+    path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
+    path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
+    path('usuario/editar/<int:pk>/',UsuarioUpdateView.as_view(), name='usuario_editar'),
+    path('usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
