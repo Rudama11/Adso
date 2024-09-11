@@ -7,13 +7,11 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
-
-#---------------------------------------------------------- Usuario ----------------------------------------------------------
-from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from .models import CustomUser
 
+
+#---------------------------------------------------------- Usuario ----------------------------------------------------------
 class UsuarioForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput,
