@@ -40,7 +40,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=150, unique=True,verbose_name='Nombre de usuario')
     nombres = models.CharField(max_length=30, blank=True,validators=[validate_nombre],verbose_name='Nombres y apellidos')
-    password = models.CharField(max_length=128)
+    password = models.CharField(max_length=128,verbose_name='Contraseña')
     email = models.EmailField(unique=True,verbose_name='Correo electrónico')
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
