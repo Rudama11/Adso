@@ -8,7 +8,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Guardar Cambios</button>
+        <button type="submit">Crear usuario</button>
         <a href="{% url 'app:usuario_listar' %}">Cancelar</a>
     </form>
 </body>
