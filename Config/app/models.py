@@ -213,6 +213,7 @@ class Compras(models.Model):
         db_table = 'Compras'
         ordering = ['id']
 
+
 #----------------------------------------------- Stock -----------------------------------------------
 class Stock(models.Model):
     nombre_pro = models.OneToOneField(Producto, on_delete=models.CASCADE)
