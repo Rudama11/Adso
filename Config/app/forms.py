@@ -5,17 +5,33 @@ from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
+
+# Formulario exclusivo para la creación de usuarios.
 class UsuarioForm(forms.ModelForm):
+    TIPO_USUARIO_CHOICES = [
+        ('admin', 'Administrador'),
+        ('usuario', 'Usuario normal'),
+    ]
+    
+    tipo_usuario = forms.ChoiceField(choices=TIPO_USUARIO_CHOICES, label='Tipo de usuario')
+    
+    email = forms.EmailField(
+        label='Correo electrónico'
+    )
+    
+    email2 = forms.EmailField(
+        label='Confirma el correo electrónico'
+    )
+    
     password = forms.CharField(
         widget=forms.PasswordInput,
-        label='Contraseña',
+        label='Nueva contraseña',
         validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
@@ -27,20 +43,26 @@ class UsuarioForm(forms.ModelForm):
             )
         ]
     )
+    
     password2 = forms.CharField(
         widget=forms.PasswordInput,
-        label='Confirma tu contraseña'
+        label='Confirma nueva contraseña'
     )
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'password']
+        fields = ['username', 'nombres', 'tipo_usuario', 'email', 'email2', 'password', 'password2']
 
     def clean(self):
         cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        email2 = cleaned_data.get('email2')
         password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
 
+        if email and email2 and email != email2:
+            raise ValidationError('Los correos electrónicos no coinciden.')
+        
         if password and password2 and password != password2:
             raise ValidationError('Las contraseñas no coinciden.')
 
@@ -49,10 +71,99 @@ class UsuarioForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password'])
+        
+        # Asignar permisos según el tipo de usuario seleccionado
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        if tipo_usuario == 'admin':
+            user.is_staff = True  # Los administradores tienen permisos de staff
+            user.is_superuser = False  # No permitir superusuarios desde el formulario
+        else:
+            user.is_staff = False  # Los usuarios normales no tienen permisos de staff
+            user.is_superuser = False
+
         if commit:
             user.save()
         return user
 
+# Formulario exclusivo para editar los usuarios.
+
+class UsuarioEditForm(forms.ModelForm):
+    TIPO_USUARIO_CHOICES = [
+        ('admin', 'Administrador'),
+        ('usuario', 'Usuario normal'),
+    ]
+
+    tipo_usuario = forms.ChoiceField(choices=TIPO_USUARIO_CHOICES, label='Tipo de usuario', required=False)
+    
+    email = forms.EmailField(
+        label='Correo electrónico',
+        required=False
+    )
+    
+    email2 = forms.EmailField(
+        label='Confirma el correo electrónico',
+        required=False
+    )
+    
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Nueva contraseña',
+        required=False,
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
+                message=(
+                    'La contraseña debe tener entre 8 y 20 caracteres, '
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
+                ),
+            )
+        ]
+    )
+    
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirma nueva contraseña',
+        required=False
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'nombres', 'email', 'email2', 'tipo_usuario', 'password', 'password2']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+        email = cleaned_data.get('email')
+        email2 = cleaned_data.get('email2')
+
+        if email and email2 and email != email2:
+            raise ValidationError('Los correos electrónicos no coinciden.')
+        
+        if password or password2:  # Verificar coincidencia si alguna contraseña es proporcionada
+            if password and password2 and password != password2:
+                raise ValidationError('Las contraseñas no coinciden.')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        
+        if self.cleaned_data.get('password'):
+            user.set_password(self.cleaned_data['password'])
+        
+        # Asignar permisos según el tipo de usuario seleccionado
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        if tipo_usuario:
+            user.is_staff = tipo_usuario == 'admin'
+            user.is_superuser = False
+        
+        if commit:
+            user.save()
+        return user
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
