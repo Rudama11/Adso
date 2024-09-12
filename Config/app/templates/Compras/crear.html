@@ -63,7 +63,7 @@
                 <label for="id_iva">{{ form.iva.label }}</label>
                 {{ form.iva|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_iva'}}
             </div>
-            <!-- Campo total con texto personalizado -->
+            <!-- Campo total como número entero -->
             <div class="form-group">
                 <label for="id_total">Total $(COP)</label>
                 <div class="input-group">
@@ -87,24 +87,17 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-function formatCurrency(value) {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP'
-    }).format(value);
-}
-
 function calculateTotal() {
-    var precio = parseFloat(document.getElementById("id_precio").value) || 0;
-    var cantidad = parseFloat(document.getElementById("id_cantidad").value) || 0;
-    var iva = parseFloat(document.getElementById("id_iva").value) || 0;
+    var precio = parseInt(document.getElementById("id_precio").value) || 0;
+    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
+    var iva = parseInt(document.getElementById("id_iva").value) || 0;
 
-    // Calcular total
+    // Calcular total como número entero
     var subtotal = precio * cantidad;
-    var total = subtotal + (subtotal * iva / 100);
+    var total = subtotal + Math.floor((subtotal * iva / 100)); // Usar Math.floor para evitar decimales
 
-    // Actualizar el campo de total en el formulario
-    document.getElementById("id_total").value = formatCurrency(total);
+    // Actualizar el campo de total en el formulario sin formatear como moneda
+    document.getElementById("id_total").value = total;
 }
 
 // Añadir eventos a los campos

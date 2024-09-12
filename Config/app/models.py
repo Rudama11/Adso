@@ -168,24 +168,20 @@ class Producto(models.Model):
         ordering = ['id']
 
 #----------------------------------------------- Compras -----------------------------------------------
-from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-from decimal import Decimal
-
 class Compras(models.Model):
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compras')
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'), validators=[MinValueValidator(Decimal('0.00'))], verbose_name='Precio $(COP)')
+    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio $(Cop)')
     iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'), verbose_name='Total $(COP)')
+    total = models.IntegerField(default=0, verbose_name='Total $(Cop)')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        # Calcular el total usando decimales
+        # Calcular el total usando enteros
         subtotal = self.precio * self.cantidad
-        self.total = subtotal + (subtotal * self.iva / Decimal('100'))
+        self.total = subtotal + (subtotal * self.iva // 100)  # División entera para evitar decimales
         super().save(*args, **kwargs)
 
         # Actualizar el stock del producto
