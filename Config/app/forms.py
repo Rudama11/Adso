@@ -453,21 +453,28 @@ class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['proveedor'].widget.attrs['autofocus'] = True
-        self.fields['total'].widget.attrs['readonly'] = True
         # Establecer la fecha actual por defecto si no se ha proporcionado
         if not self.instance.pk:  # Solo si es una nueva instancia
             self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'proveedor']
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
             'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
+            'proveedor': forms.Select(attrs={'autofocus': True}),
+        }
+
+#------------------------------- detalle Compra----------------------------
+
+class DetalleCompraForm(forms.ModelForm):
+    class Meta:
+        model = DetalleCompra
+        fields = ['producto', 'cantidad', 'precio_unitario', 'iva']
+        widgets = {
             'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),
+            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
-            'proveedor': forms.Select(attrs={'autofocus': True}),
         }

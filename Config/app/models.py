@@ -168,9 +168,9 @@ class Proveedor(models.Model):
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3),validate_campos], verbose_name='Nombre')
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE, verbose_name='Tipo de producto')
+    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Nombre')
+    categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
+    tipo_pro = models.ForeignKey('Tipo', on_delete=models.CASCADE, verbose_name='Tipo de producto')
 
     def __str__(self):
         return self.nombre
@@ -185,40 +185,43 @@ class Producto(models.Model):
 class Compras(models.Model):
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='compras')
-    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio $(Cop)')
-    iva = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='IVA (%)')
-    total = models.IntegerField(default=0, verbose_name='Total $(Cop)')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
 
-    def save(self, *args, **kwargs):
-        # Calcular el total usando enteros
-        subtotal = self.precio * self.cantidad
-        self.total = subtotal + (subtotal * self.iva // 100)  # División entera para evitar decimales
-        super().save(*args, **kwargs)
-
-        # Actualizar el stock del producto
-        stock, created = Stock.objects.get_or_create(nombre_pro=self.producto)
-        stock.cantidad += self.cantidad
-        stock.precio = self.precio  # Actualizar el precio si es necesario
-        stock.save()
-
     def __str__(self):
-        return f'Factura {self.num_factura} - Producto: {self.producto.nombre}'
+        return f'Factura {self.num_factura}'
 
     class Meta:
-        verbose_name = 'Compras'
+        verbose_name = 'Compra'
         verbose_name_plural = 'Compras'
         db_table = 'Compras'
         ordering = ['id']
+#----------------------------------------------- DetalleCompra -----------------------------------------------
+class DetalleCompra(models.Model):
+    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Unitario')
+    iva = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, verbose_name='IVA (%)')
 
+    @property
+    def total(self):
+        subtotal = self.precio_unitario * self.cantidad
+        return subtotal + (subtotal * self.iva / 100)
+
+    def __str__(self):
+        return f'Detalle de Compra {self.compra.num_factura} - Producto: {self.producto.nombre}'
+
+    class Meta:
+        verbose_name = 'Detalle de Compra'
+        verbose_name_plural = 'Detalles de Compra'
+        db_table = 'DetalleCompra'
+        ordering = ['id']
 
 #----------------------------------------------- Stock -----------------------------------------------
 class Stock(models.Model):
     nombre_pro = models.OneToOneField(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad en Stock')
-    precio = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Precio(Cop)')
+    precio = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Precio(Cop)')
 
     def __str__(self):
         return f'{self.nombre_pro.nombre} - Stock: {self.cantidad}'
@@ -228,15 +231,13 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
         db_table = 'Stock'
         ordering = ['id']
+        
 #----------------------------------------------- Venta -----------------------------------------------
 class Venta(models.Model):
     num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
-    subtotal = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    impuestos = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     fecha_emision = models.DateTimeField(auto_now_add=True)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
@@ -246,6 +247,20 @@ class Venta(models.Model):
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
 
+#----------------------------------------------- DetalleVenta -----------------------------------------------
+class DetalleVenta(models.Model):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
+    producto = models.ForeignKey(Stock, on_delete=models.CASCADE)  # Referencia a Stock, que a su vez tiene el Producto
+    cantidad = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])  # IVA en porcentaje
+
+    def __str__(self):
+        return f'Detalle de la venta {self.venta.num_factura} - Producto: {self.producto.nombre_pro.nombre}'
+
+    class Meta:
+        verbose_name = 'Detalle de Venta'
+        verbose_name_plural = 'Detalles de Ventas'
+        db_table = 'DetalleVenta'
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
     decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3),validate_campos],verbose_name='Decreto')
