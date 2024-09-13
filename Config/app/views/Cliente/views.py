@@ -65,14 +65,6 @@ class ClienteCreateView(CreateView):
     template_name = 'Cliente/crear.html'
     success_url = reverse_lazy('app:cliente_listar')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'Cliente creado exitosamente.')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'No se pudo crear el cliente. Verifica los errores.')
-        return super().form_invalid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Cliente'
@@ -85,14 +77,6 @@ class ClienteUpdateView(UpdateView):
     form_class = ClienteForm
     template_name = 'Cliente/editarCli.html'
     success_url = reverse_lazy('app:cliente_listar')
-
-    def form_valid(self, form):
-        messages.success(self.request, 'Cliente actualizado exitosamente.')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'No se pudo actualizar el cliente. Verifica los errores.')
-        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
