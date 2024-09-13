@@ -16,7 +16,6 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
 from django.core.mail import EmailMultiAlternatives
-from .forms import CustomLoginForm  # Importa el formulario personalizado
 
 UserModel = get_user_model()
 class LoginFormView(LoginView):
@@ -114,34 +113,4 @@ class PasswordResetCompleteView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Restablecimiento Completo"
-        return context
-    
-    
-class LoginFormView(LoginView):
-    template_name = 'login.html'
-    form_class = CustomLoginForm  # Usa el formulario personalizado
-
-    def form_invalid(self, form):
-        # Si los datos son incorrectos, muestra un mensaje de error
-        messages.error(self.request, 'Los datos ingresados no coinciden con nuestros registros.')
-        return super().form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["titulo"] = "Iniciar Sesión"
-        return context
-    
-
-class LoginFormView(LoginView):
-    template_name = 'login.html'
-    form_class = CustomLoginForm  # Usa el formulario personalizado
-
-    def form_invalid(self, form):
-        # Si los datos son incorrectos, muestra un mensaje de error
-        messages.error(self.request, 'Los datos ingresados no coinciden con nuestros registros.')
-        return super().form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["titulo"] = "Iniciar Sesión"
         return context
