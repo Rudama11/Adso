@@ -38,10 +38,6 @@ class UsuarioCreateView(CreateView):
     template_name = 'usuario/crear.html'
     success_url = reverse_lazy('app:usuario_listar')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'Usuario creado exitosamente.')
-        return super().form_valid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Usuario'
@@ -79,10 +75,6 @@ class UsuarioDeleteView(DeleteView):
     model = CustomUser
     template_name = 'usuario/eliminar.html'
     success_url = reverse_lazy('app:usuario_listar')
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, 'Usuario eliminado exitosamente.')
-        return super().delete(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
