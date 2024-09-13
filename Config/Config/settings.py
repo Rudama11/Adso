@@ -61,6 +61,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processors.user_last_login',
                 'app.context_processors.user_count',
+                'app.context_processors.user_name',
             ],
         },
     },

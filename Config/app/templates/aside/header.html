@@ -70,15 +70,20 @@
                 <span class="dropdown-header">
                     Último Acceso: {{ last_login|date:"d M Y" }} a las {{ last_login|date:"H:i" }} {{ last_login|date:"a" }}
                 </span>
-                
+            
                 <div class="dropdown-divider"></div>
-                
-                <!-- Opción para editar perfil -->
+            
+                <!-- Saludo personalizado al usuario -->
+                <span class="dropdown-item-text">
+                    Hola, {{ user_name }}! Bienvenido de nuevo.
+                </span>
+            
+                <div class="dropdown-divider"></div>
+            
                 <a href="{% url 'app:usuario_listar' %}" class="dropdown-item">
                     <i class="fas fa-users" style="margin-right: 10px;"></i> Usuarios
                     <span class="float-right text-muted text-sm">Registrados: {{ user_count }}</span>
                 </a>
-                
                 <div class="dropdown-divider"></div>
                 
                 <!-- Información adicional -->
@@ -86,6 +91,7 @@
                     <p>Este sistema permite editar los diferentes perfiles de usuario disponibles.</p>
                 </a>
             </div>
+            
         </li>
 
 

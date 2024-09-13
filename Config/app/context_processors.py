@@ -15,3 +15,12 @@ def user_count(request):
     return {
         'user_count': user_count,
     }
+
+def user_name(request):
+    if request.user.is_authenticated:
+        user_name = request.user.username  # Obtiene el nombre de usuario del usuario autenticado
+    else:
+        user_name = None
+    return {
+        'user_name': user_name,
+    }

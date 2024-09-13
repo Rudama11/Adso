@@ -38,7 +38,6 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     USER_TYPE_CHOICES = [
-        ('superadmin', 'Superadministrador'),
         ('admin', 'Administrador'),
         ('usuario', 'Usuario normal'),
     ]
@@ -48,14 +47,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=30, blank=True, validators=[validate_nombre], verbose_name='Nombres y apellidos')
     password = models.CharField(max_length=128, verbose_name='Contraseña')
     email = models.EmailField(unique=True, verbose_name='Correo electrónico')
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    last_login = models.DateTimeField(null=True, blank=True)
+    is_superuser = models.BooleanField(default=False,verbose_name='SuperUsuario')
+    is_staff = models.BooleanField(default=False,verbose_name='Administrador')
+    is_active = models.BooleanField(default=True,verbose_name='Estado')
+    last_login = models.DateTimeField(null=True, blank=True,verbose_name='Ultima conexión')
     tipo_usuario = models.CharField(
         max_length=10,
         choices=USER_TYPE_CHOICES,
-        default='usuario',
+        default='admin',
         verbose_name='Tipo de usuario'
     )
 
@@ -64,6 +63,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
+    class Meta:
+        verbose_name = 'Usuarios'
+        verbose_name_plural = 'Usuarios'
+        db_table = 'usuario'
+        
     def __str__(self):
         return self.username
 

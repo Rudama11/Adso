@@ -15,7 +15,6 @@ from django.core.validators import RegexValidator
 # Formulario exclusivo para la creación de usuarios.
 class UsuarioForm(forms.ModelForm):
     USER_TYPE_CHOICES = [
-        ('superadmin', 'Superadministrador'),
         ('admin', 'Administrador'),
         ('usuario', 'Usuario normal'),
     ]
