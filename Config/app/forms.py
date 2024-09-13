@@ -14,12 +14,12 @@ from django.core.validators import RegexValidator
 
 # Formulario exclusivo para la creación de usuarios.
 class UsuarioForm(forms.ModelForm):
-    USER_TYPE_CHOICES = [
+    TIPO_USUARIO_CHOICES = [
         ('admin', 'Administrador'),
         ('usuario', 'Usuario normal'),
     ]
     
-    tipo_usuario = forms.ChoiceField(choices=USER_TYPE_CHOICES, label='Tipo de usuario')
+    tipo_usuario = forms.ChoiceField(choices=TIPO_USUARIO_CHOICES, label='Tipo de usuario')
     
     password = forms.CharField(
         widget=forms.PasswordInput,
@@ -43,7 +43,7 @@ class UsuarioForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'password', 'password2', 'tipo_usuario']
+        fields = ['username', 'nombres', 'email', 'password', 'tipo_usuario']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -58,12 +58,20 @@ class UsuarioForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password'])
-        user.tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        # Asignar permisos según el tipo de usuario seleccionado
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        if tipo_usuario == 'admin':
+            user.is_staff = True  # Los administradores tienen permisos de staff
+            user.is_superuser = False  # Los administradores tienen permisos de superusuario
+        else:
+            user.is_staff = False  # Los usuarios normales no tienen permisos de staff
+            user.is_superuser = False
 
         if commit:
             user.save()
         return user
-
 
 # Formulario exclusivo para editar los usuarios.
 
@@ -116,6 +124,15 @@ class UsuarioEditForm(forms.ModelForm):
             # No hacer nada con la contraseña si no se ha proporcionado
             user.password = self.instance.password
         
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        if tipo_usuario == 'admin':
+            user.is_staff = True  # Los administradores tienen permisos de staff
+            user.is_superuser = False  # Los administradores tienen permisos de superusuario
+        else:
+            user.is_staff = False  # Los usuarios normales no tienen permisos de staff
+            user.is_superuser = False
+            
         if commit:
             user.save()
         return user
