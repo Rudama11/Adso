@@ -57,8 +57,8 @@ class UsuarioEditForm(forms.ModelForm):
                 regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
                 message=(
                     'La contraseña debe tener entre 8 y 20 caracteres, '
-                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
-                    'un número y un carácter especial.'
+                    'Debe incluir al menos una letra mayúscula, una letra minúscula, '
+                    'Debe incluir un número y un carácter especial.'
                 ),
             )
         ]
