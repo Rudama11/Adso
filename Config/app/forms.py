@@ -47,13 +47,22 @@ class UsuarioForm(forms.ModelForm):
     
 # Formulario exclusivo para editar los usuarios.
 
+# app/forms.py
+
+from django import forms
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+
+User = get_user_model()
+
 class UsuarioEditForm(UserChangeForm):
     password = forms.CharField(widget=forms.PasswordInput, required=False, label="Nueva Contraseña")
     password2 = forms.CharField(widget=forms.PasswordInput, required=False, label="Confirmar Nueva Contraseña")
     email2 = forms.EmailField(required=False, label="Confirme nuevamente el correo")
 
     class Meta:
-        model = User
+        model = Usuario
         fields = ['username', 'nombres', 'email', 'email2', 'password', 'password2', 'is_active']  # Ajusta el orden de los campos
 
     def clean_password2(self):
@@ -89,6 +98,7 @@ class UsuarioEditForm(UserChangeForm):
         if commit:
             user.save()
         return user
+
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

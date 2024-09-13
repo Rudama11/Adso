@@ -40,6 +40,15 @@ class UsuarioCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
 
+# app/views.py
+
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView
+from app.forms import UsuarioEditForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib import messages
+
 @method_decorator(login_required, name='dispatch')
 class UsuarioUpdateView(UpdateView):
     model = Usuario
@@ -66,7 +75,7 @@ class UsuarioUpdateView(UpdateView):
         context['entidad'] = 'Usuario'
         context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
-    
+
 class UsuarioDeleteView(DeleteView):
     model = Usuario  # Cambia a Usuario
     template_name = 'usuario/eliminar.html'
