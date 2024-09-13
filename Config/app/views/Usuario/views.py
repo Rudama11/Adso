@@ -1,14 +1,23 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from app.models import Usuario
+from app.forms import UsuarioForm,UsuarioEditForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
-from app.models import Usuario
-from app.forms import UsuarioForm,UsuarioEditForm
+
+@login_required
+def perfil_view(request):
+    user = request.user
+    last_login = user.last_login
+    context = {
+        'last_login': last_login,
+    }
+    return render(request, 'perfil.html', context)
 
 class UsuarioListView(ListView):
-    model = Usuario  # Cambia a Usuario
+    model = Usuario
     template_name = 'usuario/listar.html'
     context_object_name = 'usuarios'
     
@@ -24,8 +33,8 @@ class UsuarioListView(ListView):
         return context
 
 class UsuarioCreateView(CreateView):
-    model = Usuario  # Cambia a Usuario
-    form_class = UsuarioForm  # Asegúrate de que este formulario exista y esté bien definido
+    model = Usuario
+    form_class = UsuarioForm
     template_name = 'usuario/crear.html'
     success_url = reverse_lazy('app:usuario_listar')
 
@@ -40,16 +49,6 @@ class UsuarioCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:usuario_listar')
         return context
 
-# app/views.py
-
-from django.urls import reverse_lazy
-from django.views.generic import UpdateView
-from app.forms import UsuarioEditForm
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.contrib import messages
-
-@method_decorator(login_required, name='dispatch')
 class UsuarioUpdateView(UpdateView):
     model = Usuario
     form_class = UsuarioEditForm
@@ -77,7 +76,7 @@ class UsuarioUpdateView(UpdateView):
         return context
 
 class UsuarioDeleteView(DeleteView):
-    model = Usuario  # Cambia a Usuario
+    model = Usuario
     template_name = 'usuario/eliminar.html'
     success_url = reverse_lazy('app:usuario_listar')
 

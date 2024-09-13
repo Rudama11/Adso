@@ -47,54 +47,55 @@ class UsuarioForm(forms.ModelForm):
     
 # Formulario exclusivo para editar los usuarios.
 
-# app/forms.py
-
-from django import forms
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
-
-User = get_user_model()
-
-class UsuarioEditForm(UserChangeForm):
-    password = forms.CharField(widget=forms.PasswordInput, required=False, label="Nueva Contraseña")
-    password2 = forms.CharField(widget=forms.PasswordInput, required=False, label="Confirmar Nueva Contraseña")
-    email2 = forms.EmailField(required=False, label="Confirme nuevamente el correo")
-
+class UsuarioEditForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Nueva contraseña',
+        required=False,  # No es obligatorio en el formulario de edición
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
+                message=(
+                    'La contraseña debe tener entre 8 y 20 caracteres, '
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
+                ),
+            )
+        ]
+    )
+    
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirma nueva contraseña',
+        required=False  # No es obligatorio en el formulario de edición
+    )
+    
     class Meta:
         model = Usuario
-        fields = ['username', 'nombres', 'email', 'email2', 'password', 'password2', 'is_active']  # Ajusta el orden de los campos
+        fields = ['username', 'nombres', 'email']
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password")
-        password2 = self.cleaned_data.get("password2")
-        if password1 or password2:  # Solo valida si se ingresó alguna contraseña
-            if password1 != password2:
-                raise ValidationError("Las contraseñas no coinciden")
-        return password2
-
-    def clean_email2(self):
-        email1 = self.cleaned_data.get("email")
-        email2 = self.cleaned_data.get("email2")
-        if email1 and email2 and email1 != email2:
-            raise ValidationError("Los correos electrónicos no coinciden")
-        return email2
-
+        # Si el usuario ha proporcionado una nueva contraseña, asegúrate de que coincidan
+        if password or password2:
+            if password != password2:
+                raise forms.ValidationError("Las contraseñas no coinciden.")
+        
+        return cleaned_data
+    
     def save(self, commit=True):
         user = super().save(commit=False)
-        # Solo actualiza la contraseña si se proporciona una nueva
-        password = self.cleaned_data.get('password')
-        if password:
-            user.set_password(password)
         
-        # Actualiza el email solo si se proporciona un nuevo valor
-        email = self.cleaned_data.get('email')
-        if email:
-            user.email = email
-
-        # Marca al usuario como activo o inactivo
-        user.is_active = self.cleaned_data.get('is_active', user.is_active)
-
+        # Solo actualiza la contraseña si el campo de contraseña no está vacío
+        if self.cleaned_data['password']:
+            user.set_password(self.cleaned_data['password'])
+        else:
+            # No hacer nada con la contraseña si no se ha proporcionado
+            user.password = self.instance.password
+        
         if commit:
             user.save()
         return user
