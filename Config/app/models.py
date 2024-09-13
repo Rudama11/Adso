@@ -1,6 +1,6 @@
 from django.db import models
-from datetime import datetime, date
-from .choices import Roles, Tipo_Documento_Choices, Tipo_Persona_Choices
+from datetime import datetime,date
+from .choices import Roles,Tipo_Documento_Choices,Tipo_Persona_Choices
 from django.core.validators import *
 from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
@@ -168,7 +168,7 @@ class Proveedor(models.Model):
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Nombre')
+    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3),validate_campos], verbose_name='Nombre')
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     tipo_pro = models.ForeignKey(Tipo, on_delete=models.CASCADE, verbose_name='Tipo de producto')
 
@@ -213,27 +213,6 @@ class Compras(models.Model):
         db_table = 'Compras'
         ordering = ['id']
 
-#----------------------------------------------- DetalleCompra -----------------------------------------------
-class DetalleCompra(models.Model):
-    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio Unitario')
-    iva = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='IVA (%)')
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total')
-
-    def save(self, *args, **kwargs):
-        self.total = (self.cantidad * self.precio_unitario) * (1 + (self.iva / 100))
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'Detalle de Compra: {self.producto.nombre}'
-
-    class Meta:
-        verbose_name = 'Detalle de Compra'
-        verbose_name_plural = 'Detalles de Compra'
-        db_table = 'DetalleCompra'
-        ordering = ['id']
 
 #----------------------------------------------- Stock -----------------------------------------------
 class Stock(models.Model):
@@ -249,7 +228,6 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
         db_table = 'Stock'
         ordering = ['id']
-
 #----------------------------------------------- Venta -----------------------------------------------
 class Venta(models.Model):
     num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
@@ -258,7 +236,7 @@ class Venta(models.Model):
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
     fecha_emision = models.DateTimeField(auto_now_add=True)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
@@ -267,29 +245,7 @@ class Venta(models.Model):
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
-        ordering = ['num_factura']
 
-#----------------------------------------------- DetalleVenta -----------------------------------------------
-class DetalleVenta(models.Model):
-    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Precio Unitario')
-    iva = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='IVA (%)')
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total')
-
-    def save(self, *args, **kwargs):
-        self.total = (self.cantidad * self.precio_unitario) * (1 + (self.iva / 100))
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'Detalle de Venta: {self.producto.nombre}'
-
-    class Meta:
-        verbose_name = 'Detalle de Venta'
-        verbose_name_plural = 'Detalles de Venta'
-        db_table = 'DetalleVenta'
-        ordering = ['id']
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
     decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3),validate_campos],verbose_name='Decreto')
