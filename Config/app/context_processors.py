@@ -1,17 +1,12 @@
-from django.utils.timezone import localtime
-from app.models import CustomUser
+from django.utils.timezone import now
 
 def user_last_login(request):
     if request.user.is_authenticated:
-        last_login = localtime(request.user.last_login)  # Convierte a la hora local
-    else:
-        last_login = None
-    return {
-        'last_login': last_login,
-    }
+        return {'user_last_login': request.user.last_login}
+    return {'user_last_login': None}
+
+from django.contrib.auth import get_user_model
 
 def user_count(request):
-    user_count = CustomUser.objects.count()
-    return {
-        'user_count': user_count,
-    }
+    User = get_user_model()  # Obtiene el modelo de usuario actual
+    return {'user_count': User.objects.count()}

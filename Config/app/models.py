@@ -6,9 +6,9 @@ from django.contrib.auth.models import *
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 import re
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.utils import timezone
-
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.db import models
 
 # ----------------------------------------------- Validaciones -----------------------------------------------
 
@@ -22,39 +22,64 @@ def validate_campos(value):
     if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.\d]+$', value):
         raise ValidationError('El nombre solo puede contener letras, espacios, puntos y números.')
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields):
-        if not username:
-            raise ValueError('El campo Nombre de usuario debe estar configurado')
-        user = self.model(username=username, **extra_fields)
+# ----------------------------------------------- Usuarios -----------------------------------------------
+class UsuarioManager(BaseUserManager):
+    def create_user(self, username, email, nombres, password=None, **extra_fields):
+        if not email:
+            raise ValueError('El usuario debe tener un correo electrónico.')
+        
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, nombres=nombres, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
+    def create_superuser(self, username, email, nombres, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
-        return self.create_user(username, password, **extra_fields)
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_active', True)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=150, unique=True,verbose_name='Nombre de usuario')
-    nombres = models.CharField(max_length=30, blank=True,validators=[validate_nombre],verbose_name='Nombres y apellidos')
-    password = models.CharField(max_length=128,verbose_name='Contraseña')
+        return self.create_user(username, email, nombres, password, **extra_fields)
+
+class Usuario(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=150, unique=True, verbose_name='Usuario')
+    nombres = models.CharField(max_length=150,verbose_name='Nombres del usuario')  # Renombrando 'first_name' a 'nombres'
     email = models.EmailField(unique=True,verbose_name='Correo electrónico')
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    last_login = models.DateTimeField(null=True, blank=True)
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True,verbose_name='Ultima conexión')
+    is_superuser = models.BooleanField(default=False,verbose_name='SuperUsuario')
+    is_staff = models.BooleanField(default=False,verbose_name='Administrador')
+    is_active = models.BooleanField(default=True,verbose_name='Estado')
 
-    objects = CustomUserManager()
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='usuario_set',  # Cambia related_name para evitar conflictos
+        blank=True,
+        help_text='Los grupos a los que pertenece este usuario.',
+        verbose_name='grupos',
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='usuario_permissions_set',  # Cambia related_name para evitar conflictos
+        blank=True,
+        help_text='Permisos específicos para este usuario.',
+        verbose_name='permisos de usuario',
+    )
+
+    objects = UsuarioManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'nombres']
+
+    class Meta:
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
+        db_table = 'usuario'
 
     def __str__(self):
         return self.username
-    
+
+
 
 # ----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):

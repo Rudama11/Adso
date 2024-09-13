@@ -125,4 +125,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'boyacaconaldex@gmail.com'
 EMAIL_HOST_PASSWORD = 'ewfh mhlu txgs cnls'
 
-AUTH_USER_MODEL = 'app.CustomUser'  # Cambia 'app' por el nombre de tu aplicación
+
+AUTH_USER_MODEL = 'app.Usuario'
