@@ -35,17 +35,16 @@ class ComprasCreateView(CreateView):
 
     def form_valid(self, form):
         # Convertir los valores a Decimal para realizar las operaciones
-        cantidad = Decimal(form.cleaned_data['cantidad'])
-        precio = Decimal(form.cleaned_data['precio'])
-        iva = Decimal(form.cleaned_data['iva'])
-    
+        cantidad = form.cleaned_data.get('cantidad', Decimal(0))
+        precio = form.cleaned_data.get('precio', Decimal(0))
+        iva = form.cleaned_data.get('iva', Decimal(0))
+
         # Calcular el total utilizando Decimal
         total = (precio * cantidad) * (1 + iva / Decimal(100))
-    
+
         # Asignar el valor calculado al campo 'total'
         form.instance.total = total
         return super().form_valid(form)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -62,25 +61,25 @@ class ComprasUpdateView(UpdateView):
     template_name = 'Compras/editarCom.html'
     success_url = reverse_lazy('app:compras_listar')
 
+    def form_valid(self, form):
+        # Convertir los valores a Decimal para realizar las operaciones
+        cantidad = form.cleaned_data.get('cantidad', Decimal(0))
+        precio = form.cleaned_data.get('precio', Decimal(0))
+        iva = form.cleaned_data.get('iva', Decimal(0))
+
+        # Calcular el total utilizando Decimal
+        total = (precio * cantidad) * (1 + iva / Decimal(100))
+
+        # Asignar el valor calculado al campo 'total'
+        form.instance.total = total
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
         return context
-
-    def form_valid(self, form):
-        # Convertir los valores a Decimal para realizar las operaciones
-        cantidad = Decimal(form.cleaned_data['cantidad'])
-        precio = Decimal(form.cleaned_data['precio'])
-        iva = Decimal(form.cleaned_data['iva'])
-    
-        # Calcular el total utilizando Decimal
-        total = (precio * cantidad) * (1 + iva / Decimal(100))
-    
-        # Asignar el valor calculado al campo 'total'
-        form.instance.total = total
-        return super().form_valid(form)
 
 
 class ComprasDeleteView(DeleteView):
@@ -94,6 +93,7 @@ class ComprasDeleteView(DeleteView):
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
         return context
+
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')

@@ -11,6 +11,7 @@ from app.views.Ventas.views import *
 from app.views.Compras.views import *
 from app.views.Stock.views import *
 from app.views.Usuario.views import *
+from app.views.Dcompras.views import *
 
 app_name = 'app'
 
@@ -100,4 +101,13 @@ urlpatterns = [
     #-------------------------------------------------- Stock -----------------------------------------------------
     
     path('stock/listar/', StockListView.as_view(), name='listar_stock'),
+
+    #-------------------------------------------------- Dcompras --------------------------------------------------------
+    
+    path('detalle-compras/listar/', DetalleCompraListView.as_view(), name='detallecompra_listar'),
+    path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
+    path('detalle-compras/eliminar/<int:pk>/', DetalleCompraDeleteView.as_view(), name='detallecompra_eliminar'),
+    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
+    path('detalle-compras/crear/<int:compra_id>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
 ]

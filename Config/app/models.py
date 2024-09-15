@@ -186,6 +186,7 @@ class Compras(models.Model):
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
+    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total', default=0.00)
 
     def __str__(self):
         return f'Factura {self.num_factura}'

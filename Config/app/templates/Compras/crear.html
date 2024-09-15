@@ -44,32 +44,16 @@
                 {{ form.fecha_compra|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             <div class="form-group">
-                <label for="id_producto">{{ form.producto.label }}</label>
-                {{ form.producto|add_class:'form-control'|attr:'autocomplete:off'}}
-            </div>
-            <div class="form-group">
                 <label for="id_proveedor">{{ form.proveedor.label }}</label>
                 {{ form.proveedor|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
-            <div class="form-group">
-                <label for="id_cantidad">{{ form.cantidad.label }}</label>
-                {{ form.cantidad|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_cantidad'}}
-            </div>
-            <div class="form-group">
-                <label for="id_precio">{{ form.precio.label }}</label>
-                {{ form.precio|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_precio'}}
-            </div>
-            <div class="form-group">
-                <label for="id_iva">{{ form.iva.label }}</label>
-                {{ form.iva|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_iva'}}
-            </div>
+
             <!-- Campo total como número entero -->
             <div class="form-group">
                 <label for="id_total">Total $(COP)</label>
                 <div class="input-group">
                     <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly class="form-control">
-                    <div class="input-group-append">
-                    </div>
+                    <div class="input-group-append"></div>
                 </div>
             </div>
         </div>
@@ -80,36 +64,40 @@
             <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
             </a>
+            <!-- Botón para agregar producto -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal">
+                <i class="fas fa-plus"></i> Agregar Producto
+            </button>
         </div>
     </div>
 </form>
 
+<!-- Modal para DetalleCompra -->
+<div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar Detalle de Compra</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del modal cargado dinámicamente -->
+                <div id="modalContent">
+                    <!-- Aquí se cargará el contenido dinámicamente -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-function calculateTotal() {
-    var precio = parseInt(document.getElementById("id_precio").value) || 0;
-    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
-    var iva = parseInt(document.getElementById("id_iva").value) || 0;
-
-    // Calcular total como número entero
-    var subtotal = precio * cantidad;
-    var total = subtotal + Math.floor((subtotal * iva / 100)); // Usar Math.floor para evitar decimales
-
-    // Actualizar el campo de total en el formulario sin formatear como moneda
-    document.getElementById("id_total").value = total;
-}
-
-// Añadir eventos a los campos
-document.getElementById("id_cantidad").addEventListener('input', calculateTotal);
-document.getElementById("id_precio").addEventListener('input', calculateTotal);
-document.getElementById("id_iva").addEventListener('input', calculateTotal);
-
-// Inicializar la función cuando la página carga
-window.onload = function() {
-    calculateTotal();
-}
-
 document.getElementById('confirmButton').addEventListener('click', function(e) {
     e.preventDefault(); 
     
@@ -134,7 +122,7 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             icon: 'success',
             confirmButtonText: 'Continuar',
             backdrop: true,
-            timer:3000,
+            timer: 3000,
             timerProgressBar: true,
             position: 'center',
             allowOutsideClick: false,
@@ -155,8 +143,8 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             icon: 'error',
             confirmButtonText: 'Aceptar',
             backdrop: true,
-            timer:3000,
-            timerProgressBar:true,
+            timer: 3000,
+            timerProgressBar: true,
             position: 'center',
             allowOutsideClick: true,
             allowEscapeKey: false,
@@ -168,6 +156,55 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
         });
     }
 });
+
+// Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
+$(document).ready(function() {
+    $('#detalleCompraModal').on('show.bs.modal', function(e) {
+        var url = "{% url 'app:detallecompra_crear' %}";  // Ajusta esta URL si es necesario
+        $('#modalContent').load(url, function() {
+            // Asegúrate de que los elementos existan antes de añadir event listeners
+            var cantidadInput = document.getElementById("id_cantidad");
+            var precioInput = document.getElementById("id_precio");
+            var ivaInput = document.getElementById("id_iva");
+            var totalInput = document.getElementById("id_total");
+
+            if (cantidadInput && precioInput && ivaInput && totalInput) {
+                cantidadInput.addEventListener('input', calculateTotal);
+                precioInput.addEventListener('input', calculateTotal);
+                ivaInput.addEventListener('input', calculateTotal);
+
+                // Inicializar el total cuando se carga el modal
+                calculateTotal();
+            } else {
+                console.error('No se encontraron los elementos necesarios en el modal.');
+            }
+        });
+    });
+});
+
+function calculateTotal() {
+    var precio = parseInt(document.getElementById("id_precio").value) || 0;
+    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
+    var iva = parseInt(document.getElementById("id_iva").value) || 0;
+
+    // Calcular total como número entero
+    var subtotal = precio * cantidad;
+    var total = subtotal + Math.floor((subtotal * iva / 100)); // Usar Math.floor para evitar decimales
+
+    // Actualizar el campo de total en el formulario sin formatear como moneda
+    document.getElementById("id_total").value = total;
+}
+
+// Añadir eventos a los campos
+document.getElementById("id_cantidad").addEventListener('input', calculateTotal);
+document.getElementById("id_precio").addEventListener('input', calculateTotal);
+document.getElementById("id_iva").addEventListener('input', calculateTotal);
+
+// Inicializar la función cuando la página carga
+window.onload = function() {
+    calculateTotal();
+}
+
 </script>
 
 {% endblock %}

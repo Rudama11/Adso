@@ -1,0 +1,75 @@
+{% extends 'listar.html' %}
+{# Extiende la plantilla base 'listar.html' #}
+
+{% load static %}
+{# Carga la etiqueta estática para usar archivos estáticos #}
+
+{% block filtro_form_contenido %}
+{# Bloque para el formulario de filtrado #}
+<form method="GET" action="{% url 'app:detallecompra_listar' %}">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="compra">Número de Compra</label>
+                <input type="text" class="form-control" id="compra" name="compra" placeholder="Ingrese el número de compra" value="{{ request.GET.compra }}">
+                {# Campo para ingresar el número de compra #}
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
+                {# Campo para ingresar el nombre del producto #}
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
+                {# Campo para ingresar la cantidad #}
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+    {# Botón para enviar el formulario de filtrado #}
+</form>
+{% endblock %}
+
+{% block columnas %}
+{# Bloque para los encabezados de la tabla #}
+<tr>
+    <th scope="col">Número de Compra</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Precio Unitario</th>
+    <th scope="col">IVA (%)</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{# Bloque para las filas de la tabla #}
+{% for dcompra in object_list %}
+<tr>
+    <td>{{ dcompra.compra.num_factura }}</td>
+    <td>{{ dcompra.producto.nombre }}</td>
+    <td>{{ dcompra.cantidad }}</td>
+    <td>{{ dcompra.precio_unitario }}</td>
+    <td>{{ dcompra.iva }}</td>
+    <td>
+        <a href="{% url 'app:detallecompra_editar' dcompra.pk %}" class="btn btn-info btn-sm" title="Editar detalle compra">
+            <i class="fas fa-edit"></i>
+        </a>
+        {# Enlace para editar el detalle de la compra #}
+        <a href="{% url 'app:detallecompra_eliminar' dcompra.pk %}" class="btn btn-danger btn-sm" title="Eliminar detalle de compra">
+            <i class="fas fa-trash"></i>
+        </a>
+        {# Enlace para eliminar el detalle de la compra #}
+    </td>
+</tr>
+{% endfor %}
+{# Itera sobre la lista de detalles de compra y muestra los datos en cada fila #}
+{% endblock %}

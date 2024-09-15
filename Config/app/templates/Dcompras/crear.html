@@ -1,0 +1,56 @@
+
+{% load widget_tweaks %}
+
+{% block contenidoDC %}
+<form method="post" id="detalleCompraForm">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_producto">Producto</label>
+        <select name="producto" class="form-control" id="id_producto">
+            {% for producto in form.producto.field.queryset %}
+                <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_precio">Precio Unitario</label>
+        <input type="number" name="precio_unitario" class="form-control" id="id_precio" placeholder="Ingrese el precio unitario">
+    </div>
+    <div class="form-group">
+        <label for="id_cantidad">Cantidad</label>
+        <input type="number" name="cantidad" class="form-control" id="id_cantidad" placeholder="Ingrese la cantidad">
+    </div>
+    <div class="form-group">
+        <label for="id_iva">IVA (%)</label>
+        <input type="number" name="iva" class="form-control" id="id_iva" placeholder="Ingrese el IVA (%)">
+    </div>
+
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                ×
+            </button>
+            <h5>
+                <i class="icon fas fa-ban"></i> 
+                {% if form.instance.pk %}
+                    Ha ocurrido un error al intentar {{ titulo }}.
+                {% else %}
+                    Ha ocurrido un error al intentar crear {{ titulo }}.
+                {% endif %}
+            </h5>
+            <ul>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="card-footer">
+        <button type="button" class="btn btn-success" id="confirmButton">
+            <i class="fas fa-save"></i> Confirmar
+        </button>
+    </div>
+</form>
+{% endblock %}

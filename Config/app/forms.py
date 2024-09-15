@@ -452,18 +452,31 @@ class ProductoFilterForm(forms.Form):
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
+        # Establecer enfoque automático en el campo proveedor
         self.fields['proveedor'].widget.attrs['autofocus'] = True
-        # Establecer la fecha actual por defecto si no se ha proporcionado
+        
+        # Establecer la fecha actual por defecto si es una nueva instancia
         if not self.instance.pk:  # Solo si es una nueva instancia
             self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
         fields = ['num_factura', 'fecha_compra', 'proveedor']
+        
         widgets = {
-            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
-            'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
-            'proveedor': forms.Select(attrs={'autofocus': True}),
+            'num_factura': forms.TextInput(attrs={
+                'placeholder': 'Ingrese el número de factura',
+                'class': 'form-control'
+            }),
+            'fecha_compra': forms.DateTimeInput(attrs={
+                'placeholder': 'Ingrese la fecha de compra',
+                'type': 'datetime-local',
+                'class': 'form-control'
+            }),
+            'proveedor': forms.Select(attrs={
+                'class': 'form-control'
+            }),
         }
 
 #------------------------------- detalle Compra----------------------------
@@ -478,3 +491,15 @@ class DetalleCompraForm(forms.ModelForm):
             'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        self.compra_id = kwargs.pop('compra_id', None)
+        super().__init__(*args, **kwargs)
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.compra_id:
+            instance.compra_id = self.compra_id
+        if commit:
+            instance.save()
+        return instance
