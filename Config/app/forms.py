@@ -102,6 +102,18 @@ class UsuarioEditForm(forms.ModelForm):
         model = CustomUser
         fields = ['username', 'nombres', 'email', 'tipo_usuario']
     
+    def __init__(self, *args, **kwargs):
+        # Obtenemos el usuario actual que edita
+        self.current_user = kwargs.pop('user', None)
+        super(UsuarioEditForm, self).__init__(*args, **kwargs)
+
+        # Si el usuario actual no es superusuario, no puede modificar is_superuser
+        if not self.current_user.is_superuser:
+            self.fields['is_superuser'].disabled = True
+        # Si el usuario actual no es superusuario o admin, no puede modificar is_staff
+        if not (self.current_user.is_superuser or self.current_user.is_staff):
+            self.fields['is_staff'].disabled = True
+    
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
