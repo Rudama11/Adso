@@ -198,7 +198,7 @@ class Producto(models.Model):
 
 #----------------------------------------------- Compras -----------------------------------------------
 class Compras(models.Model):
-    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')
+    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura', primary_key=True)  # Clave primaria
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total', default=0.00)
@@ -210,7 +210,7 @@ class Compras(models.Model):
         verbose_name = 'Compra'
         verbose_name_plural = 'Compras'
         db_table = 'Compras'
-        ordering = ['id']
+        ordering = ['num_factura']
 #----------------------------------------------- DetalleCompra -----------------------------------------------
 class DetalleCompra(models.Model):
     compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles')
