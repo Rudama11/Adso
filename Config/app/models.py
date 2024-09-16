@@ -213,7 +213,7 @@ class Compras(models.Model):
         ordering = ['num_factura']
 #----------------------------------------------- DetalleCompra -----------------------------------------------
 class DetalleCompra(models.Model):
-    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles')
+    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles', to_field='num_factura')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Unitario')

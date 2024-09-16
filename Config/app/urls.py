@@ -35,8 +35,8 @@ urlpatterns = [
     
     path('compras/listar/', ComprasListView.as_view(), name='compras_listar'),
     path('compras/crear/', ComprasCreateView.as_view(), name='compras_crear'),
-    path('compras/editar/<int:pk>/', ComprasUpdateView.as_view(), name='compras_editar'),
-    path('compras/eliminar/<int:pk>/', ComprasDeleteView.as_view(), name='compras_eliminar'),
+    path('compras/editar/<str:num_factura>/', ComprasUpdateView.as_view(), name='compras_editar'),
+    path('compras/eliminar/<str:num_factura>/', ComprasDeleteView.as_view(), name='compras_eliminar'),
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
     #-------------------------------------------------- Normativa --------------------------------------------------
@@ -109,5 +109,5 @@ urlpatterns = [
     path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
     path('detalle-compras/eliminar/<int:pk>/', DetalleCompraDeleteView.as_view(), name='detallecompra_eliminar'),
     path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
-    path('detalle-compras/crear/<int:compra_id>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
 ]

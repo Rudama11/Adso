@@ -1,28 +1,32 @@
-
 {% load widget_tweaks %}
 
 {% block contenidoDC %}
 <form method="post" id="detalleCompraForm">
     {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="id_num_factura">Número de Factura</label>
+        {% render_field form.num_factura class="form-control" id="id_num_factura" placeholder="Número de Factura" %}
+    </div>
+    
     <div class="form-group">
         <label for="id_producto">Producto</label>
-        <select name="producto" class="form-control" id="id_producto">
-            {% for producto in form.producto.field.queryset %}
-                <option value="{{ producto.id }}">{{ producto.nombre }}</option>
-            {% endfor %}
-        </select>
+        {% render_field form.producto class="form-control" id="id_producto" %}
     </div>
+    
     <div class="form-group">
         <label for="id_precio">Precio Unitario</label>
-        <input type="number" name="precio_unitario" class="form-control" id="id_precio" placeholder="Ingrese el precio unitario">
+        {% render_field form.precio_unitario class="form-control" id="id_precio" placeholder="Ingrese el precio unitario" %}
     </div>
+    
     <div class="form-group">
         <label for="id_cantidad">Cantidad</label>
-        <input type="number" name="cantidad" class="form-control" id="id_cantidad" placeholder="Ingrese la cantidad">
+        {% render_field form.cantidad class="form-control" id="id_cantidad" placeholder="Ingrese la cantidad" %}
     </div>
+    
     <div class="form-group">
         <label for="id_iva">IVA (%)</label>
-        <input type="number" name="iva" class="form-control" id="id_iva" placeholder="Ingrese el IVA (%)">
+        {% render_field form.iva class="form-control" id="id_iva" placeholder="Ingrese el IVA (%)" %}
     </div>
 
     {% if form.errors %}
@@ -40,17 +44,59 @@
             </h5>
             <ul>
                 {% for field in form %}
-                {% for error in field.errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
                 {% endfor %}
             </ul>
         </div>
     {% endif %}
+    
     <div class="card-footer">
-        <button type="button" class="btn btn-success" id="confirmButton">
+        <button type="submit" class="btn btn-success" id="confirmButton">
             <i class="fas fa-save"></i> Confirmar
         </button>
     </div>
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.getElementById('confirmButton').addEventListener('click', function(e) {
+    e.preventDefault(); // Evita el comportamiento predeterminado del botón
+
+    let isValid = true;
+    let formFields = document.querySelectorAll('#detalleCompraForm .form-control');
+
+    formFields.forEach(function(field) {
+        if (field.value.trim() === '') {
+            isValid = false;
+            field.classList.add('is-invalid');
+        } else {
+            field.classList.remove('is-invalid');
+        }
+    });
+
+    if (isValid) {
+        document.getElementById('detalleCompraForm').submit();
+    } else {
+        Swal.fire({
+            title: 'Error',
+            text: 'Debe llenar todos los campos del formulario.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            backdrop: true,
+            timer: 3000,
+            timerProgressBar: true,
+            position: 'center',
+            allowOutsideClick: true,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            stopKeydownPropagation: false,
+            buttonsStyling: true,
+            showCloseButton: true,
+            closeButtonAriaLabel: 'Cerrar alerta',
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -1,10 +1,10 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
-from app.models import DetalleCompra, Producto
+from app.models import DetalleCompra, Producto, Compras
 from app.forms import DetalleCompraForm
 
 # Vista para listar detalles de compra
@@ -32,18 +32,31 @@ class DetalleCompraCreateView(CreateView):
     model = DetalleCompra
     form_class = DetalleCompraForm
     template_name = 'Dcompras/crear.html'
-    success_url = reverse_lazy('app:detallecompra_listar')  # URL para redirigir tras la creación
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        # Suponiendo que 'compra_id' se pasa como un argumento en la URL
         kwargs['compra_id'] = self.kwargs.get('compra_id')
         return kwargs
 
     def form_valid(self, form):
-        form.instance.compra_id = self.kwargs.get('compra_id')
+        num_factura = form.cleaned_data.get('num_factura')
+        if not Compras.objects.filter(num_factura=num_factura).exists():
+            form.add_error('num_factura', 'No existe una compra con el número de factura proporcionado.')
+            return self.form_invalid(form)
+        form.instance.compra = get_object_or_404(Compras, num_factura=num_factura)
         return super().form_valid(form)
-    
+
+    def get_success_url(self):
+        # Redirige a la vista de lista de detalles de compra
+        return reverse_lazy('app:detallecompra_listar')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Detalle de Compra'
+        context['entidad'] = 'Detalle de Compra'
+        context['listar_url'] = reverse_lazy('app:detallecompra_listar')
+        return context
+
 # Vista para actualizar un detalle de compra existente
 class DetalleCompraUpdateView(UpdateView):
     model = DetalleCompra

@@ -468,9 +468,16 @@ class ComprasForm(forms.ModelForm):
 #------------------------------- detalle Compra----------------------------
 
 class DetalleCompraForm(forms.ModelForm):
+    num_factura = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Número de Factura'})
+        # Elimina 'disabled=True' para que el campo sea editable
+    )
+
     class Meta:
         model = DetalleCompra
-        fields = ['producto', 'cantidad', 'precio_unitario', 'iva']
+        fields = ['num_factura', 'producto', 'cantidad', 'precio_unitario', 'iva']
         widgets = {
             'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
@@ -479,13 +486,18 @@ class DetalleCompraForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        # Extraer `compra_id` del diccionario de argumentos
         self.compra_id = kwargs.pop('compra_id', None)
         super().__init__(*args, **kwargs)
-    
+        # Si `compra_id` está presente, establecer el valor inicial para `num_factura`
+        if self.compra_id:
+            self.fields['num_factura'].initial = self.compra_id
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         if self.compra_id:
-            instance.compra_id = self.compra_id
+            # Obtener la instancia de `Compras` usando `num_factura` y asignarla
+            instance.compra = get_object_or_404(Compras, num_factura=self.compra_id)
         if commit:
             instance.save()
         return instance

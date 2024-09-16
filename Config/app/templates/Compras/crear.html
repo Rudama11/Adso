@@ -86,6 +86,7 @@
                 <!-- Contenido del modal cargado dinámicamente -->
                 <div id="modalContent">
                     <!-- Aquí se cargará el contenido dinámicamente -->
+                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
                 </div>
             </div>
             <div class="modal-footer">
@@ -160,8 +161,13 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
 // Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
 $(document).ready(function() {
     $('#detalleCompraModal').on('show.bs.modal', function(e) {
-        var url = "{% url 'app:detallecompra_crear' %}";  // Ajusta esta URL si es necesario
+        var url = "{% url 'app:detallecompra_crear' %}";
+        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de que el número de factura esté disponible en el contexto
+
         $('#modalContent').load(url, function() {
+            // Rellenar el campo num_factura en el formulario cargado
+            $('#id_num_factura').val(numFactura);
+
             // Asegúrate de que los elementos existan antes de añadir event listeners
             var cantidadInput = document.getElementById("id_cantidad");
             var precioInput = document.getElementById("id_precio");
