@@ -101,14 +101,6 @@ class ProveedorUpdateView(UpdateView):
     template_name = 'Proveedor/editarProv.html'
     success_url = reverse_lazy('app:proveedor_listar')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'El proveedor ha sido actualizado exitosamente.')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'No se pudo actualizar el proveedor. Verifica los errores.')
-        return super().form_invalid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({

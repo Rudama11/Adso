@@ -15,6 +15,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
+from django.core.mail import EmailMultiAlternatives
 
 UserModel = get_user_model()
 class LoginFormView(LoginView):
@@ -57,11 +58,21 @@ class PasswordResetView(FormView):
             reverse_lazy('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
         )
         subject = 'Restablecer contraseña'
-        message = render_to_string('register/password_reset_email.html', {
+        html_message = render_to_string('register/password_reset_email.html', {
             'user': user,
             'reset_url': reset_url
         })
-        send_mail(subject, message, None, [email])
+        
+        # Usar EmailMultiAlternatives para enviar HTML y texto plano
+        email_message = EmailMultiAlternatives(
+            subject,
+            '',  # Deja el cuerpo de texto plano vacío si solo quieres enviar HTML
+            None,  # Remitente (None utilizará el predeterminado en settings)
+            [email]
+        )
+        email_message.attach_alternative(html_message, "text/html")
+        email_message.send()
+        
         messages.success(self.request, 'Se ha enviado un correo de restablecimiento de contraseña.')
         return super().form_valid(form)
     

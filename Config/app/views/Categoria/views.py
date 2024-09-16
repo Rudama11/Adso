@@ -42,10 +42,6 @@ class CategoriaCreateView(CreateView):
     template_name = 'Categoria/crear.html'
     success_url = reverse_lazy('app:categoria_listar')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'Categoría creada exitosamente.')
-        return super().form_valid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Categoría'
@@ -59,10 +55,6 @@ class CategoriaUpdateView(UpdateView):
     template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'Categoría actualizada exitosamente.')
-        return super().form_valid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Categoría'
@@ -72,12 +64,8 @@ class CategoriaUpdateView(UpdateView):
 
 class CategoriaDeleteView(DeleteView):
     model = Categoria
-    template_name = 'Categoria/eliminar.html'
-    success_url = reverse_lazy('app:categoria_listar')
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, 'Categoría eliminada exitosamente.')
-        return super().delete(request, *args, **kwargs)
+    template_name = 'Categoria/listar.html'
+    success_url = reverse_lazy('app:categoria_listarE')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

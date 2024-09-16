@@ -37,23 +37,40 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    USER_TYPE_CHOICES = [
+        ('admin', 'Administrador'),
+        ('usuario', 'Usuario normal'),
+    ]
+
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=150, unique=True,verbose_name='Nombre de usuario')
-    nombres = models.CharField(max_length=30, blank=True,validators=[validate_nombre],verbose_name='Nombres y apellidos')
-    password = models.CharField(max_length=128,verbose_name='Contraseña')
-    email = models.EmailField(unique=True,verbose_name='Correo electrónico')
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    last_login = models.DateTimeField(null=True, blank=True)
+    username = models.CharField(max_length=150, unique=True, verbose_name='Nombre de usuario')
+    nombres = models.CharField(max_length=30, blank=True, validators=[validate_nombre], verbose_name='Nombres y apellidos')
+    password = models.CharField(max_length=128, verbose_name='Contraseña')
+    email = models.EmailField(unique=True, verbose_name='Correo electrónico')
+    is_superuser = models.BooleanField(default=False,verbose_name='SuperUsuario')
+    is_staff = models.BooleanField(default=False,verbose_name='Administrador')
+    is_active = models.BooleanField(default=True,verbose_name='Estado')
+    last_login = models.DateTimeField(null=True, blank=True,verbose_name='Ultima conexión')
+    tipo_usuario = models.CharField(
+        max_length=10,
+        choices=USER_TYPE_CHOICES,
+        default='admin',
+        verbose_name='Tipo de usuario'
+    )
 
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
+    class Meta:
+        verbose_name = 'Usuarios'
+        verbose_name_plural = 'Usuarios'
+        db_table = 'usuario'
+        
     def __str__(self):
         return self.username
+
     
 
 # ----------------------------------------------- Departamentos -----------------------------------------------

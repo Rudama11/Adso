@@ -245,14 +245,12 @@
                 if (isValid) {
                     // Si todos los campos están llenos, muestra la alerta de éxito
                     Swal.fire({
-                        title: 'Registrado Correctamente',
-                        text: 'Asegúrate de no olvidar tu información',
+                        title: 'Compra Exitosa',
+                        text: 'La compra ha sido registrada Correctamente.',
                         icon: 'success',
                         confirmButtonText: 'Continuar',
-                        footer: '<span>Aviso Importante</span>', 
-                        width: '25%',
-                        padding: '1rem',
                         backdrop: true,
+                        timer:2000,
                         timerProgressBar: true,
                         position: 'center',
                         allowOutsideClick: false,
@@ -274,8 +272,6 @@
                         text: 'Debe llenar todos los campos de registro',
                         icon: 'error',
                         confirmButtonText: 'Aceptar',
-                        width: '25%',
-                        padding: '1rem',
                         backdrop: true,
                         position: 'center',
                         allowOutsideClick: true,
