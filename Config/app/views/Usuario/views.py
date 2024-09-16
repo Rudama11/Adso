@@ -51,16 +51,12 @@ class UsuarioUpdateView(UpdateView):
     template_name = 'usuario/editar.html'
     success_url = reverse_lazy('app:usuario_listar')
 
-    def form_valid(self, form):
-        user = form.save(commit=False)
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # Pasamos el usuario actual al formulario
+        return kwargs
 
-        # Verifica si la contraseña ha sido cambiada
-        if form.cleaned_data.get('password'):
-            # Marcar al usuario como no autenticado (forzando un nuevo inicio de sesión)
-            self.request.session.flush()
-            messages.success(self.request, 'Contraseña cambiada exitosamente. Por favor, inicie sesión de nuevo.')
-        
-        user.save()
+    def form_valid(self, form):
         messages.success(self.request, 'Usuario actualizado exitosamente.')
         return super().form_valid(form)
 

@@ -71,8 +71,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
-    
-
 # ----------------------------------------------- Departamentos -----------------------------------------------
 class Departamentos(models.Model):
     nombre = models.CharField(max_length=50,verbose_name='Departamento',null=False,blank=False,validators=[validate_nombre])
