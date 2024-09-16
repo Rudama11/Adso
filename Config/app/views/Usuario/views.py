@@ -4,7 +4,6 @@ from app.models import CustomUser
 from app.forms import UsuarioForm, UsuarioEditForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 
@@ -23,8 +22,8 @@ class UsuarioListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'usuarios'
 
     def test_func(self):
-        # Solo permitir acceso a usuarios que son superusuarios (administradores)
-        return self.request.user.is_superuser
+        # Permitir acceso a superusuarios o usuarios con rol de administrador
+        return self.request.user.is_superuser or self.request.user.is_staff
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,7 +34,7 @@ class UsuarioListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def handle_no_permission(self):
         messages.error(self.request, 'No tienes permiso para acceder a esta página.')
-        return redirect('app:acceso_denegado')  # Cambia esta URL a tu página de acceso denegado
+        return redirect('app:acceso_denegado')
 
 class UsuarioCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = CustomUser
@@ -44,7 +43,8 @@ class UsuarioCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('app:usuario_listar')
 
     def test_func(self):
-        return self.request.user.is_superuser
+        # Permitir acceso a superusuarios o usuarios con rol de administrador
+        return self.request.user.is_superuser or self.request.user.is_staff
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -64,7 +64,8 @@ class UsuarioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('app:usuario_listar')
 
     def test_func(self):
-        return self.request.user.is_superuser
+        # Permitir acceso a superusuarios o usuarios con rol de administrador
+        return self.request.user.is_superuser or self.request.user.is_staff
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -95,7 +96,8 @@ class UsuarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy('app:usuario_listar')
 
     def test_func(self):
-        return self.request.user.is_superuser
+        # Permitir acceso a superusuarios o usuarios con rol de administrador
+        return self.request.user.is_superuser or self.request.user.is_staff
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -107,6 +109,6 @@ class UsuarioDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def handle_no_permission(self):
         messages.error(self.request, 'No tienes permiso para acceder a esta página.')
         return redirect('app:acceso_denegado')
-    
+
 def acceso_denegado_view(request):
     return render(request, 'acceso_denegado.html', {})
