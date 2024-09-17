@@ -91,29 +91,28 @@ class UsuarioEditForm(forms.ModelForm):
             )
         ]
     )
-    
+
     password2 = forms.CharField(
         widget=forms.PasswordInput,
         label='Confirma nueva contraseña',
         required=False  # No es obligatorio en el formulario de edición
     )
-    
+
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'tipo_usuario']
-    
+        fields = ['username', 'nombres', 'email', 'tipo_usuario']  # Incluye tipo_usuario en fields
+
     def __init__(self, *args, **kwargs):
         # Obtenemos el usuario actual que edita
         self.current_user = kwargs.pop('user', None)
         super(UsuarioEditForm, self).__init__(*args, **kwargs)
 
-        # Si el usuario actual no es superusuario, no puede modificar is_superuser
-        if not self.current_user.is_superuser:
-            self.fields['is_superuser'].disabled = True
-        # Si el usuario actual no es superusuario o admin, no puede modificar is_staff
-        if not (self.current_user.is_superuser or self.current_user.is_staff):
-            self.fields['is_staff'].disabled = True
-    
+        # Desactivar los campos de superusuario y staff si el usuario actual no tiene permisos
+        if not self.current_user or not self.current_user.is_superuser:
+            self.fields.pop('is_superuser', None)
+        if not self.current_user or not (self.current_user.is_superuser or self.current_user.is_staff):
+            self.fields.pop('is_staff', None)
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
@@ -123,33 +122,35 @@ class UsuarioEditForm(forms.ModelForm):
         if password or password2:
             if password != password2:
                 raise forms.ValidationError("Las contraseñas no coinciden.")
-        
+
         return cleaned_data
-    
+
     def save(self, commit=True):
         user = super().save(commit=False)
-        
+
         # Solo actualiza la contraseña si el campo de contraseña no está vacío
         if self.cleaned_data['password']:
             user.set_password(self.cleaned_data['password'])
         else:
             # No hacer nada con la contraseña si no se ha proporcionado
             user.password = self.instance.password
-        
+
         tipo_usuario = self.cleaned_data.get('tipo_usuario')
-        
+
+        # Asigna permisos según el tipo de usuario
         if tipo_usuario == 'admin':
             user.is_staff = True  # Los administradores tienen permisos de staff
-            user.is_superuser = False  # Los administradores tienen permisos de superusuario
+            user.is_superuser = False  # Los administradores no tienen permisos de superusuario
+        elif tipo_usuario == 'superadmin':
+            user.is_superuser = True  # El superusuario tiene permisos de superusuario
+            user.is_staff = True  # También tiene permisos de staff
         else:
             user.is_staff = False  # Los usuarios normales no tienen permisos de staff
             user.is_superuser = False
-            
+
         if commit:
             user.save()
         return user
-
-
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
