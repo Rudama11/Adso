@@ -66,7 +66,7 @@ urlpatterns = [
     path('proveedor/listar/', ProveedorListView.as_view(), name='proveedor_listar'),
     path('proveedor/crear/', ProveedorCreateView.as_view(), name='proveedor_crear'),
     path('proveedor/editar/<int:pk>/', ProveedorUpdateView.as_view(), name='proveedor_editar'),
-    path('proveedor/eliminar/<int:pk>/', ProveedorDeleteView.as_view(), name='proveedor_eliminar'),
+    path('proveedor/eliminar/<int:id_prove>/', ProveedorListView.EliminarProveedor, name='proveedor_eliminar'),
     
     #-------------------------------------------------- Tipos de productos -----------------------------------------
 
