@@ -1,10 +1,10 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from app.models import DetalleCompra, Producto, Compras
+from app.models import DetalleCompra, Producto, Compras, Stock
 from app.forms import DetalleCompraForm
 
 # Vista para listar detalles de compra
@@ -12,19 +12,16 @@ class DetalleCompraListView(ListView):
     model = DetalleCompra
     template_name = 'Dcompras/listar.html'
     
-    @method_decorator(login_required)  # Requiere autenticación para acceder
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
-        """
-        Agrega datos adicionales al contexto de la plantilla.
-        """
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Detalles de Compras'
         context['entidad'] = 'Detalle de Compra'
-        context['crear_url'] = reverse_lazy('app:detallecompra_crear')  # URL para crear un nuevo detalle
-        context['request'] = self.request  # Incluye la solicitud en el contexto
+        context['crear_url'] = reverse_lazy('app:detallecompra_crear')
+        context['request'] = self.request
         return context
 
 # Vista para crear un nuevo detalle de compra
@@ -43,11 +40,35 @@ class DetalleCompraCreateView(CreateView):
         if not Compras.objects.filter(num_factura=num_factura).exists():
             form.add_error('num_factura', 'No existe una compra con el número de factura proporcionado.')
             return self.form_invalid(form)
+        
+        # Asignar la compra correspondiente al detalle
         form.instance.compra = get_object_or_404(Compras, num_factura=num_factura)
-        return super().form_valid(form)
+        
+        # Guardar el detalle de compra
+        response = super().form_valid(form)
+        
+        # Actualizar el stock después de guardar el detalle
+        self.actualizar_stock(form.instance)
+        
+        return response
+
+    def actualizar_stock(self, detalle_compra):
+        """
+        Actualiza el stock basado en el detalle de compra.
+        """
+        producto = detalle_compra.producto  # Asegúrate de que `producto` es un campo en `DetalleCompra`
+        cantidad = detalle_compra.cantidad
+        
+        # Intentar obtener el producto en stock y actualizar la cantidad
+        try:
+            stock = Stock.objects.get(nombre_pro=producto)  # Usamos el campo correcto `nombre_pro` en Stock
+            stock.cantidad += cantidad  # Sumar la cantidad comprada al stock actual
+            stock.save()
+        except Stock.DoesNotExist:
+            # Si no existe el producto en stock, crear una nueva entrada
+            Stock.objects.create(nombre_pro=producto, cantidad=cantidad, precio=detalle_compra.precio_unitario)
 
     def get_success_url(self):
-        # Redirige a la vista de lista de detalles de compra
         return reverse_lazy('app:detallecompra_listar')
 
     def get_context_data(self, **kwargs):
@@ -62,32 +83,26 @@ class DetalleCompraUpdateView(UpdateView):
     model = DetalleCompra
     form_class = DetalleCompraForm
     template_name = 'Dcompras/editar.html'
-    success_url = reverse_lazy('app:detallecompra_listar')  # URL para redirigir tras la actualización
+    success_url = reverse_lazy('app:detallecompra_listar')
     
     def get_context_data(self, **kwargs):
-        """
-        Agrega datos adicionales al contexto de la plantilla para la actualización de un detalle.
-        """
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
-        context['listar_url'] = reverse_lazy('app:detallecompra_listar')  # URL para listar los detalles
+        context['listar_url'] = reverse_lazy('app:detallecompra_listar')
         return context
 
 # Vista para eliminar un detalle de compra
 class DetalleCompraDeleteView(DeleteView):
     model = DetalleCompra
     template_name = 'Dcompras/eliminar.html'
-    success_url = reverse_lazy('app:detallecompra_listar')  # URL para redirigir tras la eliminación
+    success_url = reverse_lazy('app:detallecompra_listar')
 
     def get_context_data(self, **kwargs):
-        """
-        Agrega datos adicionales al contexto de la plantilla para la eliminación de un detalle.
-        """
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Eliminar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
-        context['listar_url'] = reverse_lazy('app:detallecompra_listar')  # URL para listar los detalles
+        context['listar_url'] = reverse_lazy('app:detallecompra_listar')
         return context
 
 # Vista para obtener datos del producto en formato JSON
