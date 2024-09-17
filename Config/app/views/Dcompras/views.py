@@ -56,16 +56,15 @@ class DetalleCompraCreateView(CreateView):
         """
         Actualiza el stock basado en el detalle de compra.
         """
-        producto = detalle_compra.producto  # Asegúrate de que `producto` es un campo en `DetalleCompra`
+        producto = detalle_compra.producto
         cantidad = detalle_compra.cantidad
         
         # Intentar obtener el producto en stock y actualizar la cantidad
         try:
-            stock = Stock.objects.get(nombre_pro=producto)  # Usamos el campo correcto `nombre_pro` en Stock
-            stock.cantidad += cantidad  # Sumar la cantidad comprada al stock actual
+            stock = Stock.objects.get(nombre_pro=producto)
+            stock.cantidad += cantidad
             stock.save()
         except Stock.DoesNotExist:
-            # Si no existe el producto en stock, crear una nueva entrada
             Stock.objects.create(nombre_pro=producto, cantidad=cantidad, precio=detalle_compra.precio_unitario)
 
     def get_success_url(self):

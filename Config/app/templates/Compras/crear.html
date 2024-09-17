@@ -47,15 +47,6 @@
                 <label for="id_proveedor">{{ form.proveedor.label }}</label>
                 {{ form.proveedor|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
-
-            <!-- Campo total como número entero -->
-            <div class="form-group">
-                <label for="id_total">Total $(COP)</label>
-                <div class="input-group">
-                    <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly class="form-control">
-                    <div class="input-group-append"></div>
-                </div>
-            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
@@ -167,50 +158,9 @@ $(document).ready(function() {
         $('#modalContent').load(url, function() {
             // Rellenar el campo num_factura en el formulario cargado
             $('#id_num_factura').val(numFactura);
-
-            // Asegúrate de que los elementos existan antes de añadir event listeners
-            var cantidadInput = document.getElementById("id_cantidad");
-            var precioInput = document.getElementById("id_precio");
-            var ivaInput = document.getElementById("id_iva");
-            var totalInput = document.getElementById("id_total");
-
-            if (cantidadInput && precioInput && ivaInput && totalInput) {
-                cantidadInput.addEventListener('input', calculateTotal);
-                precioInput.addEventListener('input', calculateTotal);
-                ivaInput.addEventListener('input', calculateTotal);
-
-                // Inicializar el total cuando se carga el modal
-                calculateTotal();
-            } else {
-                console.error('No se encontraron los elementos necesarios en el modal.');
-            }
         });
     });
 });
-
-function calculateTotal() {
-    var precio = parseInt(document.getElementById("id_precio").value) || 0;
-    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
-    var iva = parseInt(document.getElementById("id_iva").value) || 0;
-
-    // Calcular total como número entero
-    var subtotal = precio * cantidad;
-    var total = subtotal + Math.floor((subtotal * iva / 100)); // Usar Math.floor para evitar decimales
-
-    // Actualizar el campo de total en el formulario sin formatear como moneda
-    document.getElementById("id_total").value = total;
-}
-
-// Añadir eventos a los campos
-document.getElementById("id_cantidad").addEventListener('input', calculateTotal);
-document.getElementById("id_precio").addEventListener('input', calculateTotal);
-document.getElementById("id_iva").addEventListener('input', calculateTotal);
-
-// Inicializar la función cuando la página carga
-window.onload = function() {
-    calculateTotal();
-}
-
 </script>
 
 {% endblock %}

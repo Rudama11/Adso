@@ -15,7 +15,7 @@
                 {# Campo para ingresar el número de factura #}
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_compra">Fecha de Compra</label>
@@ -23,26 +23,12 @@
                 {# Campo para seleccionar la fecha de compra #}
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="proveedor">Proveedor</label>
                 <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
                 {# Campo para ingresar el nombre del proveedor #}
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            {# Espacio vacío para alinear el formulario #}
-        </div>
-        
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="total">Total de la Factura</label>
-                <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la compra" value="{{ request.GET.total }}">
-                {# Campo para ingresar el total de la factura #}
             </div>
         </div>
     </div>
@@ -58,7 +44,6 @@
     <th scope="col">Número de Factura</th>
     <th scope="col">Fecha de Compra</th>
     <th scope="col">Proveedor</th>
-    <th scope="col">total</th>
     <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
@@ -70,7 +55,6 @@
     <td>{{ com.num_factura }}</td>
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
-    <td>{{ com.total }}</td>
     <td>
         <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>

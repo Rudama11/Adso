@@ -468,6 +468,10 @@ class ComprasForm(forms.ModelForm):
 
 #------------------------------- detalle Compra----------------------------
 
+from django import forms
+from django.shortcuts import get_object_or_404
+from .models import DetalleCompra, Compras
+
 class DetalleCompraForm(forms.ModelForm):
     num_factura = forms.CharField(
         max_length=20,

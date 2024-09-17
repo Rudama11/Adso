@@ -201,8 +201,7 @@ class Compras(models.Model):
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura', primary_key=True)  # Clave primaria
     fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
-    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total', default=0.00)
-
+    
     def __str__(self):
         return f'Factura {self.num_factura}'
 
@@ -211,6 +210,7 @@ class Compras(models.Model):
         verbose_name_plural = 'Compras'
         db_table = 'Compras'
         ordering = ['num_factura']
+
 #----------------------------------------------- DetalleCompra -----------------------------------------------
 class DetalleCompra(models.Model):
     compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles', to_field='num_factura')
@@ -218,11 +218,16 @@ class DetalleCompra(models.Model):
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Unitario')
     iva = models.DecimalField(max_digits=5, decimal_places=2, default=0.00, verbose_name='IVA (%)')
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0, editable=False, verbose_name='Total')
 
     @property
-    def total(self):
+    def Total(self):
         subtotal = self.precio_unitario * self.cantidad
         return subtotal + (subtotal * self.iva / 100)
+
+    def save(self, *args, **kwargs):
+        self.total = self.Total  # Asigna el total calculado al campo 'total'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Detalle de Compra {self.compra.num_factura} - Producto: {self.producto.nombre}'
@@ -232,7 +237,6 @@ class DetalleCompra(models.Model):
         verbose_name_plural = 'Detalles de Compra'
         db_table = 'DetalleCompra'
         ordering = ['id']
-
 #----------------------------------------------- Stock -----------------------------------------------
 class Stock(models.Model):
     nombre_pro = models.OneToOneField(Producto, on_delete=models.CASCADE)

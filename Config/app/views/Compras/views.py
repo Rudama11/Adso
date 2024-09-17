@@ -44,7 +44,7 @@ class ComprasCreateView(CreateView):
         total = (precio * cantidad) * (1 + iva / Decimal(100))
 
         # Asignar el valor calculado al campo 'total'
-        form.instance.total = total
+        form.instance.total = total  # Eliminar esta línea si no es necesario
 
         # Llamar al método form_valid() de la clase base
         response = super().form_valid(form)
@@ -87,7 +87,7 @@ class ComprasUpdateView(UpdateView):
         total = (precio * cantidad) * (1 + iva / Decimal(100))
 
         # Asignar el valor calculado al campo 'total'
-        form.instance.total = total
+        form.instance.total = total  # Eliminar esta línea si no es necesario
 
         # Llamar al método form_valid() de la clase base
         response = super().form_valid(form)

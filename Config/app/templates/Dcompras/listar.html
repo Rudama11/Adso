@@ -46,6 +46,7 @@
     <th scope="col">Cantidad</th>
     <th scope="col">Precio Unitario</th>
     <th scope="col">IVA (%)</th>
+    <th scope="col">Total</th>
     <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
@@ -59,6 +60,7 @@
     <td>{{ dcompra.cantidad }}</td>
     <td>{{ dcompra.precio_unitario }}</td>
     <td>{{ dcompra.iva }}</td>
+    <td>{{ dcompra.total }}</td>
     <td>
         <a href="{% url 'app:detallecompra_editar' dcompra.pk %}" class="btn btn-info btn-sm" title="Editar detalle compra">
             <i class="fas fa-edit"></i>
