@@ -1,12 +1,98 @@
 {% extends "layout.html" %}
 
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
-    <form method="post">
+    <!-- Mostrar mensajes de éxito o error si existen -->
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" id="editForm">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar Cambios</button>
-        <a href="{% url 'app:categoria_listar' %}">Cancelar</a>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                {% for error in field.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+        <a href="{% url 'app:categoria_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <i class="fas fa-times"></i> Cancelar
+        </a>
     </form>
+
+    <!-- Script para SweetAlert -->
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script>
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenir el envío del formulario
+
+            let isValid = true;
+            let formFields = document.querySelectorAll('#editForm .form-control');
+            
+            formFields.forEach(function(field) {
+                if (field.value.trim() === '') {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (isValid) {
+                Swal.fire({
+                    title: 'Actualización Exitosa',
+                    text: 'La categoría ha sido actualizada exitosamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    document.getElementById('editForm').submit();
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debe llenar todos los campos de registro correctamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: true,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                });
+            }
+        });
+    </script>
 {% endblock %}
