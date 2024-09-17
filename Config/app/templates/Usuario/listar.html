@@ -30,9 +30,40 @@
         <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:usuario_eliminar' user.id %}" class="btn btn-danger btn-sm" title="Eliminar normativa">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ user.id }}" title="Eliminar categoría">
             <i class="fas fa-trash"></i>
         </a>
+
+        <!-- Scripts de accesibilidad y AdminLTE -->
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+        
+        <script>
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let userId = this.getAttribute('data-id');
+                    
+                    Swal.fire({
+                        title: 'Confirmación',
+                        text: '¿Estás seguro de que deseas eliminar este Usuario?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "{% url 'app:usuario_eliminar' 0 %}".replace('0', userId);
+                        }
+                    });
+                });
+            });
+        </script>
     </td>
 </tr>
 {% endfor %}
