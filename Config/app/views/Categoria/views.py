@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from app.models import Categoria
 from app.forms import CategoriaForm
+from django.shortcuts import redirect
 
 class CategoriaListView(ListView):
     model = Categoria
@@ -36,11 +37,10 @@ class CategoriaListView(ListView):
 
         return queryset
     
-    def CategoriaDeleteView(request, id_categ):
+    def EliminarCategoria(request, id_categ):
         categ = Categoria.objects.get(pk=id_categ)
         categ.delete()
-        categs = Categoria.objects.all()
-        return render(request,"Categoria/listar.html",{"categs":categs,"mesaje":'OK'})
+        return redirect('app:categoria_listar')
 
 class CategoriaCreateView(CreateView):
     model = Categoria

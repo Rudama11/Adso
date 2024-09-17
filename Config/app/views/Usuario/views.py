@@ -35,6 +35,11 @@ class UsuarioListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def handle_no_permission(self):
         messages.error(self.request, 'No tienes permiso para acceder a esta página.')
         return redirect('app:acceso_denegado')
+    
+    def EliminarUsuario(request, id_userc):
+        userc = CustomUser.objects.get(pk=id_userc)
+        userc.delete()
+        return redirect('app:usuario_listar')
 
 class UsuarioCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = CustomUser

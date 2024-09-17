@@ -22,14 +22,14 @@ urlpatterns = [
     path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'),
     path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
     path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editar'),
-    path('categoria/eliminar/<int:id_categ>/', CategoriaListView.CategoriaDeleteView, name='categoria_eliminar'), 
+    path('categoria/eliminar/<int:id_categ>/', CategoriaListView.EliminarCategoria, name='categoria_eliminar'), 
     
     #-------------------------------------------------- Cliente ----------------------------------------------------
     
     path('cliente/listar/', ClienteListView.as_view(), name='cliente_listar'),
     path('cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editarCli'),
-    path('cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
+    path('cliente/eliminar/<int:id_cliente>/', ClienteListView.EliminarCliente, name='cliente_eliminar'),
     
     #-------------------------------------------------- Compras ----------------------------------------------------
     
@@ -51,7 +51,7 @@ urlpatterns = [
     path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
     path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
     path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
-    path('usuario/eliminar/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario_eliminar'),
+    path('usuario/eliminar/<int:id_userc>/', UsuarioListView.EliminarUsuario, name='usuario_eliminar'),
     path('perfil/', perfil_view, name='perfil'),
     path('acceso-denegado/', acceso_denegado_view, name='acceso_denegado'),
     
