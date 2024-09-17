@@ -90,15 +90,3 @@ class ClienteUpdateView(UpdateView):
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
-    
-class ClienteDeleteView(DeleteView):
-    model = Cliente
-    template_name = 'Cliente/eliminar.html'
-    success_url = reverse_lazy('app:cliente_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Cliente'
-        context['entidad'] = 'Cliente'
-        context['listar_url'] = reverse_lazy('app:cliente_listar')
-        return context
