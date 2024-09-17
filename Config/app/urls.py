@@ -80,7 +80,7 @@ urlpatterns = [
     path('ubicacion/listar/', UbicacionListView.as_view(), name='ubicacion_listar'),
     path('ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
-    path('ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),
+    path('ubicacion/eliminar/<int:id_ubica>/', UbicacionListView.EliminarUbicacion, name='ubicacion_eliminar'),
     path('municipios-por-departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
     #-------------------------------------------------- Ventas ----------------------------------------------------

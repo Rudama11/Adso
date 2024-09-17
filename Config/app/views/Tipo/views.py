@@ -42,6 +42,7 @@ class TipoListView(ListView):
             queryset = queryset.filter(descripcion__icontains=descripcion)
         
         return queryset
+    
     def EliminarTipo(request, id_tipo):
         tipo = Tipo.objects.get(pk=id_tipo)
         tipo.delete()
