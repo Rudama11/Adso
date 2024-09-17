@@ -35,6 +35,12 @@ class CategoriaListView(ListView):
             queryset = queryset.filter(descripcion__icontains=descripcion)
 
         return queryset
+    
+    def CategoriaDeleteView(request, id_categ):
+        categ = Categoria.objects.get(pk=id_categ)
+        categ.delete()
+        categs = Categoria.objects.all()
+        return render(request,"Categoria/listar.html",{"categs":categs,"mesaje":'OK'})
 
 class CategoriaCreateView(CreateView):
     model = Categoria
@@ -58,18 +64,6 @@ class CategoriaUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Categoría'
-        context['entidad'] = 'Categoría'
-        context['listar_url'] = reverse_lazy('app:categoria_listar')
-        return context
-
-class CategoriaDeleteView(DeleteView):
-    model = Categoria
-    template_name = 'Categoria/listar.html'
-    success_url = reverse_lazy('app:categoria_listarE')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Categoría'
         context['entidad'] = 'Categoría'
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         return context
