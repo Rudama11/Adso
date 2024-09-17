@@ -1,41 +1,31 @@
-{% extends 'listar.html' %} 
-{# Extiende la plantilla base 'listar.html' #}
+{% extends 'listar.html' %}
 
-{% load static %} 
-{# Carga la biblioteca de archivos estáticos para incluir archivos como CSS o JS #}
+{% load static %}
 
-{% block filtro_form_contenido %} 
-{# Bloque para el formulario de filtrado #}
+{% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:categoria_listar' %}">
-    {# Formulario que envía datos por GET a la vista 'categoria_listar' #}
-    
     <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.GET.nombre }}">
-        {# Campo para filtrar por nombre #}
     </div>
 
     <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ request.GET.descripcion }}">
-        {# Campo para filtrar por descripción #}
     </div>
 </form>
 {% endblock %}
 
-{% block columnas %} 
-{# Bloque para los encabezados de la tabla #}
+{% block columnas %}
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Nombre</th>
     <th scope="col">Descripción</th>
     <th scope="col">Opciones</th>
-    {# Encabezados de las columnas #}
 </tr>
 {% endblock %}
 
-{% block filas %} 
-{# Bloque para las filas de la tabla #}
+{% block filas %}
 {% for c in object_list %}
 <tr>
     <td>{{ c.id }}</td>
@@ -45,45 +35,26 @@
         <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm" title="Eliminar cliente">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ c.id }}" title="Eliminar categoría">
             <i class="fas fa-trash"></i>
         </a>
-        <!-- <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
-            <i class="fas fa-edit"></i>
-        </a> -->
-        {# Enlace para editar la categoría #}
-        {# Enlace para eliminar la categoría #}
+
+        <!-- Scripts de accesibilidad y AdminLTE -->
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
-        {# Script para accesibilidad #}
-        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
-        {# Script personalizado de accesibilidad #}
-        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
-        {# Script demo de AdminLTE #}
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
-        {# Script principal de AdminLTE #}
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            document.getElementById('delete-button').addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Validar campos
-                let isValid = true;
-                let formFields = document.querySelectorAll('#createForm .form-control');
-                
-                formFields.forEach(function(field) {
-                    if (field.value.trim() === '') {
-                        isValid = false;
-                        field.classList.add('is-invalid');
-                    } else {
-                        field.classList.remove('is-invalid');
-                    }
-                });
+        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
         
-                if (isValid) {
-                    // Si todo es válido, muestra la alerta de confirmación de creación
+        <script>
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let categoriaId = this.getAttribute('data-id');
+                    
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar esta ?',
+                        text: '¿Estás seguro de que deseas eliminar esta categoría?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -92,29 +63,10 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            Swal.fire({
-                                title: 'Eliminado Correctamente',
-                                text: 'Artículo Eliminada con éxitosamente.',
-                                icon: 'success',
-                                timer:2000,
-                                timerProgressBar: true,
-                                confirmButtonText: 'Continuar'
-                            }).then(() => {
-                                document.getElementById('createForm').submit();
-                            });
+                            window.location.href = "{% url 'app:categoria_eliminar' 0 %}".replace('0', categoriaId);
                         }
                     });
-                } else {
-                    // Si hay errores en los campos, muestra alerta de error
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Por favor, complete todos los campos correctamente.',
-                        icon: 'error',
-                        timer:2000,
-                        timerProgressBar: true,
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
+                });
             });
         </script>
     </td>

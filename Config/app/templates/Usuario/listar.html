@@ -30,11 +30,9 @@
         <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar la normativa #}
         <a href="{% url 'app:usuario_eliminar' user.id %}" class="btn btn-danger btn-sm" title="Eliminar normativa">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar la normativa #}
     </td>
 </tr>
 {% endfor %}
