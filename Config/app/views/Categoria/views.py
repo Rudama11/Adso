@@ -37,10 +37,9 @@ class CategoriaListView(ListView):
 
         return queryset
     
-    def CategoriaDeleteView(request, id_categ):
+    def EliminarCategoria(request, id_categ):
         categ = Categoria.objects.get(pk=id_categ)
         categ.delete()
-        categs = Categoria.objects.all()
         return redirect('app:categoria_listar')
 
 class CategoriaCreateView(CreateView):
