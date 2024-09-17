@@ -264,7 +264,7 @@ class Venta(models.Model):
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
     decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3),validate_campos],verbose_name='Decreto')
-    descripcion=models.CharField(max_length=200,validators=[MinLengthValidator(10),validate_nombre],verbose_name='Descripción')
+    descripcion=models.CharField(max_length=200,validators=[MinLengthValidator(1),validate_nombre],verbose_name='Descripción')
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE,)
     
     def __str__(self):
