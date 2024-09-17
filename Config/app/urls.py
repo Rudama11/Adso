@@ -28,7 +28,7 @@ urlpatterns = [
     path('cliente/listar/', ClienteListView.as_view(), name='cliente_listar'),
     path('cliente/crear/', ClienteCreateView.as_view(), name='cliente_crear'),
     path('cliente/editar/<int:pk>/', ClienteUpdateView.as_view(), name='cliente_editarCli'),
-    path('cliente/eliminar/<int:pk>/', ClienteDeleteView.as_view(), name='cliente_eliminar'),
+    path('cliente/eliminar/<int:id_cliente>/', ClienteListView.EliminarCliente, name='cliente_eliminar'),
     
     #-------------------------------------------------- Compras ----------------------------------------------------
     

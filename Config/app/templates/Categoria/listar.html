@@ -51,6 +51,7 @@
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     let categoriaId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:categoria_eliminar' 0 %}".replace('0', categoriaId);
                     
                     Swal.fire({
                         title: 'Confirmación',
@@ -63,12 +64,31 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "{% url 'app:categoria_eliminar' 0 %}".replace('0', categoriaId);
+                            // Mostrar alerta de éxito
+                            Swal.fire({
+                                title: 'Eliminación Exitosa',
+                                text: 'La categoría ha sido eliminada correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Continuar',
+                                backdrop: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                position: 'center',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                stopKeydownPropagation: false,
+                                buttonsStyling: true,
+                                showCloseButton: true,
+                                closeButtonAriaLabel: 'Cerrar alerta',
+                            }).then(() => {
+                                window.location.href = deleteUrl;
+                            });
                         }
                     });
                 });
             });
-        </script>
+        </script>        
     </td>
 </tr>
 {% endfor %}

@@ -45,11 +45,12 @@
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    let userId = this.getAttribute('data-id');
+                    let categoriaId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:categoria_eliminar' 0 %}".replace('0', categoriaId);
                     
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar este Usuario?',
+                        text: '¿Estás seguro de que deseas eliminar esta categoría?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -58,7 +59,26 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "{% url 'app:usuario_eliminar' 0 %}".replace('0', userId);
+                            // Mostrar alerta de éxito
+                            Swal.fire({
+                                title: 'Eliminación Exitosa',
+                                text: 'La categoría ha sido eliminada correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Continuar',
+                                backdrop: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                position: 'center',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                stopKeydownPropagation: false,
+                                buttonsStyling: true,
+                                showCloseButton: true,
+                                closeButtonAriaLabel: 'Cerrar alerta',
+                            }).then(() => {
+                                window.location.href = deleteUrl;
+                            });
                         }
                     });
                 });

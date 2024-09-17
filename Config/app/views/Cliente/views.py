@@ -8,6 +8,7 @@ from app.models import Cliente
 from app.forms import ClienteForm
 from django.contrib import messages
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúrate de importar tus choices aquí
+from django.shortcuts import redirect
 
 class ClienteListView(ListView):
     model = Cliente
@@ -58,6 +59,11 @@ class ClienteListView(ListView):
             queryset = queryset.filter(password__icontains=password)
 
         return queryset
+    
+    def EliminarCliente(request, id_cliente):
+        cliente = Cliente.objects.get(pk=id_cliente)
+        cliente.delete()
+        return redirect('app:cliente_listar')
 
 class ClienteCreateView(CreateView):
     model = Cliente
