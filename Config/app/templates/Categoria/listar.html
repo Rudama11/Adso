@@ -45,13 +45,13 @@
         <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
+        <a href="{% url 'app:categoria_eliminar' c.id %}" class="btn btn-danger btn-sm" title="Eliminar cliente">
+            <i class="fas fa-trash"></i>
+        </a>
         <!-- <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a> -->
         {# Enlace para editar la categoría #}
-        <button type="button" class="btn btn-danger btn-sm" title="Eliminar categoría" data-id="{{ c.id }}" id="delete-button">
-            <i class="fas fa-trash"></i>
-        </button>
         {# Enlace para eliminar la categoría #}
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         {# Script para accesibilidad #}
