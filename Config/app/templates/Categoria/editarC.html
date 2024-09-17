@@ -1,1 +1,12 @@
-{% extends 'editar.html' %}
+{% extends "layout.html" %}
+
+{% load widget_tweaks %}
+
+{% block contenido %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Cambios</button>
+        <a href="{% url 'app:categoria_listar' %}">Cancelar</a>
+    </form>
+{% endblock %}
