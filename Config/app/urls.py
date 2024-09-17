@@ -59,7 +59,7 @@ urlpatterns = [
     path('producto/listar/', ProductoListView.as_view(), name='producto_listar'),
     path('producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
     path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editarP'),
-    path('producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
+    path('producto/eliminar/<int:id_producto>/', ProductoListView.EliminarProducto, name='producto_eliminar'),
     
     #-------------------------------------------------- Proveedor --------------------------------------------------
     
