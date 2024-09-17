@@ -73,7 +73,7 @@ urlpatterns = [
     path('tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
     path('tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
     path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editarTP'),
-    path('tipo/eliminar/<int:pk>/', TipoDeleteView.as_view(), name='tipo_eliminar'),
+    path('tipo/eliminar/<int:id_tipo>/', TipoListView.EliminarTipo, name='tipo_eliminar'),
 
     #-------------------------------------------------- Ubicación --------------------------------------------------
     
