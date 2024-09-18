@@ -21,7 +21,7 @@ urlpatterns = [
     path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'),
     path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
     path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editar'),
-    path('categoria/eliminar/<int:id_categ>/', CategoriaListView.EliminarCategoria, name='categoria_eliminar'), 
+    path('categoria/eliminar/<int:id_categ>/', CategoriaListView.eliminar_categoria, name='categoria_eliminar'), 
     
     #-------------------------------------------------- Cliente ----------------------------------------------------
     
