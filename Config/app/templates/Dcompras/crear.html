@@ -1,7 +1,7 @@
 {% load widget_tweaks %}
 
 {% block contenidoDC %}
-<form method="post" id="detalleCompraForm">
+<form method="post" id="detalleCompraForm" action="{% url 'app:detallecompra_crear' %}">
     {% csrf_token %}
 
     <div class="form-group">
@@ -92,7 +92,37 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
     });
 
     if (isValid) {
-        document.getElementById('detalleCompraForm').submit();
+        // Obtener el formulario
+        var form = document.getElementById('detalleCompraForm');
+        
+        // Enviar el formulario usando AJAX
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: $(form).serialize(),
+            success: function(response) {
+                // Manejar respuesta exitosa
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Detalle de compra agregado correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(function() {
+                    // Cerrar el modal y recargar la página para ver el nuevo detalle
+                    $('#detalleCompraModal').modal('hide');
+                    location.reload();
+                });
+            },
+            error: function(response) {
+                // Manejar error
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrió un error al agregar el detalle de compra.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        });
     } else {
         Swal.fire({
             title: 'Error',
