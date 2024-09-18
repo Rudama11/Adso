@@ -1,44 +1,41 @@
-from django.shortcuts import render, redirect
-from django.http.response import HttpResponse as HttpResponse
+from django.shortcuts import redirect
+from django.http.response import HttpResponse
 from django.views.generic import RedirectView, FormView
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.contrib import messages
-from .forms import PasswordResetForm, SetPasswordForm
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
-from django.core.mail import EmailMultiAlternatives
+from .forms import PasswordResetForm, SetPasswordForm
 
 UserModel = get_user_model()
+
 class LoginFormView(LoginView):
-    template_name="login.html"
+    template_name = "login.html"
     
     def dispatch(self, request, **kwargs):
         if request.user.is_authenticated:
             return redirect("app:categoria_listar")
         return super().dispatch(request, **kwargs)
-            
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context ["titulo"] = "Iniciar Sesion"
+        context["titulo"] = "Iniciar Sesión"
         return context
 
 class logoutredirect(RedirectView):
-    pattern_name="login"
+    pattern_name = "login"
     
-    def dispatch(self, request,*kwargs ):
+    def dispatch(self, request, *kwargs):
         logout(request)
         return super().dispatch(request, *kwargs)
-    
+
 class PasswordResetView(FormView):
     template_name = "register/password_reset_form.html"
     form_class = PasswordResetForm
@@ -63,7 +60,6 @@ class PasswordResetView(FormView):
             'reset_url': reset_url
         })
         
-        # Usar EmailMultiAlternatives para enviar HTML y texto plano
         email_message = EmailMultiAlternatives(
             subject,
             '',  # Deja el cuerpo de texto plano vacío si solo quieres enviar HTML
@@ -72,14 +68,14 @@ class PasswordResetView(FormView):
         )
         email_message.attach_alternative(html_message, "text/html")
         email_message.send()
-        
+
         messages.success(self.request, 'Se ha enviado un correo de restablecimiento de contraseña.')
         return super().form_valid(form)
-    
+
 class PasswordResetConfirmView(FormView):
     template_name = 'register/password_reset_confirm.html'
     form_class = SetPasswordForm
-    success_url = reverse_lazy('password_reset_complete')
+    success_url = reverse_lazy('login')  # Redirigir al login después de completar el restablecimiento
 
     def get_user(self, uidb64):
         try:
@@ -95,9 +91,26 @@ class PasswordResetConfirmView(FormView):
         kwargs['user'] = self.user
         return kwargs
 
+    def dispatch(self, request, *args, **kwargs):
+        self.user = self.get_user(self.kwargs['uidb64'])
+        token = self.kwargs['token']
+
+        try:
+            # Validar el token
+            if self.user is not None and default_token_generator.check_token(self.user, token):
+                return super().dispatch(request, *args, **kwargs)
+            else:
+                # Si el token no es válido o ha expirado, mostrar un mensaje de error
+                messages.error(self.request, 'El enlace de restablecimiento de contraseña es inválido o ha expirado. Por favor, solicita uno nuevo.')
+                return redirect('expiro_correo')  # Redirige a la página de solicitud de restablecimiento de contraseña
+        except Exception as e:
+            # Capturar cualquier error que pueda ocurrir y redirigir con un mensaje de error
+            messages.error(self.request, 'Hubo un problema con el enlace de restablecimiento. Por favor, intenta nuevamente.')
+            return redirect('expiro_correo')
+
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, 'Tu contraseña ha sido restablecida con éxito.')
+        messages.success(self.request, 'Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión.')
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -113,4 +126,13 @@ class PasswordResetCompleteView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["titulo"] = "Restablecimiento Completo"
+        return context
+
+class ExpirioCorreoView(TemplateView):
+    template_name = "register/expiro_correo.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = "Enlace Expirado"
+        context["mensaje"] = "El enlace de restablecimiento de contraseña ha expirado. Por favor, solicita un nuevo enlace."
         return context
