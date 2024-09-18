@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.http.response import HttpResponse as HttpResponse
 from app.models import Ubicacion,Departamentos,Municipios
 from app.forms import UbicacionForm
+from django.shortcuts import redirect
 
 class UbicacionListView(ListView):
     model = Ubicacion
@@ -38,6 +39,13 @@ class UbicacionListView(ListView):
             queryset = queryset.filter(municipio_id=municipio_id)
 
         return queryset
+    
+    def EliminarUbicacion(request, id_ubica):
+        ubica = Ubicacion.objects.get(pk=id_ubica)
+        ubica.delete()
+        return redirect('app:ubicacion_listar')
+    
+    
 
 class UbicacionCreateView(CreateView):
     model = Ubicacion

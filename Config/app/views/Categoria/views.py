@@ -55,15 +55,30 @@ class CategoriaCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         return context
 
+    def form_valid(self, form):
+        # Guardar la categoría explícitamente
+        form.save()  # Esto es importante, guarda el objeto en la base de datos
+        return JsonResponse({'status': 'success', 'message': 'Categoría creada correctamente'})
+
+    def form_invalid(self, form):
+        # Si el formulario es inválido, enviamos los errores
+        errors = form.errors.as_json()
+        return JsonResponse({'status': 'error', 'message': 'Ya existe una categoría con ese nombre o el formulario es inválido', 'errors': errors}, status=400)
+
 class CategoriaUpdateView(UpdateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Categoría'
-        context['entidad'] = 'Categoría'
-        context['listar_url'] = reverse_lazy('app:categoria_listar')
-        return context
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return response
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            errors = form.errors.as_json()
+            return JsonResponse({'success': False, 'errors': errors})
+        return super().form_invalid(form)

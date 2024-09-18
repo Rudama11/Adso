@@ -45,7 +45,7 @@ urlpatterns = [
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
     path('normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
     path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
-    path('normativa/eliminar/<int:pk>/', NormativaDeleteView.as_view(), name='normativa_eliminar'),
+    path('normativa/eliminar/<int:id_norma>/', NormativaListView.EliminarNormativa, name='normativa_eliminar'),
     
     #-------------------------------------------------- Usuario ---------------------------------------------------
     
@@ -61,28 +61,28 @@ urlpatterns = [
     path('producto/listar/', ProductoListView.as_view(), name='producto_listar'),
     path('producto/crear/', ProductoCreateView.as_view(), name='producto_crear'),
     path('producto/editar/<int:pk>/', ProductoUpdateView.as_view(), name='producto_editarP'),
-    path('producto/eliminar/<int:pk>/', ProductoDeleteView.as_view(), name='producto_eliminar'),
+    path('producto/eliminar/<int:id_producto>/', ProductoListView.EliminarProducto, name='producto_eliminar'),
     
     #-------------------------------------------------- Proveedor --------------------------------------------------
     
     path('proveedor/listar/', ProveedorListView.as_view(), name='proveedor_listar'),
     path('proveedor/crear/', ProveedorCreateView.as_view(), name='proveedor_crear'),
     path('proveedor/editar/<int:pk>/', ProveedorUpdateView.as_view(), name='proveedor_editar'),
-    path('proveedor/eliminar/<int:pk>/', ProveedorDeleteView.as_view(), name='proveedor_eliminar'),
+    path('proveedor/eliminar/<int:id_prove>/', ProveedorListView.EliminarProveedor, name='proveedor_eliminar'),
     
     #-------------------------------------------------- Tipos de productos -----------------------------------------
 
     path('tipo/listar/', TipoListView.as_view(), name='tipo_listar'),
     path('tipo/crear/', TipoCreateView.as_view(), name='tipo_crear'),
     path('tipo/editar/<int:pk>/', TipoUpdateView.as_view(), name='tipo_editarTP'),
-    path('tipo/eliminar/<int:pk>/', TipoDeleteView.as_view(), name='tipo_eliminar'),
+    path('tipo/eliminar/<int:id_tipo>/', TipoListView.EliminarTipo, name='tipo_eliminar'),
 
     #-------------------------------------------------- Ubicación --------------------------------------------------
     
     path('ubicacion/listar/', UbicacionListView.as_view(), name='ubicacion_listar'),
     path('ubicacion/crear/', UbicacionCreateView.as_view(), name='ubicacion_crear'),
     path('ubicacion/editar/<int:pk>/', UbicacionUpdateView.as_view(), name='ubicacion_editar'),
-    path('ubicacion/eliminar/<int:pk>/', UbicacionDeleteView.as_view(), name='ubicacion_eliminar'),
+    path('ubicacion/eliminar/<int:id_ubica>/', UbicacionListView.EliminarUbicacion, name='ubicacion_eliminar'),
     path('municipios-por-departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
     #-------------------------------------------------- Ventas ----------------------------------------------------
