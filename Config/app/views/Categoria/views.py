@@ -7,7 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from app.models import Categoria
 from app.forms import CategoriaForm
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 
 class CategoriaListView(ListView):
     model = Categoria
@@ -36,9 +38,11 @@ class CategoriaListView(ListView):
             queryset = queryset.filter(descripcion__icontains=descripcion)
 
         return queryset
-    
-    def EliminarCategoria(request, id_categ):
-        categ = Categoria.objects.get(pk=id_categ)
+
+
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
+    def eliminar_categoria(request, id_categ):
+        categ = get_object_or_404(Categoria, pk=id_categ)
         categ.delete()
         return redirect('app:categoria_listar')
 
@@ -56,14 +60,29 @@ class CategoriaCreateView(CreateView):
         return context
 
     def form_valid(self, form):
+        # Verificar si la descripción está vacía
+        if not form.cleaned_data.get('descripcion'):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'El campo de descripción es obligatorio.'
+            }, status=400)
+
         # Guardar la categoría explícitamente
-        form.save()  # Esto es importante, guarda el objeto en la base de datos
-        return JsonResponse({'status': 'success', 'message': 'Categoría creada correctamente'})
+        form.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Categoría creada correctamente'
+        })
 
     def form_invalid(self, form):
         # Si el formulario es inválido, enviamos los errores
         errors = form.errors.as_json()
-        return JsonResponse({'status': 'error', 'message': 'Ya existe una categoría con ese nombre o el formulario es inválido', 'errors': errors}, status=400)
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Ya existe una categoría con ese nombre o el formulario es inválido',
+            'errors': errors
+        }, status=400)
+
 
 class CategoriaUpdateView(UpdateView):
     model = Categoria
