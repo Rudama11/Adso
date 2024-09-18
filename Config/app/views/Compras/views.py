@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from app.models import Compras, Proveedor
+from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
 
 class ComprasListView(ListView):
@@ -110,10 +110,13 @@ def obtener_datos_proveedor(request):
 @login_required
 def compra_detalle(request, num_factura):
     compra = get_object_or_404(Compras, num_factura=num_factura)
+    detalles_compra = DetalleCompra.objects.filter(compra=compra)
     form = ComprasForm(instance=compra)
+    
     context = {
         'form': form,
         'titulo': 'Detalles de Compra',
         'listar_url': reverse_lazy('app:compras_listar'),
+        'detalles_compra': detalles_compra,  # Pasamos los detalles de la compra al contexto
     }
     return render(request, 'Compras/CompraD.html', context)

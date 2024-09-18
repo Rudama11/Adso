@@ -55,37 +55,9 @@
             <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
             </a>
-            <!-- Botón para agregar producto -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal">
-                <i class="fas fa-plus"></i> Agregar Producto
-            </button>
         </div>
     </div>
 </form>
-
-<!-- Modal para DetalleCompra -->
-<div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar Detalle de Compra</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido del modal cargado dinámicamente -->
-                <div id="modalContent">
-                    <!-- Aquí se cargará el contenido dinámicamente -->
-                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -147,19 +119,6 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             closeButtonAriaLabel: 'Cerrar alerta',
         });
     }
-});
-
-// Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
-$(document).ready(function() {
-    $('#detalleCompraModal').on('show.bs.modal', function(e) {
-        var url = "{% url 'app:detallecompra_crear' %}";
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de que el número de factura esté disponible en el contexto
-
-        $('#modalContent').load(url, function() {
-            // Rellenar el campo num_factura en el formulario cargado
-            $('#id_num_factura').val(numFactura);
-        });
-    });
 });
 </script>
 
