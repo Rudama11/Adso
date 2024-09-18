@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from app.models import Compras, Proveedor
 from app.forms import ComprasForm
-from decimal import Decimal
 
 class ComprasListView(ListView):
     model = Compras
@@ -35,24 +35,8 @@ class ComprasCreateView(CreateView):
     success_url = reverse_lazy('app:compras_listar')
 
     def form_valid(self, form):
-        # Convertir los valores a Decimal para realizar las operaciones
-        cantidad = form.cleaned_data.get('cantidad', Decimal(0))
-        precio = form.cleaned_data.get('precio', Decimal(0))
-        iva = form.cleaned_data.get('iva', Decimal(0))
-
-        # Calcular el total utilizando Decimal
-        total = (precio * cantidad) * (1 + iva / Decimal(100))
-
-        # Asignar el valor calculado al campo 'total'
-        form.instance.total = total  # Eliminar esta línea si no es necesario
-
-        # Llamar al método form_valid() de la clase base
         response = super().form_valid(form)
-
-        # Obtener el número de factura asignado
         num_factura = form.instance.num_factura
-
-        # Pasar el número de factura al contexto para el modal
         self.object = form.instance
         context = self.get_context_data()
         context['num_factura'] = num_factura
@@ -78,24 +62,8 @@ class ComprasUpdateView(UpdateView):
         return Compras.objects.get(num_factura=self.kwargs['num_factura'])
 
     def form_valid(self, form):
-        # Convertir los valores a Decimal para realizar las operaciones
-        cantidad = form.cleaned_data.get('cantidad', Decimal(0))
-        precio = form.cleaned_data.get('precio', Decimal(0))
-        iva = form.cleaned_data.get('iva', Decimal(0))
-
-        # Calcular el total utilizando Decimal
-        total = (precio * cantidad) * (1 + iva / Decimal(100))
-
-        # Asignar el valor calculado al campo 'total'
-        form.instance.total = total  # Eliminar esta línea si no es necesario
-
-        # Llamar al método form_valid() de la clase base
         response = super().form_valid(form)
-
-        # Obtener el número de factura asignado
         num_factura = form.instance.num_factura
-
-        # Pasar el número de factura al contexto para el modal
         self.object = form.instance
         context = self.get_context_data()
         context['num_factura'] = num_factura
@@ -114,7 +82,6 @@ class ComprasDeleteView(DeleteView):
     template_name = 'Compras/eliminar.html'
     success_url = reverse_lazy('app:compras_listar')
 
-    # Ajuste para buscar por 'num_factura'
     def get_object(self, queryset=None):
         return Compras.objects.get(num_factura=self.kwargs['num_factura'])
 
@@ -139,3 +106,14 @@ def obtener_datos_proveedor(request):
         return JsonResponse(data)
     except Proveedor.DoesNotExist:
         return JsonResponse({'error': 'Proveedor no encontrado.'}, status=404)
+
+@login_required
+def compra_detalle(request, num_factura):
+    compra = get_object_or_404(Compras, num_factura=num_factura)
+    form = ComprasForm(instance=compra)
+    context = {
+        'form': form,
+        'titulo': 'Detalles de Compra',
+        'listar_url': reverse_lazy('app:compras_listar'),
+    }
+    return render(request, 'Compras/CompraD.html', context)

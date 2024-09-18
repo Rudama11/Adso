@@ -63,7 +63,10 @@
         <a href="{% url 'app:compras_eliminar' com.pk %}" class="btn btn-danger btn-sm" title="Eliminar compra">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar la compra #}
+        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm" title="Detalle">
+            <i class="fas fa-info-circle"></i>
+        </a>
+
     </td>
 </tr>
 {% endfor %}

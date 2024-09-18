@@ -37,6 +37,7 @@ urlpatterns = [
     path('compras/crear/', ComprasCreateView.as_view(), name='compras_crear'),
     path('compras/editar/<str:num_factura>/', ComprasUpdateView.as_view(), name='compras_editar'),
     path('compras/eliminar/<str:num_factura>/', ComprasDeleteView.as_view(), name='compras_eliminar'),
+    path('compras/detalle/<str:num_factura>/', compra_detalle, name='compras_detalle'),
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
     #-------------------------------------------------- Normativa --------------------------------------------------
