@@ -8,6 +8,7 @@ from app.models import Cliente
 from app.forms import ClienteForm
 from django.contrib import messages
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúrate de importar tus choices aquí
+from django.shortcuts import redirect
 
 class ClienteListView(ListView):
     model = Cliente
@@ -58,6 +59,11 @@ class ClienteListView(ListView):
             queryset = queryset.filter(password__icontains=password)
 
         return queryset
+    
+    def EliminarCliente(request, id_cliente):
+        cliente = Cliente.objects.get(pk=id_cliente)
+        cliente.delete()
+        return redirect('app:cliente_listar')
 
 class ClienteCreateView(CreateView):
     model = Cliente
@@ -81,18 +87,6 @@ class ClienteUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Cliente'
-        context['entidad'] = 'Cliente'
-        context['listar_url'] = reverse_lazy('app:cliente_listar')
-        return context
-    
-class ClienteDeleteView(DeleteView):
-    model = Cliente
-    template_name = 'Cliente/eliminar.html'
-    success_url = reverse_lazy('app:cliente_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context

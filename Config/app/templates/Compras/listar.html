@@ -15,7 +15,7 @@
                 {# Campo para ingresar el número de factura #}
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_compra">Fecha de Compra</label>
@@ -23,26 +23,12 @@
                 {# Campo para seleccionar la fecha de compra #}
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <div class="form-group">
                 <label for="proveedor">Proveedor</label>
                 <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
                 {# Campo para ingresar el nombre del proveedor #}
-            </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-md-6">
-            {# Espacio vacío para alinear el formulario #}
-        </div>
-        
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="total">Total de la Factura</label>
-                <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la compra" value="{{ request.GET.total }}">
-                {# Campo para ingresar el total de la factura #}
             </div>
         </div>
     </div>
@@ -58,11 +44,6 @@
     <th scope="col">Número de Factura</th>
     <th scope="col">Fecha de Compra</th>
     <th scope="col">Proveedor</th>
-    <th scope="col">Producto</th>
-    <th scope="col">Cantidad</th>
-    <th scope="col">Precio</th>
-    <th scope="col">IVA (%)</th>
-    <th scope="col">Total</th>
     <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
@@ -74,11 +55,6 @@
     <td>{{ com.num_factura }}</td>
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
-    <td>{{ com.producto }}</td>
-    <td>{{ com.cantidad }}</td>
-    <td>{{ com.precio }}</td>
-    <td>{{ com.iva }}</td>
-    <td>{{ com.total }}</td>
     <td>
         <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
@@ -87,7 +63,10 @@
         <a href="{% url 'app:compras_eliminar' com.pk %}" class="btn btn-danger btn-sm" title="Eliminar compra">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar la compra #}
+        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm" title="Detalle">
+            <i class="fas fa-info-circle"></i>
+        </a>
+
     </td>
 </tr>
 {% endfor %}

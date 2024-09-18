@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from app.models import Normativa
 from app.forms import NormativaForm
+from django.shortcuts import redirect
 
 class NormativaListView(ListView):
     model = Normativa
@@ -45,6 +46,11 @@ class NormativaListView(ListView):
             queryset = queryset.filter(producto__icontains=producto)
         
         return queryset
+    
+    def EliminarNormativa(request, id_norma):
+        norma = Normativa.objects.get(pk=id_norma)
+        norma.delete()
+        return redirect('app:normativa_listar')
 
 class NormativaCreateView(CreateView):
     model = Normativa
@@ -69,17 +75,5 @@ class NormativaUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar una Normativa'
         context['entidad'] = 'Normativa'
-        context['listar_url'] = reverse_lazy('app:normativa_listar')
-        return context
-
-class NormativaDeleteView(DeleteView):
-    model = Normativa
-    template_name = 'Normativa/eliminar.html'
-    success_url = reverse_lazy('app:normativa_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar una Normativa'
-        context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context

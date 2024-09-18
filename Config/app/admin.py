@@ -1,11 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from app.models import CustomUser
-from app.forms import UsuarioForm, UsuarioEditForm
 
 class CustomUserAdmin(BaseUserAdmin):
-    add_form = UsuarioForm
-    form = UsuarioEditForm
     model = CustomUser
     list_display = ('username', 'email', 'nombres', 'is_staff', 'is_superuser', 'is_active', 'last_login')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
@@ -19,31 +16,20 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Fechas importantes', {'fields': ('last_login',)}),
     )
 
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'email', 'nombres', 'password', 'password2', 'is_staff', 'is_active')}
-        ),
-    )
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(CustomUserAdmin, self).get_form(request, obj, **kwargs)
+        # Si el usuario no es superusuario, deshabilitamos is_superuser en el admin
+        if not request.user.is_superuser:
+            form.base_fields['is_superuser'].disabled = True
+        # Si el usuario no es superusuario o admin, deshabilitamos is_staff
+        if not (request.user.is_superuser or request.user.is_staff):
+            form.base_fields['is_staff'].disabled = True
+        return form
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj:  # Si estamos editando un usuario existente
-            if request.user.is_superuser:
-                return self.readonly_fields
-            else:
-                return ('username', 'last_login', 'is_superuser', 'is_staff')
-        return self.readonly_fields
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(is_staff=True)
-
-    def save_model(self, request, obj, form, change):
-        if not change:  # Si estamos creando un nuevo usuario
-            if not request.user.is_superuser:
-                obj.is_staff = True  # Asegúrate de que el admin tenga permisos de staff
-        super().save_model(request, obj, form, change)
+    # Este método impide que un usuario no superusuario pueda ver o editar usuarios superusuarios
+    def has_change_permission(self, request, obj=None):
+        if obj and obj.is_superuser and not request.user.is_superuser:
+            return False
+        return super().has_change_permission(request, obj)
 
 admin.site.register(CustomUser, CustomUserAdmin)

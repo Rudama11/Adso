@@ -8,46 +8,19 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-plus"></i>
-                {{titulo}}
+                Crear {{ entidad }}
             </h3>
         </div>
         <div class="card-body">
             {% csrf_token %}
-            {% if messages %}
-                <div class="alert-container">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% if form.errors %}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                    ×
-                </button>
-                <h5>
-                    <i class="icon fas fa-ban"></i> 
-                    {% if form.instance.pk %}
-                        Ha ocurrido un error al intentar {{ titulo }}.
-                    {% else %}
-                        Ha ocurrido un error al intentar crear {{ titulo }}.
-                    {% endif %}
-                </h5>
-                <ul>
-                    {% for field in form %}
-                    {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
+            <div id="alert-container"></div>
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ field.errors|striptags }}
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -63,55 +36,80 @@
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     document.getElementById('confirmButton').addEventListener('click', function(e) {
         e.preventDefault(); 
         
-        // Validar que los campos no estén vacíos
-        let isValid = true;
-        let formFields = document.querySelectorAll('#createForm .form-control');
-        
-        formFields.forEach(function(field) {
-            if (field.value.trim() === '') {
-                isValid = false;
-                field.classList.add('is-invalid');
-            } else {
-                field.classList.remove('is-invalid');
-            }
-        });
-
-        if (isValid) {
-            // Mostrar alerta de éxito y luego enviar el formulario
+        // Validación del lado del cliente
+        let descripcionField = document.querySelector('[name="descripcion"]');
+        if (!descripcionField.value.trim()) {
             Swal.fire({
-                title: 'Registrado Correctamente',
-                text: 'El Artículo ha sido creado exitosamente.',
-                icon: 'success',
-                confirmButtonText: 'Continuar',
-                backdrop: true,
+                title: 'Campo Obligatorio',
+                text: 'El campo de descripción es obligatorio.',
+                icon: 'warning',
                 timer:2000,
                 timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
                 position: 'center',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                stopKeydownPropagation: false,
+                allowOutsideClick: true,
                 buttonsStyling: true,
-                showCloseButton: true,
-                closeButtonAriaLabel: 'Cerrar alerta',
-            }).then(() => {
-                document.getElementById('createForm').submit();
             });
-        } else {
-            // Si hay campos vacíos, muestra la alerta de error
+            descripcionField.focus();
+            return;
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('createForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                // Mostrar alerta de éxito
+                Swal.fire({
+                    title: 'Registrado Correctamente',
+                    text: `La {{ entidad }} ha sido creada exitosamente.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                });
+            }
+        })
+        .catch(data => {
+            // Mostrar alerta de error
             Swal.fire({
                 title: 'Error',
-                text: 'Debe llenar todos los campos de registro',
+                text: data.message || 'Ha ocurrido un error al intentar crear {{ entidad }}.',
                 icon: 'error',
                 confirmButtonText: 'Aceptar',
                 backdrop: true,
-                timer:2000,
-                timerProgressBar:true,
+                timer: 2000,
+                timerProgressBar: true,
                 position: 'center',
                 allowOutsideClick: true,
                 allowEscapeKey: false,
@@ -121,7 +119,21 @@
                 showCloseButton: true,
                 closeButtonAriaLabel: 'Cerrar alerta',
             });
-        }
+
+            // Mostrar los errores específicos del formulario si es necesario
+            if (data.errors) {
+                Object.keys(data.errors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = data.errors[key][0].message;
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>
 

@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
+from django.shortcuts import redirect
 
 class ProductoListView(ListView):
     model = Producto
@@ -48,6 +49,12 @@ class ProductoListView(ListView):
                 queryset = queryset.filter(tipo_pro=tipo_pro)
 
         return queryset
+    
+    def EliminarProducto(request, id_producto):
+        producto = Producto.objects.get(pk=id_producto)
+        producto.delete()
+        return redirect('app:producto_listar')
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from app.models import Tipo
 from app.forms import TipoForm
-
+from django.shortcuts import redirect
 class TipoListView(ListView):
     model = Tipo 
     template_name = 'Tipo/listar.html'
@@ -42,6 +42,12 @@ class TipoListView(ListView):
             queryset = queryset.filter(descripcion__icontains=descripcion)
         
         return queryset
+    
+    def EliminarTipo(request, id_tipo):
+        tipo = Tipo.objects.get(pk=id_tipo)
+        tipo.delete()
+        return redirect('app:tipo_listar')
+    
 
 class TipoCreateView(CreateView):
     model = Tipo
