@@ -62,9 +62,13 @@ class CategoriaUpdateView(UpdateView):
     success_url = reverse_lazy('app:categoria_listar')
 
     def form_valid(self, form):
-        messages.success(self.request, 'La categoría ha sido actualizada exitosamente.')
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return response
 
     def form_invalid(self, form):
-        messages.error(self.request, 'Debe llenar todos los campos de registro correctamente.')
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            errors = form.errors.as_json()
+            return JsonResponse({'success': False, 'errors': errors})
         return super().form_invalid(form)

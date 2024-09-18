@@ -41,9 +41,9 @@
     <script>
         document.getElementById('editForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevenir el envío del formulario
-
-            let isValid = true;
+        
             let formFields = document.querySelectorAll('#editForm .form-control');
+            let isValid = true;
             
             formFields.forEach(function(field) {
                 if (field.value.trim() === '') {
@@ -53,26 +53,74 @@
                     field.classList.remove('is-invalid');
                 }
             });
-
+        
             if (isValid) {
-                Swal.fire({
-                    title: 'Actualización Exitosa',
-                    text: 'La categoría ha sido actualizada exitosamente.',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar',
-                    backdrop: true,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    position: 'center',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    stopKeydownPropagation: false,
-                    buttonsStyling: true,
-                    showCloseButton: true,
-                    closeButtonAriaLabel: 'Cerrar alerta',
-                }).then(() => {
-                    document.getElementById('editForm').submit();
+                fetch(document.getElementById('editForm').action, {
+                    method: 'POST',
+                    body: new FormData(document.getElementById('editForm')),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Actualización Exitosa',
+                            text: 'La categoría ha sido actualizada exitosamente.',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            backdrop: true,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            position: 'center',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            stopKeydownPropagation: false,
+                            buttonsStyling: true,
+                            showCloseButton: true,
+                            closeButtonAriaLabel: 'Cerrar alerta',
+                        }).then(() => {
+                            window.location.href = "{% url 'app:categoria_listar' %}";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Debe llenar todos los campos de registro correctamente.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            backdrop: true,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            position: 'center',
+                            allowOutsideClick: true,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            stopKeydownPropagation: false,
+                            buttonsStyling: true,
+                            showCloseButton: true,
+                            closeButtonAriaLabel: 'Cerrar alerta',
+                        });
+                    }
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hubo un problema al procesar la solicitud.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        backdrop: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'center',
+                        allowOutsideClick: true,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        stopKeydownPropagation: false,
+                        buttonsStyling: true,
+                        showCloseButton: true,
+                        closeButtonAriaLabel: 'Cerrar alerta',
+                    });
                 });
             } else {
                 Swal.fire({
@@ -94,5 +142,6 @@
                 });
             }
         });
+        
     </script>
 {% endblock %}
