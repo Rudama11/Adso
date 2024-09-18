@@ -71,9 +71,14 @@ class CategoriaUpdateView(UpdateView):
     template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Categoría'
-        context['entidad'] = 'Categoría'
-        context['listar_url'] = reverse_lazy('app:categoria_listar')
-        return context
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': True})
+        return response
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            errors = form.errors.as_json()
+            return JsonResponse({'success': False, 'errors': errors})
+        return super().form_invalid(form)
