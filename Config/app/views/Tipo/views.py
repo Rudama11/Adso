@@ -61,6 +61,30 @@ class TipoCreateView(CreateView):
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
         return context
+    
+    def form_valid(self, form):
+        # Verificar si la descripción está vacía
+        if not form.cleaned_data.get('descripcion'):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'El campo de descripción es obligatorio.'
+            }, status=400)
+
+        # Guardar la categoría explícitamente
+        form.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Tipo de Producto creado correctamente'
+        })
+
+    def form_invalid(self, form):
+        # Si el formulario es inválido, enviamos los errores
+        errors = form.errors.as_json()
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Ya existe un Tipo de producto con ese nombre o el formulario es inválido',
+            'errors': errors
+        }, status=400)
 
 class TipoUpdateView(UpdateView):
     model = Tipo
