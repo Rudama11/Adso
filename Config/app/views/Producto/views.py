@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
 from django.shortcuts import redirect
+from django.http import JsonResponse
 
 class ProductoListView(ListView):
     model = Producto
@@ -67,7 +68,7 @@ class ProductoListView(ListView):
         context['form'] = ProductoFilterForm(self.request.GET)
 
         return context
-
+    
 class ProductoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
@@ -80,7 +81,27 @@ class ProductoCreateView(CreateView):
         context['entidad'] = 'Producto'
         context['listar_url'] = reverse_lazy('app:producto_listar')
         return context
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Producto creado correctamente'
+        })
+        
+        return response
 
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            errors = form.errors.as_json()
+            return JsonResponse({
+            'status': 'error',
+            'message': 'El formulario es inválido',
+            'errors': errors
+            }, status=400)
+        return super().form_invalid(form)
+    
 class ProductoUpdateView(UpdateView):
     model = Producto
     form_class = ProductoForm
@@ -90,18 +111,6 @@ class ProductoUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar un producto'
-        context['entidad'] = 'Producto'
-        context['listar_url'] = reverse_lazy('app:producto_listar')
-        return context
-
-class ProductoDeleteView(DeleteView):
-    model = Producto
-    template_name = 'Producto/eliminar.html'
-    success_url = reverse_lazy('app:producto_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar un producto'
         context['entidad'] = 'Producto'
         context['listar_url'] = reverse_lazy('app:producto_listar')
         return context
