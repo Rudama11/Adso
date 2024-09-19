@@ -96,11 +96,11 @@
                         <p style="color: #ffffff; margin-left: 10px;"><b>Ventas</b></p>
                     </a>
                 </li>
-
-                <li class="nav-item">
+                <!-- Opción oculta para "Detalle de Compra" -->
+                <li class="nav-item" style="display: none;">
                     <a href="{% url 'app:detallecompra_listar' %}" class="nav-link">
-                        <i class="nav-icon fa fa-box" style="color: #fbdbb6;"></i>
-                        <p style="color: #ffffff; margin-left: 10px;"><b>Detalles de Compra</b></p>
+                        <i class="nav-icon fas fa-receipt" style="color: #fbdbb6;"></i>
+                        <p style="color: #fff; margin-left: 10px;"><b>Detalle de Compra</b></p>
                     </a>
                 </li>
             </ul>
