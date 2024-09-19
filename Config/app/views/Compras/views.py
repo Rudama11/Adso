@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
 
 class ComprasListView(ListView):
     model = Compras
@@ -27,15 +28,13 @@ class ComprasListView(ListView):
         context['crear_url'] = reverse_lazy('app:compras_crear')
         context['request'] = self.request
         return context
-    
+
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarCompras(request, id_compra):
-        compra = Compras.objects.get(pk=id_compra)
+        compra = get_object_or_404(Compras, pk=id_compra)
         compra.delete()
-        return redirect('app:compra_listar')
+        return redirect('app:compras_listar')
     
-    
-
-
 class ComprasCreateView(CreateView):
     model = Compras
     form_class = ComprasForm
@@ -84,22 +83,6 @@ class ComprasUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:compras_listar')
         context['num_factura'] = self.object.num_factura if self.object else ''
         return context
-
-class ComprasDeleteView(DeleteView):
-    model = Compras
-    template_name = 'Compras/eliminar.html'
-    success_url = reverse_lazy('app:compras_listar')
-
-    def get_object(self, queryset=None):
-        return Compras.objects.get(num_factura=self.kwargs['num_factura'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Compra'
-        context['entidad'] = 'Compras'
-        context['listar_url'] = reverse_lazy('app:compras_listar')
-        return context
-
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')
