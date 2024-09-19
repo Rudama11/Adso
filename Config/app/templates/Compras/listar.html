@@ -62,21 +62,26 @@
         <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm" title="Detalle">
             <i class="fas fa-info-circle"></i>
         </a>
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ dcompra.id }}" title="Eliminar ">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ com.id }}" title="Eliminar Compra">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar el detalle de la compra #}
 
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    let CompraId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:proveedor_eliminar' 0 %}".replace('0', DcompraId);
+                    let compraId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:compras_eliminar' 0 %}".replace('0', compraId);
                     
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar este proveedor?',
+                        text: '¿Estás seguro de que deseas eliminar esta compra?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -88,7 +93,7 @@
                             // Mostrar alerta de éxito
                             Swal.fire({
                                 title: 'Eliminación Exitosa',
-                                text: 'El proveedor ha sido eliminada correctamente.',
+                                text: 'La compra ha sido eliminado correctamente.',
                                 icon: 'success',
                                 confirmButtonText: 'Continuar',
                                 backdrop: true,

@@ -25,10 +25,12 @@ class DetalleCompraListView(ListView):
         context['request'] = self.request
         return context
     
-    def EliminarDcompra(self, request, id_Dcompra):
-        Dcom = get_object_or_404(DetalleCompra, pk=id_Dcompra)
-        Dcom.delete()
-        return redirect('app:detallecompra_listar')
+    def EliminarDcompras(request, id_compra):
+        compra = Dcompra.objects.get(pk=id_compra)
+        compra.delete()
+        return redirect('app:compra_listar')
+    
+    
 
 # Vista para crear un nuevo detalle de compra
 class DetalleCompraCreateView(CreateView):

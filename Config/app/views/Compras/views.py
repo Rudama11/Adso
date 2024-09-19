@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
+from django.shortcuts import redirect
 
 class ComprasListView(ListView):
     model = Compras
@@ -26,6 +27,13 @@ class ComprasListView(ListView):
         context['crear_url'] = reverse_lazy('app:compras_crear')
         context['request'] = self.request
         return context
+    
+    def EliminarCompras(request, id_compra):
+        compra = Compras.objects.get(pk=id_compra)
+        compra.delete()
+        return redirect('app:compra_listar')
+    
+    
 
 
 class ComprasCreateView(CreateView):
