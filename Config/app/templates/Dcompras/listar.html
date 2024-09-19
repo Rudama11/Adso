@@ -6,33 +6,33 @@
 
 {% block filtro_form_contenido %}
 {# Bloque para el formulario de filtrado #}
-<form method="GET" action="{% url 'app:compras_listar' %}">
+<form method="GET" action="{% url 'app:detallecompra_listar' %}">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label for="num_factura">Número de Factura</label>
-                <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
-                {# Campo para ingresar el número de factura #}
+                <label for="compra">Número de Compra</label>
+                <input type="text" class="form-control" id="compra" name="compra" placeholder="Ingrese el número de compra" value="{{ request.GET.compra }}">
+                {# Campo para ingresar el número de compra #}
             </div>
         </div>
-
+        
         <div class="col-md-4">
             <div class="form-group">
-                <label for="fecha_compra">Fecha de Compra</label>
-                <input type="date" class="form-control" id="fecha_compra" name="fecha_compra" value="{{ request.GET.fecha_compra }}">
-                {# Campo para seleccionar la fecha de compra #}
+                <label for="producto">Producto</label>
+                <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
+                {# Campo para ingresar el nombre del producto #}
             </div>
         </div>
-
+        
         <div class="col-md-4">
             <div class="form-group">
-                <label for="proveedor">Proveedor</label>
-                <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
-                {# Campo para ingresar el nombre del proveedor #}
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
+                {# Campo para ingresar la cantidad #}
             </div>
         </div>
     </div>
-
+    
     <button type="submit" class="btn btn-primary">Filtrar</button>
     {# Botón para enviar el formulario de filtrado #}
 </form>
@@ -41,42 +41,46 @@
 {% block columnas %}
 {# Bloque para los encabezados de la tabla #}
 <tr>
-    <th scope="col">Número de Factura</th>
-    <th scope="col">Fecha de Compra</th>
-    <th scope="col">Proveedor</th>
+    <th scope="col">Número de Compra</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Precio Unitario</th>
+    <th scope="col">IVA (%)</th>
+    <th scope="col">Total</th>
     <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
 
 {% block filas %}
 {# Bloque para las filas de la tabla #}
-{% for com in object_list %}
+{% for dcompra in object_list %}
 <tr>
-    <td>{{ com.num_factura }}</td>
-    <td>{{ com.fecha_compra }}</td>
-    <td>{{ com.proveedor }}</td>
+    <td>{{ dcompra.compra.num_factura }}</td>
+    <td>{{ dcompra.producto.nombre }}</td>
+    <td>{{ dcompra.cantidad }}</td>
+    <td>{{ dcompra.precio_unitario }}</td>
+    <td>{{ dcompra.iva }}</td>
+    <td>{{ dcompra.total }}</td>
     <td>
-        <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
+        <a href="{% url 'app:detallecompra_editar' dcompra.pk %}" class="btn btn-info btn-sm" title="Editar detalle compra">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm" title="Detalle">
-            <i class="fas fa-info-circle"></i>
-        </a>
+        {# Enlace para editar el detalle de la compra #}
         <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ dcompra.id }}" title="Eliminar ">
             <i class="fas fa-trash"></i>
         </a>
         {# Enlace para eliminar el detalle de la compra #}
-
+        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    let CompraId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:proveedor_eliminar' 0 %}".replace('0', DcompraId);
+                    let DcompraId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:detallecompra_eliminar' 0 %}".replace('0', DcompraId);
                     
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar este proveedor?',
+                        text: '¿Estás seguro de que deseas eliminar el detalle?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -88,7 +92,7 @@
                             // Mostrar alerta de éxito
                             Swal.fire({
                                 title: 'Eliminación Exitosa',
-                                text: 'El proveedor ha sido eliminada correctamente.',
+                                text: 'El Detalle ha sido eliminado correctamente.',
                                 icon: 'success',
                                 confirmButtonText: 'Continuar',
                                 backdrop: true,
@@ -110,9 +114,8 @@
                 });
             });
         </script>
-
     </td>
 </tr>
 {% endfor %}
-{# Itera sobre la lista de compras y muestra los datos en cada fila #}
+{# Itera sobre la lista de detalles de compra y muestra los datos en cada fila #}
 {% endblock %}

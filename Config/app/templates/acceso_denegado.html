@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Denegado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #34495e, #95a5a6);
+            color: #ecf0f1;
+        }
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ecf0f1;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .icon {
+            font-size: 120px;
+            color: #b11b1b; /* Soft orange */
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        h1 {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+        p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+        a {
+            padding: 12px 30px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db; /* Blue */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #2980b9; /* Darker blue */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="material-icons icon">warning</i>
+        <h1>Acceso Denegado</h1>
+        <p>No tienes los permisos necesarios para acceder a esta página.</p>
+        <a href="{% url 'dashboard' %}">Volver al inicio</a>
+    </div>
+</body>
+</html>

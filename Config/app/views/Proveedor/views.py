@@ -8,6 +8,7 @@ from app.forms import ProveedorForm
 from django.contrib import messages
 from django.views.generic import UpdateView
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Importa tus choices
+from django.shortcuts import redirect
 
 @login_required
 def lista_proveedor(request):
@@ -79,6 +80,12 @@ class ProveedorListView(ListView):
                 queryset = queryset.filter(**{filtro: valor})
 
         return queryset
+    
+    def EliminarProveedor(request, id_prove):
+        prove = Proveedor.objects.get(pk=id_prove)
+        prove.delete()
+        return redirect('app:proveedor_listar')
+    
 
 class ProveedorCreateView(CreateView):
     model = Proveedor
@@ -100,14 +107,6 @@ class ProveedorUpdateView(UpdateView):
     form_class = ProveedorForm
     template_name = 'Proveedor/editarProv.html'
     success_url = reverse_lazy('app:proveedor_listar')
-
-    def form_valid(self, form):
-        messages.success(self.request, 'El proveedor ha sido actualizado exitosamente.')
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, 'No se pudo actualizar el proveedor. Verifica los errores.')
-        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

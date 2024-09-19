@@ -57,10 +57,61 @@
     <td>{{ u.municipio.nombre }}</td>
     <td>
         {# Enlace para editar la ubicación #}
-        <a href="{% url 'app:ubicacion_eliminar' u.id %}" class="btn btn-danger btn-sm" title="Eliminar ubicación">
+
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ u.id }}" title="Eliminar ">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar la ubicación #}
+
+        <!-- Scripts de accesibilidad y AdminLTE -->
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+        
+        <script>
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let ubicacionId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:ubicacion_eliminar' 0 %}".replace('0', ubicacionId);
+                    
+                    Swal.fire({
+                        title: 'Confirmación',
+                        text: '¿Estás seguro de que deseas eliminar la ubicación?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Mostrar alerta de éxito
+                            Swal.fire({
+                                title: 'Eliminación Exitosa',
+                                text: 'la Ubicación ha sido eliminada correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Continuar',
+                                backdrop: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                position: 'center',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                stopKeydownPropagation: false,
+                                buttonsStyling: true,
+                                showCloseButton: true,
+                                closeButtonAriaLabel: 'Cerrar alerta',
+                            }).then(() => {
+                                window.location.href = deleteUrl;
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
     </td>
 </tr>
 {% endfor %}

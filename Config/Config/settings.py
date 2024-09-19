@@ -61,6 +61,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processors.user_last_login',
                 'app.context_processors.user_count',
+                'app.context_processors.user_name',
             ],
         },
     },
@@ -115,7 +116,9 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/dashboard'
-LOGOUT_REDIRECT_URL = '/login/'
+
+#Tiempo para el correo
+PASSWORD_RESET_TIMEOUT=120
 
 #inicio,# Olvido su contraseña
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

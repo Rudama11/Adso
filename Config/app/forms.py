@@ -5,46 +5,74 @@ from django_select2.forms import Select2Widget
 from app.models import *
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from .models import CustomUser
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-from django.contrib.auth.forms import UserChangeForm
-from django.contrib.auth import get_user_model
+
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
 
 # Formulario exclusivo para la creación de usuarios.
-User = get_user_model()
-
 class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
-    password2 = forms.CharField(widget=forms.PasswordInput, label="Confirmar Contraseña nuevamente")
-    email2 = forms.EmailField(label="Confirme nuevamente el correo")
+    TIPO_USUARIO_CHOICES = [
+        ('admin', 'Administrador'),
+        ('usuario', 'Usuario normal'),
+    ]
+    
+    tipo_usuario = forms.ChoiceField(choices=TIPO_USUARIO_CHOICES, label='Tipo de usuario')
+    
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Nueva contraseña',
+        validators=[
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
+                message=(
+                    'La contraseña debe tener entre 8 y 20 caracteres, '
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
+                ),
+            )
+        ]
+    )
+    
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        label='Confirma nueva contraseña'
+    )
 
     class Meta:
-        model = User
-        fields = ['username', 'nombres', 'email', 'email2', 'password']  # Orden de los campos
+        model = CustomUser
+        fields = ['username', 'nombres', 'email', 'password', 'tipo_usuario']
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise ValidationError("Las contraseñas no coinciden")
-        return password2
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
 
-    def clean_email2(self):
-        email1 = self.cleaned_data.get("email")
-        email2 = self.cleaned_data.get("email2")
-        if email1 and email2 and email1 != email2:
-            raise ValidationError("Los correos electrónicos no coinciden")
-        return email2
+        if password and password2 and password != password2:
+            raise ValidationError('Las contraseñas no coinciden.')
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])  # Establece la contraseña cifrada
+        user.set_password(self.cleaned_data['password'])
+        
+        # Asignar permisos según el tipo de usuario seleccionado
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+        
+        if tipo_usuario == 'admin':
+            user.is_staff = True  # Los administradores tienen permisos de staff
+            user.is_superuser = False  # Los administradores tienen permisos de superusuario
+        else:
+            user.is_staff = False  # Los usuarios normales no tienen permisos de staff
+            user.is_superuser = False
+
         if commit:
             user.save()
         return user
-    
+
 # Formulario exclusivo para editar los usuarios.
 
 class UsuarioEditForm(forms.ModelForm):
@@ -57,23 +85,34 @@ class UsuarioEditForm(forms.ModelForm):
                 regex=r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*+]).{8,20}$',
                 message=(
                     'La contraseña debe tener entre 8 y 20 caracteres, '
-                    'Debe incluir al menos una letra mayúscula, una letra minúscula, '
-                    'Debe incluir un número y un carácter especial.'
+                    'incluyendo al menos una letra mayúscula, una letra minúscula, '
+                    'un número y un carácter especial.'
                 ),
             )
         ]
     )
-    
+
     password2 = forms.CharField(
         widget=forms.PasswordInput,
         label='Confirma nueva contraseña',
         required=False  # No es obligatorio en el formulario de edición
     )
-    
+
     class Meta:
-        model = Usuario
-        fields = ['username', 'nombres', 'email']
-    
+        model = CustomUser
+        fields = ['username', 'nombres', 'email', 'tipo_usuario']  # Incluye tipo_usuario en fields
+
+    def __init__(self, *args, **kwargs):
+        # Obtenemos el usuario actual que edita
+        self.current_user = kwargs.pop('user', None)
+        super(UsuarioEditForm, self).__init__(*args, **kwargs)
+
+        # Desactivar los campos de superusuario y staff si el usuario actual no tiene permisos
+        if not self.current_user or not self.current_user.is_superuser:
+            self.fields.pop('is_superuser', None)
+        if not self.current_user or not (self.current_user.is_superuser or self.current_user.is_staff):
+            self.fields.pop('is_staff', None)
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
@@ -83,19 +122,32 @@ class UsuarioEditForm(forms.ModelForm):
         if password or password2:
             if password != password2:
                 raise forms.ValidationError("Las contraseñas no coinciden.")
-        
+
         return cleaned_data
-    
+
     def save(self, commit=True):
         user = super().save(commit=False)
-        
+
         # Solo actualiza la contraseña si el campo de contraseña no está vacío
         if self.cleaned_data['password']:
             user.set_password(self.cleaned_data['password'])
         else:
             # No hacer nada con la contraseña si no se ha proporcionado
             user.password = self.instance.password
-        
+
+        tipo_usuario = self.cleaned_data.get('tipo_usuario')
+
+        # Asigna permisos según el tipo de usuario
+        if tipo_usuario == 'admin':
+            user.is_staff = True  # Los administradores tienen permisos de staff
+            user.is_superuser = False  # Los administradores no tienen permisos de superusuario
+        elif tipo_usuario == 'superadmin':
+            user.is_superuser = True  # El superusuario tiene permisos de superusuario
+            user.is_staff = True  # También tiene permisos de staff
+        else:
+            user.is_staff = False  # Los usuarios normales no tienen permisos de staff
+            user.is_superuser = False
+
         if commit:
             user.save()
         return user
@@ -387,22 +439,70 @@ class ProductoFilterForm(forms.Form):
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
+        # Establecer enfoque automático en el campo proveedor
         self.fields['proveedor'].widget.attrs['autofocus'] = True
-        self.fields['total'].widget.attrs['readonly'] = True
-        # Establecer la fecha actual por defecto si no se ha proporcionado
+        
+        # Establecer la fecha actual por defecto si es una nueva instancia
         if not self.instance.pk:  # Solo si es una nueva instancia
             self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'producto', 'cantidad', 'precio', 'iva', 'total', 'proveedor']
+        fields = ['num_factura', 'fecha_compra', 'proveedor']
+        
         widgets = {
-            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese el número de factura'}),
-            'fecha_compra': forms.DateTimeInput(attrs={'placeholder': 'Ingrese la fecha de compra', 'type': 'datetime-local'}),
+            'num_factura': forms.TextInput(attrs={
+                'placeholder': 'Ingrese el número de factura',
+                'class': 'form-control'
+            }),
+            'fecha_compra': forms.DateTimeInput(attrs={
+                'placeholder': 'Ingrese la fecha de compra',
+                'type': 'datetime-local',
+                'class': 'form-control'
+            }),
+            'proveedor': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+        }
+
+#------------------------------- detalle Compra----------------------------
+
+from django import forms
+from django.shortcuts import get_object_or_404
+from .models import DetalleCompra, Compras
+
+class DetalleCompraForm(forms.ModelForm):
+    num_factura = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Número de Factura'})
+        # Elimina 'disabled=True' para que el campo sea editable
+    )
+
+    class Meta:
+        model = DetalleCompra
+        fields = ['num_factura', 'producto', 'cantidad', 'precio_unitario', 'iva']
+        widgets = {
             'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
             'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio en céntimos'}),
+            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
-            'total': forms.NumberInput(attrs={'readonly': 'readonly'}),
-            'proveedor': forms.Select(attrs={'autofocus': True}),
         }
+
+    def __init__(self, *args, **kwargs):
+        # Extraer `compra_id` del diccionario de argumentos
+        self.compra_id = kwargs.pop('compra_id', None)
+        super().__init__(*args, **kwargs)
+        # Si `compra_id` está presente, establecer el valor inicial para `num_factura`
+        if self.compra_id:
+            self.fields['num_factura'].initial = self.compra_id
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.compra_id:
+            # Obtener la instancia de `Compras` usando `num_factura` y asignarla
+            instance.compra = get_object_or_404(Compras, num_factura=self.compra_id)
+        if commit:
+            instance.save()
+        return instance

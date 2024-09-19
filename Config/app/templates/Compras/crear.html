@@ -44,33 +44,8 @@
                 {{ form.fecha_compra|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             <div class="form-group">
-                <label for="id_producto">{{ form.producto.label }}</label>
-                {{ form.producto|add_class:'form-control'|attr:'autocomplete:off'}}
-            </div>
-            <div class="form-group">
                 <label for="id_proveedor">{{ form.proveedor.label }}</label>
                 {{ form.proveedor|add_class:'form-control'|attr:'autocomplete:off'}}
-            </div>
-            <div class="form-group">
-                <label for="id_cantidad">{{ form.cantidad.label }}</label>
-                {{ form.cantidad|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_cantidad'}}
-            </div>
-            <div class="form-group">
-                <label for="id_precio">{{ form.precio.label }}</label>
-                {{ form.precio|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_precio'}}
-            </div>
-            <div class="form-group">
-                <label for="id_iva">{{ form.iva.label }}</label>
-                {{ form.iva|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_iva'}}
-            </div>
-            <!-- Campo total como número entero -->
-            <div class="form-group">
-                <label for="id_total">Total $(COP)</label>
-                <div class="input-group">
-                    <input type="text" id="id_total" name="total" value="{{ form.total.value|default_if_none:'' }}" readonly class="form-control">
-                    <div class="input-group-append">
-                    </div>
-                </div>
             </div>
         </div>
         <div class="card-footer">
@@ -87,29 +62,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-function calculateTotal() {
-    var precio = parseInt(document.getElementById("id_precio").value) || 0;
-    var cantidad = parseInt(document.getElementById("id_cantidad").value) || 0;
-    var iva = parseInt(document.getElementById("id_iva").value) || 0;
-
-    // Calcular total como número entero
-    var subtotal = precio * cantidad;
-    var total = subtotal + Math.floor((subtotal * iva / 100)); // Usar Math.floor para evitar decimales
-
-    // Actualizar el campo de total en el formulario sin formatear como moneda
-    document.getElementById("id_total").value = total;
-}
-
-// Añadir eventos a los campos
-document.getElementById("id_cantidad").addEventListener('input', calculateTotal);
-document.getElementById("id_precio").addEventListener('input', calculateTotal);
-document.getElementById("id_iva").addEventListener('input', calculateTotal);
-
-// Inicializar la función cuando la página carga
-window.onload = function() {
-    calculateTotal();
-}
-
 document.getElementById('confirmButton').addEventListener('click', function(e) {
     e.preventDefault(); 
     
@@ -134,7 +86,7 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             icon: 'success',
             confirmButtonText: 'Continuar',
             backdrop: true,
-            timer:3000,
+            timer: 3000,
             timerProgressBar: true,
             position: 'center',
             allowOutsideClick: false,
@@ -155,8 +107,8 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             icon: 'error',
             confirmButtonText: 'Aceptar',
             backdrop: true,
-            timer:3000,
-            timerProgressBar:true,
+            timer: 3000,
+            timerProgressBar: true,
             position: 'center',
             allowOutsideClick: true,
             allowEscapeKey: false,
