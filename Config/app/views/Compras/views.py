@@ -2,11 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
-from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404,render
 from django.contrib.auth.decorators import user_passes_test
 
 class ComprasListView(ListView):
@@ -31,8 +30,8 @@ class ComprasListView(ListView):
 
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarCompras(request, id_compra):
-        compra = get_object_or_404(Compras, pk=id_compra)
-        compra.delete()
+        compraD = get_object_or_404(Compras, pk=id_compra)
+        compraD.delete()
         return redirect('app:compras_listar')
     
 class ComprasCreateView(CreateView):

@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Categoria
@@ -37,7 +36,6 @@ class CategoriaListView(ListView):
             queryset = queryset.filter(descripcion__icontains=descripcion)
 
         return queryset
-
 
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def eliminar_categoria(request, id_categ):
