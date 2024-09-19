@@ -1,17 +1,17 @@
 {% extends 'listar.html' %}
-{# Extiende la plantilla base 'listar.html' #}
+
 
 {% load static %}
-{# Carga la etiqueta estática para usar archivos estáticos #}
+
 
 {% block filtro_form_contenido %}
-{# Bloque para el formulario de filtrado #}
 <form method="GET" action="{% url 'app:compras_listar' %}">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="num_factura">Número de Factura</label>
-                <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
+                <input type="text" class="form-control" id="num_factura" name="num_factura"
+                    placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
                 {# Campo para ingresar el número de factura #}
             </div>
         </div>
@@ -19,7 +19,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_compra">Fecha de Compra</label>
-                <input type="date" class="form-control" id="fecha_compra" name="fecha_compra" value="{{ request.GET.fecha_compra }}">
+                <input type="date" class="form-control" id="fecha_compra" name="fecha_compra"
+                    value="{{ request.GET.fecha_compra }}">
                 {# Campo para seleccionar la fecha de compra #}
             </div>
         </div>
@@ -27,7 +28,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="proveedor">Proveedor</label>
-                <input type="text" class="form-control" id="proveedor" name="proveedor" placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
+                <input type="text" class="form-control" id="proveedor" name="proveedor"
+                    placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
                 {# Campo para ingresar el nombre del proveedor #}
             </div>
         </div>
@@ -56,54 +58,55 @@
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
     <td>
-        <a href="{% url 'app:compras_editar' com.pk %}" class="btn btn-info btn-sm" title="Editar compra">
+        <a href="{% url 'app:compras_editar' com.num_factura %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm" title="Detalle">
+        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm"
+            title="Detalle">
             <i class="fas fa-info-circle"></i>
         </a>
-    </a>
-    {% if request.user.is_superuser or request.user.is_staff %}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ c.num_factura }}" title="Eliminar Compra">
+        </a>
+        {% if request.user.is_superuser or request.user.is_staff %}
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ com.num_factura }}" title="Eliminar Compra">
             <i class="fas fa-trash"></i>
         </a>
-    {% else %}
+        {% else %}
         <span class="btn btn-danger btn-sm disabled" title="Eliminar Compra">
             <i class="fas fa-trash"></i>
         </span>
-    {% endif %}
+        {% endif %}
 
-    <!-- Scripts de accesibilidad y AdminLTE -->
-    <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
-    <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
-    <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
-    <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
-    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-    
-    <script>
-        document.querySelectorAll('.delete-button').forEach(function(button) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                let compraD = this.getAttribute('data-id');
-                let deleteUrl = "{% url 'app:compras_eliminar' 0 %}".replace('0', compraD);
-                
-                Swal.fire({
-                    title: 'Confirmación',
-                    text: '¿Estás seguro de que deseas eliminar esta compra?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sí, Eliminar',
-                    cancelButtonText: 'Cancelar',
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = deleteUrl;
-                    }
+        <!-- Scripts de accesibilidad y AdminLTE -->
+        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
+        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
+        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+
+        <script>
+            document.querySelectorAll('.delete-button').forEach(function (button) {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    let compraD = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:compras_eliminar' 0 %}".replace('0', compraD);
+
+                    Swal.fire({
+                        title: 'Confirmación',
+                        text: '¿Estás seguro de que deseas eliminar esta compra?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = deleteUrl;
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
     </td>
 </tr>
 {% endfor %}
