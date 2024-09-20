@@ -377,21 +377,58 @@ class NormativaForm(ModelForm):
         }
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
-class VentaForm(ModelForm):
+class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
 
     class Meta:
         model = Venta
-        fields = '__all__'
+        fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
         widgets = {
-            'nombre': TextInput(
+            'num_factura': forms.TextInput(
                 attrs={
-                    'placeholder': 'Ingrese un numero de factura'
+                    'placeholder': 'Ingrese un número de factura',
+                    'class': 'form-control'  # Puedes añadir clases CSS para estilizar
+                }
+            ),
+            'fecha_emision': forms.DateTimeInput(
+                attrs={
+                    'placeholder': 'Seleccione la fecha de emisión',
+                    'class': 'form-control',
+                    'type': 'datetime-local'  # Permite seleccionar fecha y hora
+                }
+            ),
+            'cliente': forms.Select(
+                attrs={
+                    'class': 'form-control'  # Para estilizar el select
                 }
             ),
         }
+        
+        
+#---------------------------------------------------------- Dellate compra  ---------------------------------------------------------------
+class DetalleVentaForm(forms.ModelForm):
+    class Meta:
+        model = DetalleVenta
+        fields = ['venta', 'producto', 'cantidad', 'iva', 'total']
+        widgets = {
+            'venta': forms.Select(attrs={'class': 'form-control'}),
+            'producto': forms.Select(attrs={'class': 'form-control'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+            'iva': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100}),
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+        }
+
+    def clean_total(self):
+        cleaned_data = self.cleaned_data
+        cantidad = cleaned_data.get('cantidad')
+        producto = cleaned_data.get('producto')
+        
+        if producto:
+            total = cantidad * producto.precio  # Suponiendo que tienes un campo 'precio' en tu modelo Producto
+            cleaned_data['total'] = total
+        return cleaned_data['total']        
 
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
