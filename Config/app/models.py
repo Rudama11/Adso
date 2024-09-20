@@ -261,7 +261,7 @@ class Stock(models.Model):
         
 class Venta(models.Model):
     num_factura = models.CharField(max_length=10)  # No es clave primaria
-    fecha_emision = models.DateTimeField(editable=True)  # Editable
+    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emision')  # Editable
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
