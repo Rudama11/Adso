@@ -1,1 +1,160 @@
-{% extends 'crear.html' %}
+{% extends 'listar.html' %}  {# Asegúrate de extender de la plantilla base adecuada #}
+
+{% load widget_tweaks %}
+
+{% block contenido %}
+<form method="post" action="." id="createForm">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>
+                Crear {{ entidad }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            
+            <!-- Campo para Número de Decreto -->
+            <div class="form-group">
+                <label for="id_decreto">Número de Decreto</label>
+                {{ form.decreto|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ form.decreto.errors|striptags }}
+                </div>
+            </div>
+            
+            <!-- Campo para Descripción -->
+            <div class="form-group">
+                <label for="id_descripcion">Descripción</label>
+                {{ form.descripcion|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ form.descripcion.errors|striptags }}
+                </div>
+            </div>
+            
+            <!-- Campo para Producto -->
+            <div class="form-group">
+                <label for="id_producto">Producto</label>
+                {{ form.producto|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ form.producto.errors|striptags }}
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{% url 'app:normativa_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault(); 
+
+        // Validación del lado del cliente
+        let decretoField = document.querySelector('[name="decreto"]');
+        let descripcionField = document.querySelector('[name="descripcion"]');
+        let productoField = document.querySelector('[name="producto"]');
+
+        if (!decretoField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de número de decreto es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            decretoField.focus();
+            return;
+        }
+
+        if (!descripcionField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de descripción es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            descripcionField.focus();
+            return;
+        }
+
+        if (!productoField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de producto es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            productoField.focus();
+            return;
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('createForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    title: 'Registrado Correctamente',
+                    text: '{{ entidad }} ha sido creado exitosamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    timer: 2000,
+                    timerProgressBar: true,
+                }).then(() => {
+                    // Redirigir al listado de normativas
+                    window.location.href = "{% url 'app:normativa_listar' %}";
+                });
+            } else {
+                // Mostrar alerta de error
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message || 'Ha ocurrido un error al intentar crear {{ entidad }}.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                });
+
+                // Mostrar los errores específicos del formulario
+                if (data.errors) {
+                    Object.keys(data.errors).forEach(function(key) {
+                        let field = document.querySelector(`[name=${key}]`);
+                        if (field) {
+                            field.classList.add('is-invalid');
+                            let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                            if (errorDiv) {
+                                errorDiv.innerHTML = data.errors[key][0].message;
+                            }
+                        }
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+{% endblock %}
