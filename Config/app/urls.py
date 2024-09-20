@@ -21,7 +21,7 @@ urlpatterns = [
     
     path('categoria/listar/', CategoriaListView.as_view(), name='categoria_listar'),
     path('categoria/crear/', CategoriaCreateView.as_view(), name='categoria_crear'),
-    path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editar'),
+    path('categoria/editar/<int:pk>/', CategoriaUpdateView.as_view(), name='categoria_editarC'),
     path('categoria/eliminar/<int:id_categ>/', CategoriaListView.eliminar_categoria, name='categoria_eliminar'), 
     
     #-------------------------------------------------- Cliente ----------------------------------------------------
@@ -44,7 +44,7 @@ urlpatterns = [
     
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
     path('normativa/crear/', NormativaCreateView.as_view(), name='normativa_crear'),
-    path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editar'),
+    path('normativa/editar/<int:pk>/', NormativaUpdateView.as_view(), name='normativa_editarN'),
     path('normativa/eliminar/<int:id_norma>/', NormativaListView.EliminarNormativa, name='normativa_eliminar'),
     
     #-------------------------------------------------- Usuario ---------------------------------------------------

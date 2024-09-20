@@ -8,8 +8,6 @@ from django.utils.text import slugify
 import re
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.utils import timezone
-
-
 # ----------------------------------------------- Validaciones -----------------------------------------------
 
 # Validación de campos con letras, espacios y puntos
@@ -189,6 +187,15 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def clean(self):
+        # Ejemplo de validación personalizada
+        if not self.nombre:
+            raise ValidationError({'nombre': 'El nombre es obligatorio.'})
+
+        # Validar si el nombre ya existe en la misma categoría y tipo_pro
+        if Producto.objects.filter(nombre=self.nombre, categoria=self.categoria, tipo_pro=self.tipo_pro).exists():
+            raise ValidationError({'nombre': 'Ya existe un producto con ese nombre en esta categoría y tipo de producto.'})
 
     class Meta:
         verbose_name = 'Producto'

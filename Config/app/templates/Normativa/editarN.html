@@ -1,1 +1,144 @@
-{% extends 'editar.html' %}
+{% extends 'listar.html' %}
+
+{% load static %}
+
+{% block contenido %}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-edit"></i> Editar Normativa
+        </h3>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{% url 'app:normativa_editarN' object.id %}" id="updateForm">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            <div class="form-group">
+                <label for="decreto">Decreto</label>
+                <input type="text" class="form-control" id="decreto" name="decreto" value="{{ form.decreto.value }}" autocomplete="off">
+                <div class="invalid-feedback" id="error-decreto"></div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" value="{{ form.descripcion.value }}" autocomplete="off">
+                <div class="invalid-feedback" id="error-descripcion"></div>
+            </div>
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <input type="text" class="form-control" id="producto" name="producto" value="{{ form.producto.value }}" autocomplete="off">
+                <div class="invalid-feedback" id="error-producto"></div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-success" id="confirmButton">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                <a href="{% url 'app:normativa_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'node_modules/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script>
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Validación del lado del cliente
+        let decretoField = document.getElementById('decreto');
+        let descripcionField = document.getElementById('descripcion');
+        let productoField = document.getElementById('producto');
+
+        if (!decretoField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de decreto es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            decretoField.focus();
+            return;
+        }
+
+        if (!descripcionField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de descripción es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            descripcionField.focus();
+            return;
+        }
+
+        if (!productoField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de producto es obligatorio.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+            });
+            productoField.focus();
+            return;
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('updateForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(document.getElementById('updateForm').action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                Swal.fire({
+                    title: 'Actualizado Correctamente',
+                    text: 'Normativa ha sido actualizada exitosamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    timer: 2000,
+                    timerProgressBar: true,
+                }).then(() => {
+                    window.location.href = "{% url 'app:normativa_listar' %}";
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message || 'Ha ocurrido un error al intentar actualizar la normativa.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                });
+
+                // Mostrar los errores específicos del formulario
+                if (data.errors) {
+                    Object.keys(data.errors).forEach(function(key) {
+                        let field = document.getElementById(key);
+                        if (field) {
+                            field.classList.add('is-invalid');
+                            let errorDiv = document.getElementById('error-' + key);
+                            if (errorDiv) {
+                                errorDiv.innerHTML = data.errors[key][0].message;
+                            }
+                        }
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+{% endblock %}

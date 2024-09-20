@@ -30,7 +30,17 @@
                             <!-- Título de la página con una referencia al módulo actual y una variable 'entidad' que probablemente representa el nombre del módulo o sección -->
                             <h1 class="m-0 text-dark"> Bienvenidos: <small> Módulo | {{ entidad }}</small></h1>
                         </div>
+                        {% if entidad == "Compras" %}
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <!-- Barra de navegación (breadcrumbs) que ayuda a los usuarios a conocer su ubicación en el sitio -->
 
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'app:detallecompra_listar' %}" style="color: #007bff; text-decoration: none;">Detalle de Compra</a>
+                                </li>
+                            </ol>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
