@@ -28,7 +28,7 @@
             <button type="button" class="btn btn-success" id="confirmButton">
                 <i class="fas fa-save"></i> Confirmar
             </button>
-            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{% url 'app:producto_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
@@ -43,7 +43,7 @@
         // Validación del lado del cliente
         let nombreField = document.querySelector('[name="nombre"]');
         let categoriaField = document.querySelector('[name="categoria"]');
-        let tipoProductoField = document.querySelector('[name="tipo_pro"]'); // Verifica que el nombre coincida
+        let tipoProductoField = document.querySelector('[name="tipo_pro"]');
 
         if (!nombreField.value.trim()) {
             Swal.fire({
@@ -53,10 +53,6 @@
                 timer: 2000,
                 timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
-                backdrop: true,
-                position: 'center',
-                allowOutsideClick: true,
-                buttonsStyling: true,
             });
             nombreField.focus();
             return;
@@ -70,10 +66,6 @@
                 timer: 2000,
                 timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
-                backdrop: true,
-                position: 'center',
-                allowOutsideClick: true,
-                buttonsStyling: true,
             });
             categoriaField.focus();
             return;
@@ -87,10 +79,6 @@
                 timer: 2000,
                 timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
-                backdrop: true,
-                position: 'center',
-                allowOutsideClick: true,
-                buttonsStyling: true,
             });
             tipoProductoField.focus();
             return;
@@ -107,51 +95,27 @@
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error en la solicitud');
-            }
-        })
+        .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
                 Swal.fire({
                     title: 'Registrado Correctamente',
-                    text: `{{ entidad }} ha sido creado exitosamente.`,
+                    text: '{{ entidad }} ha sido creado exitosamente.',
                     icon: 'success',
                     confirmButtonText: 'Continuar',
-                    backdrop: true,
                     timer: 2000,
                     timerProgressBar: true,
-                    position: 'center',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    stopKeydownPropagation: false,
-                    buttonsStyling: true,
-                    showCloseButton: true,
-                    closeButtonAriaLabel: 'Cerrar alerta',
                 }).then(() => {
-                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                    // Redirigir al listado de productos
+                    window.location.href = "{% url 'app:producto_listar' %}";
                 });
             } else {
+                // Mostrar alerta de error
                 Swal.fire({
                     title: 'Error',
                     text: data.message || 'Ha ocurrido un error al intentar crear {{ entidad }}.',
                     icon: 'error',
                     confirmButtonText: 'Aceptar',
-                    backdrop: true,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    position: 'center',
-                    allowOutsideClick: true,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    stopKeydownPropagation: false,
-                    buttonsStyling: true,
-                    showCloseButton: true,
-                    closeButtonAriaLabel: 'Cerrar alerta',
                 });
 
                 // Mostrar los errores específicos del formulario
