@@ -28,35 +28,35 @@
         </form>
     </div>
 
-    <!-- Tabla para mostrar los productos agregados -->
-    <h4>Productos Agregados</h4>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>IVA</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for detalle in detalles_compra %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
                 <tr>
-                    <td>{{ detalle.producto }}</td>
-                    <td>{{ detalle.cantidad }}</td>
-                    <td>{{ detalle.precio_unitario }}</td>
-                    <td>{{ detalle.iva }}%</td>
-                    <td>{{ detalle.total }}</td>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>IVA</th>
+                    <th>Total</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="5">No hay productos agregados.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for detalle in detalles_compra %}
+                    <tr>
+                        <td>{{ detalle.producto }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.precio_unitario }}</td>
+                        <td>{{ detalle.iva }}%</td>
+                        <td>{{ detalle.total }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No hay productos agregados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
     <div class="card-footer">
         <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
             <i class="fas fa-times"></i> Volver al Listado
@@ -64,8 +64,11 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal">
             <i class="fas fa-plus"></i> Agregar Producto
         </button>
+        <button type="button" class="btn btn-success" onclick="window.print();">
+            <i class="fas fa-print"></i> Imprimir Factura
+        </button>
     </div>
-</div>
+    
 
 <!-- Modal para DetalleCompra -->
 <div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
@@ -106,5 +109,24 @@ $(document).ready(function() {
 });
 
 </script>
+
+<style>
+    .card-footer .btn {
+        margin: 5px 0;
+        flex: 1 1 30%; /* Ajusta el tamaño de los botones */
+    }
+    
+    /* Asegúrate de que la tabla y los botones se adapten en pantallas pequeñas */
+    @media (max-width: 768px) {
+        .table th, .table td {
+            font-size: 14px;
+        }
+    
+        .card-footer .btn {
+            flex: 1 1 100%; /* Los botones ocupan el ancho completo en móviles */
+        }
+    }
+
+</style>
 
 {% endblock %}
