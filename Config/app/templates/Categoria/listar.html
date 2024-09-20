@@ -32,7 +32,7 @@
     <td>{{ c.nombre }}</td>
     <td>{{ c.descripcion }}</td>
     <td>
-        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
+        <a href="{% url 'app:categoria_editarC' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
         {% if request.user.is_superuser or request.user.is_staff %}
