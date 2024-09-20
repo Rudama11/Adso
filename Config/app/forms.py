@@ -100,7 +100,7 @@ class UsuarioEditForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'tipo_usuario']  # Incluye tipo_usuario en fields
+        fields = ['tipo_usuario','username', 'nombres', 'email']  # Incluye tipo_usuario en fields
 
     def __init__(self, *args, **kwargs):
         # Obtenemos el usuario actual que edita
