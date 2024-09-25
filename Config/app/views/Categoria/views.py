@@ -8,6 +8,7 @@ from app.models import Categoria
 from app.forms import CategoriaForm
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 
 class CategoriaListView(ListView):
     model = Categoria
@@ -37,12 +38,16 @@ class CategoriaListView(ListView):
 
         return queryset
 
+    @require_POST  # Asegura que solo se pueda eliminar con POST
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def eliminar_categoria(request, id_categ):
-        categ = get_object_or_404(Categoria, pk=id_categ)
-        categ.delete()
-        return redirect('app:categoria_listar')
-
+        try:
+            categ = get_object_or_404(Categoria, pk=id_categ)
+            categ.delete()
+            return JsonResponse({'status': 'success', 'message': 'Categoría eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        
 class CategoriaCreateView(CreateView):
     model = Categoria
     form_class = CategoriaForm
