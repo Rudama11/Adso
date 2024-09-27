@@ -64,27 +64,68 @@
         <button type="button" class="btn btn-success" onclick="window.print();">
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
+
+        <!-- Botón para abrir el modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleVentaModal">
+            <i class="fas fa-plus"></i> Agregar Detalle
+        </button>
     </div>
 
-    <!-- Modal para DetalleVenta (actualmente ignorado) -->
-    <!-- Puedes agregar el modal aquí cuando estés listo para implementarlo -->
-    
+    <!-- Modal para Agregar Detalle -->
+    <div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detalleVentaModalLabel">Agregar Detalle de Venta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí se cargará el contenido del modal dinámicamente -->
+                    <div id="modalContent">
+                        <!-- Aquí irá el formulario dinámico -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script>
+    // Captura el valor de num_factura del servidor y lo pasa a una variable JavaScript
+    var numFactura = "{{ form.num_factura.value }}";
+
+    // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
+    $(document).ready(function() {
+        $('#detalleVentaModal').on('show.bs.modal', function(e) {
+            var url = "{% url 'app:detalleventa_crear' %}";  // Ajusta la URL para el formulario de detalle de venta
+
+            $('#modalContent').load(url, function() {
+                // Rellenar el campo num_factura en el formulario cargado
+                $('#id_num_factura').val(numFactura);
+            });
+        });
+    });
+</script>
 
 <style>
     .card-footer .btn {
         margin: 5px 0;
-        flex: 1 1 30%; /* Ajusta el tamaño de los botones */
+        flex: 1 1 30%;
     }
-    
-    /* Asegúrate de que la tabla y los botones se adapten en pantallas pequeñas */
+
     @media (max-width: 768px) {
         .table th, .table td {
             font-size: 14px;
         }
-    
+
         .card-footer .btn {
-            flex: 1 1 100%; /* Los botones ocupan el ancho completo en móviles */
+            flex: 1 1 100%;
         }
     }
 </style>
