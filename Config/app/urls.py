@@ -12,6 +12,8 @@ from app.views.Compras.views import *
 from app.views.Stock.views import *
 from app.views.Usuario.views import *
 from app.views.Dcompras.views import *
+from app.views.Dventas.views import *
+
 
 app_name = 'app'
 
@@ -113,4 +115,14 @@ urlpatterns = [
     path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
     path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
     path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    
+    #-------------------------------------------------- Dventas ---------------------------------------------------------
+    path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
+    path('detalle-venta/crear/', DetalleVentaCreateView.as_view(), name='detalleventa_crear'),
+    path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
+    path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
+    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
+    path('obtener-id-venta/', obtener_id_venta_por_factura, name='obtener_id_venta_por_factura'),
+
+    
 ]

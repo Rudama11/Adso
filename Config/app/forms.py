@@ -407,29 +407,36 @@ class VentaForm(forms.ModelForm):
         }
         
         
-#---------------------------------------------------------- Dellate compra  ---------------------------------------------------------------
+#---------------------------------------------------------- Dellate  Ventas---------------------------------------------------------------
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
-        fields = ['venta', 'producto', 'cantidad', 'iva', 'total']
+        fields = ['venta', 'producto', 'cantidad', 'iva', 'total', 'precio', 'num_factura']  # Asegúrate de incluir 'num_factura'
         widgets = {
             'venta': forms.Select(attrs={'class': 'form-control'}),
             'producto': forms.Select(attrs={'class': 'form-control'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
             'iva': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100}),
             'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'num_factura': forms.TextInput(attrs={'class': 'form-control'})  # Asegúrate de que sea editable si es necesario
         }
 
-    def clean_total(self):
-        cleaned_data = self.cleaned_data
-        cantidad = cleaned_data.get('cantidad')
-        producto = cleaned_data.get('producto')
-        
-        if producto:
-            total = cantidad * producto.precio  # Suponiendo que tienes un campo 'precio' en tu modelo Producto
-            cleaned_data['total'] = total
-        return cleaned_data['total']        
 
+    def clean(self):
+        cleaned_data = super().clean()
+        producto = cleaned_data.get('producto')
+        cantidad = cleaned_data.get('cantidad')
+
+        if producto:
+            precio_unitario = producto.precio  # Obtén el precio desde el modelo Stock
+            cleaned_data['precio'] = precio_unitario  # Almacenar el precio unitario
+
+        if cantidad and 'precio' in cleaned_data:
+            total = cantidad * cleaned_data['precio']  # Calcular total
+            cleaned_data['total'] = total
+
+        return cleaned_data
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
