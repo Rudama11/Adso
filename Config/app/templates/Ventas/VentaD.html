@@ -44,7 +44,7 @@
                     <tr>
                         <td>{{ detalle.producto }}</td>
                         <td>{{ detalle.cantidad }}</td>
-                        <td>{{ detalle.precio_unitario }}</td>
+                        <td>{{ detalle.precio }}</td>
                         <td>{{ detalle.iva }}%</td>
                         <td>{{ detalle.total }}</td>
                     </tr>
@@ -64,52 +64,43 @@
         <button type="button" class="btn btn-success" onclick="window.print();">
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
-
-        <!-- Botón para abrir el modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleVentaModal">
-            <i class="fas fa-plus"></i> Agregar Detalle
+            <i class="fas fa-plus"></i> Agregar Detalle de Venta
         </button>
     </div>
+</div>
 
-    <!-- Modal para Agregar Detalle -->
-    <div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detalleVentaModalLabel">Agregar Detalle de Venta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Modal para DetalleVenta -->
+<div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleVentaModalLabel">Agregar Detalle de Venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del modal cargado dinámicamente -->
+                <div id="modalContent">
+                    <!-- Aquí se cargará el contenido dinámicamente -->
                 </div>
-                <div class="modal-body">
-                    <!-- Aquí se cargará el contenido del modal dinámicamente -->
-                    <div id="modalContent">
-                        <!-- Aquí irá el formulario dinámico -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
-    // Captura el valor de num_factura del servidor y lo pasa a una variable JavaScript
-    var numFactura = "{{ form.num_factura.value }}";
-
-    // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
-    $(document).ready(function() {
-        $('#detalleVentaModal').on('show.bs.modal', function(e) {
-            var url = "{% url 'app:detalleventa_crear' %}";  // Ajusta la URL para el formulario de detalle de venta
-
-            $('#modalContent').load(url, function() {
-                // Rellenar el campo num_factura en el formulario cargado
-                $('#id_num_factura').val(numFactura);
-            });
-        });
+   // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
+$(document).ready(function() {
+    $('#detalleVentaModal').on('show.bs.modal', function(e) {
+        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de obtener el valor correcto
+        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" + numFactura; // Pasar el número de factura como parámetro
+        $('#modalContent').load(url);
+    });
     });
 </script>
 

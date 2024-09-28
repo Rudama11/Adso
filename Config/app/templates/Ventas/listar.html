@@ -43,6 +43,7 @@
 
 {% block columnas %}
 <tr>
+    <th scope="col">ID</th>
     <th scope="col">Número de Factura</th>
     <th scope="col">Fecha de Emisión</th>
     <th scope="col">Cliente</th>
@@ -53,6 +54,7 @@
 {% block filas %}
 {% for v in object_list %}
 <tr>
+    <td>{{ v.id }}</td>
     <td>{{ v.num_factura }}</td>
     <td>{{ v.fecha_emision }}</td>
     <td>{{ v.cliente.nombres }}</td>

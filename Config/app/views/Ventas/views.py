@@ -86,18 +86,6 @@ def obtener_datos_cliente(request):
     except Cliente.DoesNotExist:
         return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
 
-# Vista para obtener datos del producto en formato JSON
-def obtener_datos_producto(request):
-    producto_id = request.GET.get('producto_id')
-    try:
-        producto = Producto.objects.get(id=producto_id)
-        data = {
-            'precio': float(producto.precio),
-        }
-        return JsonResponse(data)
-    except Producto.DoesNotExist:
-        return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
-    
 def venta_detalle(request, num_factura):
     venta = get_object_or_404(Venta, num_factura=num_factura)
     detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
@@ -110,3 +98,4 @@ def venta_detalle(request, num_factura):
         'detalles_venta': detalles_venta,  # Pasamos los detalles de la venta al contexto
     }
     return render(request, 'Ventas/ventaD.html', context)
+

@@ -411,17 +411,16 @@ class VentaForm(forms.ModelForm):
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
-        fields = ['venta', 'producto', 'cantidad', 'iva', 'total', 'precio', 'num_factura']  # Asegúrate de incluir 'num_factura'
+        fields = ['venta', 'producto', 'cantidad', 'iva', 'total', 'precio', 'num_factura']
         widgets = {
-            'venta': forms.Select(attrs={'class': 'form-control'}),
-            'producto': forms.Select(attrs={'class': 'form-control'}),
-            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
-            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
-            'iva': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100}),
-            'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
-            'num_factura': forms.TextInput(attrs={'class': 'form-control'})  # Asegúrate de que sea editable si es necesario
+            'venta': forms.Select(attrs={'class': 'form-control', 'id': 'id_venta'}),
+            'producto': forms.Select(attrs={'class': 'form-control', 'id': 'id_producto'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'value': 0, 'id': 'id_cantidad'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control', 'id': 'id_precio'}),
+            'iva': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100, 'id': 'id_iva'}),
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly', 'id': 'id_total'}),
+            'num_factura': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_num_factura'})
         }
-
 
     def clean(self):
         cleaned_data = super().clean()
@@ -429,7 +428,7 @@ class DetalleVentaForm(forms.ModelForm):
         cantidad = cleaned_data.get('cantidad')
 
         if producto:
-            precio_unitario = producto.precio  # Obtén el precio desde el modelo Stock
+            precio_unitario = producto.precio  # Obtén el precio desde el modelo Producto
             cleaned_data['precio'] = precio_unitario  # Almacenar el precio unitario
 
         if cantidad and 'precio' in cleaned_data:

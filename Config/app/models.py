@@ -258,10 +258,10 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
         db_table = 'Stock'
         ordering = ['id']
-        
+#----------------------------------------------- venta -----------------------------------------------       
 class Venta(models.Model):
-    num_factura = models.CharField(max_length=10)  # No es clave primaria
-    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emision')  # Editable
+    num_factura = models.CharField(max_length=10, unique=True)  # Ahora es único
+    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emisión', editable=True)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):

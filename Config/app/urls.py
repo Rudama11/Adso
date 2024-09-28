@@ -42,6 +42,17 @@ urlpatterns = [
     path('compras/detalle/<str:num_factura>/', compra_detalle, name='compras_detalle'),
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
+    
+        #-------------------------------------------------- Dcompras --------------------------------------------------------
+    
+    path('detalle-compras/listar/', DetalleCompraListView.as_view(), name='detallecompra_listar'),
+    path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
+    path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
+    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
+    path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    
+    
     #-------------------------------------------------- Normativa --------------------------------------------------
     
     path('normativa/listar/', NormativaListView.as_view(), name='normativa_listar'),
@@ -87,15 +98,23 @@ urlpatterns = [
     path('ubicacion/eliminar/<int:id_ubica>/', UbicacionListView.EliminarUbicacion, name='ubicacion_eliminar'),
     path('municipios-por-departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
-    #-------------------------------------------------- Ventas ----------------------------------------------------
+   #-------------------------------------------------- Ventas ----------------------------------------------------
     
-    path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
-    path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
-    path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
-    path('ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
-    path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
-    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
-    path('ventas/detalle/<str:num_factura>/', venta_detalle, name='venta_detalle'),
+path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
+path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
+path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
+path('ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
+path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
+path('ventas/detalle/<str:num_factura>/', venta_detalle, name='venta_detalle'),
+
+#-------------------------------------------------- Dventas ---------------------------------------------------------
+path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
+path('detalle-venta/crear/', DetalleVentaCreateView.as_view(), name='detalleventa_crear'),
+path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
+path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
+path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
+path('obtener-id-venta/', obtener_id_venta_por_factura, name='obtener_id_venta_por_factura'),
+
 
     #-------------------------------------------------- Backup del sistema ----------------------------------------
     
@@ -107,22 +126,7 @@ urlpatterns = [
     
     path('stock/listar/', StockListView.as_view(), name='listar_stock'),
 
-    #-------------------------------------------------- Dcompras --------------------------------------------------------
-    
-    path('detalle-compras/listar/', DetalleCompraListView.as_view(), name='detallecompra_listar'),
-    path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
-    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
-    path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
-    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
-    path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
-    
-    #-------------------------------------------------- Dventas ---------------------------------------------------------
-    path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
-    path('detalle-venta/crear/', DetalleVentaCreateView.as_view(), name='detalleventa_crear'),
-    path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
-    path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
-    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
-    path('obtener-id-venta/', obtener_id_venta_por_factura, name='obtener_id_venta_por_factura'),
 
+    
     
 ]

@@ -8,13 +8,18 @@ from app.forms import DetalleVentaForm
 from app.models import DetalleVenta, Stock, Venta
 
 # Listado de detalles de ventas
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from app.forms import DetalleVentaForm
+from app.models import DetalleVenta, Stock, Venta
+
+# Listado de detalles de ventas
+@method_decorator(login_required, name='dispatch')
 class DetalleVentaListView(ListView):
     model = DetalleVenta
     template_name = 'Dventas/listar.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,6 +29,7 @@ class DetalleVentaListView(ListView):
         return context
 
 # Crear un nuevo detalle de venta
+@method_decorator(login_required, name='dispatch')
 class DetalleVentaCreateView(CreateView):
     model = DetalleVenta
     form_class = DetalleVentaForm
@@ -36,30 +42,55 @@ class DetalleVentaCreateView(CreateView):
             form.add_error('num_factura', 'No existe una venta con el número de factura proporcionado.')
             return self.form_invalid(form)
         
-        # Asignar la venta correspondiente al detalle
+        # Asegúrate de que el campo `num_factura` está correctamente definido en el modelo
         form.instance.venta = get_object_or_404(Venta, num_factura=num_factura)
         
-        # Guardar el detalle de venta
-        response = super().form_valid(form)
+        # Guarda el detalle de venta
+        detalle_venta = form.save()
 
-        # Actualizar el stock solo si la venta es válida
-        self.actualizar_stock(form.instance)  
-        
-        return response
+        # Actualiza el stock después de guardar el detalle de venta
+        self.actualizar_stock(detalle_venta)
 
-    def actualizar_stock(self, detalle_venta):
+        return super().form_valid(form)
+
+class DetalleVentaCreateView(CreateView):
+    model = DetalleVenta
+    form_class = DetalleVentaForm
+    template_name = 'Dventas/crear.html'
+    success_url = reverse_lazy('app:detalleventa_listar')
+
+    def form_valid(self, form):
+        num_factura = form.cleaned_data.get('num_factura')
+        if not Venta.objects.filter(num_factura=num_factura).exists():
+            form.add_error('num_factura', 'No existe una venta con el número de factura proporcionado.')
+            return self.form_invalid(form)
+
+        # Asigna la instancia de venta al detalle de venta
+        form.instance.venta = get_object_or_404(Venta, num_factura=num_factura)
+
+        # Guarda el formulario primero para obtener la instancia de detalle_venta
+        detalle_venta = form.save()
+
+        # Llama al método para actualizar el stock
+        self.actualizar_stock(detalle_venta)
+
+        return super().form_valid(form)
+
+    def actualizar_stock(self, detalle_venta): 
         """
         Actualiza el stock basado en el detalle de venta.
         """
-        producto = detalle_venta.producto
+    # Obtener la instancia de Stock
+        stock = detalle_venta.producto  # Esto es correcto ya que detalle_venta.producto es Stock
         cantidad = detalle_venta.cantidad
-        
-        try:
-            stock = Stock.objects.get(nombre_pro=producto)
+
+    # Aquí verificamos que la cantidad en stock es suficiente
+        if stock.cantidad >= cantidad:  # Verifica que hay suficiente stock
             stock.cantidad -= cantidad
             stock.save()
-        except Stock.DoesNotExist:
-            pass  # Manejar la excepción si es necesario
+            print(f"Stock actualizado: {stock.nombre_pro.nombre} - Nueva cantidad: {stock.cantidad}")  # Debugging
+        else:
+            print(f"No hay suficiente stock para {stock.nombre_pro.nombre}. Stock actual: {stock.cantidad}, solicitado: {cantidad}")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,8 +98,8 @@ class DetalleVentaCreateView(CreateView):
         context['entidad'] = 'Detalle de Venta'
         context['listar_url'] = reverse_lazy('app:detalleventa_listar')
         return context
-
-# Vista para actualizar un detalle de venta existente
+# Actualizar un detalle de venta
+@method_decorator(login_required, name='dispatch')
 class DetalleVentaUpdateView(UpdateView):
     model = DetalleVenta
     form_class = DetalleVentaForm
@@ -82,7 +113,8 @@ class DetalleVentaUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:detalleventa_listar')
         return context
 
-# Vista para eliminar un detalle de venta
+# Eliminar un detalle de venta
+@method_decorator(login_required, name='dispatch')
 class DetalleVentaDeleteView(DeleteView):
     model = DetalleVenta
     template_name = 'Dventas/eliminar.html'
@@ -94,6 +126,17 @@ class DetalleVentaDeleteView(DeleteView):
         context['entidad'] = 'Detalle de Venta'
         context['listar_url'] = reverse_lazy('app:detalleventa_listar')
         return context
+
+
+def obtener_id_venta_por_factura(request):
+    num_factura = request.GET.get('num_factura', None)
+    if num_factura:
+        try:
+            venta = Venta.objects.get(num_factura=num_factura)
+            return JsonResponse({'id_venta': venta.id})
+        except Venta.DoesNotExist:
+            return JsonResponse({'error': 'No se encontró ninguna venta con ese número de factura.'}, status=404)
+    return JsonResponse({'error': 'Número de factura no proporcionado.'}, status=400)
 
 # Vista para obtener datos del producto en formato JSON
 def obtener_datos_producto(request):
@@ -109,14 +152,3 @@ def obtener_datos_producto(request):
         return JsonResponse({'error': 'Producto no encontrado.'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)  # Manejo general de errores
-
-
-def obtener_id_venta_por_factura(request):
-    num_factura = request.GET.get('num_factura', None)
-    if num_factura:
-        try:
-            venta = Venta.objects.get(num_factura=num_factura)
-            return JsonResponse({'id_venta': venta.id})
-        except Venta.DoesNotExist:
-            return JsonResponse({'error': 'No se encontró ninguna venta con ese número de factura.'}, status=404)
-    return JsonResponse({'error': 'Número de factura no proporcionado.'}, status=400)

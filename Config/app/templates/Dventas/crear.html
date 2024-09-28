@@ -1,233 +1,78 @@
 {% load widget_tweaks %}
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    {% block contenidoDC %}
-    <form method="post" id="detalleVentaForm" action="{% url 'app:detalleventa_crear' %}">
-        {% csrf_token %}
+{% block contenidoDC %}
+<form method="post" id="detalleVentaForm" action="{% url 'app:detalleventa_crear' %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="id_num_factura">Número de Factura</label>
+        {{ form.num_factura }}
+    </div>
 
-        <!-- Campo para ingresar el número de factura -->
-        <div class="form-group">
-            <label for="id_num_factura">Número de Factura</label>
-            <input type="text" class="form-control" id="id_num_factura" name="num_factura" placeholder="Ingrese el número de factura" required>
-        </div>
+    <input type="text" name="venta" id="id_venta" value="{{ form.venta.value|default:'' }}">
 
-        <!-- Campo oculto para almacenar el ID de la venta -->
-        <input type="text" name="id_venta" id="id_venta" value="">
+    <div class="form-group">
+        <label for="id_producto">Producto</label>
+        {{ form.producto }}
+    </div>
 
-        <!-- Campo para seleccionar el producto -->
-        <div class="form-group">
-            <label for="id_producto">Producto</label>
-            {% render_field form.producto class="form-control" id="id_producto" %} 
-        </div>
+    <div class="form-group">
+        <label for="id_precio">Precio Unitario</label>
+        {{ form.precio }}
+    </div>
 
-        <!-- Campo para el precio unitario -->
-        <div class="form-group">
-            <label for="id_precio">Precio Unitario</label>
-            <input type="text" class="form-control" id="id_precio" placeholder="Ingrese el precio unitario" readonly>
-        </div>
+    <div class="form-group">
+        <label for="id_cantidad">Cantidad</label>
+        {{ form.cantidad }}
+    </div>
 
-        <!-- Campo para la cantidad -->
-        <div class="form-group">
-            <label for="id_cantidad">Cantidad</label>
-            {% render_field form.cantidad class="form-control" id="id_cantidad" placeholder="Ingrese la cantidad" %} 
-        </div>
+    <div class="form-group">
+        <label for="id_iva">IVA (%)</label>
+        {{ form.iva }}
+    </div>
 
-        <!-- Campo para el IVA -->
-        <div class="form-group">
-            <label for="id_iva">IVA (%)</label>
-            {% render_field form.iva class="form-control" id="id_iva" placeholder="Ingrese el IVA (%)" %} 
-        </div>
+    <div class="form-group">
+        <label for="id_total">Total</label>
+        {{ form.total }}
+    </div>
 
-        <!-- Campo para el total calculado -->
-        <div class="form-group">
-            <label for="id_total">Total</label>
-            {% render_field form.total class="form-control" id="id_total" readonly="readonly" %} 
-            {# El campo 'total' se muestra como solo lectura ya que se calcula automáticamente #}
-        </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-success" id="confirmButton">
+            <i class="fas fa-save"></i> Confirmar
+        </button>
+    </div>
+</form>
+<script>
+// Metodo para odtener ID venta 
+document.getElementById('id_num_factura').addEventListener('change', function() {
+    const numFactura = this.value;
 
-        {% if form.errors %}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-ban"></i> 
-                    {% if form.instance.pk %}
-                        Ha ocurrido un error al intentar {{ titulo }}.
-                    {% else %}
-                        Ha ocurrido un error al intentar crear {{ titulo }}.
-                    {% endif %}
-                </h5>
-                <ul>
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
+    fetch(`{% url 'app:obtener_id_venta_por_factura' %}?num_factura=${numFactura}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.id_venta) {
+                document.getElementById('id_venta').value = data.id_venta; // Asigna el id de venta al campo oculto
+            } else {
+                alert(data.error); // Maneja el error
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
+// metodo para odtener el porducto y demas datos 
+document.getElementById('id_producto').addEventListener('change', function() {
+    const productoId = this.value;
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-success" id="confirmButton">
-                <i class="fas fa-save"></i> Confirmar
-            </button>
-        </div>
-    </form>
-
-    {% endblock %}
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-        $(document).ready(function() {
-            /* Función 1: Obtener el ID de la venta según el número de factura ingresado */
-            $('#id_num_factura').on('change', function() {
-                let numFactura = $(this).val(); // Obtener el número de factura ingresado
-
-                if (numFactura) {
-                    // Enviar la solicitud AJAX para obtener el ID de la venta
-                    $.ajax({
-                        url: "{% url 'app:obtener_id_venta_por_factura' %}",
-                        data: {
-                            'num_factura': numFactura
-                        },
-                        success: function(data) {
-                            // Si se encuentra el ID de la venta, actualizar el campo oculto
-                            if (data.id_venta) {
-                                $('#id_venta').val(data.id_venta);
-                            } else {
-                                $('#id_venta').val(''); // Si no, limpiar el campo oculto
-                            }
-                        },
-                        error: function(xhr) {
-                            // Mostrar alerta de error si falla la solicitud AJAX
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'No se pudo obtener el ID de la venta.',
-                                icon: 'error',
-                            });
-                        }
-                    });
-                } else {
-                    $('#id_venta').val(''); // Limpiar el campo si no hay número de factura
-                }
-            });
-
-            /* Función 2: Obtener el precio del producto seleccionado mediante AJAX */
-            $('#id_producto').change(function() {
-                var productoId = $(this).val(); // Obtener el ID del producto seleccionado
-
-                if (productoId) {
-                    $.ajax({
-                        url: "{% url 'app:obtener_datos_producto' %}", // URL para obtener datos del producto
-                        data: {
-                            'producto_id': productoId
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            // Si se obtiene el precio unitario, actualizar el campo de precio
-                            if (data.precio_unitario) {
-                                $('#id_precio').val(data.precio_unitario);
-                            } else {
-                                $('#id_precio').val(''); // Limpiar el campo si no hay precio
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            // Mostrar alerta si ocurre un error en la solicitud
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'Ocurrió un error al obtener los datos del producto.',
-                                icon: 'error'
-                            });
-                        }
-                    });
-                } else {
-                    $('#id_precio').val(''); // Limpiar el campo si no hay producto seleccionado
-                }
-            });
-
-            /* Función 3: Cálculo automático del total (precio * cantidad + IVA) */
-            $('#detalleVentaForm').on('input', function() {
-                // Obtener valores de los campos
-                let precio = parseFloat($('#id_precio').val()) || 0;
-                let cantidad = parseFloat($('#id_cantidad').val()) || 0;
-                let iva = parseFloat($('#id_iva').val()) || 0;
-
-                // Calcular el total (precio * cantidad + IVA)
-                let total = (precio * cantidad) * (1 + iva / 100);
-                $('#id_total').val(total.toFixed(2)); // Actualizar el campo total
-            });
-
-            /* Función 4: Validación y envío del formulario mediante AJAX */
-            $('#confirmButton').on('click', function(e) {
-                e.preventDefault(); // Evitar el envío automático del formulario
-
-                let isValid = true; // Variable para verificar la validez del formulario
-                let formFields = $('#detalleVentaForm .form-control'); // Seleccionar los campos del formulario
-
-                // Validar cada campo del formulario (excepto los de solo lectura)
-                formFields.each(function() {
-                    if ($(this).val().trim() === '' && !$(this).attr('readonly')) {
-                        isValid = false;
-                        $(this).addClass('is-invalid'); // Marcar como inválido
-                    } else {
-                        $(this).removeClass('is-invalid'); // Quitar el estado inválido
-                    }
-                });
-
-                // Si el formulario es válido, enviarlo mediante AJAX
-                if (isValid) {
-                    let form = $('#detalleVentaForm'); // Obtener el formulario
-
-                    $.ajax({
-                        type: 'POST',
-                        url: form.attr('action'),
-                        data: form.serialize(),
-                        success: function(response) {
-                            // Mostrar alerta de éxito y recargar la página tras cerrar el modal
-                            Swal.fire({
-                                title: 'Éxito',
-                                text: 'Detalle de venta agregado correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Aceptar'
-                            }).then(function() {
-                                $('#detalleVentaModal').modal('hide'); // Cerrar el modal
-                                location.reload(); // Recargar la página
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            // Mostrar alerta de error si la solicitud falla
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'Ocurrió un error al agregar el detalle de venta. ' + error,
-                                icon: 'error',
-                                confirmButtonText: 'Aceptar'
-                            });
-                        }
-                    });
-                } else {
-                    // Mostrar alerta si el formulario no está completo
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Debe llenar todos los campos del formulario.',
-                        icon: 'error',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+    fetch(`{% url 'app:obtener_datos_producto' %}?producto_id=${productoId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.precio_unitario) {
+                document.getElementById('id_precio').value = data.precio_unitario; // Actualiza el precio unitario
+            } else {
+                alert(data.error); // Maneja el error
+                document.getElementById('id_precio').value = ''; // Limpia el campo en caso de error
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock %}
