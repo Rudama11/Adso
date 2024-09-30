@@ -14,20 +14,20 @@
     </div>
     <div class="backup-form">
         <div class="form-section backup-section">
-            <h2>Realizar Backup</h2>
+            <h2>Crear copia de seguridad</h2>
             <form id="backup-form" method="POST" enctype="multipart/form-data" action="">
                 {% csrf_token %}
-                <button type="submit" class="backup-button">Realizar Backup</button>
+                <button type="submit" class="backup-button">Crear</button>
             </form>
         </div>
         <div class="form-section restore-section">
-            <h2>Restaurar Backup</h2>
+            <h2>Restaurar copia de seguridad</h2>
             <form id="restore-form" method="POST" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                 <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
                 <button type="button" id="select-file-button">Seleccionar archivo</button>
                 <span id="file-name">Sin archivos seleccionados</span>
-                <button type="submit" class="restore-button" id="restore-button">Restaurar Backup</button>
+                <button type="submit" class="restore-button" id="restore-button">Restaurar</button>
             </form>
         </div>
     </div>
