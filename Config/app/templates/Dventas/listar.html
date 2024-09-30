@@ -1,0 +1,111 @@
+{% extends 'listar.html' %}
+
+{% load static %}
+
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:detalleventa_listar' %}">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="venta">Número de Venta</label>
+                <input type="text" class="form-control" id="venta" name="venta" placeholder="Ingrese el número de venta" value="{{ request.GET.venta }}">
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+{% endblock %}
+
+{% block columnas %}
+<tr>
+    <th scope="col">ID Venta</th>  {# Agregar columna para ID Venta #}
+    <th scope="col">Número de Venta</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Cantidad</th>
+    <th scope="col">Precio Unitario</th>
+    <th scope="col">IVA (%)</th>
+    <th scope="col">Total</th>
+    <th scope="col">Opciones</th>
+</tr>
+{% endblock %}
+
+{% block filas %}
+{% for detalle in object_list %}
+<tr>
+    <td>{{ detalle.venta.id }}</td>  {# Mostrar ID Venta #}
+    <td>{{ detalle.venta.num_factura }}</td>
+    <td>{{ detalle.producto }}</td>
+    <td>{{ detalle.cantidad }}</td>
+    <td>{{ detalle.precio }}</td>  {# Asegúrate de que este campo esté correcto #}
+    <td>{{ detalle.iva }}</td>
+    <td>{{ detalle.total }}</td>
+    <td>
+        <a href="{% url 'app:detalleventa_editar' detalle.pk %}" class="btn btn-info btn-sm" title="Editar detalle venta">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ detalle.id }}" title="Eliminar">
+            <i class="fas fa-trash"></i>
+        </a>
+        
+        <script>
+            document.querySelectorAll('.delete-button').forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let detalleId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:detalleventa_eliminar' 0 %}".replace('0', detalleId);
+                    
+                    Swal.fire({
+                        title: 'Confirmación',
+                        text: '¿Estás seguro de que deseas eliminar el detalle?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, Eliminar',
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Mostrar alerta de éxito
+                            Swal.fire({
+                                title: 'Eliminación Exitosa',
+                                text: 'El detalle ha sido eliminado correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Continuar',
+                                backdrop: true,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                position: 'center',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
+                                stopKeydownPropagation: false,
+                                buttonsStyling: true,
+                                showCloseButton: true,
+                                closeButtonAriaLabel: 'Cerrar alerta',
+                            }).then(() => {
+                                window.location.href = deleteUrl;
+                            });
+                        }
+                    });
+                });
+            });
+        </script>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

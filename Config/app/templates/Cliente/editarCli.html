@@ -1,1 +1,129 @@
-{% extends 'editar.html' %}
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+    <form method="post" id="editForm" action="{% url 'app:cliente_editarCli' cliente.id %}">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-edit"></i>
+                    Editar {{ entidad }}
+                </h3>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                <div id="alert-container"></div>
+                {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    <div class="invalid-feedback">
+                        {{ field.errors|striptags }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-success" id="confirmButton">
+                    <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                <a href="{% url 'app:cliente_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+    <script>
+        document.getElementById('confirmButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir el envío normal del formulario
+
+            // Validación del lado del cliente
+            let formFields = document.querySelectorAll('#editForm .form-control');
+            let isValid = true;
+
+            formFields.forEach(function(field) {
+                if (field.value.trim() === '') {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (isValid) {
+                // Obtener los datos del formulario
+                let formData = new FormData(document.getElementById('editForm'));
+
+                // Enviar los datos mediante AJAX
+                fetch(document.getElementById('editForm').action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Actualización Exitosa',
+                            text: `Los cambios en {{ entidad }} han sido guardados exitosamente.`,
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar',
+                            timer: 2000,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            window.location.href = "{% url 'app:cliente_listar' %}"; // Redirigir al listado
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.message || 'Ha ocurrido un error al intentar editar {{ entidad }}.',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar',
+                            timer: 2000,
+                            timerProgressBar: true,
+                        });
+
+                        // Mostrar los errores específicos del formulario
+                        if (data.errors) {
+                            Object.keys(data.errors).forEach(function(key) {
+                                let field = document.querySelector(`[name=${key}]`);
+                                if (field) {
+                                    field.classList.add('is-invalid');
+                                    let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                                    if (errorDiv) {
+                                        errorDiv.innerHTML = data.errors[key][0]; // Mostrar el mensaje de error
+                                    }
+                                }
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error en el servidor o en la red.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                    });
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debe llenar todos los campos de registro correctamente.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+            }
+        });
+    </script>
+{% endblock %}

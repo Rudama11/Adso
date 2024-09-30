@@ -258,12 +258,10 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
         db_table = 'Stock'
         ordering = ['id']
-        
-#----------------------------------------------- Venta -----------------------------------------------
+#----------------------------------------------- venta -----------------------------------------------       
 class Venta(models.Model):
-    num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
-    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    fecha_emision = models.DateTimeField(auto_now_add=True)
+    num_factura = models.CharField(max_length=10, unique=True)  # Ahora es único
+    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emisión', editable=True)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -273,13 +271,15 @@ class Venta(models.Model):
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
-
 #----------------------------------------------- DetalleVenta -----------------------------------------------
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Stock, on_delete=models.CASCADE)  # Referencia a Stock, que a su vez tiene el Producto
+    producto = models.ForeignKey('Stock', on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1, validators=[MinValueValidator(1)])
-    iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])  # IVA en porcentaje
+    precio = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+    iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    num_factura = models.CharField(max_length=20, null=True, blank=True)  # Agregar este campo
 
     def __str__(self):
         return f'Detalle de la venta {self.venta.num_factura} - Producto: {self.producto.nombre_pro.nombre}'

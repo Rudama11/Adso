@@ -18,12 +18,12 @@
                 {{ form.num_factura|add_class:'form-control'|attr:'readonly:readonly' }}
             </div>
             <div class="form-group">
-                <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_compra" value="{{ form.fecha_compra.value|date:'Y-m-d H:i:s' }}" readonly>
+                <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
+                <input type="text" class="form-control" id="id_fecha_emision" value="{{ form.fecha_emision.value|date:'Y-m-d H:i:s' }}" readonly>
             </div>
             <div class="form-group">
-                <label for="id_proveedor">{{ form.proveedor.label }}</label>
-                {{ form.proveedor|add_class:'form-control'|attr:'disabled:disabled' }}
+                <label for="id_cliente">{{ form.cliente.label }}</label>
+                {{ form.cliente|add_class:'form-control'|attr:'disabled:disabled' }}
             </div>
         </form>
     </div>
@@ -40,11 +40,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for detalle in detalles_compra %}
+                {% for detalle in detalles_venta %}
                     <tr>
                         <td>{{ detalle.producto }}</td>
                         <td>{{ detalle.cantidad }}</td>
-                        <td>{{ detalle.precio_unitario }}</td>
+                        <td>{{ detalle.precio }}</td>
                         <td>{{ detalle.iva }}%</td>
                         <td>{{ detalle.total }}</td>
                     </tr>
@@ -61,21 +61,21 @@
         <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
             <i class="fas fa-times"></i> Volver al Listado
         </a>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal">
-            <i class="fas fa-plus"></i> Agregar Producto
-        </button>
         <button type="button" class="btn btn-success" onclick="window.print();">
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleVentaModal">
+            <i class="fas fa-plus"></i> Agregar Detalle de Venta
+        </button>
     </div>
-    
+</div>
 
-<!-- Modal para DetalleCompra -->
-<div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
+<!-- Modal para DetalleVenta -->
+<div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar Detalle de Compra</h5>
+                <h5 class="modal-title" id="detalleVentaModalLabel">Agregar Detalle de Venta</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -84,7 +84,6 @@
                 <!-- Contenido del modal cargado dinámicamente -->
                 <div id="modalContent">
                     <!-- Aquí se cargará el contenido dinámicamente -->
-                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,38 +94,31 @@
 </div>
 
 <script>
-    // Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
+   // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
 $(document).ready(function() {
-    $('#detalleCompraModal').on('show.bs.modal', function(e) {
-        var url = "{% url 'app:detallecompra_crear' %}";
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de que el número de factura esté disponible en el contexto
-
-        $('#modalContent').load(url, function() {
-            // Rellenar el campo num_factura en el formulario cargado
-            $('#id_num_factura').val(numFactura);
-        });
+    $('#detalleVentaModal').on('show.bs.modal', function(e) {
+        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de obtener el valor correcto
+        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" + numFactura; // Pasar el número de factura como parámetro
+        $('#modalContent').load(url);
     });
-});
-
+    });
 </script>
 
 <style>
     .card-footer .btn {
         margin: 5px 0;
-        flex: 1 1 30%; /* Ajusta el tamaño de los botones */
+        flex: 1 1 30%;
     }
-    
-    /* Asegúrate de que la tabla y los botones se adapten en pantallas pequeñas */
+
     @media (max-width: 768px) {
         .table th, .table td {
             font-size: 14px;
         }
-    
+
         .card-footer .btn {
-            flex: 1 1 100%; /* Los botones ocupan el ancho completo en móviles */
+            flex: 1 1 100%;
         }
     }
-
 </style>
 
 {% endblock %}
