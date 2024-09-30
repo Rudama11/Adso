@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from app.models import DetalleCompra, Producto, Compras, Stock
 from app.forms import DetalleCompraForm
+from django.shortcuts import redirect
 
 # Vista para listar detalles de compra
 class DetalleCompraListView(ListView):
@@ -23,8 +24,12 @@ class DetalleCompraListView(ListView):
         context['crear_url'] = reverse_lazy('app:detallecompra_crear')
         context['request'] = self.request
         return context
+    
+    def EliminarComprasD(request, id_compraD):
+        compra = DetalleCompra.objects.get(pk=id_compraD)
+        compra.delete()
+        return redirect('app:compras_listar')
 
-# Vista para crear un nuevo detalle de compra
 class DetalleCompraCreateView(CreateView):
     model = DetalleCompra
     form_class = DetalleCompraForm

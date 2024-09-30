@@ -1,0 +1,78 @@
+{% load widget_tweaks %}
+
+{% block contenidoDC %}
+<form method="post" id="detalleVentaForm" action="{% url 'app:detalleventa_crear' %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="id_num_factura">Número de Factura</label>
+        {{ form.num_factura }}
+    </div>
+
+    <input type="text" name="venta" id="id_venta" value="{{ form.venta.value|default:'' }}">
+
+    <div class="form-group">
+        <label for="id_producto">Producto</label>
+        {{ form.producto }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_precio">Precio Unitario</label>
+        {{ form.precio }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_cantidad">Cantidad</label>
+        {{ form.cantidad }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_iva">IVA (%)</label>
+        {{ form.iva }}
+    </div>
+
+    <div class="form-group">
+        <label for="id_total">Total</label>
+        {{ form.total }}
+    </div>
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-success" id="confirmButton">
+            <i class="fas fa-save"></i> Confirmar
+        </button>
+    </div>
+</form>
+<script>
+// Metodo para odtener ID venta 
+document.getElementById('id_num_factura').addEventListener('change', function() {
+    const numFactura = this.value;
+
+    fetch(`{% url 'app:obtener_id_venta_por_factura' %}?num_factura=${numFactura}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.id_venta) {
+                document.getElementById('id_venta').value = data.id_venta; // Asigna el id de venta al campo oculto
+            } else {
+                alert(data.error); // Maneja el error
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
+// metodo para odtener el porducto y demas datos 
+document.getElementById('id_producto').addEventListener('change', function() {
+    const productoId = this.value;
+
+    fetch(`{% url 'app:obtener_datos_producto' %}?producto_id=${productoId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.precio_unitario) {
+                document.getElementById('id_precio').value = data.precio_unitario; // Actualiza el precio unitario
+            } else {
+                alert(data.error); // Maneja el error
+                document.getElementById('id_precio').value = ''; // Limpia el campo en caso de error
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock %}

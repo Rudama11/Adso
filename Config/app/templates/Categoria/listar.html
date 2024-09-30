@@ -32,7 +32,7 @@
     <td>{{ c.nombre }}</td>
     <td>{{ c.descripcion }}</td>
     <td>
-        <a href="{% url 'app:categoria_editar' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
+        <a href="{% url 'app:categoria_editarC' c.id %}" class="btn btn-info btn-sm" title="Editar categoría">
             <i class="fas fa-edit"></i>
         </a>
         {% if request.user.is_superuser or request.user.is_staff %}
@@ -51,7 +51,6 @@
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
@@ -70,12 +69,57 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = deleteUrl;
+                            // Enviar solicitud AJAX para eliminar la categoría
+                            fetch(deleteUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',  // Asegúrate de enviar el token CSRF
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Eliminación Exitosa',
+                                        text: 'La Categoría ha sido eliminada correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Continuar',
+                                        backdrop: true,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        position: 'center',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        allowEnterKey: false,
+                                        stopKeydownPropagation: false,
+                                        buttonsStyling: true,
+                                        showCloseButton: true,
+                                        closeButtonAriaLabel: 'Cerrar alerta',
+                                    }).then(() => {
+                                        // Recargar la página después de eliminar
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: data.message,
+                                        icon: 'error',
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ocurrió un error al eliminar la categoría.',
+                                    icon: 'error',
+                                });
+                            });
                         }
                     });
                 });
             });
-        </script>        
+        </script>               
     </td>
 </tr>
 {% endfor %}

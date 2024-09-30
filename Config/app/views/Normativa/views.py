@@ -60,20 +60,68 @@ class NormativaCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear una Normativa'
-        context['entidad'] = 'Normativas'
+        context['titulo'] = 'Crear Normativa'
+        context['entidad'] = 'Normativa'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
+    
+    def form_valid(self, form):
+        # Verificar si el campo de descripción está vacío
+        if not form.cleaned_data.get('descripcion'):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'El campo de descripción es obligatorio.'
+            }, status=400)
+
+        # Guardar la normativa
+        self.object = form.save()
+
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Normativa creada correctamente'
+        })
+
+    def form_invalid(self, form):
+        # Preparar los errores para respuesta JSON
+        errors = form.errors.as_json()
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Error al crear la normativa. Verifica los campos.',
+            'errors': errors
+        }, status=400)
 
 class NormativaUpdateView(UpdateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/editarN.html'
     success_url = reverse_lazy('app:normativa_listar')
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar una Normativa'
+        context['titulo'] = 'Editar Normativa'
         context['entidad'] = 'Normativa'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
+    
+    def form_valid(self, form):
+        # Verificar si la descripción está vacía
+        if not form.cleaned_data.get('descripcion'):
+            return JsonResponse({
+                'status': 'error',
+                'message': 'El campo de descripción es obligatorio.'
+            }, status=400)
+
+        # Guardar la normativa
+        self.object = form.save()
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Normativa actualizada correctamente'
+        })
+    
+    def form_invalid(self, form):
+        # Enviar los errores de validación en formato JSON
+        errors = form.errors.as_json()
+        return JsonResponse({
+            'status': 'error',
+            'errors': errors
+        }, status=400)

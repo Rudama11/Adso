@@ -9,6 +9,7 @@ from app.forms import ClienteForm
 from django.contrib import messages
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúrate de importar tus choices aquí
 from django.shortcuts import redirect
+from django.forms.models import model_to_dict
 
 class ClienteListView(ListView):
     model = Cliente
@@ -78,15 +79,52 @@ class ClienteCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
 
+    def form_invalid(self, form):
+        """Devuelve errores de formulario en caso de que no pase la validación."""
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            # Enviar errores como respuesta JSON
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+        else:
+            # En caso de una solicitud normal (no AJAX), procesar de la forma normal
+            return super().form_invalid(form)
+
+    def form_valid(self, form):
+        """Devuelve una respuesta de éxito si el formulario es válido."""
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            # Guardar el formulario y devolver una respuesta exitosa
+            cliente = form.save()
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Cliente creado exitosamente',
+                'cliente': model_to_dict(cliente)
+            })
+        else:
+            # En caso de una solicitud normal (no AJAX), procesar de la forma normal
+            return super().form_valid(form)
+
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/editarCli.html'
+    template_name = 'Cliente/editarCli.html'  # Aquí apunta a tu nueva plantilla de edición
     success_url = reverse_lazy('app:cliente_listar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Cliente'
+        context['titulo'] = 'Editar Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
+
+    def form_valid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            cliente = form.save()
+            return JsonResponse({
+                'success': True,
+                'message': 'Cliente actualizado exitosamente',
+            })
+        return super().form_valid(form)

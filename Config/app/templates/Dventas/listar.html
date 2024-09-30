@@ -1,18 +1,14 @@
 {% extends 'listar.html' %}
-{# Extiende la plantilla base 'listar.html' #}
 
 {% load static %}
-{# Carga la etiqueta estática para usar archivos estáticos #}
 
 {% block filtro_form_contenido %}
-{# Bloque para el formulario de filtrado #}
-<form method="GET" action="{% url 'app:detallecompra_listar' %}">
+<form method="GET" action="{% url 'app:detalleventa_listar' %}">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <label for="compra">Número de Compra</label>
-                <input type="text" class="form-control" id="compra" name="compra" placeholder="Ingrese el número de compra" value="{{ request.GET.compra }}">
-                {# Campo para ingresar el número de compra #}
+                <label for="venta">Número de Venta</label>
+                <input type="text" class="form-control" id="venta" name="venta" placeholder="Ingrese el número de venta" value="{{ request.GET.venta }}">
             </div>
         </div>
         
@@ -20,7 +16,6 @@
             <div class="form-group">
                 <label for="producto">Producto</label>
                 <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
-                {# Campo para ingresar el nombre del producto #}
             </div>
         </div>
         
@@ -28,20 +23,18 @@
             <div class="form-group">
                 <label for="cantidad">Cantidad</label>
                 <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
-                {# Campo para ingresar la cantidad #}
             </div>
         </div>
     </div>
     
     <button type="submit" class="btn btn-primary">Filtrar</button>
-    {# Botón para enviar el formulario de filtrado #}
 </form>
 {% endblock %}
 
 {% block columnas %}
-{# Bloque para los encabezados de la tabla #}
 <tr>
-    <th scope="col">Número de Compra</th>
+    <th scope="col">ID Venta</th>  {# Agregar columna para ID Venta #}
+    <th scope="col">Número de Venta</th>
     <th scope="col">Producto</th>
     <th scope="col">Cantidad</th>
     <th scope="col">Precio Unitario</th>
@@ -52,31 +45,29 @@
 {% endblock %}
 
 {% block filas %}
-{# Bloque para las filas de la tabla #}
-{% for dcompra in object_list %}
+{% for detalle in object_list %}
 <tr>
-    <td>{{ dcompra.compra.num_factura }}</td>
-    <td>{{ dcompra.producto.nombre }}</td>
-    <td>{{ dcompra.cantidad }}</td>
-    <td>{{ dcompra.precio_unitario }}</td>
-    <td>{{ dcompra.iva }}</td>
-    <td>{{ dcompra.total }}</td>
+    <td>{{ detalle.venta.id }}</td>  {# Mostrar ID Venta #}
+    <td>{{ detalle.venta.num_factura }}</td>
+    <td>{{ detalle.producto }}</td>
+    <td>{{ detalle.cantidad }}</td>
+    <td>{{ detalle.precio }}</td>  {# Asegúrate de que este campo esté correcto #}
+    <td>{{ detalle.iva }}</td>
+    <td>{{ detalle.total }}</td>
     <td>
-        <a href="{% url 'app:detallecompra_editar' dcompra.pk %}" class="btn btn-info btn-sm" title="Editar detalle compra">
+        <a href="{% url 'app:detalleventa_editar' detalle.pk %}" class="btn btn-info btn-sm" title="Editar detalle venta">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar el detalle de la compra #}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ dcompra.id }}" title="Eliminar ">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ detalle.id }}" title="Eliminar">
             <i class="fas fa-trash"></i>
         </a>
-        {# Enlace para eliminar el detalle de la compra #}
         
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    let DcompraId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:detallecompra_eliminar' 0 %}".replace('0', DcompraId);
+                    let detalleId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:detalleventa_eliminar' 0 %}".replace('0', detalleId);
                     
                     Swal.fire({
                         title: 'Confirmación',
@@ -92,7 +83,7 @@
                             // Mostrar alerta de éxito
                             Swal.fire({
                                 title: 'Eliminación Exitosa',
-                                text: 'El Detalle ha sido eliminado correctamente.',
+                                text: 'El detalle ha sido eliminado correctamente.',
                                 icon: 'success',
                                 confirmButtonText: 'Continuar',
                                 backdrop: true,
@@ -117,5 +108,4 @@
     </td>
 </tr>
 {% endfor %}
-{# Itera sobre la lista de detalles de compra y muestra los datos en cada fila #}
 {% endblock %}

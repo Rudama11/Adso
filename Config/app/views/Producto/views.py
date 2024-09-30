@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
 from django.shortcuts import redirect
+from django.http import JsonResponse
 
 class ProductoListView(ListView):
     model = Producto
@@ -67,26 +68,43 @@ class ProductoListView(ListView):
         context['form'] = ProductoFilterForm(self.request.GET)
 
         return context
-
+    
 class ProductoCreateView(CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'Producto/crear.html'
-    success_url = reverse_lazy('app:producto_listar')
+    success_url = reverse_lazy('producto_listar')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Crear un producto'
-        context['entidad'] = 'Producto'
-        context['listar_url'] = reverse_lazy('app:producto_listar')
-        return context
+    def form_valid(self, form):
+        # Guardar el objeto producto
+        producto = form.save()
 
+        # Retornar una respuesta JSON para que JavaScript lo maneje
+        return JsonResponse({'status': 'success'})
+
+    def form_invalid(self, form):
+        # Si hay errores en el formulario, retornar los errores en formato JSON
+        return JsonResponse({
+            'status': 'error',
+            'errors': form.errors,
+        }, status=400)
+
+    
 class ProductoUpdateView(UpdateView):
     model = Producto
     form_class = ProductoForm
-    template_name = 'Producto/editarPro.html'
+    template_name = 'Producto/editarP.html'
     success_url = reverse_lazy('app:producto_listar')
-    
+
+    def form_valid(self, form):
+        # Puedes agregar lógica adicional si es necesario antes de guardar el formulario
+        response = super().form_valid(form)
+        return JsonResponse({'status': 'success'}, status=200)
+
+    def form_invalid(self, form):
+        # Si el formulario es inválido, puedes devolver los errores de los campos
+        return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar un producto'
@@ -94,14 +112,3 @@ class ProductoUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:producto_listar')
         return context
 
-class ProductoDeleteView(DeleteView):
-    model = Producto
-    template_name = 'Producto/eliminar.html'
-    success_url = reverse_lazy('app:producto_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar un producto'
-        context['entidad'] = 'Producto'
-        context['listar_url'] = reverse_lazy('app:producto_listar')
-        return context

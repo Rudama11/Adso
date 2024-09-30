@@ -21,91 +21,96 @@
                 <!-- Encabezado de la sección -->
                 <li class="nav-header" style="color: #fff; padding: 10px 15px; font-size: 1rem; font-weight: bold;">Módulos</li>
                 
-                <!-- Menú desplegable para Gestión de Inventario (anteriormente Productos) -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-toggle="collapse" data-target="#productosSubmenu" aria-expanded="false" aria-controls="productosSubmenu">
+                <!-- Menú desplegable para Gestión de Inventario -->
+                <li class="nav-item has-treeview {% if 'categoria' in request.path or 'tipo' in request.path or 'producto' in request.path or 'stock' in request.path or 'normativa' in request.path %} menu-open {% endif %}">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-boxes" style="color: #eee600;"></i>
-                        <p style="color: #fff; margin-left: 10px;"><b>Gestión de Inventario</b></p>
+                        <p style="color: #fff;"><b>Gestión de Inventario</b></p>
                     </a>
-                    <ul class="nav nav-treeview collapse" id="productosSubmenu">
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{% url 'app:categoria_listar' %}" class="nav-link">
+                            <a href="{% url 'app:categoria_listar' %}" class="nav-link {% if 'categoria' in request.path %} active {% endif %}">
                                 <i class="nav-icon fas fa-layer-group" style="color: #fff;"></i>
-                                <p style="color: #fff; margin-left: 10px;"><b>Categoría</b></p>
+                                <p style="color: #fff;">Categoría</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'app:tipo_listar' %}" class="nav-link">
+                            <a href="{% url 'app:tipo_listar' %}" class="nav-link {% if 'tipo' in request.path %} active {% endif %}">
                                 <i class="nav-icon fas fa-clipboard-list" style="color: #e1ffed;"></i>
-                                <p style="color: #fff; margin-left: 10px;"><b>Tipo producto</b></p>
+                                <p style="color: #fff;">Tipo Producto</p>
                             </a>
                         </li>
-                        
                         <li class="nav-item">
-                            <a href="{% url 'app:producto_listar' %}" class="nav-link">
+                            <a href="{% url 'app:producto_listar' %}" class="nav-link {% if 'producto' in request.path %} active {% endif %}">
                                 <i class="nav-icon fas fa-fire-extinguisher" style="color: #eee600;"></i>
-                                <p style="color: #fff; margin-left: 10px;"><b>Productos</b></p>
+                                <p style="color: #fff;">Productos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'app:listar_stock' %}" class="nav-link">
+                            <a href="{% url 'app:listar_stock' %}" class="nav-link {% if 'stock' in request.path %} active {% endif %}">
                                 <i class="nav-icon fas fa-cubes" style="color: #e2bf5e;"></i>
-                                <p style="color: #fff; margin-left: 10px;"><b>Stock</b></p>
+                                <p style="color: #fff;">Stock</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'app:normativa_listar' %}" class="nav-link">
+                            <a href="{% url 'app:normativa_listar' %}" class="nav-link {% if 'normativa' in request.path %} active {% endif %}">
                                 <i class="nav-icon fas fa-balance-scale" style="color: #b6e8e2;"></i>
-                                <p style="color: #fff; margin-left: 10px;"><b>Normativas</b></p>
+                                <p style="color: #fff;">Normativas</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'app:ubicacion_listar' %}" class="nav-link">
+                    <a href="{% url 'app:ubicacion_listar' %}" class="nav-link {% if 'ubicacion' in request.path %} active {% endif %}">
                         <i class="nav-icon fas fa-map-marker-alt" style="color: #e1ffed;"></i>
-                        <p style="color: #fff; margin-left: 10px;"><b>Ubicación</b></p>
+                        <p style="color: #fff;">Ubicación</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'app:cliente_listar' %}" class="nav-link">
+                    <a href="{% url 'app:cliente_listar' %}" class="nav-link {% if 'cliente' in request.path %} active {% endif %}">
                         <i class="nav-icon fas fa-user-tie" style="color: #fef3ef;"></i>
-                        <p style="color: #fff; margin-left: 10px;"><b>Clientes</b></p>
+                        <p style="color: #fff;">Clientes</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'app:proveedor_listar' %}" class="nav-link">
+                    <a href="{% url 'app:proveedor_listar' %}" class="nav-link {% if 'proveedor' in request.path %} active {% endif %}">
                         <i class="nav-icon fas fa-truck" style="color: #e9ffff;"></i>
-                        <p style="color: #fff; margin-left: 10px;"><b>Proveedor</b></p>
+                        <p style="color: #fff;">Proveedor</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'app:compras_listar' %}" class="nav-link">
+                    <a href="{% url 'app:compras_listar' %}" class="nav-link {% if 'compras' in request.path %} active {% endif %}">
                         <i class="nav-icon fas fa-credit-card" style="color: hsl(58, 83%, 49%);"></i>
-                        <p style="color: #fff; margin-left: 10px;"><b>Compras</b></p>
+                        <p style="color: #fff;">Compras</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'app:venta_listar' %}" class="nav-link">
+                    <a href="{% url 'app:venta_listar' %}" class="nav-link {% if 'venta' in request.path %} active {% endif %}">
                         <i class="nav-icon fa fa-handshake" style="color: #fbdbb6;"></i>
-                        <p style="color: #ffffff; margin-left: 10px;"><b>Ventas</b></p>
+                        <p style="color: #ffffff;">Ventas</p>
                     </a>
                 </li>
-
+                
                 <li class="nav-item">
-                    <a href="{% url 'app:detallecompra_listar' %}" class="nav-link">
-                        <i class="nav-icon fa fa-box" style="color: #fbdbb6;"></i>
-                        <p style="color: #ffffff; margin-left: 10px;"><b>Detalles de Compra</b></p>
+                    <a href="{% url 'app:detalleventa_listar' %}" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart" style="color: #fbdbb6;"></i>
+                        <p style="color: #fff; margin-left: 10px;"><b>Detalle de Venta</b></p>
                     </a>
                 </li>
             </ul>
         </nav>
-        <!-- Fin del menú lateral -->
     </div>
-    <!-- Fin del panel lateral -->
 </aside>
+
+<!-- Estilo CSS para cambiar el color de selección -->
+<style>
+    .nav-sidebar .nav-link.active {
+        background-color: #37648f !important; /* Cambia el color de fondo al seleccionar */
+        color: #ac9999 !important; /* Cambia el color del texto al seleccionar */
+    }
+</style>
