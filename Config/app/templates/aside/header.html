@@ -1,6 +1,5 @@
 {% load static %} <!-- Carga archivos estáticos -->
-<nav class="main-header navbar navbar-expand navbar-dark"
-    style="background: linear-gradient(135deg, #003366, #2075ca);">
+<nav class="main-header navbar navbar-expand navbar-dark" style="background: linear-gradient(135deg, #003366, #2075ca);">
     <ul class="navbar-nav">
         <li class="nav-item">
             <!-- Botón para mostrar/ocultar el menú lateral -->
@@ -14,44 +13,67 @@
 
     <div class="container">
         <!-- Botón de toggler para dispositivos móviles -->
-
         <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <!-- Menú desplegable de módulos -->
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> <b> Módulos</a></b>
+                        class="nav-link dropdown-toggle">
+                        <i class="fas fa-folder-open"></i> <b>Módulos</b>
+                    </a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                         <!-- Lista de módulos con iconos -->
                         <li><a href="{% url 'app:categoria_listar' %}" class="dropdown-item">
-                                <i class="fas fa-layer-group" style="margin-right: 8px;"></i> Categoría</a></li>
+                                <i class="fas fa-layer-group" style="margin-right: 8px;"></i> Categoría
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:ubicacion_listar' %}" class="dropdown-item">
-                                <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Ubicación</a></li>
+                                <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Ubicación
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:cliente_listar' %}" class="dropdown-item">
-                                <i class="fas fa-user-tie" style="margin-right: 8px;"></i> Clientes</a></li>
+                                <i class="fas fa-user-tie" style="margin-right: 8px;"></i> Clientes
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:proveedor_listar' %}" class="dropdown-item">
-                                <i class="fas fa-truck" style="margin-right: 8px;"></i> Proveedor</a></li>
+                                <i class="fas fa-truck" style="margin-right: 8px;"></i> Proveedor
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:tipo_listar' %}" class="dropdown-item">
-                                <i class="fas fa-clipboard-list" style="margin-right: 8px;"></i> Tipo producto</a></li>
+                                <i class="fas fa-clipboard-list" style="margin-right: 8px;"></i> Tipo producto
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:producto_listar' %}" class="dropdown-item">
-                                <i class="fa fa-fire-extinguisher" style="margin-right: 8px;"></i> Productos</a></li>
+                                <i class="fa fa-fire-extinguisher" style="margin-right: 8px;"></i> Productos
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:compras_listar' %}" class="dropdown-item">
-                                <i class="fas fa-credit-card" style="margin-right: 8px;"></i> Compras</a></li>
+                                <i class="fas fa-credit-card" style="margin-right: 8px;"></i> Compras
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:normativa_listar' %}" class="dropdown-item">
-                                <i class="fas fa-balance-scale" style="margin-right: 8px;"></i> Normativas</a></li>
+                                <i class="fas fa-balance-scale" style="margin-right: 8px;"></i> Normativas
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:listar_stock' %}" class="dropdown-item">
-                                <i class="fas fa-cubes" style="margin-right: 8px;"></i> Stock</a></li>
+                                <i class="fas fa-cubes" style="margin-right: 8px;"></i> Stock
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:venta_listar' %}" class="dropdown-item">
-                                <i class="fa fa-handshake" style="margin-right: 8px;"></i> Ventas</a></li>
+                                <i class="fa fa-handshake" style="margin-right: 8px;"></i> Ventas
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
+
     <ul class="navbar-nav ml-auto">
         <!-- Enlace a la copia de seguridad -->
         <li class="nav-item">
@@ -70,30 +92,23 @@
                 <span class="dropdown-header">
                     Último Acceso: {{ last_login|date:"d M Y" }} a las {{ last_login|date:"H:i" }} {{ last_login|date:"a" }}
                 </span>
-            
                 <div class="dropdown-divider"></div>
-            
                 <!-- Saludo personalizado al usuario -->
                 <span class="dropdown-item-text">
                     Hola, {{ user_name }}! Bienvenido de nuevo.
                 </span>
-            
                 <div class="dropdown-divider"></div>
-            
                 <a href="{% url 'app:usuario_listar' %}" class="dropdown-item">
                     <i class="fas fa-users" style="margin-right: 10px;"></i> Usuarios
                     <span class="float-right text-muted text-sm">Registrados: {{ user_count }}</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                
                 <!-- Información adicional -->
                 <a href="#" class="dropdown-item dropdown-footer">
                     <p>Este sistema permite editar los diferentes perfiles de usuario disponibles.</p>
                 </a>
             </div>
-            
         </li>
-
 
         <!-- Enlace a la ayuda del usuario -->
         <li class="nav-item">
