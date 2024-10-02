@@ -48,9 +48,11 @@
             <div class="content">
                 <div class="container-fluid">
                     {% block contenido %}
+                        {% include 'inicio.html' %}
                     {% endblock %}
                 </div>
             </div>
+            
         </div>
         <!-- Incluyendo el pie de página desde un archivo separado -->
         {% include 'footer.html' %}
