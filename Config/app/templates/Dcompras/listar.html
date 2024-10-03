@@ -1,121 +1,181 @@
-{% extends 'listar.html' %}
-{# Extiende la plantilla base 'listar.html' #}
+{% extends "layout.html" %}
 
 {% load static %}
-{# Carga la etiqueta estática para usar archivos estáticos #}
 
-{% block filtro_form_contenido %}
-{# Bloque para el formulario de filtrado #}
-<form method="GET" action="{% url 'app:detallecompra_listar' %}">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="compra">Número de Compra</label>
-                <input type="text" class="form-control" id="compra" name="compra" placeholder="Ingrese el número de compra" value="{{ request.GET.compra }}">
-                {# Campo para ingresar el número de compra #}
-            </div>
+{% block head %}
+<!-- Urls de los archivos CSS -->
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+
+<style>
+    .custom-button {
+        background-color: #1f5a96;
+        border: 2px solid hwb(0 100% 0%);
+        color: #fff;
+        margin: 0;
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .custom-button:hover {
+        background-color: #1d3c5d;
+        border: 2px solid #09335f;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-box" style="margin-right: 5px;"></i>
+            {{ titulo }}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target="#filtroModal">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
         </div>
-        
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="producto">Producto</label>
-                <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
-                {# Campo para ingresar el nombre del producto #}
-            </div>
-        </div>
-        
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
-                {# Campo para ingresar la cantidad #}
-            </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in object_list %}
+                    <tr>
+                        <td>{{ stock.id }}</td>
+                        <td>{{ stock.nombre_pro }}</td>
+                        <td>{{ stock.cantidad }}</td>
+                        <td>{{ stock.precio }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-    {# Botón para enviar el formulario de filtrado #}
-</form>
+    <div class="card-footer">
+        <!-- Botón de agregar eliminado en esta plantilla -->
+    </div>
+</div>
+
+<!-- Modal Grande -->
+<div class="modal fade" id="filtroModal" tabindex="-1" role="dialog" aria-labelledby="filtroModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filtroModalLabel">Filtrar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% block filtro_form_contenido %}
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
+                <button type="button" class="btn btn-danger" onclick="clearFilters()">Limpiar Filtros</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-{% block columnas %}
-{# Bloque para los encabezados de la tabla #}
-<tr>
-    <th scope="col">Número de Compra</th>
-    <th scope="col">Producto</th>
-    <th scope="col">Cantidad</th>
-    <th scope="col">Precio Unitario</th>
-    <th scope="col">IVA (%)</th>
-    <th scope="col">Total</th>
-    <th scope="col">Opciones</th>
-</tr>
-{% endblock %}
+{% block javascript %}
+<!-- Urls de los archivos Js -->
+<script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
+<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
 
-{% block filas %}
-{# Bloque para las filas de la tabla #}
-{% for dcompra in object_list %}
-<tr>
-    <td>{{ dcompra.compra.num_factura }}</td>
-    <td>{{ dcompra.producto.nombre }}</td>
-    <td>{{ dcompra.cantidad }}</td>
-    <td>{{ dcompra.precio_unitario }}</td>
-    <td>{{ dcompra.iva }}</td>
-    <td>{{ dcompra.total }}</td>
-    <td>
-        <a href="{% url 'app:detallecompra_editar' dcompra.pk %}" class="btn btn-info btn-sm" title="Editar detalle compra">
-            <i class="fas fa-edit"></i>
-        </a>
-        {# Enlace para editar el detalle de la compra #}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ dcompra.id }}" title="Eliminar ">
-            <i class="fas fa-trash"></i>
-        </a>
-        {# Enlace para eliminar el detalle de la compra #}
-        
-        <script>
-            document.querySelectorAll('.delete-button').forEach(function(button) {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let DcompraId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:detallecompra_eliminar' 0 %}".replace('0', DcompraId);
-                    
-                    Swal.fire({
-                        title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar el detalle?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Sí, Eliminar',
-                        cancelButtonText: 'Cancelar',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Mostrar alerta de éxito
-                            Swal.fire({
-                                title: 'Eliminación Exitosa',
-                                text: 'El Detalle ha sido eliminado correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Continuar',
-                                backdrop: true,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                position: 'center',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                stopKeydownPropagation: false,
-                                buttonsStyling: true,
-                                showCloseButton: true,
-                                closeButtonAriaLabel: 'Cerrar alerta',
-                            }).then(() => {
-                                window.location.href = deleteUrl;
-                            });
-                        }
-                    });
-                });
-            });
-        </script>
-    </td>
-</tr>
-{% endfor %}
-{# Itera sobre la lista de detalles de compra y muestra los datos en cada fila #}
+<script>
+    $(document).ready(function () {
+        $("#tabla").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "language": {
+                "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"
+            },
+            "buttons": [
+                {
+                    extend: 'copy',
+                    text: 'Copiar tabla',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'Archivo CSV',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Archivo Excel',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                }
+            ],
+            "dom": 'Bfrtip'
+        }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
+    });
+
+    function clearFilters() {
+        document.querySelector('#filtroModal form').reset();
+        const url = new URL(window.location.href);
+        url.search = '';
+        window.location.href = url.toString();
+    }
+
+    function applyFilters() {
+        document.querySelector('#filtroModal form').submit();
+    }
+</script>
 {% endblock %}
