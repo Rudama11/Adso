@@ -8,8 +8,6 @@ from django.utils.text import slugify
 import re
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, User
 from django.utils import timezone
-
-
 # ----------------------------------------------- Validaciones -----------------------------------------------
 
 # Validación de campos con letras, espacios y puntos
@@ -183,12 +181,21 @@ class Proveedor(models.Model):
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3)], verbose_name='Nombre')
+    nombre = models.CharField(max_length=150, validators=[MinLengthValidator(3),validate_campos], verbose_name='Nombre')
     categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     tipo_pro = models.ForeignKey('Tipo', on_delete=models.CASCADE, verbose_name='Tipo de producto')
 
     def __str__(self):
         return self.nombre
+
+    def clean(self):
+        # Ejemplo de validación personalizada
+        if not self.nombre:
+            raise ValidationError({'nombre': 'El nombre es obligatorio.'})
+
+        # Validar si el nombre ya existe en la misma categoría y tipo_pro
+        if Producto.objects.filter(nombre=self.nombre, categoria=self.categoria, tipo_pro=self.tipo_pro).exists():
+            raise ValidationError({'nombre': 'Ya existe un producto con ese nombre en esta categoría y tipo de producto.'})
 
     class Meta:
         verbose_name = 'Producto'
@@ -251,12 +258,10 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
         db_table = 'Stock'
         ordering = ['id']
-        
-#----------------------------------------------- Venta -----------------------------------------------
+#----------------------------------------------- venta -----------------------------------------------       
 class Venta(models.Model):
-    num_factura = models.CharField(max_length=10, primary_key=True, editable=False)
-    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
-    fecha_emision = models.DateTimeField(auto_now_add=True)
+    num_factura = models.CharField(max_length=10, unique=True)  # Ahora es único
+    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emisión', editable=True)
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -266,13 +271,15 @@ class Venta(models.Model):
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
-
 #----------------------------------------------- DetalleVenta -----------------------------------------------
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
-    producto = models.ForeignKey(Stock, on_delete=models.CASCADE)  # Referencia a Stock, que a su vez tiene el Producto
+    producto = models.ForeignKey('Stock', on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1, validators=[MinValueValidator(1)])
-    iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])  # IVA en porcentaje
+    precio = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
+    iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
+    num_factura = models.CharField(max_length=20, null=True, blank=True)  # Agregar este campo
 
     def __str__(self):
         return f'Detalle de la venta {self.venta.num_factura} - Producto: {self.producto.nombre_pro.nombre}'

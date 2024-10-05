@@ -43,7 +43,7 @@ class UsuarioForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'password', 'tipo_usuario']
+        fields = ['tipo_usuario','username', 'nombres', 'email', 'password', ]
 
     def clean(self):
         cleaned_data = super().clean()
@@ -100,7 +100,7 @@ class UsuarioEditForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'nombres', 'email', 'tipo_usuario']  # Incluye tipo_usuario en fields
+        fields = ['tipo_usuario','username', 'nombres', 'email']  # Incluye tipo_usuario en fields
 
     def __init__(self, *args, **kwargs):
         # Obtenemos el usuario actual que edita
@@ -377,22 +377,65 @@ class NormativaForm(ModelForm):
         }
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
-class VentaForm(ModelForm):
+class VentaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
 
     class Meta:
         model = Venta
-        fields = '__all__'
+        fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
         widgets = {
-            'nombre': TextInput(
+            'num_factura': forms.TextInput(
                 attrs={
-                    'placeholder': 'Ingrese un numero de factura'
+                    'placeholder': 'Ingrese un número de factura',
+                    'class': 'form-control'  # Puedes añadir clases CSS para estilizar
+                }
+            ),
+            'fecha_emision': forms.DateTimeInput(
+                attrs={
+                    'placeholder': 'Seleccione la fecha de emisión',
+                    'class': 'form-control',
+                    'type': 'datetime-local'  # Permite seleccionar fecha y hora
+                }
+            ),
+            'cliente': forms.Select(
+                attrs={
+                    'class': 'form-control'  # Para estilizar el select
                 }
             ),
         }
+        
+        
+#---------------------------------------------------------- Dellate  Ventas---------------------------------------------------------------
+class DetalleVentaForm(forms.ModelForm):
+    class Meta:
+        model = DetalleVenta
+        fields = ['venta', 'producto', 'cantidad', 'iva', 'total', 'precio', 'num_factura']
+        widgets = {
+            'venta': forms.Select(attrs={'class': 'form-control', 'id': 'id_venta'}),
+            'producto': forms.Select(attrs={'class': 'form-control', 'id': 'id_producto'}),
+            'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'value': 0, 'id': 'id_cantidad'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control', 'id': 'id_precio'}),
+            'iva': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'max': 100, 'id': 'id_iva'}),
+            'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly', 'id': 'id_total'}),
+            'num_factura': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_num_factura'})
+        }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        producto = cleaned_data.get('producto')
+        cantidad = cleaned_data.get('cantidad')
+
+        if producto:
+            precio_unitario = producto.precio  # Obtén el precio desde el modelo Producto
+            cleaned_data['precio'] = precio_unitario  # Almacenar el precio unitario
+
+        if cantidad and 'precio' in cleaned_data:
+            total = cantidad * cleaned_data['precio']  # Calcular total
+            cleaned_data['total'] = total
+
+        return cleaned_data
 #---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(

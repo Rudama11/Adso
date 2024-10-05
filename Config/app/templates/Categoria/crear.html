@@ -1,1 +1,142 @@
-{% extends 'crear.html' %}
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+
+<form method="post" action="." id="createForm">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>
+                Crear {{ entidad }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ field.errors|striptags }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script>
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault(); 
+        
+        // Validación del lado del cliente
+        let descripcionField = document.querySelector('[name="descripcion"]');
+        if (!descripcionField.value.trim()) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: 'El campo de descripción es obligatorio.',
+                icon: 'warning',
+                timer:2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+                buttonsStyling: true,
+            });
+            descripcionField.focus();
+            return;
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('createForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                // Mostrar alerta de éxito
+                Swal.fire({
+                    title: 'Registrado Correctamente',
+                    text: `La {{ entidad }} ha sido creada exitosamente.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                });
+            }
+        })
+        .catch(data => {
+            // Mostrar alerta de error
+            Swal.fire({
+                title: 'Error',
+                text: data.message || 'Ha ocurrido un error al intentar crear {{ entidad }}.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 2000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
+            });
+
+            // Mostrar los errores específicos del formulario si es necesario
+            if (data.errors) {
+                Object.keys(data.errors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = data.errors[key][0].message;
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}

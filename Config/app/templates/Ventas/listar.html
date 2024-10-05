@@ -1,5 +1,6 @@
 {% extends 'listar.html' %}
 {% load static %}
+
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:venta_listar' %}">
     <div class="row">
@@ -22,7 +23,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -32,54 +33,42 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="total">Total de la Factura</label>
-                <input type="number" step="0.01" class="form-control" id="total" name="total" placeholder="Ingrese el total de la factura" value="{{ request.GET.total }}">
+                <label for="subtotal">Subtotal de la Factura</label>
+                <input type="number" step="0.01" class="form-control" id="subtotal" name="subtotal" placeholder="Ingrese el subtotal de la factura" value="{{ request.GET.subtotal }}">
             </div>
         </div>
     </div>
-
 </form>
 {% endblock %}
+
 {% block columnas %}
-<!-- Encabezado de la tabla con las columnas de datos de ventas -->
 <tr>
-    <th scope="col">Id Venta</th>  {# Identificador único de la venta #}
-    <th scope="col">Fecha factura</th>  {# Fecha en que se emitió la factura #}
-    <th scope="col">Cliente</th>  {# Nombre del cliente #}
-    <th scope="col">Producto</th>  {# Nombre del producto #}
-    <th scope="col">Subtotal</th>  {# Monto subtotal antes de impuestos #}
-    <th scope="col">IVA</th>  {# Monto del IVA aplicado #}
-    <th scope="col">Total factura</th>  {# Monto total de la factura incluyendo impuestos #}
-    <th scope="col">Opciones</th>  {# Acciones disponibles para cada venta #}
+    <th scope="col">ID</th>
+    <th scope="col">Número de Factura</th>
+    <th scope="col">Fecha de Emisión</th>
+    <th scope="col">Cliente</th>
+    <th scope="col">Opciones</th>
 </tr>
 {% endblock %}
 
 {% block filas %}
-<!-- Filas de la tabla que muestran los datos de cada venta -->
 {% for v in object_list %}
 <tr>
-    <td>{{v.num_factura}}</td>  {# Muestra el número de factura #}
-    <td>{{v.fecha_emision}}</td>  {# Muestra la fecha de emisión de la factura #}
-    <td>{{v.cliente.nombre}}</td>  {# Muestra el nombre del cliente asociado a la venta #}
-    <td>{{v.producto.nombre}}</td>  {# Muestra el nombre del producto vendido #}
-    <th>{{v.subtotal}}</th>  {# Muestra el subtotal de la venta #}
-    <th>{{v.impuestos}}</th>  {# Muestra el monto de impuestos aplicado #}
-    <td>{{v.total}}</td>  {# Muestra el total de la factura #}
+    <td>{{ v.id }}</td>
+    <td>{{ v.num_factura }}</td>
+    <td>{{ v.fecha_emision }}</td>
+    <td>{{ v.cliente.nombres }}</td>
     <td>
-        <!-- Botones para editar o eliminar la venta -->
-        <a href="{% url 'app:venta_editar' v.num_factura %}" class="btn btn-info btn-sm" title="Editar venta">
+        <a href="{% url 'app:venta_editar' v.pk %}" class="btn btn-info btn-sm" title="Editar venta">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:venta_eliminar' v.num_factura %}" class="btn btn-danger btn-sm"title="Eliminar venta">
+        <a href="{% url 'app:venta_detalle' num_factura=v.num_factura %}" class="btn btn-secondary btn-sm" title="Detalles">
+            <i class="fas fa-plus"></i>
+        </a>
+        <a href="{% url 'app:venta_eliminar' v.pk %}" class="btn btn-danger btn-sm" title="Eliminar venta">
             <i class="fas fa-trash"></i>
         </a>
-        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
-        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?V1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
-        
     </td>
 </tr>
 {% endfor %}
-
 {% endblock %}

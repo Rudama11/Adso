@@ -1,1 +1,216 @@
-{% extends 'editar.html' %}
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+<form method="post" action="." id="createClientForm">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+
+            <div class="form-group">
+                <label for="tipo_persona">Tipo de Persona</label>
+                {{ form.tipo_persona|add_class:'form-control'|attr:'id:tipo_persona'|attr:'autocomplete:off' }}
+            </div>
+
+            <div class="form-group" id="nombres_field">
+                <label for="id_nombres">Nombres</label>
+                {{ form.nombres|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_nombres' }}
+                <div class="invalid-feedback">
+                    El campo de nombres es obligatorio.
+                </div>
+            </div>
+
+            <div class="form-group" id="razon_social_field" style="display:none;">
+                <label for="id_razon_social">Razón Social</label>
+                {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_razon_social' }}
+                <div class="invalid-feedback">
+                    El campo de razón social es obligatorio.
+                </div>
+            </div>
+
+            <div class="form-group" id="tipo_documento_field">
+                <label for="id_tipo_documento">Tipo de Documento</label>
+                {{ form.tipo_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_tipo_documento' }}
+                <div class="invalid-feedback">
+                    El campo de tipo de documento es obligatorio.
+                </div>
+            </div>
+
+            <div class="form-group" id="numero_documento_field">
+                <label for="id_numero_documento">Número de Documento</label>
+                {{ form.numero_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_numero_documento' }}
+                <div class="invalid-feedback">
+                    El campo de número de documento es obligatorio.
+                </div>
+            </div>
+
+            {% for field in form.visible_fields %}
+            {% if field.name not in "tipo_persona,nombres,razon_social,tipo_documento,numero_documento" %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    El campo {{ field.label }} es obligatorio.
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tipoPersonaField = document.getElementById('tipo_persona');
+        var nombresField = document.getElementById('nombres_field');
+        var razonSocialField = document.getElementById('razon_social_field');
+        var tipo_documentoField = document.getElementById('tipo_documento_field');
+        var numero_documentoField = document.getElementById('numero_documento_field');
+
+        function toggleFields() {
+            if (tipoPersonaField.value === 'PN') {
+                nombresField.style.display = 'block';
+                razonSocialField.style.display = 'none';
+            } else {
+                nombresField.style.display = 'none';
+                razonSocialField.style.display = 'block';
+            }
+        }
+
+        tipoPersonaField.addEventListener('change', toggleFields);
+        toggleFields();
+
+        // Validación y envío del formulario
+        document.getElementById('confirmButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir el envío automático
+
+            // Validar cada campo
+            let valid = true;
+
+            // Limpieza de errores anteriores
+            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+
+            if (tipoPersonaField.value === 'PN') {
+                if (!document.getElementById('id_nombres').value.trim()) {
+                    valid = false;
+                    showError('Nombres es obligatorio', document.getElementById('id_nombres'));
+                }
+            } else {
+                if (!document.getElementById('id_razon_social').value.trim()) {
+                    valid = false;
+                    showError('Razón Social es obligatoria', document.getElementById('id_razon_social'));
+                }
+            }
+
+            if (!document.getElementById('id_tipo_documento').value.trim()) {
+                valid = false;
+                showError('Tipo de Documento es obligatorio', document.getElementById('id_tipo_documento'));
+            }
+
+            if (!document.getElementById('id_numero_documento').value.trim()) {
+                valid = false;
+                showError('Número de Documento es obligatorio', document.getElementById('id_numero_documento'));
+            }
+
+            if (!valid) {
+                return; // Si hay errores, no continuar
+            }
+
+            // Enviar el formulario usando AJAX
+            let formData = new FormData(document.getElementById('createClientForm'));
+
+            fetch(".", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Modificado Correctamente',
+                        text: `El cliente ha sido actualizado exitosamente.`,
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                        backdrop: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'center',
+                        allowOutsideClick: false
+                    }).then(() => {
+                        window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                    });
+                }
+            })
+            .catch(data => {
+                if (data.errors) {
+                    for (let field in data.errors) {
+                        let input = document.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            let errorDiv = input.parentElement.querySelector('.invalid-feedback');
+                            if (errorDiv) {
+                                errorDiv.innerHTML = data.errors[field].join('<br>');
+                                input.classList.add('is-invalid');
+                            }
+                        }
+                    }
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: data.message || 'Ha ocurrido un error al intentar actualizar el cliente.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                        backdrop: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'center',
+                        allowOutsideClick: true
+                    });
+                }
+            });
+        });
+
+        function showError(message, field) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: message,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 2000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true
+            });
+            field.classList.add('is-invalid');
+            field.focus();
+        }
+    });
+</script>
+{% endblock %}

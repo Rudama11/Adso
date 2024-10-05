@@ -286,3 +286,13 @@ button.delete-item:hover {
 .btn-remove:hover {
     background-color: #c0392b;
 }
+.table-responsive {
+    margin: 20px 0;
+}
+
+.card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+

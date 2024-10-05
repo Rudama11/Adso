@@ -3,77 +3,80 @@
 {% load widget_tweaks %}
 
 {% block contenido %}
-{% load static %}
-
-
-
-<form method="post" action=".">
+<form method="post" action="." id="createClientForm">
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-plus"></i>
-                {{titulo}}
+                {{ titulo }}
             </h3>
         </div>
         <div class="card-body">
-            {% csrf_token %} {% if form.errors %} {{form.errors}}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                    ×
-                </button>
-                <h5>
-                    <i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear un Cliente.
-                </h5>
-                <ul>
-                    {% for field in form %} {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %} {% endfor %}
-                </ul>
-            </div>
-            {% endif %} 
+            {% csrf_token %}
+            <div id="alert-container"></div>
             
             <div class="form-group">
                 <label for="tipo_persona">Tipo de Persona</label>
-                {{ form.tipo_persona|add_class:'form-control'|attr:'id:tipo_persona'|attr:'autocomplete:off'}}
+                {{ form.tipo_persona|add_class:'form-control'|attr:'id:tipo_persona'|attr:'autocomplete:off' }}
             </div>
+
             <div class="form-group" id="nombres_field">
                 <label for="id_nombres">Nombres</label>
-                {{ form.nombres|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_nombres'}}
+                {{ form.nombres|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_nombres' }}
+                <div class="invalid-feedback">
+                    El campo de nombres es obligatorio.
+                </div>
             </div>
+
             <div class="form-group" id="razon_social_field" style="display:none;">
                 <label for="id_razon_social">Razón Social</label>
-                {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_razon_social'}}
+                {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_razon_social' }}
+                <div class="invalid-feedback">
+                    El campo de razón social es obligatorio.
+                </div>
             </div>
+
             <div class="form-group" id="tipo_documento_field">
-                <label for="id_tipo_documento">Tipo de documento</label>
-                {{ form.tipo_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_tipo_documento'}}
+                <label for="id_tipo_documento">Tipo de Documento</label>
+                {{ form.tipo_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_tipo_documento' }}
+                <div class="invalid-feedback">
+                    El campo de tipo de documento es obligatorio.
+                </div>
             </div>
+
             <div class="form-group" id="numero_documento_field">
-                <label for="id_numero_documento">Numero documento</label>
-                {{ form.numero_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_numero_documento'}}
+                <label for="id_numero_documento">Número de Documento</label>
+                {{ form.numero_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_numero_documento' }}
+                <div class="invalid-feedback">
+                    El campo de número de documento es obligatorio.
+                </div>
             </div>
 
             {% for field in form.visible_fields %}
             {% if field.name not in "tipo_persona,nombres,razon_social,tipo_documento,numero_documento" %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    El campo {{ field.label }} es obligatorio.
+                </div>
             </div>
             {% endif %}
             {% endfor %}
         </div>
+
         <div class="card-footer">
-            <button class="btn btn-success swalDefaultSuccess">
-                <i class="fas fa-save"></i>
-                Confirmar
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
             </button>
             <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
-            </a>            
+            </a>
         </div>
     </div>
 </form>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var tipoPersonaField = document.getElementById('tipo_persona');
@@ -86,27 +89,110 @@
             if (tipoPersonaField.value === 'PN') {
                 nombresField.style.display = 'block';
                 razonSocialField.style.display = 'none';
-                tipo_documentoField.style.display = 'block';
-                numero_documentoField.style.display = 'block';
             } else {
                 nombresField.style.display = 'none';
                 razonSocialField.style.display = 'block';
-                tipo_documentoField.style.display = 'block';
-                numero_documentoField.style.display = 'block';
             }
         }
 
         tipoPersonaField.addEventListener('change', toggleFields);
         toggleFields();
-    });
 
-    {% if form.errors %}
-    Swal.fire({
-        title: 'Error',
-        text: 'Ha ocurrido un error al intentar guardar un Proveedor',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
+        // Validación y envío del formulario
+        document.getElementById('confirmButton').addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir el envío automático
+
+            // Validar cada campo
+            let valid = true;
+
+            if (tipoPersonaField.value === 'PN') {
+                if (!document.getElementById('id_nombres').value.trim()) {
+                    valid = false;
+                    showError('Nombres es obligatorio', document.getElementById('id_nombres'));
+                }
+            } else {
+                if (!document.getElementById('id_razon_social').value.trim()) {
+                    valid = false;
+                    showError('Razón Social es obligatoria', document.getElementById('id_razon_social'));
+                }
+            }
+
+            if (!document.getElementById('id_tipo_documento').value.trim()) {
+                valid = false;
+                showError('Tipo de Documento es obligatorio', document.getElementById('id_tipo_documento'));
+            }
+
+            if (!document.getElementById('id_numero_documento').value.trim()) {
+                valid = false;
+                showError('Número de Documento es obligatorio', document.getElementById('id_numero_documento'));
+            }
+
+            if (!valid) {
+                return; // Si hay errores, no continuar
+            }
+
+            // Enviar el formulario usando AJAX
+            let formData = new FormData(document.getElementById('createClientForm'));
+
+            fetch(".", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        title: 'Registrado Correctamente',
+                        text: `El cliente ha sido creado exitosamente.`,
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                        backdrop: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'center',
+                        allowOutsideClick: false
+                    }).then(() => {
+                        window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                    });
+                }
+            })
+            .catch(data => {
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message || 'Ha ocurrido un error al intentar crear el cliente.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: true
+                });
+            });
+        });
+
+        function showError(message, field) {
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: message,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 2000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true
+            });
+            field.focus();
+        }
     });
-    {% endif %}
 </script>
 {% endblock %}
