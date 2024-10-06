@@ -98,7 +98,7 @@ urlpatterns = [
     path('ubicacion/eliminar/<int:id_ubica>/', UbicacionListView.EliminarUbicacion, name='ubicacion_eliminar'),
     path('municipios-por-departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
-   #-------------------------------------------------- Ventas ----------------------------------------------------
+    #-------------------------------------------------- Ventas ----------------------------------------------------
     
 path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
 path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
@@ -125,8 +125,4 @@ path('obtener-id-venta/', obtener_id_venta_por_factura, name='obtener_id_venta_p
     #-------------------------------------------------- Stock -----------------------------------------------------
     
     path('stock/listar/', StockListView.as_view(), name='listar_stock'),
-
-
-    
-    
 ]

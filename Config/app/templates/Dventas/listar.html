@@ -1,111 +1,181 @@
-{% extends 'listar.html' %}
+{% extends "layout.html" %}
 
 {% load static %}
 
-{% block filtro_form_contenido %}
-<form method="GET" action="{% url 'app:detalleventa_listar' %}">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="venta">Número de Venta</label>
-                <input type="text" class="form-control" id="venta" name="venta" placeholder="Ingrese el número de venta" value="{{ request.GET.venta }}">
-            </div>
+{% block head %}
+<!-- Urls de los archivos CSS -->
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+
+<style>
+    .custom-button {
+        background-color: #1f5a96;
+        border: 2px solid hwb(0 100% 0%);
+        color: #fff;
+        margin: 0;
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .custom-button:hover {
+        background-color: #1d3c5d;
+        border: 2px solid #09335f;
+    }
+</style>
+{% endblock %}
+
+{% block contenido %}
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-box" style="margin-right: 5px;"></i>
+            {{ titulo }}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target="#filtroModal">
+                <i class="fas fa-filter"></i> Filtrar
+            </button>
         </div>
-        
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="producto">Producto</label>
-                <input type="text" class="form-control" id="producto" name="producto" placeholder="Ingrese el nombre del producto" value="{{ request.GET.producto }}">
-            </div>
-        </div>
-        
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingrese la cantidad" value="{{ request.GET.cantidad }}">
-            </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="tabla" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in object_list %}
+                    <tr>
+                        <td>{{ stock.id }}</td>
+                        <td>{{ stock.nombre_pro }}</td>
+                        <td>{{ stock.cantidad }}</td>
+                        <td>{{ stock.precio }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-</form>
+    <div class="card-footer">
+        <!-- Botón de agregar eliminado en esta plantilla -->
+    </div>
+</div>
+
+<!-- Modal Grande -->
+<div class="modal fade" id="filtroModal" tabindex="-1" role="dialog" aria-labelledby="filtroModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filtroModalLabel">Filtrar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% block filtro_form_contenido %}
+                {% endblock %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
+                <button type="button" class="btn btn-danger" onclick="clearFilters()">Limpiar Filtros</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
-{% block columnas %}
-<tr>
-    <th scope="col">ID Venta</th>  {# Agregar columna para ID Venta #}
-    <th scope="col">Número de Venta</th>
-    <th scope="col">Producto</th>
-    <th scope="col">Cantidad</th>
-    <th scope="col">Precio Unitario</th>
-    <th scope="col">IVA (%)</th>
-    <th scope="col">Total</th>
-    <th scope="col">Opciones</th>
-</tr>
-{% endblock %}
+{% block javascript %}
+<!-- Urls de los archivos Js -->
+<script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
+<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
 
-{% block filas %}
-{% for detalle in object_list %}
-<tr>
-    <td>{{ detalle.venta.id }}</td>  {# Mostrar ID Venta #}
-    <td>{{ detalle.venta.num_factura }}</td>
-    <td>{{ detalle.producto }}</td>
-    <td>{{ detalle.cantidad }}</td>
-    <td>{{ detalle.precio }}</td>  {# Asegúrate de que este campo esté correcto #}
-    <td>{{ detalle.iva }}</td>
-    <td>{{ detalle.total }}</td>
-    <td>
-        <a href="{% url 'app:detalleventa_editar' detalle.pk %}" class="btn btn-info btn-sm" title="Editar detalle venta">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ detalle.id }}" title="Eliminar">
-            <i class="fas fa-trash"></i>
-        </a>
-        
-        <script>
-            document.querySelectorAll('.delete-button').forEach(function(button) {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    let detalleId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:detalleventa_eliminar' 0 %}".replace('0', detalleId);
-                    
-                    Swal.fire({
-                        title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar el detalle?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Sí, Eliminar',
-                        cancelButtonText: 'Cancelar',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Mostrar alerta de éxito
-                            Swal.fire({
-                                title: 'Eliminación Exitosa',
-                                text: 'El detalle ha sido eliminado correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Continuar',
-                                backdrop: true,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                position: 'center',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                stopKeydownPropagation: false,
-                                buttonsStyling: true,
-                                showCloseButton: true,
-                                closeButtonAriaLabel: 'Cerrar alerta',
-                            }).then(() => {
-                                window.location.href = deleteUrl;
-                            });
-                        }
-                    });
-                });
-            });
-        </script>
-    </td>
-</tr>
-{% endfor %}
+<script>
+    $(document).ready(function () {
+        $("#tabla").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "language": {
+                "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"
+            },
+            "buttons": [
+                {
+                    extend: 'copy',
+                    text: 'Copiar tabla',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'Archivo CSV',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Archivo Excel',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: 'PDF',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    className: 'custom-button',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
+                }
+            ],
+            "dom": 'Bfrtip'
+        }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
+    });
+
+    function clearFilters() {
+        document.querySelector('#filtroModal form').reset();
+        const url = new URL(window.location.href);
+        url.search = '';
+        window.location.href = url.toString();
+    }
+
+    function applyFilters() {
+        document.querySelector('#filtroModal form').submit();
+    }
+</script>
 {% endblock %}

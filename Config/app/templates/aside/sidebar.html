@@ -88,7 +88,7 @@
                         <p style="color: #fff;">Compras</p>
                     </a>
                 </li>
-
+                
                 <li class="nav-item">
                     <a href="{% url 'app:venta_listar' %}" class="nav-link {% if 'venta' in request.path %} active {% endif %}">
                         <i class="nav-icon fa fa-handshake" style="color: #fbdbb6;"></i>
@@ -96,7 +96,7 @@
                     </a>
                 </li>
                 
-                <li class="nav-item">
+                <li class="nav-item" style="display: none;">
                     <a href="{% url 'app:detalleventa_listar' %}" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart" style="color: #fbdbb6;"></i>
                         <p style="color: #fff; margin-left: 10px;"><b>Detalle de Venta</b></p>
