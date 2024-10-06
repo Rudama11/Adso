@@ -86,8 +86,8 @@ def obtener_datos_cliente(request):
     except Cliente.DoesNotExist:
         return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
 
-def venta_detalle(request, num_factura):
-    venta = get_object_or_404(Venta, num_factura=num_factura)
+def venta_detalle(request, id):
+    venta = get_object_or_404(Venta, id=id)  # Buscar por id en lugar de num_factura
     detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
     form = VentaForm(instance=venta)
     

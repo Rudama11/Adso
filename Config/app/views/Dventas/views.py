@@ -96,7 +96,7 @@ class DetalleVentaCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Detalle de Venta'
         context['entidad'] = 'Detalle de Venta'
-        context['listar_url'] = reverse_lazy('app:detalleventa_listar')
+        context['listar_url'] = reverse_lazy('app:venta_detalle')
         return context
 # Actualizar un detalle de venta
 @method_decorator(login_required, name='dispatch')

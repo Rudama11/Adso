@@ -97,8 +97,8 @@
    // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
 $(document).ready(function() {
     $('#detalleVentaModal').on('show.bs.modal', function(e) {
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de obtener el valor correcto
-        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" + numFactura; // Pasar el número de factura como parámetro
+        
+        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" ; 
         $('#modalContent').load(url);
     });
     });
