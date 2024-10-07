@@ -48,16 +48,22 @@
                         <th scope="col">Id</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Cantidad</th>
-                        <th scope="col">Precio</th>
+                        <th scope="col">Precio Unitario</th>
+                        <th scope="col">IVA (%)</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Número de Factura</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for stock in object_list %}
+                    {% for detalle in object_list %}
                     <tr>
-                        <td>{{ stock.id }}</td>
-                        <td>{{ stock.nombre_pro }}</td>
-                        <td>{{ stock.cantidad }}</td>
-                        <td>{{ stock.precio }}</td>
+                        <td>{{ detalle.id }}</td> <!-- ID del detalle de venta -->
+                        <td>{{ detalle.producto.nombre_pro }}</td> <!-- Nombre del producto desde el modelo Stock -->
+                        <td>{{ detalle.cantidad }}</td> <!-- Cantidad de productos -->
+                        <td>{{ detalle.precio }}</td> <!-- Precio unitario -->
+                        <td>{{ detalle.iva }}</td> <!-- IVA aplicado -->
+                        <td>{{ detalle.total }}</td> <!-- Total calculado -->
+                        <td>{{ detalle.num_factura }}</td> <!-- Número de factura -->
                     </tr>
                     {% endfor %}
                 </tbody>
