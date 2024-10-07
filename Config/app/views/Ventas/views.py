@@ -1,7 +1,4 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
@@ -26,10 +23,10 @@ class VentasListView(ListView):
         # Filtrar por fecha de emisión
         fecha_emision = self.request.GET.get('fecha_emision', None)
         if fecha_emision:
-            # Usar parse_date solo si es necesario
+            # Usar parse_date para convertir el string a un objeto datetime.date
             fecha_emision = parse_date(fecha_emision)
             if fecha_emision:
-                queryset = queryset.filter(fecha_emision__date=fecha_emision)
+                queryset = queryset.filter(fecha_emision=fecha_emision)
 
         # Filtrar por cliente
         cliente = self.request.GET.get('cliente', None)
