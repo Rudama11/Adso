@@ -266,9 +266,6 @@ class ClienteForm(forms.ModelForm):
         # Puedes añadir más validaciones si es necesario
         return cleaned_data
 #---------------------------------------------------------- Proveedor ----------------------------------------------------------
-from django import forms
-from .models import Proveedor
-
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -308,23 +305,37 @@ class ProveedorForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs.update({
-            'autofocus': True,
-            'placeholder': 'Ingrese el nombre del producto',
-            'class': 'form-control'
-        })
-        self.fields['categoria'].widget.attrs.update({
-            'class': 'form-control'
-        })
-        self.fields['tipo_pro'].widget.attrs.update({
-            'class': 'form-control'
-        })
+        self.fields['nombre'].widget.attrs['autofocus'] = True  # Enfocar el campo nombre
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', nombre):
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
+        
+        # Validación de unicidad
+        if Producto.objects.filter(nombre=nombre).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un producto con este nombre.')
+        
+        return nombre
+
+    def clean_categoria(self):
+        categoria = self.cleaned_data.get('categoria')
+        if not categoria:
+            raise forms.ValidationError('Debe seleccionar una categoría.')
+        return categoria
+
+    def clean_tipo_pro(self):
+        tipo_pro = self.cleaned_data.get('tipo_pro')
+        if not tipo_pro:
+            raise forms.ValidationError('Debe seleccionar un tipo de producto.')
+        return tipo_pro
 
     class Meta:
         model = Producto
-        fields = ['nombre', 'categoria', 'tipo_pro']
+        fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'tipo_pro': forms.Select(attrs={'class': 'form-control'}),
         }
