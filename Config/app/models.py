@@ -138,46 +138,44 @@ class Ubicacion(models.Model):
 
 #----------------------------------------------- Cliente -----------------------------------------------
 class Cliente(models.Model):
-    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Usuarios')
-    nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres',null=True, blank=True)
-    razon_social = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Razon Social',null=True,blank=True)
+    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
+    nombres = models.CharField(max_length=150,verbose_name='Nombres / Razón Social',null=True, blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
-    correo = models.EmailField(max_length=50,validators=[EmailValidator()],verbose_name='Correo')
-    telefono = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')],verbose_name='Número de celular',null=True,blank=True)
+    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True)
+    correo = models.EmailField(max_length=50,verbose_name='Correo')
+    telefono = models.CharField(max_length=10,verbose_name='Número de celular',null=True,blank=True)
     ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
-    direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
+    direccion = models.CharField(max_length=50,null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
+        return f"{self.nombres if self.tipo_persona == 'PN' else self.nombres} - {self.get_tipo_persona_display()}"
 
     class Meta:
         verbose_name = 'Cliente'
-        verbose_name_plural = 'Cliente'
+        verbose_name_plural = 'Clientes'
         db_table = 'Cliente'
         ordering = ['id']
 
 #----------------------------------------------- Proveedor -----------------------------------------------
 
 class Proveedor(models.Model):
-    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices, default='PN',verbose_name='Tipo de Usuarios')
-    nombres = models.CharField(max_length=100,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Nombres',null=True, blank=True)
-    razon_social = models.CharField(max_length=150,validators=[MinLengthValidator(3),validate_nombre],verbose_name='Razon Social',null=True,blank=True)
+    tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
+    nombres = models.CharField(max_length=150,verbose_name='Nombres / Razón Social',null=True, blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de documento debe contener solo dígitos.')],verbose_name='Número de Documento',null=True,blank=True)
-    correo = models.EmailField(max_length=50,validators=[EmailValidator()],verbose_name='Correo')
-    telefono = models.CharField(max_length=10,validators=[MinLengthValidator(8),RegexValidator(regex=r'^\d+$', message='El número de celular debe contener solo dígitos.')],verbose_name='Número de celular',null=True,blank=True)
+    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True)
+    correo = models.EmailField(max_length=50,verbose_name='Correo')
+    telefono = models.CharField(max_length=10,verbose_name='Número de celular',null=True,blank=True)
     ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
-    direccion = models.CharField(max_length=50,validators=[MinLengthValidator(3)],null=True,blank=True,verbose_name='Dirección')
+    direccion = models.CharField(max_length=50,null=True,blank=True,verbose_name='Dirección')
     
     def __str__(self):
-        return f"{self.nombres if self.tipo_persona == 'PN' else self.razon_social} - {self.get_tipo_persona_display()}"
+        return f"{self.nombres if self.tipo_persona == 'PN' else self.nombres} - {self.get_tipo_persona_display()}"
 
     class Meta:
         verbose_name = 'Proveedor'
         verbose_name_plural = 'Proveedores'
         db_table = 'Proveedor'
-
+        ordering = ['id']
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):

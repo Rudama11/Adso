@@ -1,108 +1,228 @@
-{% extends 'crear.html' %}
+{% extends 'listar.html' %}
 
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
 
-<form method="post" action=".">
+<form method="post" action="." id="createForm">
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-plus"></i>
-                {{titulo}}
+                <i class="fas fa-edit"></i>
+                Editar {{ entidad }}
             </h3>
         </div>
         <div class="card-body">
-            {% csrf_token %} {% if form.errors %} {{form.errors}}
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                    ×
-                </button>
-                <h5>
-                    <i class="icon fas fa-ban"></i> Ha ocurrido un error al intentar crear un Proveedor.
-                </h5>
-                <ul>
-                    {% for field in form %} {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %} {% endfor %}
-                </ul>
-            </div>
-            {% endif %} 
-            
-            <div class="form-group">
-                <label for="tipo_persona">Tipo de Persona</label>
-                {{ form.tipo_persona|add_class:'form-control'|attr:'id:tipo_persona'|attr:'autocomplete:off'}}
-            </div>
-            <div class="form-group" id="nombres_field">
-                <label for="id_nombres">Nombres</label>
-                {{ form.nombres|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_nombres'}}
-            </div>
-            <div class="form-group" id="razon_social_field" style="display:none;">
-                <label for="id_razon_social">Razón Social</label>
-                {{ form.razon_social|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_razon_social'}}
-            </div>
-            <div class="form-group" id="tipo_documento_field">
-                <label for="id_tipo_documento">Tipo de documento</label>
-                {{ form.tipo_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_tipo_documento'}}
-            </div>
-            <div class="form-group" id="numero_documento_field">
-                <label for="id_numero_documento">Numero documento</label>
-                {{ form.numero_documento|add_class:'form-control'|attr:'autocomplete:off'|attr:'id:id_numero_documento'}}
-            </div>
+            {% csrf_token %}
+            <div id="alert-container"></div>
             {% for field in form.visible_fields %}
-            {% if field.name not in "tipo_persona,nombres,razon_social,tipo_documento,numero_documento" %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ field.errors|striptags }}
+                </div>
+                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div> <!-- Mensaje de campo obligatorio -->
             </div>
-            {% endif %}
             {% endfor %}
         </div>
         <div class="card-footer">
-            <button class="btn btn-success swalDefaultSuccess">
-                <i class="fas fa-save"></i>
-                Confirmar
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Guardar Cambios
             </button>
-            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{% url 'app:proveedor_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
-            </a>            
+            </a>
         </div>
     </div>
 </form>
 
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var tipoPersonaField = document.getElementById('tipo_persona');
-        var nombresField = document.getElementById('nombres_field');
-        var razonSocialField = document.getElementById('razon_social_field');
-        var tipo_documentoField = document.getElementById('tipo_documento_field');
-        var numero_documentoField = document.getElementById('numero_documento_field');
+    // Almacenar los valores originales
+    let originalValues = {};
+    document.querySelectorAll('#createForm input, #createForm textarea').forEach(field => {
+        originalValues[field.name] = field.value;
+    });
 
-        function toggleFields() {
-            if (tipoPersonaField.value === 'PN') {
-                nombresField.style.display = 'block';
-                razonSocialField.style.display = 'none';
-                tipo_documentoField.style.display = 'block';
-                numero_documentoField.style.display = 'block';
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault(); 
+
+        // Validación de campos vacíos
+        let isValid = true;
+        let formFields = document.querySelectorAll('#createForm .form-control');
+
+        formFields.forEach(function(field) {
+            let feedback = field.parentNode.querySelector('.mandatory-feedback');
+            if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
             } else {
-                nombresField.style.display = 'none';
-                razonSocialField.style.display = 'block';
-                tipo_documentoField.style.display = 'block';
-                numero_documentoField.style.display = 'block';
+                field.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+
+        if (!isValid) {
+            Swal.fire({
+                title: 'Campo vació',
+                text: 'Debe llenar todos los campos de registro',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 3000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
+            });
+            return;
+        }
+
+        // Validación del campo Correo
+        let correoField = document.querySelector('[name="correo"]');
+        let correoRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+        if (!correoRegex.test(correoField.value)) {
+            Swal.fire({
+                title: 'Campo Inválido',
+                text: 'Por favor ingrese un correo electrónico válido.',
+                icon: 'warning',
+                timer: 2000,
+                timerProgressBar: true,
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+            });
+            correoField.focus();
+            return;
+        }
+
+        // Comprobar si hay cambios
+        let hasChanges = false;
+        for (let name in originalValues) {
+            let currentField = document.querySelector(`[name="${name}"]`);
+            if (currentField && currentField.value !== originalValues[name]) {
+                hasChanges = true;
+                break;
             }
         }
 
-        tipoPersonaField.addEventListener('change', toggleFields);
-        toggleFields();
-    });
+        if (!hasChanges) {
+            Swal.fire({
+                title: 'Sin Cambios',
+                text: 'No se han realizado cambios en el formulario. Por favor, edite un campo antes de guardar.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+                buttonsStyling: true,
+            });
+            return;
+        }
 
-    {% if form.errors %}
-    Swal.fire({
-        title: 'Error',
-        text: 'Ha ocurrido un error al intentar guardar un Proveedor',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('createForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Actualizado Correctamente',
+                    text: `El {{ entidad }} ha sido actualizado exitosamente.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                });
+            }
+        })
+        .catch(data => {
+            // Mostrar alerta de error
+            const errorMessage = data.message;
+            const specificErrors = data.errors; // Obtenemos errores específicos
+        
+            // Si hay errores específicos, los recopilamos en un solo mensaje
+            let detailedMessages = [];
+        
+            if (specificErrors) {
+                if (specificErrors.nombres) {
+                    detailedMessages.push(specificErrors.nombres[0]); // Agregar mensaje de nombres
+                }
+                if (specificErrors.numero_documento) {
+                    detailedMessages.push(specificErrors.numero_documento[0]); // Agregar mensaje de número de documento
+                }
+                if (specificErrors.correo) {
+                    detailedMessages.push(specificErrors.correo[0]); // Agregar mensaje de correo
+                }
+                // Añadir más campos según sea necesario
+                if (specificErrors.telefono) {
+                    detailedMessages.push(specificErrors.telefono[0]); // Agregar mensaje de teléfono (ejemplo)
+                }
+                if (specificErrors.direccion) {
+                    detailedMessages.push(specificErrors.direccion[0]); // Agregar mensaje de dirección (ejemplo)
+                }
+            }
+        
+            // Unimos los mensajes detallados con saltos de línea HTML
+            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+        
+            // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
+            Swal.fire({
+                title: 'Inválido',
+                html: detailedMessage || errorMessage, // Usamos 'html' en lugar de 'text' para soportar saltos de línea
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+        
+            // Resaltar los campos con errores
+            if (specificErrors) {
+                Object.keys(specificErrors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = specificErrors[key][0];
+                        }
+                    }
+                });
+            }
+        });
     });
-    {% endif %}
 </script>
+
 {% endblock %}

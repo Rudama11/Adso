@@ -244,62 +244,127 @@ class UbicacionForm(forms.ModelForm):
             
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 class ClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+        self.initial_data = {
+            'nombres': self.instance.nombres,
+            'numero_documento': self.instance.numero_documento,
+            'correo': self.instance.correo,
+            'telefono': self.instance.telefono,
+            'direccion': self.instance.direccion,
+        }
+
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get('nombres')
+        if not re.match(r'^[\w\s.-]+$', nombres):
+            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+        return nombres
 
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get('numero_documento')
-        # Verificamos si estamos en el modo de edición (si existe una instancia)
-        if self.instance and self.instance.pk:
-            # Si estamos editando, verificamos que el número de documento no exista en otro cliente
-            if Cliente.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-                raise ValidationError("Ya existe una persona con ese número de documento.")
+        tipo_documento = self.cleaned_data.get('tipo_documento')
+
+        # Validaciones dependiendo del tipo de documento
+        if tipo_documento == 'NIT':
+            if not re.match(r'^\d{9}-\d$', numero_documento):
+                raise forms.ValidationError('El NIT debe ser un número con 9 dígitos seguido de un guion y un dígito.')
+        elif tipo_documento == 'PA':
+            if not re.match(r'^[a-zA-Z0-9]{6,}$', numero_documento):
+                raise forms.ValidationError('El pasaporte debe ser alfanumérico y tener al menos 6 caracteres.')
         else:
-            # Si estamos creando uno nuevo, verificamos que no exista ya el número de documento
-            if Cliente.objects.filter(numero_documento=numero_documento).exists():
-                raise ValidationError("Ya existe una persona con ese número de documento.")
+            if not re.match(r'^\d{7,10}$', numero_documento):
+                raise forms.ValidationError('El número de documento debe tener entre 7 y 10 dígitos.')
+
+        # Validación de unicidad
+        if Cliente.objects.filter(numero_documento=numero_documento).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un cliente con este número de documento.')
+
         return numero_documento
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Puedes añadir más validaciones si es necesario
-        return cleaned_data
-#---------------------------------------------------------- Proveedor ----------------------------------------------------------
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if not re.match(r'^\d{6,10}$', telefono):
+            raise forms.ValidationError('El teléfono debe ser solo números, entre 6 y 10 dígitos.')
+        return telefono
+
+    def clean_correo(self):
+        correo = self.cleaned_data.get('correo')
+        if Cliente.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un cliente con esta dirección de correo electrónico.')
+        return correo
+
+    class Meta:
+        model = Cliente
+        fields = '__all__'
+        widgets = {
+            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres','class': 'form-control'}),
+            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese número de documento','class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese correo','class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese número de celular','class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección','class': 'form-control'}),}
+
+#-------------------------------------------------------- Proveedor ----------------------------------------------------------
 class ProveedorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+        self.initial_data = {
+            'nombres': self.instance.nombres,
+            'numero_documento': self.instance.numero_documento,
+            'correo': self.instance.correo,
+            'telefono': self.instance.telefono,
+            'direccion': self.instance.direccion,
+        }
+
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get('nombres')
+        if not re.match(r'^[\w\s.-]+$', nombres):
+            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+        return nombres
+
+    def clean_numero_documento(self):
+        numero_documento = self.cleaned_data.get('numero_documento')
+        tipo_documento = self.cleaned_data.get('tipo_documento')
+
+        # Validaciones dependiendo del tipo de documento
+        if tipo_documento == 'NIT':
+            if not re.match(r'^\d{9}-\d$', numero_documento):
+                raise forms.ValidationError('El NIT debe ser un número con 9 dígitos seguido de un guion y un dígito.')
+        elif tipo_documento == 'PA':
+            if not re.match(r'^[a-zA-Z0-9]{6,}$', numero_documento):
+                raise forms.ValidationError('El pasaporte debe ser alfanumérico y tener al menos 6 caracteres.')
+        else:
+            if not re.match(r'^\d{7,10}$', numero_documento):
+                raise forms.ValidationError('El número de documento debe tener entre 7 y 10 dígitos.')
+
+        # Validación de unicidad
+        if Proveedor.objects.filter(numero_documento=numero_documento).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un proveedor con este número de documento.')
+
+        return numero_documento
+
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if not re.match(r'^\d{6,10}$', telefono):
+            raise forms.ValidationError('El teléfono debe ser solo números, entre 6 y 10 dígitos.')
+        return telefono
+
+    def clean_correo(self):
+        correo = self.cleaned_data.get('correo')
+        if Proveedor.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un proveedor con esta dirección de correo electrónico.')
+        return correo
+
     class Meta:
         model = Proveedor
         fields = '__all__'
         widgets = {
-            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del Proveedor'}),
-            'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social'}),
-            'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
-            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
-            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
-            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombres'].widget.attrs['autofocus'] = True
-
-    def clean(self):
-        cleaned_data = super().clean()
-        correo = cleaned_data.get('correo')
-        numero_documento = cleaned_data.get('numero_documento')
-
-        # Validación para correo, ignorando la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(correo=correo).exists():
-            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
-
-        # Validación para número de documento, ignorando la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
-
-        return cleaned_data
-
+            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres','class': 'form-control'}),
+            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese número de documento','class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese correo','class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese número de celular','class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección','class': 'form-control'}),}
 
 #--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):

@@ -1,45 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from app.models import Proveedor
 from app.forms import ProveedorForm
-from django.contrib import messages
-from django.views.generic import UpdateView
-from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Importa tus choices
+from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices
 from django.shortcuts import redirect
-
-@login_required
-def lista_proveedor(request):
-    context = {
-        'titulo': 'Listado de Proveedores',
-        'crear_url': reverse_lazy('app:proveedor_crear'),
-        'tipo_documento_choices': Tipo_Documento_Choices,  # Añade los choices aquí
-        'tipo_persona_choices': Tipo_Persona_Choices  # Añade los choices aquí
-    }
-    
-    # Filtrado basado en parámetros GET
-    proveedores = Proveedor.objects.all()
-    filtros = {
-        'tipo_persona': 'tipo_persona',
-        'nombres__icontains': 'nombres',
-        'razon_social__icontains': 'razon_social',
-        'tipo_documento': 'tipo_documento',
-        'numero_documento__icontains': 'numero_documento',
-        'correo__icontains': 'correo',
-        'telefono__icontains': 'telefono',
-        'ciudad__icontains': 'ciudad',
-        'direccion__icontains': 'direccion'
-    }
-
-    for filtro, parametro in filtros.items():
-        valor = request.GET.get(parametro)
-        if valor:
-            proveedores = proveedores.filter(**{filtro: valor})
-
-    context['proveedores'] = proveedores
-    return render(request, 'Proveedor/listar.html', context)
 
 class ProveedorListView(ListView):
     model = Proveedor
@@ -51,33 +18,37 @@ class ProveedorListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo': 'Listado de Proveedores',
-            'entidad': 'Proveedor',
-            'crear_url': reverse_lazy('app:proveedor_crear'),
-            'tipo_documento_choices': Tipo_Documento_Choices,
-            'tipo_persona_choices': Tipo_Persona_Choices
-        })
+        context['titulo'] = 'Listado de Proveedores'
+        context['entidad'] = 'Proveedores'
+        context['crear_url'] = reverse_lazy('app:proveedor_crear')
+        context['tipo_documento'] = Tipo_Documento_Choices
+        context['tipo_persona'] = Tipo_Persona_Choices
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        filtros = {
-            'tipo_persona': 'tipo_persona',
-            'nombres__icontains': 'nombres',
-            'razon_social__icontains': 'razon_social',
-            'tipo_documento': 'tipo_documento',
-            'numero_documento__icontains': 'numero_documento',
-            'correo__icontains': 'correo',
-            'telefono__icontains': 'telefono',
-            'ciudad__icontains': 'ciudad',
-            'direccion__icontains': 'direccion'
-        }
 
-        for filtro, parametro in filtros.items():
-            valor = self.request.GET.get(parametro)
-            if valor:
-                queryset = queryset.filter(**{filtro: valor})
+        # Obtener los parámetros GET
+        tipo_persona = self.request.GET.get('tipo_persona')
+        nombres = self.request.GET.get('nombres')
+        tipo_documento = self.request.GET.get('tipo_documento')
+        correo = self.request.GET.get('correo')
+        telefono = self.request.GET.get('telefono')
+        numero_documento = self.request.GET.get('numero_documento')
+
+        # Aplicar filtros si los parámetros existen
+        if tipo_persona:
+            queryset = queryset.filter(tipo_persona=tipo_persona)
+        if nombres:
+            queryset = queryset.filter(nombres__icontains=nombres)
+        if tipo_documento:
+            queryset = queryset.filter(tipo_documento=tipo_documento)
+        if correo:
+            queryset = queryset.filter(correo__icontains=correo)
+        if telefono:
+            queryset = queryset.filter(telefono__icontains=telefono)
+        if numero_documento:
+            queryset = queryset.filter(numero_documento__icontains=numero_documento)
 
         return queryset
     
@@ -86,7 +57,6 @@ class ProveedorListView(ListView):
         prove.delete()
         return redirect('app:proveedor_listar')
     
-
 class ProveedorCreateView(CreateView):
     model = Proveedor
     form_class = ProveedorForm
@@ -95,12 +65,22 @@ class ProveedorCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo': 'Crear Proveedor',
-            'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listar')
-        })
+        context['titulo'] = 'Crear Proveedor'
+        context['entidad'] = 'Proveedor'
+        context['listar_url'] = reverse_lazy('app:proveedor_listar')
         return context
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Proveedor creado exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 class ProveedorUpdateView(UpdateView):
     model = Proveedor
@@ -110,23 +90,19 @@ class ProveedorUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo': 'Actualizar Proveedor',
-            'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listar')
-        })
+        context['titulo'] = 'Actualizar Proveedor'
+        context['entidad'] = 'Proveedor'
+        context['listar_url'] = reverse_lazy('app:proveedor_listar')
         return context
-    
-class ProveedorDeleteView(DeleteView):
-    model = Proveedor
-    template_name = 'Proveedor/eliminar.html'
-    success_url = reverse_lazy('app:proveedor_listar')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo': 'Eliminar Proveedor',
-            'entidad': 'Proveedor',
-            'listar_url': reverse_lazy('app:proveedor_listar')
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Proveedor actualizado exitosamente',
         })
-        return context
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
