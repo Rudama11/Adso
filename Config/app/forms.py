@@ -389,31 +389,29 @@ class VentaForm(forms.ModelForm):
             'num_factura': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese un número de factura',
-                    'class': 'form-control'  # Puedes añadir clases CSS para estilizar
+                    'class': 'form-control'
                 }
             ),
-            'fecha_emision': forms.DateTimeInput(
+            'fecha_emision': forms.DateInput(
                 attrs={
                     'placeholder': 'Seleccione la fecha de emisión',
                     'class': 'form-control',
-                    'type': 'datetime-local'  # Permite seleccionar fecha y hora
+                    'type': 'date'  # Cambiado a 'date' para manejar solo fechas
                 }
             ),
             'cliente': forms.Select(
                 attrs={
-                    'class': 'form-control'  # Para estilizar el select
+                    'class': 'form-control'
                 }
             ),
         }
-        
-        
 #---------------------------------------------------------- Dellate  Ventas---------------------------------------------------------------
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
         fields = ['venta', 'producto', 'cantidad', 'iva', 'total', 'precio', 'num_factura']
         widgets = {
-            'venta': forms.Select(attrs={'class': 'form-control', 'id': 'id_venta'}),
+            'venta': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_venta'}),
             'producto': forms.Select(attrs={'class': 'form-control', 'id': 'id_producto'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control', 'min': 0, 'value': 0, 'id': 'id_cantidad'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'id': 'id_precio'}),
@@ -442,30 +440,7 @@ class ProductoFilterForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'placeholder': 'Nombre del producto', 'class': 'form-control'})
     )
-    descripcion = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Descripción del producto', 'class': 'form-control'})
-    )
-    stock_min = forms.IntegerField(
-        required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Stock mínimo', 'class': 'form-control'})
-    )
-    stock_max = forms.IntegerField(
-        required=False,
-        widget=forms.NumberInput(attrs={'placeholder': 'Stock máximo', 'class': 'form-control'})
-    )
-    precio_min = forms.DecimalField(
-        required=False,
-        decimal_places=2,
-        max_digits=10,
-        widget=forms.NumberInput(attrs={'placeholder': 'Precio mínimo', 'class': 'form-control'})
-    )
-    precio_max = forms.DecimalField(
-        required=False,
-        decimal_places=2,
-        max_digits=10,
-        widget=forms.NumberInput(attrs={'placeholder': 'Precio máximo', 'class': 'form-control'})
-    )
+
     categoria = forms.ModelChoiceField(
         required=False,
         queryset=Categoria.objects.all(),

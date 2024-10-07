@@ -24,26 +24,11 @@ class ProductoListView(ListView):
         form = ProductoFilterForm(self.request.GET)
         if form.is_valid():
             nombre = form.cleaned_data.get('nombre')
-            descripcion = form.cleaned_data.get('descripcion')
-            stock_min = form.cleaned_data.get('stock_min')
-            stock_max = form.cleaned_data.get('stock_max')
-            precio_min = form.cleaned_data.get('precio_min')
-            precio_max = form.cleaned_data.get('precio_max')
             categoria = form.cleaned_data.get('categoria')
             tipo_pro = form.cleaned_data.get('tipo_pro')
 
             if nombre:
                 queryset = queryset.filter(nombre__icontains=nombre)
-            if descripcion:
-                queryset = queryset.filter(descripcion__icontains=descripcion)
-            if stock_min is not None:
-                queryset = queryset.filter(stock__gte=stock_min)
-            if stock_max is not None:
-                queryset = queryset.filter(stock__lte=stock_max)
-            if precio_min is not None:
-                queryset = queryset.filter(precio__gte=precio_min)
-            if precio_max is not None:
-                queryset = queryset.filter(precio__lte=precio_max)
             if categoria:
                 queryset = queryset.filter(categoria=categoria)
             if tipo_pro:

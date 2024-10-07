@@ -7,26 +7,36 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from app.models import Venta, Producto, Cliente , DetalleVenta
 from app.forms import VentaForm
+from django.utils.dateparse import parse_date
 
 # Vista para listar ventas
 class VentasListView(ListView):
     model = Venta
-    template_name = 'Ventas/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Ventas'
-        context['entidad'] = 'Venta'
-        context['crear_url'] = reverse_lazy('app:venta_crear')  
-        return context
+    template_name = 'ventas/listar.html'
+    context_object_name = 'ventas'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Filtrar por número de factura
+        num_factura = self.request.GET.get('num_factura', None)
+        if num_factura:
+            queryset = queryset.filter(num_factura__icontains=num_factura)
+
+        # Filtrar por fecha de emisión
+        fecha_emision = self.request.GET.get('fecha_emision', None)
+        if fecha_emision:
+            # Convertimos el valor a una fecha válida
+            fecha_emision = parse_date(fecha_emision)
+            if fecha_emision:
+                queryset = queryset.filter(fecha_emision=fecha_emision)  # No se usa __date
+
+        # Filtrar por cliente
+        cliente = self.request.GET.get('cliente', None)
+        if cliente:
+            queryset = queryset.filter(cliente__nombre__icontains=cliente)
+
+        return queryset
     
 # Vista para crear una nueva venta
 class VentasCreateView(CreateView):
@@ -87,7 +97,7 @@ def obtener_datos_cliente(request):
         return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
 
 def venta_detalle(request, id):
-    venta = get_object_or_404(Venta, id=id)  # Buscar por id en lugar de num_factura
+    venta = get_object_or_404(Venta, id=id)  # Buscar por id 
     detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
     form = VentaForm(instance=venta)
     

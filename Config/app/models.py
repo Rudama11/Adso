@@ -261,7 +261,7 @@ class Stock(models.Model):
 #----------------------------------------------- venta -----------------------------------------------       
 class Venta(models.Model):
     num_factura = models.CharField(max_length=10, unique=True)  # Ahora es único
-    fecha_emision =  models.DateTimeField(verbose_name='Fecha de emisión', editable=True)
+    fecha_emision = models.DateField(verbose_name='Fecha de emisión', editable=True)  # Cambiado a DateField
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
 
     def __str__(self):

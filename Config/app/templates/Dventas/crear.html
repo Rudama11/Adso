@@ -1,4 +1,12 @@
-{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título de tu Página</title>
+    {% load static %}
+</head>
+<body>
 
 {% block contenidoDC %}
 <form method="post" id="detalleVentaForm" action="{% url 'app:detalleventa_crear' %}">
@@ -43,12 +51,22 @@
     </div>
 </form>
 <script>
-// Metodo para odtener ID venta 
+// Método para obtener ID venta 
 document.getElementById('id_num_factura').addEventListener('change', function() {
     const numFactura = this.value;
 
+    if (numFactura.trim() === "") {
+        alert("Por favor, ingresa un número de factura válido.");
+        return;
+    }
+
     fetch(`{% url 'app:obtener_id_venta_por_factura' %}?num_factura=${numFactura}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor.');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.id_venta) {
                 document.getElementById('id_venta').value = data.id_venta; // Asigna el id de venta al campo oculto
@@ -56,9 +74,13 @@ document.getElementById('id_num_factura').addEventListener('change', function() 
                 alert(data.error); // Maneja el error
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo.");
+        });
 });
-// metodo para odtener el porducto y demas datos 
+
+// Método para obtener el producto y demás datos 
 document.getElementById('id_producto').addEventListener('change', function() {
     const productoId = this.value;
 
@@ -76,3 +98,6 @@ document.getElementById('id_producto').addEventListener('change', function() {
 });
 </script>
 {% endblock %}
+
+</body>
+</html>
