@@ -98,8 +98,8 @@ class Municipios(models.Model):
 
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
-    nombre = models.CharField(max_length=50,validators=[MinLengthValidator(3),validate_campos],verbose_name='Nombre',unique=True)
-    descripcion = models.CharField(max_length=200,validators=[MinLengthValidator(5),validate_nombre],verbose_name='Descripcion',blank=True,null=True)
+    nombre = models.CharField(max_length=50,verbose_name='Nombre',unique=True)
+    descripcion = models.CharField(max_length=150,verbose_name='Descripcion',blank=True,null=True)
 
     def __str__(self):
         return self.nombre
