@@ -1,8 +1,6 @@
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from app.models import Normativa
@@ -61,34 +59,21 @@ class NormativaCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Normativa'
-        context['entidad'] = 'Normativa'
+        context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
-    
+
     def form_valid(self, form):
-        # Verificar si el campo de descripción está vacío
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la normativa
-        self.object = form.save()
-
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Normativa creada correctamente'
+            'success': True,
+            'message': 'Normativa creada exitosamente',
         })
 
     def form_invalid(self, form):
-        # Preparar los errores para respuesta JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Error al crear la normativa. Verifica los campos.',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 class NormativaUpdateView(UpdateView):
     model = Normativa
@@ -104,24 +89,13 @@ class NormativaUpdateView(UpdateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la normativa
-        self.object = form.save()
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Normativa actualizada correctamente'
+            'success': True,
+            'message': 'Normativa actualizada exitosamente',
         })
-    
+
     def form_invalid(self, form):
-        # Enviar los errores de validación en formato JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)

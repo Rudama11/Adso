@@ -1,8 +1,6 @@
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from app.models import Tipo
@@ -62,37 +60,16 @@ class TipoCreateView(CreateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar el tipo de producto
-        self.object = form.save()
-
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Tipo de Producto creado correctamente'
+            'success': True,
+            'message': 'Tipo producto creado exitosamente',
         })
 
     def form_invalid(self, form):
-        # Preparar los errores para respuesta JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
-
-    def form_invalid(self, form):
-        # Si el formulario es inválido, enviamos los errores
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Ya existe un Tipo de producto con ese nombre o el formulario es inválido',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 class TipoUpdateView(UpdateView):
     model = Tipo
@@ -108,24 +85,13 @@ class TipoUpdateView(UpdateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar el tipo explícitamente
-        self.object = form.save()
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Tipo de Producto actualizado correctamente'
+            'success': True,
+            'message': 'Tipo producto actualizado exitosamente',
         })
-    
+
     def form_invalid(self, form):
-        # Enviar los errores de validación en formato JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)

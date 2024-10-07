@@ -24,20 +24,12 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="nombres">Nombres</label>
+                <label for="nombres">Nombres / Razón Social</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
                 {# Campo de texto para ingresar los nombres del proveedor #}
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="razon_social">Razón Social</label>
-                <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
-                {# Campo de texto para ingresar la razón social del proveedor #}
-            </div>
-        </div>
     </div>
-    
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -101,8 +93,7 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Tipo de Persona</th>
-    <th scope="col">Nombres</th>
-    <th scope="col">Razón Social</th>
+    <th scope="col">Nombres / Razón Social</th>
     <th scope="col">Tipo de Documento</th>
     <th scope="col">Número de Documento</th>
     <th scope="col">Correo</th>
@@ -120,7 +111,6 @@
     <td>{{ p.id }}</td>
     <td>{{ p.get_tipo_persona_display }}</td>
     <td>{{ p.nombres }}</td>
-    <td>{{ p.razon_social }}</td>
     <td>{{ p.get_tipo_documento_display }}</td>
     <td>{{ p.numero_documento }}</td>
     <td>{{ p.correo }}</td>

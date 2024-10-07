@@ -62,28 +62,16 @@ class CategoriaCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la categoría explícitamente
         form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Categoría creada correctamente'
+            'success': True,
+            'message': 'Categoria creada exitosamente',
         })
 
     def form_invalid(self, form):
-        # Si el formulario es inválido, enviamos los errores
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Ya existe una categoría con ese nombre o el formulario es inválido',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 
 class CategoriaUpdateView(UpdateView):
@@ -91,15 +79,22 @@ class CategoriaUpdateView(UpdateView):
     form_class = CategoriaForm
     template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Editar Categoría'
+        context['entidad'] = 'Categoría'
+        context['listar_url'] = reverse_lazy('app:categoria_listar')
+        return context
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'success': True})
-        return response
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Categoria actualizada exitosamente',
+        })
 
     def form_invalid(self, form):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            errors = form.errors.as_json()
-            return JsonResponse({'success': False, 'errors': errors})
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)

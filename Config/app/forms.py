@@ -156,40 +156,33 @@ class UsuarioEditForm(forms.ModelForm):
 class CategoriaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
-        self.initial_data = {
-            'nombre': self.instance.nombre,
-            'descripcion': self.instance.descripcion,
-        }
+        self.fields['nombre'].widget.attrs['autofocus'] = True  # Enfocar el campo nombre
 
-    def clean(self):
-        cleaned_data = super().clean()
-        nombre = cleaned_data.get('nombre')
-        descripcion = cleaned_data.get('descripcion')
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', nombre):
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
+        
+        # Validación de unicidad
+        if Categoria.objects.filter(nombre=nombre).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una categoría con este nombre.')
+        
+        return nombre
 
-        if nombre == self.initial_data['nombre'] and descripcion == self.initial_data['descripcion']:
-            raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
-
-        return cleaned_data
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        return descripcion
 
     class Meta:
         model = Categoria
         fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese un nombre',
-                    'class': 'form-control'
-                }
-            ),
-            'descripcion': forms.Textarea(
-                attrs={
-                    'placeholder': 'Ingrese la descripción',
-                    'rows': 1,
-                    'cols': 50,
-                    'class': 'form-control'
-                }
-            ),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Ingrese descripción', 'class': 'form-control'}),
         }
 
 #---------------------------------------------------------- Tipo ----------------------------------------------------------
@@ -197,44 +190,33 @@ class CategoriaForm(forms.ModelForm):
 class TipoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
-        self.fields['nombre'].widget.attrs.update({
-            'placeholder': 'Ingrese el nombre del Tipo de producto',
-            'class': 'form-control'
-        })
-        self.fields['descripcion'].widget.attrs.update({
-            'placeholder': 'Ingrese la descripción del Tipo',
-            'class': 'form-control'
-        })
-        self.initial_data = {
-            'nombre': self.instance.nombre,
-            'descripcion': self.instance.descripcion,
-        }
+        self.fields['nombre'].widget.attrs['autofocus'] = True  # Enfocar el campo nombre
 
-    def clean(self):
-        cleaned_data = super().clean()
-        nombre = cleaned_data.get('nombre')
-        descripcion = cleaned_data.get('descripcion')
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', nombre):
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
+        
+        # Validación de unicidad
+        if Tipo.objects.filter(nombre=nombre).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un tipo de producto con este nombre.')
+        
+        return nombre
 
-        if nombre == self.initial_data['nombre'] and descripcion == self.initial_data['descripcion']:
-            raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
-
-        return cleaned_data
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        return descripcion
 
     class Meta:
         model = Tipo
         fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del Tipo de producto'
-                }
-            ),
-            'descripcion': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la descripción del Tipo de producto'
-                }
-            ),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Ingrese descripción', 'class': 'form-control'}),
         }
         
 #---------------------------------------------------------- Ubicación ----------------------------------------------------------
@@ -262,118 +244,199 @@ class UbicacionForm(forms.ModelForm):
             
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 class ClienteForm(forms.ModelForm):
-    class Meta:
-        model = Cliente
-        fields = ['tipo_persona', 'nombres', 'razon_social', 'tipo_documento', 'numero_documento', 'correo', 'telefono', 'ciudad', 'direccion']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+        self.initial_data = {
+            'nombres': self.instance.nombres,
+            'numero_documento': self.instance.numero_documento,
+            'correo': self.instance.correo,
+            'telefono': self.instance.telefono,
+            'direccion': self.instance.direccion,
+        }
+
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get('nombres')
+        if not re.match(r'^[\w\s.-]+$', nombres):
+            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+        return nombres
 
     def clean_numero_documento(self):
         numero_documento = self.cleaned_data.get('numero_documento')
-        # Verificamos si estamos en el modo de edición (si existe una instancia)
-        if self.instance and self.instance.pk:
-            # Si estamos editando, verificamos que el número de documento no exista en otro cliente
-            if Cliente.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-                raise ValidationError("Ya existe una persona con ese número de documento.")
+        tipo_documento = self.cleaned_data.get('tipo_documento')
+
+        # Validaciones dependiendo del tipo de documento
+        if tipo_documento == 'NIT':
+            if not re.match(r'^\d{9}-\d$', numero_documento):
+                raise forms.ValidationError('El NIT debe ser un número con 9 dígitos seguido de un guion y un dígito.')
+        elif tipo_documento == 'PA':
+            if not re.match(r'^[a-zA-Z0-9]{6,}$', numero_documento):
+                raise forms.ValidationError('El pasaporte debe ser alfanumérico y tener al menos 6 caracteres.')
         else:
-            # Si estamos creando uno nuevo, verificamos que no exista ya el número de documento
-            if Cliente.objects.filter(numero_documento=numero_documento).exists():
-                raise ValidationError("Ya existe una persona con ese número de documento.")
+            if not re.match(r'^\d{7,10}$', numero_documento):
+                raise forms.ValidationError('El número de documento debe tener entre 7 y 10 dígitos.')
+
+        # Validación de unicidad
+        if Cliente.objects.filter(numero_documento=numero_documento).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un cliente con este número de documento.')
+
         return numero_documento
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Puedes añadir más validaciones si es necesario
-        return cleaned_data
-#---------------------------------------------------------- Proveedor ----------------------------------------------------------
-from django import forms
-from .models import Proveedor
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if not re.match(r'^\d{6,10}$', telefono):
+            raise forms.ValidationError('El teléfono debe ser solo números, entre 6 y 10 dígitos.')
+        return telefono
 
+    def clean_correo(self):
+        correo = self.cleaned_data.get('correo')
+        if Cliente.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un cliente con esta dirección de correo electrónico.')
+        return correo
+
+    class Meta:
+        model = Cliente
+        fields = '__all__'
+        widgets = {
+            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres','class': 'form-control'}),
+            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese número de documento','class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese correo','class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese número de celular','class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección','class': 'form-control'}),}
+
+#-------------------------------------------------------- Proveedor ----------------------------------------------------------
 class ProveedorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs['autofocus'] = True
+        self.initial_data = {
+            'nombres': self.instance.nombres,
+            'numero_documento': self.instance.numero_documento,
+            'correo': self.instance.correo,
+            'telefono': self.instance.telefono,
+            'direccion': self.instance.direccion,
+        }
+
+    def clean_nombres(self):
+        nombres = self.cleaned_data.get('nombres')
+        if not re.match(r'^[\w\s.-]+$', nombres):
+            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+        return nombres
+
+    def clean_numero_documento(self):
+        numero_documento = self.cleaned_data.get('numero_documento')
+        tipo_documento = self.cleaned_data.get('tipo_documento')
+
+        # Validaciones dependiendo del tipo de documento
+        if tipo_documento == 'NIT':
+            if not re.match(r'^\d{9}-\d$', numero_documento):
+                raise forms.ValidationError('El NIT debe ser un número con 9 dígitos seguido de un guion y un dígito.')
+        elif tipo_documento == 'PA':
+            if not re.match(r'^[a-zA-Z0-9]{6,}$', numero_documento):
+                raise forms.ValidationError('El pasaporte debe ser alfanumérico y tener al menos 6 caracteres.')
+        else:
+            if not re.match(r'^\d{7,10}$', numero_documento):
+                raise forms.ValidationError('El número de documento debe tener entre 7 y 10 dígitos.')
+
+        # Validación de unicidad
+        if Proveedor.objects.filter(numero_documento=numero_documento).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un proveedor con este número de documento.')
+
+        return numero_documento
+
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono')
+        if not re.match(r'^\d{6,10}$', telefono):
+            raise forms.ValidationError('El teléfono debe ser solo números, entre 6 y 10 dígitos.')
+        return telefono
+
+    def clean_correo(self):
+        correo = self.cleaned_data.get('correo')
+        if Proveedor.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un proveedor con esta dirección de correo electrónico.')
+        return correo
+
     class Meta:
         model = Proveedor
         fields = '__all__'
         widgets = {
-            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del Proveedor'}),
-            'razon_social': forms.TextInput(attrs={'placeholder': 'Ingrese la razón social'}),
-            'tipo_documento': forms.Select(attrs={'placeholder': 'Seleccione el tipo de documento'}),
-            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
-            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese el correo'}),
-            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
-            'ciudad': forms.Select(attrs={'placeholder': 'Ingrese la ubicación'}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nombres'].widget.attrs['autofocus'] = True
-
-    def clean(self):
-        cleaned_data = super().clean()
-        correo = cleaned_data.get('correo')
-        numero_documento = cleaned_data.get('numero_documento')
-
-        # Validación para correo, ignorando la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(correo=correo).exists():
-            self.add_error('correo', 'Ya existe una persona con este correo electrónico.')
-
-        # Validación para número de documento, ignorando la instancia actual
-        if Proveedor.objects.exclude(pk=self.instance.pk).filter(numero_documento=numero_documento).exists():
-            self.add_error('numero_documento', 'Ya existe una persona con este número de documento.')
-
-        return cleaned_data
-
+            'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres','class': 'form-control'}),
+            'numero_documento': forms.TextInput(attrs={'placeholder': 'Ingrese número de documento','class': 'form-control'}),
+            'correo': forms.EmailInput(attrs={'placeholder': 'Ingrese correo','class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese número de celular','class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección','class': 'form-control'}),}
 
 #--------------------------------------------------------- Producto ----------------------------------------------------------
 class ProductoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs.update({
-            'autofocus': True,
-            'placeholder': 'Ingrese el nombre del producto',
-            'class': 'form-control'
-        })
-        self.fields['categoria'].widget.attrs.update({
-            'class': 'form-control'
-        })
-        self.fields['tipo_pro'].widget.attrs.update({
-            'class': 'form-control'
-        })
+        self.fields['nombre'].widget.attrs['autofocus'] = True  # Enfocar el campo nombre
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', nombre):
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
+        
+        # Validación de unicidad
+        if Producto.objects.filter(nombre=nombre).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un producto con este nombre.')
+        
+        return nombre
+
+    def clean_categoria(self):
+        categoria = self.cleaned_data.get('categoria')
+        if not categoria:
+            raise forms.ValidationError('Debe seleccionar una categoría.')
+        return categoria
+
+    def clean_tipo_pro(self):
+        tipo_pro = self.cleaned_data.get('tipo_pro')
+        if not tipo_pro:
+            raise forms.ValidationError('Debe seleccionar un tipo de producto.')
+        return tipo_pro
 
     class Meta:
         model = Producto
-        fields = ['nombre', 'categoria', 'tipo_pro']
+        fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'tipo_pro': forms.Select(attrs={'class': 'form-control'}),
         }
 
 #------------------------------------------------------- Normativa----------------------------------------------------------
-class NormativaForm(ModelForm):
+class NormativaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['decreto'].widget.attrs['autofocus'] = True
+        self.fields['decreto'].widget.attrs['autofocus'] = True  # Enfocar el campo decreto
+
+    def clean_decreto(self):
+        decreto = self.cleaned_data.get('decreto')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', decreto):
+            raise forms.ValidationError('El decreto solo puede contener letras, números, espacios, guiones y puntos.')
+
+        # Validación de unicidad
+        if Normativa.objects.filter(decreto=decreto).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una normativa con este decreto.')
+        
+        return decreto
+
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        return descripcion
 
     class Meta:
         model = Normativa
         fields = '__all__'
         widgets = {
-            'decreto': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la normativa',
-                    'class': 'form-control'
-                }
-            ),
-            'descripcion': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la descripción',
-                    'class': 'form-control'
-                }
-            ),
-            'producto': forms.Select(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
+            'decreto': forms.TextInput(attrs={'placeholder': 'Ingrese decreto', 'class': 'form-control'}),
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Ingrese descripción', 'class': 'form-control'}),
+            'producto': forms.Select(attrs={'class': 'form-control'}),  # Suponiendo que 'producto' es un ForeignKey
         }
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
@@ -405,7 +468,7 @@ class VentaForm(forms.ModelForm):
                 }
             ),
         }
-#---------------------------------------------------------- Dellate  Ventas---------------------------------------------------------------
+#----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
@@ -434,7 +497,7 @@ class DetalleVentaForm(forms.ModelForm):
             cleaned_data['total'] = total
 
         return cleaned_data
-#---------------------------------------------------------- Producto Filter Form ----------------------------------------------------------
+#---------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
         required=False,
@@ -484,7 +547,7 @@ class ComprasForm(forms.ModelForm):
             }),
         }
 
-#------------------------------- detalle Compra----------------------------
+#------------------------------- Detalle Compras ----------------------------
 
 from django import forms
 from django.shortcuts import get_object_or_404
