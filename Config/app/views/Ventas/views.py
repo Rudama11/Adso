@@ -17,7 +17,7 @@ class VentasListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
+
         # Filtrar por número de factura
         num_factura = self.request.GET.get('num_factura', None)
         if num_factura:
@@ -26,18 +26,17 @@ class VentasListView(ListView):
         # Filtrar por fecha de emisión
         fecha_emision = self.request.GET.get('fecha_emision', None)
         if fecha_emision:
-            # Convertimos el valor a una fecha válida
+            # Usar parse_date solo si es necesario
             fecha_emision = parse_date(fecha_emision)
             if fecha_emision:
-                queryset = queryset.filter(fecha_emision=fecha_emision)  # No se usa __date
+                queryset = queryset.filter(fecha_emision__date=fecha_emision)
 
         # Filtrar por cliente
         cliente = self.request.GET.get('cliente', None)
         if cliente:
-            queryset = queryset.filter(cliente__nombre__icontains=cliente)
+            queryset = queryset.filter(cliente__nombres__icontains=cliente)
 
         return queryset
-    
 # Vista para crear una nueva venta
 class VentasCreateView(CreateView):
     model = Venta
