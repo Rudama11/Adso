@@ -7,36 +7,40 @@
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:compras_listar' %}">
     <div class="row">
+        <!-- Filtro por Número de Factura -->
         <div class="col-md-4">
             <div class="form-group">
                 <label for="num_factura">Número de Factura</label>
                 <input type="text" class="form-control" id="num_factura" name="num_factura"
                     placeholder="Ingrese el número de factura" value="{{ request.GET.num_factura }}">
-                {# Campo para ingresar el número de factura #}
             </div>
         </div>
 
+        <!-- Filtro por Fecha de Compra -->
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_compra">Fecha de Compra</label>
                 <input type="date" class="form-control" id="fecha_compra" name="fecha_compra"
                     value="{{ request.GET.fecha_compra }}">
-                {# Campo para seleccionar la fecha de compra #}
             </div>
         </div>
 
+        <!-- Filtro por Proveedor -->
         <div class="col-md-4">
             <div class="form-group">
                 <label for="proveedor">Proveedor</label>
-                <input type="text" class="form-control" id="proveedor" name="proveedor"
-                    placeholder="Ingrese el nombre del proveedor" value="{{ request.GET.proveedor }}">
-                {# Campo para ingresar el nombre del proveedor #}
+                <select class="form-control" id="proveedor" name="proveedor">
+                    <option value="">Seleccione un proveedor</option>
+                    {% for proveedor in proveedores %}
+                        <option value="{{ proveedor.id }}" 
+                            {% if proveedor.id|stringformat:"s" == request.GET.proveedor %}selected{% endif %}>
+                            {{ proveedor.nombres }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
     </div>
-
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-    {# Botón para enviar el formulario de filtrado #}
 </form>
 {% endblock %}
 

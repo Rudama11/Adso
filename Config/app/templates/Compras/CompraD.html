@@ -19,7 +19,8 @@
             </div>
             <div class="form-group">
                 <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_compra" value="{{ form.fecha_compra.value|date:'Y-m-d H:i:s' }}" readonly>
+                <input type="text" class="form-control" id="id_fecha_compra" 
+                       value="{{ form.fecha_compra.value|date:'d-m-y ' }}" readonly>
             </div>
             <div class="form-group">
                 <label for="id_proveedor">{{ form.proveedor.label }}</label>

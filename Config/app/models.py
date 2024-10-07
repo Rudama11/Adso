@@ -195,7 +195,7 @@ class Producto(models.Model):
 #----------------------------------------------- Compras -----------------------------------------------
 class Compras(models.Model):
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura', primary_key=True)  # Clave primaria
-    fecha_compra = models.DateTimeField(verbose_name='Fecha de Compra')
+    fecha_compra = models.DateField(verbose_name='Fecha de Compra')  # Cambiado a DateField
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
     
     def __str__(self):

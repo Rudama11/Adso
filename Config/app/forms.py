@@ -8,6 +8,7 @@ from django.utils import timezone
 from .models import CustomUser
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+from django.shortcuts import get_object_or_404
 
 
 #---------------------------------------------------------- Usuario ----------------------------------------------------------
@@ -526,7 +527,7 @@ class ComprasForm(forms.ModelForm):
         
         # Establecer la fecha actual por defecto si es una nueva instancia
         if not self.instance.pk:  # Solo si es una nueva instancia
-            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%dT%H:%M')
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%d')  # Solo la fecha
 
     class Meta:
         model = Compras
@@ -537,9 +538,9 @@ class ComprasForm(forms.ModelForm):
                 'placeholder': 'Ingrese el número de factura',
                 'class': 'form-control'
             }),
-            'fecha_compra': forms.DateTimeInput(attrs={
+            'fecha_compra': forms.DateInput(attrs={
                 'placeholder': 'Ingrese la fecha de compra',
-                'type': 'datetime-local',
+                'type': 'date',  # Cambiado a 'date' para que solo seleccione la fecha
                 'class': 'form-control'
             }),
             'proveedor': forms.Select(attrs={
@@ -548,10 +549,6 @@ class ComprasForm(forms.ModelForm):
         }
 
 #------------------------------- Detalle Compras ----------------------------
-
-from django import forms
-from django.shortcuts import get_object_or_404
-from .models import DetalleCompra, Compras
 
 class DetalleCompraForm(forms.ModelForm):
     num_factura = forms.CharField(
