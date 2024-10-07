@@ -35,13 +35,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="razon_social">Razón Social</label>
-                <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
-            </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="form-group">
                 <label for="tipo_documento">Tipo de Documento</label>
                 <select class="form-control" id="tipo_documento" name="tipo_documento">
                     <option value="">Todos</option>
@@ -105,8 +98,7 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Tipo de Persona</th>
-    <th scope="col">Nombres</th>
-    <th scope="col">Razón Social</th>
+    <th scope="col">Nombres / Razón Social</th>
     <th scope="col">Tipo de Documento</th>
     <th scope="col">Número de Documento</th>
     <th scope="col">Correo</th>
@@ -124,7 +116,6 @@
     <td>{{ cl.id }}</td>
     <td>{{ cl.get_tipo_persona_display }}</td>
     <td>{{ cl.nombres }}</td>
-    <td>{{ cl.razon_social }}</td>
     <td>{{ cl.get_tipo_documento_display }}</td>
     <td>{{ cl.numero_documento }}</td>
     <td>{{ cl.correo }}</td>

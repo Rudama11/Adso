@@ -1,0 +1,7 @@
+.invalid-feedback {
+    font-size: 16px; /* Ajusta el tamaño de la fuente */
+}
+
+.mandatory-feedback {
+    font-size: 16px; /* Asegúrate de que ambos tengan el mismo tamaño */
+}
