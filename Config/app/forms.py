@@ -190,44 +190,33 @@ class CategoriaForm(forms.ModelForm):
 class TipoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['nombre'].widget.attrs['autofocus'] = True
-        self.fields['nombre'].widget.attrs.update({
-            'placeholder': 'Ingrese el nombre del Tipo de producto',
-            'class': 'form-control'
-        })
-        self.fields['descripcion'].widget.attrs.update({
-            'placeholder': 'Ingrese la descripción del Tipo',
-            'class': 'form-control'
-        })
-        self.initial_data = {
-            'nombre': self.instance.nombre,
-            'descripcion': self.instance.descripcion,
-        }
+        self.fields['nombre'].widget.attrs['autofocus'] = True  # Enfocar el campo nombre
 
-    def clean(self):
-        cleaned_data = super().clean()
-        nombre = cleaned_data.get('nombre')
-        descripcion = cleaned_data.get('descripcion')
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', nombre):
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
+        
+        # Validación de unicidad
+        if Tipo.objects.filter(nombre=nombre).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe un tipo de producto con este nombre.')
+        
+        return nombre
 
-        if nombre == self.initial_data['nombre'] and descripcion == self.initial_data['descripcion']:
-            raise ValidationError("No se ha modificado ningún dato. Por favor, realice algún cambio antes de guardar.")
-
-        return cleaned_data
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        return descripcion
 
     class Meta:
         model = Tipo
         fields = '__all__'
         widgets = {
-            'nombre': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el nombre del Tipo de producto'
-                }
-            ),
-            'descripcion': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la descripción del Tipo de producto'
-                }
-            ),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Ingrese descripción', 'class': 'form-control'}),
         }
         
 #---------------------------------------------------------- Ubicación ----------------------------------------------------------
