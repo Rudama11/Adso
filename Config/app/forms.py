@@ -330,32 +330,37 @@ class ProductoForm(forms.ModelForm):
         }
 
 #------------------------------------------------------- Normativa----------------------------------------------------------
-class NormativaForm(ModelForm):
+class NormativaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['decreto'].widget.attrs['autofocus'] = True
+        self.fields['decreto'].widget.attrs['autofocus'] = True  # Enfocar el campo decreto
+
+    def clean_decreto(self):
+        decreto = self.cleaned_data.get('decreto')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if not re.match(r'^[\w\s.-]+$', decreto):
+            raise forms.ValidationError('El decreto solo puede contener letras, números, espacios, guiones y puntos.')
+
+        # Validación de unicidad
+        if Normativa.objects.filter(decreto=decreto).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una normativa con este decreto.')
+        
+        return decreto
+
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        return descripcion
 
     class Meta:
         model = Normativa
         fields = '__all__'
         widgets = {
-            'decreto': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la normativa',
-                    'class': 'form-control'
-                }
-            ),
-            'descripcion': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la descripción',
-                    'class': 'form-control'
-                }
-            ),
-            'producto': forms.Select(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
+            'decreto': forms.TextInput(attrs={'placeholder': 'Ingrese decreto', 'class': 'form-control'}),
+            'descripcion': forms.TextInput(attrs={'placeholder': 'Ingrese descripción', 'class': 'form-control'}),
+            'producto': forms.Select(attrs={'class': 'form-control'}),  # Suponiendo que 'producto' es un ForeignKey
         }
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
@@ -387,7 +392,7 @@ class VentaForm(forms.ModelForm):
                 }
             ),
         }
-#---------------------------------------------------------- Dellate  Ventas---------------------------------------------------------------
+#----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
@@ -466,7 +471,7 @@ class ComprasForm(forms.ModelForm):
             }),
         }
 
-#------------------------------- detalle Compra----------------------------
+#------------------------------- Detalle Compras ----------------------------
 
 from django import forms
 from django.shortcuts import get_object_or_404

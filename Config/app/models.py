@@ -290,8 +290,8 @@ class DetalleVenta(models.Model):
         db_table = 'DetalleVenta'
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
-    decreto=models.CharField(max_length=25,validators=[MinLengthValidator(3),validate_campos],verbose_name='Decreto')
-    descripcion=models.CharField(max_length=200,validators=[MinLengthValidator(1),validate_nombre],verbose_name='Descripción')
+    decreto=models.CharField(max_length=50,verbose_name='Decreto')
+    descripcion=models.CharField(max_length=150,verbose_name='Descripción')
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE,)
     
     def __str__(self):
@@ -300,3 +300,4 @@ class Normativa(models.Model):
         verbose_name = 'Normativa'
         verbose_name_plural = 'Normativas'
         db_table = 'Normativa'
+        ordering = ['id']
