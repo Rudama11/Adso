@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -7,13 +7,6 @@ from django.http import JsonResponse  # Importar JsonResponse
 from app.forms import DetalleVentaForm
 from app.models import DetalleVenta, Stock, Venta
 
-# Listado de detalles de ventas
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from app.forms import DetalleVentaForm
-from app.models import DetalleVenta, Stock, Venta
 
 # Listado de detalles de ventas
 @method_decorator(login_required, name='dispatch')
@@ -34,30 +27,6 @@ class DetalleVentaCreateView(CreateView):
     model = DetalleVenta
     form_class = DetalleVentaForm
     template_name = 'Dventas/crear.html'
-    success_url = reverse_lazy('app:detalleventa_listar')
-
-    def form_valid(self, form):
-        num_factura = form.cleaned_data.get('num_factura')
-        if not Venta.objects.filter(num_factura=num_factura).exists():
-            form.add_error('num_factura', 'No existe una venta con el número de factura proporcionado.')
-            return self.form_invalid(form)
-        
-        # Asegúrate de que el campo `num_factura` está correctamente definido en el modelo
-        form.instance.venta = get_object_or_404(Venta, num_factura=num_factura)
-        
-        # Guarda el detalle de venta
-        detalle_venta = form.save()
-
-        # Actualiza el stock después de guardar el detalle de venta
-        self.actualizar_stock(detalle_venta)
-
-        return super().form_valid(form)
-
-class DetalleVentaCreateView(CreateView):
-    model = DetalleVenta
-    form_class = DetalleVentaForm
-    template_name = 'Dventas/crear.html'
-    success_url = reverse_lazy('app:detalleventa_listar')
 
     def form_valid(self, form):
         num_factura = form.cleaned_data.get('num_factura')
@@ -74,17 +43,17 @@ class DetalleVentaCreateView(CreateView):
         # Llama al método para actualizar el stock
         self.actualizar_stock(detalle_venta)
 
-        return super().form_valid(form)
+        # Redirige a la vista de detalle de venta usando el ID de la venta
+        return redirect(reverse('app:venta_detalle', kwargs={'id': detalle_venta.venta.id}))
 
-    def actualizar_stock(self, detalle_venta): 
+    def actualizar_stock(self, detalle_venta):
         """
         Actualiza el stock basado en el detalle de venta.
         """
-    # Obtener la instancia de Stock
         stock = detalle_venta.producto  # Esto es correcto ya que detalle_venta.producto es Stock
         cantidad = detalle_venta.cantidad
 
-    # Aquí verificamos que la cantidad en stock es suficiente
+        # Aquí verificamos que la cantidad en stock es suficiente
         if stock.cantidad >= cantidad:  # Verifica que hay suficiente stock
             stock.cantidad -= cantidad
             stock.save()
@@ -96,7 +65,7 @@ class DetalleVentaCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Detalle de Venta'
         context['entidad'] = 'Detalle de Venta'
-        context['listar_url'] = reverse_lazy('app:venta_detalle')
+        context['listar_url'] = reverse_lazy('app:venta_detalle')  # Puedes cambiar esto si necesitas
         return context
 # Actualizar un detalle de venta
 @method_decorator(login_required, name='dispatch')

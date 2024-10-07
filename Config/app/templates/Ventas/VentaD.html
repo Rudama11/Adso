@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_emision" value="{{ form.fecha_emision.value|date:'Y-m-d H:i:s' }}" readonly>
+                <input type="text" class="form-control" id="id_fecha_emision" value="{{ form.fecha_emision.value|date:'Y-m-d' }}" readonly>
             </div>
             <div class="form-group">
                 <label for="id_cliente">{{ form.cliente.label }}</label>
@@ -98,7 +98,7 @@
 $(document).ready(function() {
     $('#detalleVentaModal').on('show.bs.modal', function(e) {
         
-        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" ; 
+        var url = "{% url 'app:detalleventa_crear' %}" ; 
         $('#modalContent').load(url);
     });
     });
