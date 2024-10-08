@@ -48,9 +48,10 @@
         <a href="{% url 'app:venta_editar' v.pk %}" class="btn btn-info btn-sm" title="Editar venta">
             <i class="fas fa-edit"></i>
         </a>
-        <a  href="{% url 'app:venta_detalle' id=v.id %}" class="btn btn-secondary btn-sm" title="Detalles">
+        <a href="{% url 'app:venta_detalle' id=v.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalles">
             <i class="fas fa-plus"></i>
         </a>
+        
         <a href="{% url 'app:venta_eliminar' v.pk %}" class="btn btn-danger btn-sm" title="Eliminar venta">
             <i class="fas fa-trash"></i>
         </a>
