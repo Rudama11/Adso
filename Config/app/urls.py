@@ -65,9 +65,7 @@ urlpatterns = [
     path('usuario/listar/', UsuarioListView.as_view(), name='usuario_listar'),
     path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
     path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
-    path('usuario/eliminar/<int:id_userc>/', UsuarioListView.EliminarUsuario, name='usuario_eliminar'),
-    path('perfil/', perfil_view, name='perfil'),
-    path('acceso-denegado/', acceso_denegado_view, name='acceso_denegado'),
+    path('usuario/eliminar/<int:id_usuario>/', UsuarioListView.EliminarUsuario, name='usuario_eliminar'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
