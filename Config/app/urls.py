@@ -43,12 +43,12 @@ urlpatterns = [
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
     
-        #-------------------------------------------------- Dcompras --------------------------------------------------------
+        #-------------------------------------------------- Detalle Compras --------------------------------------------------------
     
     path('detalle-compras/listar/', DetalleCompraListView.as_view(), name='detallecompra_listar'),
     path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
-    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
-    path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
+    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='compraD_editar'),
+    path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='compraD_eliminar'),
     path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
     path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
     
@@ -107,7 +107,7 @@ path('ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_elimin
 path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
 path('ventas/detalle/<int:id>/', venta_detalle, name='venta_detalle'),
 
-#-------------------------------------------------- Dventas ---------------------------------------------------------
+#-------------------------------------------------- Detalle Ventas ---------------------------------------------------------
 path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
 path('detalle-venta/crear/', DetalleVentaCreateView.as_view(), name='detalleventa_crear'),
 path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),

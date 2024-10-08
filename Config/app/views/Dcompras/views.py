@@ -26,9 +26,9 @@ class DetalleCompraListView(ListView):
         return context
     
     def EliminarComprasD(request, id_compraD):
-        compra = DetalleCompra.objects.get(pk=id_compraD)
-        compra.delete()
-        return redirect('app:compras_listar')
+        comprad = DetalleCompra.objects.get(pk=id_compraD)
+        comprad.delete()
+        return redirect('app:detallecompra_listar')
 
 class DetalleCompraCreateView(CreateView):
     model = DetalleCompra
@@ -92,19 +92,6 @@ class DetalleCompraUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Detalle de Compra'
-        context['entidad'] = 'Detalle de Compra'
-        context['listar_url'] = reverse_lazy('app:detallecompra_listar')
-        return context
-
-# Vista para eliminar un detalle de compra
-class DetalleCompraDeleteView(DeleteView):
-    model = DetalleCompra
-    template_name = 'Dcompras/eliminar.html'
-    success_url = reverse_lazy('app:detallecompra_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
         context['listar_url'] = reverse_lazy('app:detallecompra_listar')
         return context
