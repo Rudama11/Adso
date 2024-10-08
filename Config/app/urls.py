@@ -47,7 +47,7 @@ urlpatterns = [
     
     path('detalle-compras/listar/', DetalleCompraListView.as_view(), name='detallecompra_listar'),
     path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
-    path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='compraD_editar'),
+    path('detalle-compras/editar/<int:detalle_id>/', DetalleCompraUpdateView.as_view(), name='compraD_editar'),
     path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='compraD_eliminar'),
     path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
     path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),

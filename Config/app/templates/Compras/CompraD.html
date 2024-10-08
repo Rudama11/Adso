@@ -52,9 +52,9 @@
                         <td>{{ detalle.total }}</td>
                         <td>
                             <!-- Botón de editar producto -->
-                            <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detalleCompraModalEdit{{ detalle.id }}" title="Editar Producto">
+                            <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detalleCompraModalEdit{{ detalle.id }}" data-detalle-id="{{ detalle.id }}" title="Editar Producto">
                                 <i class="fas fa-edit"></i>
-                            </a>
+                            </a>                                                       
                         </td>
                     </tr>
                 {% empty %}
@@ -145,22 +145,28 @@ $(document).ready(function() {
 
 <!-- Script para manejar la carga dinámica en los modales de edición -->
 <script>
-$(document).ready(function() {
-    $('[id^=detalleCompraModalEdit]').on('show.bs.modal', function(e) {
-        // Obtener el botón que activó el modal
-        var button = $(e.relatedTarget);
-        // Obtener el ID del detalle de compra desde el data-target del botón
-        var detalleId = button.data('target').replace('#detalleCompraModalEdit', '');
-
-        // Construir la URL para editar el detalle de compra pasando el ID correspondiente
-        var url = "{% url 'app:compraD_editar' 0 %}".replace('0', detalleId);
-
-        // Cargar el contenido del modal con el formulario de edición
-        $('#modalContentEdit' + detalleId).load(url, function() {
-            // Aquí puedes realizar cualquier manipulación adicional del contenido cargado
+    $(document).ready(function() {
+        // Manejar la carga dinámica de los modales de edición
+        $('[id^=detalleCompraModalEdit]').on('show.bs.modal', function(e) {
+            // Obtener el botón que activó el modal
+            var button = $(e.relatedTarget);
+            // Obtener el ID del detalle de compra desde el atributo 'data-detalle-id'
+            var detalleId = button.data('detalle-id');
+        
+            // Construir la URL para editar el detalle de compra pasando el ID correspondiente
+            var url = "{% url 'app:compraD_editar' 0 %}".replace('0', detalleId);
+        
+            // Seleccionar el contenedor del contenido dinámico
+            var modalContent = $(this).find('.modal-body #modalContentEdit' + detalleId);
+        
+            // Cargar el contenido del formulario de edición
+            modalContent.load(url, function(response, status, xhr) {
+                if (status == "error") {
+                    modalContent.html("<p>Error al cargar el formulario de edición. Por favor, intenta nuevamente.</p>");
+                }
+            });
         });
-    });
-});
+    });        
 </script>
 
 <style>
