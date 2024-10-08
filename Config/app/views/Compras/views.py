@@ -7,10 +7,13 @@ from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
 from django.shortcuts import redirect, get_object_or_404,render
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.dateparse import parse_date
+
 
 class ComprasListView(ListView):
     model = Compras
     template_name = 'Compras/listar.html'
+    context_object_name = 'compras'
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -25,8 +28,31 @@ class ComprasListView(ListView):
         context['titulo'] = 'Listado de Compras'
         context['entidad'] = 'Compras'
         context['crear_url'] = reverse_lazy('app:compras_crear')
-        context['request'] = self.request
+        context['proveedores'] = Proveedor.objects.all()  # Añade la lista de proveedores al contexto
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Filtrar por número de factura
+        num_factura = self.request.GET.get('num_factura', None)
+        if num_factura:
+            queryset = queryset.filter(num_factura__icontains=num_factura)
+
+        # Filtrar por fecha de compra
+        fecha_compra = self.request.GET.get('fecha_compra', None)
+        if fecha_compra:
+            # Usar parse_date para evitar problemas con la hora
+            fecha_compra = parse_date(fecha_compra)
+            if fecha_compra:
+                queryset = queryset.filter(fecha_compra=fecha_compra)
+
+        # Filtrar por proveedor
+        proveedor_id = self.request.GET.get('proveedor', None)
+        if proveedor_id:
+            queryset = queryset.filter(proveedor__id=proveedor_id)  # Filtra por ID de proveedor
+
+        return queryset
 
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarCompras(request, id_compra):
