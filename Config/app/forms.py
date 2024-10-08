@@ -584,3 +584,28 @@ class DetalleCompraForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+    
+#-------------------------------- filtro de stok para que se filtre en rangos espesificos ---------------
+class StockFilterForm(forms.Form):
+    nombre_pro = forms.ModelChoiceField(
+        queryset=Producto.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    cantidad_min = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    cantidad_max = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    precio_min = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    precio_max = forms.DecimalField(
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )

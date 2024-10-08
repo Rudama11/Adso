@@ -82,6 +82,41 @@
             </div>
             <div class="modal-body">
                 {% block filtro_form_contenido %}
+                <form method="GET" action="">
+                    <div class="row">
+                        <!-- Filtro por Producto -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form.nombre_pro.label_tag }}
+                                {{ form.nombre_pro }}
+                            </div>
+                        </div>
+                        <!-- Filtros de Cantidad -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="cantidad_min_max">Cantidad (Mín - Máx)</label>
+                                <div class="input-group">
+                                    {{ form.cantidad_min }}
+                                    <span class="input-group-text">-</span>
+                                    {{ form.cantidad_max }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Filtros de Precio -->
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="precio_min_max">Precio (Mín - Máx)</label>
+                                <div class="input-group">
+                                    {{ form.precio_min }}
+                                    <span class="input-group-text">-</span>
+                                    {{ form.precio_max }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-3">
+                    </div>
+                </form>
                 {% endblock %}
             </div>
             <div class="modal-footer">
