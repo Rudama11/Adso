@@ -104,7 +104,7 @@ path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
 path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
 path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
 path('ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
-path('obtener-datos-cliente/', obtener_datos_cliente, name='obtener_datos_cliente'),
+path('ventas/detalle/<int:id>/', VentaDetalleView.as_view(), name='venta_detalle'),
 path('ventas/detalle/<int:id>/', venta_detalle, name='venta_detalle'),
 
 #-------------------------------------------------- Dventas ---------------------------------------------------------
