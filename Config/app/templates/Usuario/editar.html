@@ -9,7 +9,7 @@
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-edit"></i>  <!-- Icono de editar -->
+                <i class="fas fa-edit"></i> <!-- Icono de editar -->
                 Editar Usuario
             </h3>
         </div>
@@ -26,14 +26,17 @@
                 <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
             </div>
             {% endfor %}
+
             <!-- Mensaje de error de coincidencia de contraseñas -->
-            <div class="invalid-feedback" id="passwordMismatch" style="display:none;">Las contraseñas no coinciden.</div>
+            <div class="invalid-feedback" id="passwordMismatch" style="display:none;">Las contraseñas no coinciden.
+            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
                 <i class="fas fa-save"></i> Guardar Cambios
             </button>
-            <a href="{% url 'app:usuario_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{% url 'app:usuario_listar' %}" class="btn btn-info btn-flat"
+                style="background-color: #b82b2b; color: white;">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
@@ -42,8 +45,8 @@
 
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
-    document.getElementById('confirmButton').addEventListener('click', function(e) {
-        e.preventDefault(); 
+    document.getElementById('confirmButton').addEventListener('click', function (e) {
+        e.preventDefault();
 
         // Validación de campos vacíos
         let isValid = true;
@@ -52,7 +55,7 @@
         let password2 = document.querySelector('[name="confirm_password"]');
         let passwordMismatchFeedback = document.getElementById('passwordMismatch');
 
-        formFields.forEach(function(field) {
+        formFields.forEach(function (field) {
             let feedback = field.parentNode.querySelector('.mandatory-feedback');
             if (field.value.trim() === '' && field.name !== 'password' && field.name !== 'confirm_password') {
                 isValid = false;
@@ -83,7 +86,7 @@
         // Validación de caracteres permitidos en el nombre de usuario y nombres
         let usernameField = document.querySelector('[name="username"]');
         let nombresField = document.querySelector('[name="nombres"]');
-        
+
         if (!/^[a-zA-Z0-9-_]+$/.test(usernameField.value)) {
             isValid = false;
             usernameField.classList.add('is-invalid');
@@ -128,79 +131,79 @@
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => { throw data; });
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    title: 'Actualizado Correctamente',
-                    text: `Los cambios han sido guardados exitosamente.`,
-                    icon: 'success',
-                    confirmButtonText: 'Continuar',
-                    backdrop: true,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    position: 'center',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                    stopKeydownPropagation: false,
-                    buttonsStyling: true,
-                    showCloseButton: true,
-                    closeButtonAriaLabel: 'Cerrar alerta',
-                }).then(() => {
-                    window.location.href = "{% url 'app:usuario_listar' %}"; // Redirigir al listado
-                });
-            }
-        })
-        .catch(data => {
-            // Mostrar alerta de error
-            const errorMessage = data.message;
-            const specificErrors = data.errors; 
-            // Si hay errores específicos, los recopilamos en un solo mensaje
-            let detailedMessages = [];
-        
-            if (specificErrors) {
-                if (specificErrors.username) {
-                    detailedMessages.push(specificErrors.username[0]); // Agregar mensaje de nombre
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
                 }
-                if (specificErrors.email) {
-                    detailedMessages.push(specificErrors.email[0]); // Agregar mensaje de email
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Actualizado Correctamente',
+                        text: `Los cambios han sido guardados exitosamente.`,
+                        icon: 'success',
+                        confirmButtonText: 'Continuar',
+                        backdrop: true,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        position: 'center',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                        stopKeydownPropagation: false,
+                        buttonsStyling: true,
+                        showCloseButton: true,
+                        closeButtonAriaLabel: 'Cerrar alerta',
+                    }).then(() => {
+                        window.location.href = "{% url 'app:usuario_listar' %}"; // Redirigir al listado
+                    });
                 }
-                if (specificErrors.password) {
-                    detailedMessages.push(specificErrors.password[0]); // Agregar mensaje de contraseña
-                }
-            }
-        
-            // Unimos los mensajes detallados con saltos de línea HTML
-            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
-        
-            // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
-            Swal.fire({
-                title: 'Inválido',
-                html: detailedMessage || errorMessage, // Usamos 'html' en lugar de 'text' para soportar saltos de línea
-                icon: 'warning',
-                confirmButtonText: 'Aceptar',
-            });
-        
-            // Resaltar los campos con errores
-            if (specificErrors) {
-                Object.keys(specificErrors).forEach(function(key) {
-                    let field = document.querySelector(`[name=${key}]`);
-                    if (field) {
-                        field.classList.add('is-invalid');
-                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
-                        if (errorDiv) {
-                            errorDiv.innerHTML = specificErrors[key][0];
-                        }
+            })
+            .catch(data => {
+                // Mostrar alerta de error
+                const errorMessage = data.message;
+                const specificErrors = data.errors;
+                // Si hay errores específicos, los recopilamos en un solo mensaje
+                let detailedMessages = [];
+
+                if (specificErrors) {
+                    if (specificErrors.username) {
+                        detailedMessages.push(specificErrors.username[0]); // Agregar mensaje de nombre
                     }
+                    if (specificErrors.email) {
+                        detailedMessages.push(specificErrors.email[0]); // Agregar mensaje de email
+                    }
+                    if (specificErrors.password) {
+                        detailedMessages.push(specificErrors.password[0]); // Agregar mensaje de contraseña
+                    }
+                }
+
+                // Unimos los mensajes detallados con saltos de línea HTML
+                let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+
+                // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
+                Swal.fire({
+                    title: 'Inválido',
+                    html: detailedMessage || errorMessage, // Usamos 'html' en lugar de 'text' para soportar saltos de línea
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar',
                 });
-            }
-        });
+
+                // Resaltar los campos con errores
+                if (specificErrors) {
+                    Object.keys(specificErrors).forEach(function (key) {
+                        let field = document.querySelector(`[name=${key}]`);
+                        if (field) {
+                            field.classList.add('is-invalid');
+                            let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                            if (errorDiv) {
+                                errorDiv.innerHTML = specificErrors[key][0];
+                            }
+                        }
+                    });
+                }
+            });
     });
 </script>
 

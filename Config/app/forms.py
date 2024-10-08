@@ -98,7 +98,11 @@ class UsuarioForm(forms.ModelForm):
             user.save()  # Guarda el usuario después de establecer la contraseña encriptada
         return user
     
+
 # Formulario exclusivo para editar los usuarios.
+from django import forms
+import re
+from .models import CustomUser  # Asegúrate de que la importación del modelo es correcta
 
 class UsuarioEditForm(forms.ModelForm):
     password = forms.CharField(
@@ -110,6 +114,12 @@ class UsuarioEditForm(forms.ModelForm):
         label='Confirmar Contraseña',  # Etiqueta en español
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirme nueva contraseña (dejar vacío si no quiere cambiar)', 'class': 'form-control'}),
         required=False  # Hacer el campo opcional
+    )
+    is_active = forms.ChoiceField(
+        choices=[(True, 'Habilitado'), (False, 'Inhabilitado')],
+        label='Estado del Usuario',  # Etiqueta en español
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        initial=True  # O el valor que desees como predeterminado
     )
 
     def __init__(self, *args, **kwargs):
@@ -160,7 +170,7 @@ class UsuarioEditForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password']  # Tipo de usuario al inicio
+        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password', 'is_active']  # Agregar el campo is_active aquí
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Ingrese nombre de usuario', 'class': 'form-control'}),
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres y apellidos', 'class': 'form-control'}),
@@ -186,9 +196,13 @@ class UsuarioEditForm(forms.ModelForm):
             user.is_superuser = False
             user.is_staff = False
         
+        # Establecer el estado activo/inactivo
+        user.is_active = self.cleaned_data['is_active'] == 'True'
+
         if commit:
             user.save()  # Guarda el usuario después de establecer la contraseña si se ha cambiado
         return user
+
 
 #---------------------------------------------------------- Categoría ----------------------------------------------------------
 class CategoriaForm(forms.ModelForm):
