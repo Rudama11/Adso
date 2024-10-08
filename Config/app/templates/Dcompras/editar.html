@@ -1,0 +1,143 @@
+{% load widget_tweaks %}
+
+{% block contenidoDC %}
+<form method="post" id="detalleCompraFormEdit" action="{% url 'app:compraD_editar' detalle.id %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="id_num_factura">Número de Factura</label>
+        {% render_field form.num_factura class="form-control" id="id_num_factura" placeholder="Número de Factura" readonly="readonly" %}
+    </div>
+
+    <div class="form-group">
+        <label for="id_producto">Producto</label>
+        {% render_field form.producto class="form-control" id="id_producto" %}
+    </div>
+
+    <div class="form-group">
+        <label for="id_precio">Precio Unitario</label>
+        {% render_field form.precio_unitario class="form-control" id="id_precio" placeholder="Ingrese el precio unitario" %}
+    </div>
+
+    <div class="form-group">
+        <label for="id_cantidad">Cantidad</label>
+        {% render_field form.cantidad class="form-control" id="id_cantidad" placeholder="Ingrese la cantidad" %}
+    </div>
+
+    <div class="form-group">
+        <label for="id_iva">IVA (%)</label>
+        {% render_field form.iva class="form-control" id="id_iva" placeholder="Ingrese el IVA (%)" %}
+    </div>
+
+    <div class="form-group">
+        <label for="id_total">Total</label>
+        {% render_field form.total class="form-control" id="id_total" readonly="readonly" %}
+        {# El campo 'total' se muestra como solo lectura ya que se calcula automáticamente #}
+    </div>
+
+    {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                ×
+            </button>
+            <h5>
+                <i class="icon fas fa-ban"></i> 
+                Ha ocurrido un error al intentar editar el detalle de compra.
+            </h5>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="card-footer">
+        <button type="submit" class="btn btn-success" id="confirmButtonEdit">
+            <i class="fas fa-save"></i> Guardar Cambios
+        </button>
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.getElementById('detalleCompraFormEdit').addEventListener('input', function() {
+    let precio = parseFloat(document.getElementById('id_precio').value) || 0;
+    let cantidad = parseFloat(document.getElementById('id_cantidad').value) || 0;
+    let iva = parseFloat(document.getElementById('id_iva').value) || 0;
+
+    let total = (precio * cantidad) * (1 + iva / 100);
+    document.getElementById('id_total').value = total.toFixed(2);
+});
+
+document.getElementById('confirmButtonEdit').addEventListener('click', function(e) {
+    e.preventDefault(); // Evita el comportamiento predeterminado del botón
+
+    let isValid = true;
+    let formFields = document.querySelectorAll('#detalleCompraFormEdit .form-control');
+
+    formFields.forEach(function(field) {
+        if (field.value.trim() === '' && !field.hasAttribute('readonly')) {
+            isValid = false;
+            field.classList.add('is-invalid');
+        } else {
+            field.classList.remove('is-invalid');
+        }
+    });
+
+    if (isValid) {
+        // Obtener el formulario
+        var form = document.getElementById('detalleCompraFormEdit');
+        
+        // Enviar el formulario usando AJAX
+        $.ajax({
+            type: 'POST',
+            url: form.action,
+            data: $(form).serialize(),
+            success: function(response) {
+                // Manejar respuesta exitosa
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Detalle de compra editado correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(function() {
+                    // Cerrar el modal y recargar la página para ver los cambios
+                    $('#detalleCompraModalEdit{{ detalle.id }}').modal('hide');
+                    location.reload();
+                });
+            },
+            error: function(response) {
+                // Manejar error
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Ocurrió un error al editar el detalle de compra.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        });
+    } else {
+        Swal.fire({
+            title: 'Error',
+            text: 'Debe llenar todos los campos del formulario.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            backdrop: true,
+            timer: 3000,
+            timerProgressBar: true,
+            position: 'center',
+            allowOutsideClick: true,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            stopKeydownPropagation: false,
+            buttonsStyling: true,
+            showCloseButton: true,
+            closeButtonAriaLabel: 'Cerrar alerta',
+        });
+    }
+});
+</script>
+{% endblock %}

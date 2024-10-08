@@ -87,14 +87,66 @@ class DetalleCompraUpdateView(UpdateView):
     model = DetalleCompra
     form_class = DetalleCompraForm
     template_name = 'Dcompras/editar.html'
-    success_url = reverse_lazy('app:detallecompra_listar')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['compra_id'] = self.kwargs.get('compra_id')  # Pasa el ID de la compra si es necesario
+        return kwargs
+
+    def form_valid(self, form):
+        num_factura = form.cleaned_data.get('num_factura')
+        if not Compras.objects.filter(num_factura=num_factura).exists():
+            form.add_error('num_factura', 'No existe una compra con el número de factura proporcionado.')
+            return self.form_invalid(form)
+
+        # Obtener la compra asociada al número de factura
+        form.instance.compra = get_object_or_404(Compras, num_factura=num_factura)
+        
+        # Guardar el detalle de compra
+        old_detalle = self.get_object()  # Obtiene el detalle de compra antes de la edición
+        response = super().form_valid(form)
+        
+        # Actualizar el stock si la cantidad o el producto cambió
+        self.actualizar_stock(form.instance, old_detalle)
+        
+        return response
+
+    def actualizar_stock(self, nuevo_detalle, old_detalle):
+        """
+        Actualiza el stock basado en los cambios en el detalle de compra.
+        """
+        producto = nuevo_detalle.producto
+        cantidad = nuevo_detalle.cantidad
+        
+        # Comparar si el producto o la cantidad cambió
+        if old_detalle.producto != producto or old_detalle.cantidad != cantidad:
+            # Revertir el stock del producto anterior (si es diferente al nuevo)
+            if old_detalle.producto != producto:
+                try:
+                    old_stock = Stock.objects.get(nombre_pro=old_detalle.producto)
+                    old_stock.cantidad -= old_detalle.cantidad
+                    old_stock.save()
+                except Stock.DoesNotExist:
+                    pass  # Si no existe en el stock anterior, no hay necesidad de revertir
+
+            # Actualizar el stock del nuevo producto
+            try:
+                stock = Stock.objects.get(nombre_pro=producto)
+                stock.cantidad += cantidad
+                stock.save()
+            except Stock.DoesNotExist:
+                Stock.objects.create(nombre_pro=producto, cantidad=cantidad, precio=nuevo_detalle.precio_unitario)
     
+    def get_success_url(self):
+        return reverse_lazy('app:detallecompra_listar')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Detalle de Compra'
+        context['titulo'] = 'Editar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
         context['listar_url'] = reverse_lazy('app:detallecompra_listar')
         return context
+
 
 # Vista para obtener datos del producto en formato JSON
 def obtener_datos_producto(request):

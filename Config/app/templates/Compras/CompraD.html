@@ -1,4 +1,6 @@
 {% extends 'listar.html' %}
+
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -37,6 +39,7 @@
                     <th>Precio Unitario</th>
                     <th>IVA</th>
                     <th>Total</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,16 +50,22 @@
                         <td>{{ detalle.precio_unitario }}</td>
                         <td>{{ detalle.iva }}%</td>
                         <td>{{ detalle.total }}</td>
+                        <td>
+                            <!-- Botón de editar producto -->
+                            <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detalleCompraModalEdit{{ detalle.id }}" title="Editar Producto">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="5">No hay productos agregados.</td>
+                        <td colspan="6">No hay productos agregados.</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    
+
     <div class="card-footer">
         <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
             <i class="fas fa-times"></i> Volver al Listado
@@ -68,14 +77,13 @@
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
     </div>
-    
 
-<!-- Modal para DetalleCompra -->
+<!-- Modal para Agregar Detalle de Compra -->
 <div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar Detalle de Compra</h5>
+                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -94,39 +102,82 @@
     </div>
 </div>
 
+<!-- Modales para Editar cada Detalle de Compra -->
+{% for detalle in detalles_compra %}
+<div class="modal fade" id="detalleCompraModalEdit{{ detalle.id }}" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalEditLabel{{ detalle.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleCompraModalEditLabel{{ detalle.id }}">Editar producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del modal cargado dinámicamente -->
+                <div id="modalContentEdit{{ detalle.id }}">
+                    <!-- Aquí se cargará el contenido dinámicamente -->
+                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Script para manejar la carga dinámica en el modal de agregar -->
 <script>
-    // Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
 $(document).ready(function() {
     $('#detalleCompraModal').on('show.bs.modal', function(e) {
         var url = "{% url 'app:detallecompra_crear' %}";
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de que el número de factura esté disponible en el contexto
+        var numFactura = "{{ form.num_factura.value }}";  // Obtener el número de factura del formulario
 
         $('#modalContent').load(url, function() {
-            // Rellenar el campo num_factura en el formulario cargado
+            // Asignar el número de factura al campo en el formulario cargado
             $('#id_num_factura').val(numFactura);
         });
     });
 });
+</script>
 
+<!-- Script para manejar la carga dinámica en los modales de edición -->
+<script>
+$(document).ready(function() {
+    $('[id^=detalleCompraModalEdit]').on('show.bs.modal', function(e) {
+        // Obtener el botón que activó el modal
+        var button = $(e.relatedTarget);
+        // Obtener el ID del detalle de compra desde el data-target del botón
+        var detalleId = button.data('target').replace('#detalleCompraModalEdit', '');
+
+        // Construir la URL para editar el detalle de compra pasando el ID correspondiente
+        var url = "{% url 'app:compraD_editar' 0 %}".replace('0', detalleId);
+
+        // Cargar el contenido del modal con el formulario de edición
+        $('#modalContentEdit' + detalleId).load(url, function() {
+            // Aquí puedes realizar cualquier manipulación adicional del contenido cargado
+        });
+    });
+});
 </script>
 
 <style>
     .card-footer .btn {
         margin: 5px 0;
-        flex: 1 1 30%; /* Ajusta el tamaño de los botones */
+        flex: 1 1 30%;
     }
-    
-    /* Asegúrate de que la tabla y los botones se adapten en pantallas pequeñas */
+
+    /* Ajustes para pantallas pequeñas */
     @media (max-width: 768px) {
         .table th, .table td {
             font-size: 14px;
         }
-    
         .card-footer .btn {
-            flex: 1 1 100%; /* Los botones ocupan el ancho completo en móviles */
+            flex: 1 1 100%;
         }
     }
-
 </style>
 
 {% endblock %}
