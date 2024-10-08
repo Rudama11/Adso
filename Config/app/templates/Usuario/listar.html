@@ -25,7 +25,13 @@
     <td>{{ user.username }}</td>
     <td>{{ user.nombres }}</td>
     <td>{{ user.email }}</td>
-    <td>{{ user.is_active }}</td>
+    <td>
+        {% if user.is_active %}
+            Habilitado
+        {% else %}
+            Inhabilitado
+        {% endif %}
+    </td>
     <td>
         <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
             <i class="fas fa-edit"></i>
@@ -36,7 +42,7 @@
 
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
         
