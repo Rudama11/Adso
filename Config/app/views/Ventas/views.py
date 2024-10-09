@@ -34,6 +34,15 @@ class VentasListView(ListView):
             queryset = queryset.filter(cliente__nombres__icontains=cliente)
 
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Listado de Venta'
+        context['entidad'] = 'Ventas'
+        context['crear_url'] = reverse_lazy('app:venta_crear')  
+        return context
+    
+    
 # Vista para crear una nueva venta
 class VentasCreateView(CreateView):
     model = Venta
@@ -48,6 +57,8 @@ class VentasCreateView(CreateView):
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')  
         return context
+    
+
 
 # Vista para actualizar una venta existente
 class VentasUpdateView(UpdateView):

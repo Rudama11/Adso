@@ -1,221 +1,61 @@
-{% extends 'layout.html' %}  {# Usamos layout.html como base #}
+{% extends 'listar.html' %}
 {% load static %}
 
-{% block head %}
-<!-- Urls de los archivos CSS -->
-<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
-<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
-<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
-<link rel="stylesheet" href="{% static 'css/general/fonts.css' %}" />
-
-<style>
-    .custom-button {
-        background-color: #1f5a96;
-        border: 2px solid hwb(0 100% 0%);
-        color: #fff;
-        margin: 0;
-        padding: 4px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        display: inline-block;
-    }
-
-    .custom-button:hover {
-        background-color: #1d3c5d;
-        border: 2px solid #09335f;
-    }
-</style>
+{% block filtro_form_contenido %}
+<form method="GET" action="{% url 'app:venta_listar' %}">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="num_factura">Número de Factura</label>
+                <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ num_factura }}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="fecha_emision">Fecha de Emisión</label>
+                <!-- Cambiamos el tipo de input a 'date' -->
+                <input type="date" class="form-control" id="fecha_emision" name="fecha_emision" value="{{ fecha_emision }}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente" value="{{ cliente }}">
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}
 
-{% block contenido %}
-<div class="card card-default">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-address-book" style="margin-right: 5px;"></i>
-            {{ titulo }}
-        </h3>
-        <div class="card-tools">
-            <button type="button" class="btn btn-secondary btn-sm custom-button" data-toggle="modal" data-target="#filtroModal">
-                <i class="fas fa-filter"></i> Filtrar
-            </button>
-        </div>
-    </div>  
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="tabla" class="table table-bordered table-striped">
-                <thead>
-                    {% block columnas %}
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Número de Factura</th>
-                        <th scope="col">Fecha de Emisión</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Opciones</th>
-                    </tr>
-                    {% endblock %}
-                </thead>
-                <tbody>
-                    {% block filas %}
-                    {% for v in object_list %}
-                    <tr>
-                        <td>{{ v.id }}</td>
-                        <td>{{ v.num_factura }}</td>
-                        <td>{{ v.fecha_emision }}</td>
-                        <td>{{ v.cliente.nombres }}</td>
-                        <td>
-                            <a href="{% url 'app:venta_editar' v.pk %}" class="btn btn-info btn-sm" title="Editar venta">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{% url 'app:detalle_venta' v.id %}" class="btn btn-secondary btn-sm" title="Detalles">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                            <a href="{% url 'app:venta_eliminar' v.pk %}" class="btn btn-danger btn-sm" title="Eliminar venta">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% endblock %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    <div class="card-footer">
-        <a href="{% url 'app:venta_crear' %}" class="btn btn-flat" style="background-color: #23853a; border: 1px solid #23853a; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
-            <i class="fas fa-plus"></i> Agregar
-        </a>        
-    </div>
-</div>
-
-<!-- Modal Grande -->
-<div class="modal fade" id="filtroModal" tabindex="-1" role="dialog" aria-labelledby="filtroModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="filtroModalLabel">Filtrar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {% block filtro_form_contenido %}
-                <form method="GET" action="{% url 'app:venta_listar' %}">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="num_factura">Número de Factura</label>
-                                <input type="text" class="form-control" id="num_factura" name="num_factura" placeholder="Ingrese el número de factura" value="{{ num_factura }}">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="fecha_emision">Fecha de Emisión</label>
-                                <input type="date" class="form-control" id="fecha_emision" name="fecha_emision" value="{{ fecha_emision }}">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="cliente">Cliente</label>
-                                <input type="text" class="form-control" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente" value="{{ cliente }}">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                {% endblock %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="applyFilters()">Filtrar</button>
-                <button type="button" class="btn btn-danger" onclick="clearFilters()">Limpiar Filtros</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% block columnas %}
+<tr>
+    <th scope="col">ID</th>
+    <th scope="col">Número de Factura</th>
+    <th scope="col">Fecha de Emisión</th>
+    <th scope="col">Cliente</th>
+    <th scope="col">Opciones</th>
+</tr>
 {% endblock %}
 
-{% block javascript %}
-<!-- Urls de los archivos Js -->
-<script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/dataTables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/jszip/jszip.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/pdfmake/pdfmake.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/pdfmake/vfs_fonts.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.html5.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.print.min.js' %}"></script>
-<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
-<script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
-<script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
-
-<script>
-    $(document).ready(function () {
-        $("#tabla").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "language": {
-                "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"
-            },
-            "buttons": [
-                {
-                    extend: 'copy',
-                    text: 'Copiar tabla',
-                    className: 'custom-button',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
-                },
-                {
-                    extend: 'csv',
-                    text: 'Archivo CSV',
-                    className: 'custom-button',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: 'Archivo Excel',
-                    className: 'custom-button',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    text: 'PDF',
-                    className: 'custom-button',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
-                },
-                {
-                    extend: 'print',
-                    text: 'Imprimir',
-                    className: 'custom-button',
-                    exportOptions: {
-                        columns: ':not(:last-child)'
-                    }
-                }
-            ],
-            "dom": 'Bfrtip'
-        }).buttons().container().appendTo('#tabla_wrapper .col-md-6:eq(0)');
-    });
-
-    function clearFilters() {
-        document.querySelector('#filtroModal form').reset();
-        const url = new URL(window.location.href);
-        url.search = '';
-        window.location.href = url.toString();
-    }
-
-    function applyFilters() {
-        document.querySelector('#filtroModal form').submit();
-    }
-</script>
+{% block filas %}
+{% for v in object_list %}
+<tr>
+    <td>{{ v.id }}</td>
+    <td>{{ v.num_factura }}</td>
+    <td>{{ v.fecha_emision }}</td>
+    <td>{{ v.cliente.nombres }}</td>
+    <td>
+        <a href="{% url 'app:venta_editar' v.pk %}" class="btn btn-info btn-sm" title="Editar venta">
+            <i class="fas fa-edit"></i>
+        </a>
+        <a href="{% url 'app:venta_detalle' id=v.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalles">
+            <i class="fas fa-plus"></i>
+        </a>
+        
+        <a href="{% url 'app:venta_eliminar' v.pk %}" class="btn btn-danger btn-sm" title="Eliminar venta">
+            <i class="fas fa-trash"></i>
+        </a>
+    </td>
+</tr>
+{% endfor %}
 {% endblock %}
