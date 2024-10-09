@@ -44,7 +44,6 @@ class VentasCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.all()  
-        context['productos'] = Producto.objects.all()  
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')  
@@ -78,43 +77,5 @@ class VentasDeleteView(DeleteView):
         return context
 
 # Vista para obtener datos del cliente en formato JSON
-class VentaDetalleView(DetailView):
-    model = Venta
-    template_name = 'Ventas/ventaD.html'
-    context_object_name = 'venta'
 
-    def get_object(self):
-        # Sobreescribimos el método para obtener la venta por id
-        return get_object_or_404(Venta, id=self.kwargs['id'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        venta = self.get_object()
-
-        # Añadimos el formulario de venta
-        context['form'] = VentaForm(instance=venta)
-        
-        # Añadimos los detalles de la venta
-        context['detalles_venta'] = DetalleVenta.objects.filter(venta=venta)
-        
-        # Añadimos el URL para listar ventas
-        context['listar_url'] = reverse_lazy('app:venta_listar')
-        
-        # Título para la plantilla
-        context['titulo'] = 'Detalles de Venta'
-        
-        return context
-
-def venta_detalle(request, id):
-    venta = get_object_or_404(Venta, id=id)  # Buscar por id 
-    detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
-    form = VentaForm(instance=venta)
-    
-    context = {
-        'form': form,
-        'titulo': 'Detalles de Venta',
-        'listar_url': reverse_lazy('app:venta_listar'),
-        'detalles_venta': detalles_venta,  # Pasamos los detalles de la venta al contexto
-    }
-    return render(request, 'Ventas/ventaD.html', context)
 
