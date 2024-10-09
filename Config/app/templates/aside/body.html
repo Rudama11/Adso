@@ -40,13 +40,15 @@
                             </ol>
                         </div>
                         {% endif %}
-            
+                        
                         <!-- Detalle de Venta -->
-                        {% if entidad == "Venta" %}
+                        {% if entidad == "Ventas" %}
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item">
-                                    <a href="{% url 'app:detalleventa_listar' %}" style="color: #007bff; text-decoration: none;">Detalle de Venta</a>
+                                    <a href="{% url 'app:detalleventa_listar' %}" style="color: #007bff; text-decoration: none;">
+                                        Detalle de Venta
+                                    </a>
                                 </li>
                             </ol>
                         </div>
