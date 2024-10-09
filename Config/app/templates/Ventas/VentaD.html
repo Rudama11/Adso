@@ -138,17 +138,17 @@
 
     function agregarDetalle() {
         const productoId = document.getElementById('id_producto').value;
-        const cantidad = document.getElementById('id_cantidad').value;
-        const precio = document.getElementById('id_precio').value;
-        const iva = document.getElementById('id_iva').value;
-    
+        const cantidad = parseFloat(document.getElementById('id_cantidad').value);
+        const precio = parseFloat(document.getElementById('id_precio').value);
+        const iva = parseFloat(document.getElementById('id_iva').value);
         const numFactura = document.getElementById('id_num_factura').value;
     
+        // Validación de campos
         const missingFields = [];
         if (!productoId) missingFields.push('producto');
-        if (!cantidad) missingFields.push('cantidad');
-        if (!precio) missingFields.push('precio');
-        if (!iva) missingFields.push('IVA');
+        if (!cantidad || isNaN(cantidad)) missingFields.push('cantidad');
+        if (!precio || isNaN(precio)) missingFields.push('precio');
+        if (!iva || isNaN(iva)) missingFields.push('IVA');
         if (!numFactura) missingFields.push('número de factura');
     
         if (missingFields.length > 0) {
@@ -158,9 +158,9 @@
     
         const formData = {
             producto: productoId,
-            cantidad: parseFloat(cantidad),
-            precio: parseFloat(precio),
-            iva: parseFloat(iva),
+            cantidad: cantidad,
+            precio: precio,
+            iva: iva,
             id_venta: ventaId,
             num_factura: numFactura
         };
@@ -187,6 +187,7 @@
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
+            mostrarMensajeError('Error inesperado en la solicitud.');
         });
     }
     

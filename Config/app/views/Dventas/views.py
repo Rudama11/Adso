@@ -4,6 +4,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db import transaction
 import json  
 from app.forms import DetalleVentaForm
 from app.models import DetalleVenta, Stock, Venta
@@ -25,7 +26,7 @@ class DetalleVentaListView(ListView):
 
 # Crear un nuevo detalle de venta
 @method_decorator(login_required, name='dispatch')
-class VentaDetalleCreateView(CreateView): 
+class VentaDetalleCreateView(CreateView):
     model = DetalleVenta
     template_name = 'Ventas/VentaD.html'
     fields = ['producto', 'cantidad', 'precio', 'iva', 'total']  # Campos que se usarán en el formulario
@@ -42,18 +43,15 @@ class VentaDetalleCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        # Asignar automáticamente el ID de venta y el número de factura
-        form.instance.venta = get_object_or_404(Venta, id=self.kwargs['venta_id'])  # Cambia 'id' a 'venta_id'
-        form.instance.num_factura = "Factura Generada"  # Cambia esto por la lógica necesaria para el número de factura
-        
-        # Calcular el total antes de guardar
+        form.instance.venta = get_object_or_404(Venta, id=self.kwargs['venta_id'])
+        form.instance.num_factura = "Factura Generada"
         form.instance.total = form.instance.precio * form.instance.cantidad * (1 + (form.instance.iva / 100))
         return super().form_valid(form)
 
     def post(self, request, *args, **kwargs):
         if request.headers.get('x-requested-with') != 'XMLHttpRequest':
             return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
-        
+
         try:
             data = json.loads(request.body)
 
@@ -69,37 +67,33 @@ class VentaDetalleCreateView(CreateView):
             if cantidad <= 0:
                 return JsonResponse({'success': False, 'error': 'La cantidad debe ser mayor que cero.'}, status=400)
 
-            # Crear y guardar el detalle de venta
-            detalle_venta = DetalleVenta.objects.create(
-                producto=producto,
-                cantidad=cantidad,
-                precio=data['precio'],
-                iva=data['iva'],
-                total=data['precio'] * cantidad * (1 + (data['iva'] / 100)),
-                venta=venta,
-                num_factura=data.get('num_factura', "Factura Generada")
-            )
+            # Verificar stock antes de crear el detalle
+            if producto.cantidad < cantidad:
+                return JsonResponse({'success': False, 'error': f"No hay suficiente stock para {producto.nombre_pro.nombre}. Stock actual: {producto.cantidad}, solicitado: {cantidad}"}, status=400)
 
-            # Actualizar stock después de crear el detalle de venta
-            self.actualizar_stock(detalle_venta)
+            with transaction.atomic():
+                # Crear el detalle de venta
+                detalle_venta = DetalleVenta.objects.create(
+                    producto=producto,
+                    cantidad=cantidad,
+                    precio=data['precio'],
+                    iva=data['iva'],
+                    total=data['precio'] * cantidad * (1 + (data['iva'] / 100)),
+                    venta=venta,
+                    num_factura=data.get('num_factura', "Factura Generada")
+                )
+
+                # Actualizar el stock del producto
+                producto.cantidad -= cantidad
+                producto.save()
 
             return JsonResponse({'success': True, 'detalle_venta': detalle_venta.id})
-        
+
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Error en los datos enviados.'}, status=400)
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
-    def actualizar_stock(self, detalle_venta):
-        stock = detalle_venta.producto
-        cantidad = detalle_venta.cantidad
-        # Actualizar el stock si hay suficiente cantidad
-        if stock.cantidad >= cantidad:
-            stock.cantidad -= cantidad
-            stock.save()
-        else:
-            # Manejo de error si no hay suficiente stock
-            raise ValueError(f"No hay suficiente stock para {stock.nombre_pro.nombre}. Stock actual: {stock.cantidad}, solicitado: {cantidad}")
 
 
 # Actualizar un detalle de venta
