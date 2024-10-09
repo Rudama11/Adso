@@ -9,6 +9,7 @@
 
 <tr>
     <th scope="col">Id</th>
+    <th scope="col">Tipo Usuario</th>
     <th scope="col">Nombre de Usuario</th>
     <th scope="col">Nombres</th>
     <th scope="col">Correo</th>
@@ -22,6 +23,7 @@
 {% for user in object_list %}
 <tr>
     <td>{{ user.id }}</td>
+    <td>{{ user.get_tipo_usuario_display }}</td>
     <td>{{ user.username }}</td>
     <td>{{ user.nombres }}</td>
     <td>{{ user.email }}</td>
@@ -33,10 +35,10 @@
         {% endif %}
     </td>
     <td>
-        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
+        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar usuario">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ user.id }}" title="Eliminar Usuario">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ user.id }}" title="Eliminar usuario">
             <i class="fas fa-trash"></i>
         </a>
 
