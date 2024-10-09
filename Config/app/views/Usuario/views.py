@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from functools import wraps
 from django.utils.decorators import method_decorator
+from django.contrib.auth.hashers import make_password
 
 # Decorador que verifica si el usuario es admin o superuser
 def user_is_admin_or_superuser(view_func):
@@ -35,6 +36,14 @@ class UsuarioListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
+        # Filtrar en función del tipo de usuario
+        user = self.request.user
+
+        # Si el usuario es 'admin', no podrá ver a los 'superuser'
+        if user.tipo_usuario == 'admin':
+            queryset = queryset.exclude(tipo_usuario='superuser')
+
+        # Agregar filtros por username y email si están en los parámetros GET
         username = self.request.GET.get('username')
         email = self.request.GET.get('email')
 
@@ -75,8 +84,6 @@ class UsuarioCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-from django.contrib.auth.hashers import make_password
-
 class UsuarioUpdateView(UpdateView):
     model = CustomUser
     form_class = UsuarioEditForm
@@ -109,4 +116,3 @@ class UsuarioUpdateView(UpdateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
-

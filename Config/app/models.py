@@ -25,9 +25,9 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     USER_TYPE_CHOICES = [
-        ('superuser', 'Superuser'),
+        ('superuser', 'Super Usuario'),
         ('admin', 'Administrador'),
-        ('usuario', 'Usuario normal'),
+        ('usuario', 'Usuario'),
     ]
 
     id = models.AutoField(primary_key=True)
