@@ -108,7 +108,7 @@ CREATE TABLE `categoria` (
   `descripcion` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +117,7 @@ CREATE TABLE `categoria` (
 
 LOCK TABLES `categoria` WRITE;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+INSERT INTO `categoria` VALUES (1,'Extintor para fuego','Extintor para incendios de fuego');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +150,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'PN','Ruben Martinez','CC','1116552386','dario564@hotmail.es','3176709994','Calle 50',1);
+INSERT INTO `cliente` VALUES (1,'PN','Ruben Martinez','CC','1116552386','dario564@hotmail.es','3176709994','Calle 50 # 10-15',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,7 +258,7 @@ CREATE TABLE `detalleventa` (
   CONSTRAINT `DetalleVenta_producto_id_a793c5f8_fk_Stock_id` FOREIGN KEY (`producto_id`) REFERENCES `stock` (`id`),
   CONSTRAINT `DetalleVenta_venta_id_d892a61e_fk_Venta_id` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`),
   CONSTRAINT `detalleventa_chk_1` CHECK ((`iva` >= 0))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,6 +267,7 @@ CREATE TABLE `detalleventa` (
 
 LOCK TABLES `detalleventa` WRITE;
 /*!40000 ALTER TABLE `detalleventa` DISABLE KEYS */;
+INSERT INTO `detalleventa` VALUES (1,10,35000.00,19,416500.00,'Adso26',1,1),(2,11,27900.00,19,365211.00,'Adso26',2,1);
 /*!40000 ALTER TABLE `detalleventa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +353,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-10-09 20:12:07.942468'),(2,'contenttypes','0002_remove_content_type_name','2024-10-09 20:12:07.992179'),(3,'auth','0001_initial','2024-10-09 20:12:08.202984'),(4,'auth','0002_alter_permission_name_max_length','2024-10-09 20:12:08.254203'),(5,'auth','0003_alter_user_email_max_length','2024-10-09 20:12:08.255401'),(6,'auth','0004_alter_user_username_opts','2024-10-09 20:12:08.265216'),(7,'auth','0005_alter_user_last_login_null','2024-10-09 20:12:08.271836'),(8,'auth','0006_require_contenttypes_0002','2024-10-09 20:12:08.273863'),(9,'auth','0007_alter_validators_add_error_messages','2024-10-09 20:12:08.279626'),(10,'auth','0008_alter_user_username_max_length','2024-10-09 20:12:08.284606'),(11,'auth','0009_alter_user_last_name_max_length','2024-10-09 20:12:08.290456'),(12,'auth','0010_alter_group_name_max_length','2024-10-09 20:12:08.304239'),(13,'auth','0011_update_proxy_permissions','2024-10-09 20:12:08.308778'),(14,'auth','0012_alter_user_first_name_max_length','2024-10-09 20:12:08.315759'),(15,'app','0001_initial','2024-10-09 20:12:09.495707'),(16,'admin','0001_initial','2024-10-09 20:12:09.605249'),(17,'admin','0002_logentry_remove_auto_add','2024-10-09 20:12:09.610372'),(18,'admin','0003_logentry_add_action_flag_choices','2024-10-09 20:12:09.618790'),(19,'app','0002_alter_customuser_tipo_usuario','2024-10-09 20:12:09.622243'),(20,'inicio','0001_initial','2024-10-09 20:12:09.654188'),(21,'inicio','0002_delete_csrftoken','2024-10-09 20:12:09.662027'),(22,'sessions','0001_initial','2024-10-09 20:12:09.694994');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-10-09 21:57:21.864422'),(2,'contenttypes','0002_remove_content_type_name','2024-10-09 21:57:21.896069'),(3,'auth','0001_initial','2024-10-09 21:57:22.100537'),(4,'auth','0002_alter_permission_name_max_length','2024-10-09 21:57:22.140610'),(5,'auth','0003_alter_user_email_max_length','2024-10-09 21:57:22.143193'),(6,'auth','0004_alter_user_username_opts','2024-10-09 21:57:22.143193'),(7,'auth','0005_alter_user_last_login_null','2024-10-09 21:57:22.156462'),(8,'auth','0006_require_contenttypes_0002','2024-10-09 21:57:22.156462'),(9,'auth','0007_alter_validators_add_error_messages','2024-10-09 21:57:22.167608'),(10,'auth','0008_alter_user_username_max_length','2024-10-09 21:57:22.172978'),(11,'auth','0009_alter_user_last_name_max_length','2024-10-09 21:57:22.178954'),(12,'auth','0010_alter_group_name_max_length','2024-10-09 21:57:22.193456'),(13,'auth','0011_update_proxy_permissions','2024-10-09 21:57:22.199121'),(14,'auth','0012_alter_user_first_name_max_length','2024-10-09 21:57:22.207234'),(15,'app','0001_initial','2024-10-09 21:57:23.343821'),(16,'admin','0001_initial','2024-10-09 21:57:23.456228'),(17,'admin','0002_logentry_remove_auto_add','2024-10-09 21:57:23.456228'),(18,'admin','0003_logentry_add_action_flag_choices','2024-10-09 21:57:23.467928'),(19,'app','0002_alter_customuser_tipo_usuario','2024-10-09 21:57:23.473147'),(20,'inicio','0001_initial','2024-10-09 21:57:23.496689'),(21,'inicio','0002_delete_csrftoken','2024-10-09 21:57:23.508362'),(22,'sessions','0001_initial','2024-10-09 21:57:23.532283');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,7 +379,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('wnvncx1w1ygdvhevdvx5p03xhcwf32gv','.eJxVjEEOwiAQAP_C2ZBtoUA9eu8byO6y2KqhSWlPxr8bkh70OjOZt4p47HM8qmxxSeqqOnX5ZYT8lNJEemC5r5rXsm8L6Zbo01Y9rUlet7P9G8xY57btrQC7QUY_ZA7WjEFCn5jYUQeYQJwhAMzcm9ETe3IuGxFAA9l2SX2-6IA4Ug:1syd3O:F9FVHeGxqSxxNjv_r0Wa6Gcvo6Zgb3yqj5nt2OH6bb8','2024-10-23 20:13:02.875655');
+INSERT INTO `django_session` VALUES ('s93ifaoxuubvuuaanlscbsj2gkby8rzb','.eJxVjMsOwiAQRf-FtSEwDC24dO83kBkeUjU0Ke3K-O_apAvd3nPOfYlA21rD1vMSpiTOQovT78YUH7ntIN2p3WYZ57YuE8tdkQft8jqn_Lwc7t9BpV6_NerChnLxxgFQNB4L2yG7YjE6MxYANH7UMWtUiH4Aj1ERgwUq3rIS7w_ZqjdE:1syeh6:Yu8sU2W8-aWxRZQfJkHvI0aOMGYbGtu6u56NOA1ICOM','2024-10-23 21:58:08.072770');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +454,7 @@ CREATE TABLE `producto` (
   KEY `Producto_tipo_pro_id_40386015_fk_Tipo_id` (`tipo_pro_id`),
   CONSTRAINT `Producto_categoria_id_d52b184f_fk_Categoria_id` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`),
   CONSTRAINT `Producto_tipo_pro_id_40386015_fk_Tipo_id` FOREIGN KEY (`tipo_pro_id`) REFERENCES `tipo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -461,6 +463,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+INSERT INTO `producto` VALUES (1,'Extintor 10 A',1,1),(2,'Extintor B',1,1);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -511,7 +514,7 @@ CREATE TABLE `stock` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_pro_id` (`nombre_pro_id`),
   CONSTRAINT `Stock_nombre_pro_id_1beafd21_fk_Producto_id` FOREIGN KEY (`nombre_pro_id`) REFERENCES `producto` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,6 +523,7 @@ CREATE TABLE `stock` (
 
 LOCK TABLES `stock` WRITE;
 /*!40000 ALTER TABLE `stock` DISABLE KEYS */;
+INSERT INTO `stock` VALUES (1,90,35000.00,1),(2,89,25800.00,2);
 /*!40000 ALTER TABLE `stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -536,7 +540,7 @@ CREATE TABLE `tipo` (
   `descripcion` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,6 +549,7 @@ CREATE TABLE `tipo` (
 
 LOCK TABLES `tipo` WRITE;
 /*!40000 ALTER TABLE `tipo` DISABLE KEYS */;
+INSERT INTO `tipo` VALUES (1,'Exintor Tipo A','Extintor para fuegos que se controlen con agua');
 /*!40000 ALTER TABLE `tipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -573,7 +578,7 @@ CREATE TABLE `ubicacion` (
 
 LOCK TABLES `ubicacion` WRITE;
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
-INSERT INTO `ubicacion` VALUES (1,1,466);
+INSERT INTO `ubicacion` VALUES (1,2,3);
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,7 +612,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('pbkdf2_sha256$870000$o54qxoS7uSHHhVbPRQci5R$6k6yzgv6MBLh65VCLorvV3UO+9gSYJHNA+c7NHvaftI=',1,'Admin','','dario564@hotmail.es',1,1,1,'2024-10-09 20:13:02.873655','superuser');
+INSERT INTO `usuario` VALUES ('pbkdf2_sha256$870000$dlXTSOqGBQtAUpIX75NWWr$cRtou4bEgGM4BwYyENzyA8Z8ptQkbGYenVGuOWt58Ao=',1,'Admin','','conalde@hotmail.com',1,1,1,'2024-10-09 21:58:08.069589','superuser');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -683,7 +688,7 @@ CREATE TABLE `venta` (
   UNIQUE KEY `num_factura` (`num_factura`),
   KEY `Venta_cliente_id_a2b0be2d_fk_Cliente_id` (`cliente_id`),
   CONSTRAINT `Venta_cliente_id_a2b0be2d_fk_Cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -692,6 +697,7 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+INSERT INTO `venta` VALUES (1,'Adso26','2024-10-09',1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -704,4 +710,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-09 15:13:42
+-- Dump completed on 2024-10-09 17:02:04
