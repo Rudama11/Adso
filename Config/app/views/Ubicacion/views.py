@@ -1,14 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
-from typing import Any
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.http.response import HttpResponse as HttpResponse
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Ubicacion,Departamentos,Municipios
 from app.forms import UbicacionForm
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 
 class UbicacionListView(ListView):
     model = Ubicacion
@@ -39,13 +38,16 @@ class UbicacionListView(ListView):
             queryset = queryset.filter(municipio_id=municipio_id)
 
         return queryset
-    
+        
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarUbicacion(request, id_ubica):
-        ubica = Ubicacion.objects.get(pk=id_ubica)
-        ubica.delete()
-        return redirect('app:ubicacion_listar')
-    
-    
+        try:
+            ubica = get_object_or_404(Ubicacion, pk=id_ubica)
+            ubica.delete()
+            return JsonResponse({'status': 'success', 'message': 'Ubicacion eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 class UbicacionCreateView(CreateView):
     model = Ubicacion
@@ -68,18 +70,6 @@ class UbicacionUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Ubicación'
-        context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
-        return context
-
-class UbicacionDeleteView(DeleteView):
-    model = Ubicacion
-    template_name = 'Ubicacion/eliminar.html'
-    success_url = reverse_lazy('app:ubicacion_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Ubicación'
         context['entidad'] = 'Ubicacion'
         context['listar_url'] = reverse_lazy('app:ubicacion_listar')
         return context

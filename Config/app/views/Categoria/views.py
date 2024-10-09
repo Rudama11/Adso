@@ -37,7 +37,7 @@ class CategoriaListView(ListView):
 
         return queryset
 
-    @require_POST  # Asegura que solo se pueda eliminar con POST
+    @require_POST
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def eliminar_categoria(request, id_categ):
         try:

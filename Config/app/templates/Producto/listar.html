@@ -88,10 +88,15 @@
         <a href="{% url 'app:producto_editarP' pro.id %}" class="btn btn-info btn-sm" title="Edita producto">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar el producto #}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ pro.id }}" title="Eliminar ">
-            <i class="fas fa-trash"></i>
-        </a>
+        {% if request.user.is_superuser or request.user.is_staff %}
+            <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ pro.id }}" title="Eliminar producto">
+                <i class="fas fa-trash"></i>
+            </a>
+        {% else %}
+            <span class="btn btn-danger btn-sm disabled" title="Eliminar producto">
+                <i class="fas fa-trash"></i>
+            </span>
+        {% endif %}
 
         <!-- Scripts de accesibilidad y AdminLTE -->
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
@@ -99,7 +104,6 @@
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
@@ -118,32 +122,57 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Mostrar alerta de éxito
-                            Swal.fire({
-                                title: 'Eliminación Exitosa',
-                                text: 'El producto ha sido eliminada correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Continuar',
-                                backdrop: true,
-                                timer: 1500,
-                                timerProgressBar: true,
-                                position: 'center',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                stopKeydownPropagation: false,
-                                buttonsStyling: true,
-                                showCloseButton: true,
-                                closeButtonAriaLabel: 'Cerrar alerta',
-                            }).then(() => {
-                                window.location.href = deleteUrl;
+                            // Enviar solicitud AJAX para eliminar la categoría
+                            fetch(deleteUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',  // Asegúrate de enviar el token CSRF
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Eliminación Exitosa',
+                                        text: 'El producto ha sido eliminado correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Continuar',
+                                        backdrop: true,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        position: 'center',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        allowEnterKey: false,
+                                        stopKeydownPropagation: false,
+                                        buttonsStyling: true,
+                                        showCloseButton: true,
+                                        closeButtonAriaLabel: 'Cerrar alerta',
+                                    }).then(() => {
+                                        // Recargar la página después de eliminar
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: data.message,
+                                        icon: 'error',
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ocurrió un error al eliminar el producto.',
+                                    icon: 'error',
+                                });
                             });
                         }
                     });
                 });
             });
         </script> 
-        {# Enlace para eliminar el producto #}
     </td>
 </tr>
 {% endfor %}
