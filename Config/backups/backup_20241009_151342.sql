@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(200) DEFAULT NULL,
+  `descripcion` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -130,10 +130,9 @@ DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `tipo_persona` varchar(2) NOT NULL,
-  `nombres` varchar(100) DEFAULT NULL,
-  `razon_social` varchar(150) DEFAULT NULL,
+  `nombres` varchar(150) DEFAULT NULL,
   `tipo_documento` varchar(3) NOT NULL,
-  `numero_documento` varchar(10) DEFAULT NULL,
+  `numero_documento` varchar(11) DEFAULT NULL,
   `correo` varchar(50) NOT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   `direccion` varchar(50) DEFAULT NULL,
@@ -141,7 +140,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`id`),
   KEY `Cliente_ciudad_id_23172d5a_fk_ubicacion_id` (`ciudad_id`),
   CONSTRAINT `Cliente_ciudad_id_23172d5a_fk_ubicacion_id` FOREIGN KEY (`ciudad_id`) REFERENCES `ubicacion` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,6 +149,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (1,'PN','Ruben Martinez','CC','1116552386','dario564@hotmail.es','3176709994','Calle 50',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS `compras`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `compras` (
   `num_factura` varchar(20) NOT NULL,
-  `fecha_compra` datetime(6) NOT NULL,
+  `fecha_compra` date NOT NULL,
   `proveedor_id` bigint NOT NULL,
   PRIMARY KEY (`num_factura`),
   KEY `Compras_proveedor_id_f5416bdf_fk_Proveedor_id` (`proveedor_id`),
@@ -342,7 +342,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -351,7 +351,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-09-30 18:12:07.843713'),(2,'contenttypes','0002_remove_content_type_name','2024-09-30 18:12:07.888255'),(3,'auth','0001_initial','2024-09-30 18:12:08.081719'),(4,'auth','0002_alter_permission_name_max_length','2024-09-30 18:12:08.134893'),(5,'auth','0003_alter_user_email_max_length','2024-09-30 18:12:08.143400'),(6,'auth','0004_alter_user_username_opts','2024-09-30 18:12:08.147814'),(7,'auth','0005_alter_user_last_login_null','2024-09-30 18:12:08.155356'),(8,'auth','0006_require_contenttypes_0002','2024-09-30 18:12:08.157667'),(9,'auth','0007_alter_validators_add_error_messages','2024-09-30 18:12:08.161664'),(10,'auth','0008_alter_user_username_max_length','2024-09-30 18:12:08.166985'),(11,'auth','0009_alter_user_last_name_max_length','2024-09-30 18:12:08.170985'),(12,'auth','0010_alter_group_name_max_length','2024-09-30 18:12:08.179092'),(13,'auth','0011_update_proxy_permissions','2024-09-30 18:12:08.187445'),(14,'auth','0012_alter_user_first_name_max_length','2024-09-30 18:12:08.192602'),(15,'app','0001_initial','2024-09-30 18:12:09.417475'),(16,'admin','0001_initial','2024-09-30 18:12:09.553399'),(17,'admin','0002_logentry_remove_auto_add','2024-09-30 18:12:09.562397'),(18,'admin','0003_logentry_add_action_flag_choices','2024-09-30 18:12:09.571398'),(19,'inicio','0001_initial','2024-09-30 18:12:09.584398'),(20,'inicio','0002_delete_csrftoken','2024-09-30 18:12:09.608441'),(21,'sessions','0001_initial','2024-09-30 18:12:09.654648');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-10-09 20:12:07.942468'),(2,'contenttypes','0002_remove_content_type_name','2024-10-09 20:12:07.992179'),(3,'auth','0001_initial','2024-10-09 20:12:08.202984'),(4,'auth','0002_alter_permission_name_max_length','2024-10-09 20:12:08.254203'),(5,'auth','0003_alter_user_email_max_length','2024-10-09 20:12:08.255401'),(6,'auth','0004_alter_user_username_opts','2024-10-09 20:12:08.265216'),(7,'auth','0005_alter_user_last_login_null','2024-10-09 20:12:08.271836'),(8,'auth','0006_require_contenttypes_0002','2024-10-09 20:12:08.273863'),(9,'auth','0007_alter_validators_add_error_messages','2024-10-09 20:12:08.279626'),(10,'auth','0008_alter_user_username_max_length','2024-10-09 20:12:08.284606'),(11,'auth','0009_alter_user_last_name_max_length','2024-10-09 20:12:08.290456'),(12,'auth','0010_alter_group_name_max_length','2024-10-09 20:12:08.304239'),(13,'auth','0011_update_proxy_permissions','2024-10-09 20:12:08.308778'),(14,'auth','0012_alter_user_first_name_max_length','2024-10-09 20:12:08.315759'),(15,'app','0001_initial','2024-10-09 20:12:09.495707'),(16,'admin','0001_initial','2024-10-09 20:12:09.605249'),(17,'admin','0002_logentry_remove_auto_add','2024-10-09 20:12:09.610372'),(18,'admin','0003_logentry_add_action_flag_choices','2024-10-09 20:12:09.618790'),(19,'app','0002_alter_customuser_tipo_usuario','2024-10-09 20:12:09.622243'),(20,'inicio','0001_initial','2024-10-09 20:12:09.654188'),(21,'inicio','0002_delete_csrftoken','2024-10-09 20:12:09.662027'),(22,'sessions','0001_initial','2024-10-09 20:12:09.694994');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,7 +377,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('4rqa3md5inwfbnhwxrwvtol8q8pjiqav','.eJxVjMEOwiAQRP-FsyEslrJ49O43kIUFqRpISnsy_rtt0oPeJvPezFt4Wpfi155mP7G4CBCn3y5QfKa6A35QvTcZW13mKchdkQft8tY4va6H-3dQqJdtjTqfYRhDJk0W0xgsbWlwKrMiF7LGbFgTIyTGaABdBgtIDECsnBGfL_ljOF0:1sw3nE:IHAvvu44IkHyrLyqkyLS-8x_AGGfj0KarNCUAkaI7FE','2024-10-16 18:09:44.119653'),('4udrj7kbscm5zjuyf6nkt1kygoww2x6u','.eJxVjMEOwiAQRP-FsyEslrJ49O43kIUFqRpISnsy_rtt0oPeJvPezFt4Wpfi155mP7G4CBCn3y5QfKa6A35QvTcZW13mKchdkQft8tY4va6H-3dQqJdtjTqfYRhDJk0W0xgsbWlwKrMiF7LGbFgTIyTGaABdBgtIDECsnBGfL_ljOF0:1svMel:Z2kNQXgLKdjbJnFhv-4nULg4A7rlI3I7glPvWhrq-YY','2024-10-14 20:06:07.349694'),('gxqbz5enrllb3d970nbkowgz69n9wp8z','.eJxVjEEOwiAQRe_C2hBmCNS6dO8ZyMAMUjWQlHbVeHdt0oVu_3vvbyrQupSwdpnDxOqiUJ1-t0jpKXUH_KB6bzq1usxT1LuiD9r1rbG8rof7d1Col29NIgwJkRxjjt6wZAdocbTsBWIUT5AAjT_TKM4CDJKQLcFgso85q_cHBkg4oA:1svL1T:A2g5oFFIGUqrHZ_QAaiDgD47fkIlJKecY_uWRbI2h-E','2024-10-14 18:21:27.423771'),('libt8o5eelec34i9uswz0h6r9msf8cza','.eJxVjMEOwiAQRP-FsyEslrJ49O43kIUFqRpISnsy_rtt0oPeJvPezFt4Wpfi155mP7G4CBCn3y5QfKa6A35QvTcZW13mKchdkQft8tY4va6H-3dQqJdtjTqfYRhDJk0W0xgsbWlwKrMiF7LGbFgTIyTGaABdBgtIDECsnBGfL_ljOF0:1svifx:0uyRiy-eEh90OmUNUgDdyfPzGllqdKIKnQCuJvZ7Nrs','2024-10-15 19:36:49.987116');
+INSERT INTO `django_session` VALUES ('wnvncx1w1ygdvhevdvx5p03xhcwf32gv','.eJxVjEEOwiAQAP_C2ZBtoUA9eu8byO6y2KqhSWlPxr8bkh70OjOZt4p47HM8qmxxSeqqOnX5ZYT8lNJEemC5r5rXsm8L6Zbo01Y9rUlet7P9G8xY57btrQC7QUY_ZA7WjEFCn5jYUQeYQJwhAMzcm9ETe3IuGxFAA9l2SX2-6IA4Ug:1syd3O:F9FVHeGxqSxxNjv_r0Wa6Gcvo6Zgb3yqj5nt2OH6bb8','2024-10-23 20:13:02.875655');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,8 +417,8 @@ DROP TABLE IF EXISTS `normativa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `normativa` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `decreto` varchar(25) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
+  `decreto` varchar(50) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
   `producto_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Normativa_producto_id_be390836_fk_Producto_id` (`producto_id`),
@@ -474,10 +474,9 @@ DROP TABLE IF EXISTS `proveedor`;
 CREATE TABLE `proveedor` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `tipo_persona` varchar(2) NOT NULL,
-  `nombres` varchar(100) DEFAULT NULL,
-  `razon_social` varchar(150) DEFAULT NULL,
+  `nombres` varchar(150) DEFAULT NULL,
   `tipo_documento` varchar(3) NOT NULL,
-  `numero_documento` varchar(10) DEFAULT NULL,
+  `numero_documento` varchar(11) DEFAULT NULL,
   `correo` varchar(50) NOT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   `direccion` varchar(50) DEFAULT NULL,
@@ -534,7 +533,7 @@ DROP TABLE IF EXISTS `tipo`;
 CREATE TABLE `tipo` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(200) DEFAULT NULL,
+  `descripcion` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -565,7 +564,7 @@ CREATE TABLE `ubicacion` (
   KEY `ubicacion_municipio_id_09d5e5ab_fk_municipios_id` (`municipio_id`),
   CONSTRAINT `ubicacion_departamento_id_be50b0a6_fk_departamentos_id` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `ubicacion_municipio_id_09d5e5ab_fk_municipios_id` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,6 +573,7 @@ CREATE TABLE `ubicacion` (
 
 LOCK TABLES `ubicacion` WRITE;
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
+INSERT INTO `ubicacion` VALUES (1,1,466);
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -585,10 +585,10 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(150) NOT NULL,
-  `nombres` varchar(30) NOT NULL,
   `password` varchar(128) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(15) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
   `email` varchar(254) NOT NULL,
   `is_superuser` tinyint(1) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
@@ -598,7 +598,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -607,7 +607,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Admin','','pbkdf2_sha256$870000$DvahmfX1EC441sYNSWflCv$O848VB60wjQJHDSOq0HM8u3uLERY6aeB/50O3fl3pPQ=','conaldex@gmail.com',1,1,1,'2024-10-02 18:09:44.118470','admin'),(2,'Normal','Ruben Martinez','pbkdf2_sha256$870000$S5OTiu5OEb8zOXTBubfhVK$KGJ8Z6F+v9WXZQBq5vtTnYWbkR41AGIAHz7YRpG9uqI=','normal@gmail.com',0,0,1,'2024-09-30 18:21:27.420741','usuario');
+INSERT INTO `usuario` VALUES ('pbkdf2_sha256$870000$o54qxoS7uSHHhVbPRQci5R$6k6yzgv6MBLh65VCLorvV3UO+9gSYJHNA+c7NHvaftI=',1,'Admin','','dario564@hotmail.es',1,1,1,'2024-10-09 20:13:02.873655','superuser');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -677,7 +677,7 @@ DROP TABLE IF EXISTS `venta`;
 CREATE TABLE `venta` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `num_factura` varchar(10) NOT NULL,
-  `fecha_emision` datetime(6) NOT NULL,
+  `fecha_emision` date NOT NULL,
   `cliente_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `num_factura` (`num_factura`),
@@ -704,4 +704,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-02 13:09:46
+-- Dump completed on 2024-10-09 15:13:42
