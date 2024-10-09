@@ -13,6 +13,7 @@ from app.views.Stock.views import *
 from app.views.Usuario.views import *
 from app.views.Dcompras.views import *
 from app.views.Dventas.views import *
+from django.views.generic import TemplateView
 
 
 app_name = 'app'
@@ -66,6 +67,7 @@ urlpatterns = [
     path('usuario/crear/', UsuarioCreateView.as_view(), name='usuario_crear'),
     path('usuario/editar/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario_editar'),
     path('usuario/eliminar/<int:id_usuario>/', UsuarioListView.EliminarUsuario, name='usuario_eliminar'),
+    path('acceso_denegado/', TemplateView.as_view(template_name='acceso_denegado.html'), name='acceso_denegado'),
     
     #-------------------------------------------------- Producto --------------------------------------------------
 
