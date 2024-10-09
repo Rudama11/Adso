@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
@@ -53,7 +53,6 @@ class VentasCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.all()  
-        context['productos'] = Producto.objects.all()  
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
         context['listar_url'] = reverse_lazy('app:venta_listar')  
@@ -89,30 +88,5 @@ class VentasDeleteView(DeleteView):
         return context
 
 # Vista para obtener datos del cliente en formato JSON
-def obtener_datos_cliente(request):
-    cliente_id = request.GET.get('cliente_id')
-    try:
-        cliente = Cliente.objects.get(id=cliente_id)
-        data = {
-            'nombre': cliente.nombres if cliente.tipo_persona == 'PN' else cliente.razon_social,
-            'direccion': cliente.direccion,
-            'correo': cliente.correo,
-            'telefono': cliente.telefono,
-        }
-        return JsonResponse(data)
-    except Cliente.DoesNotExist:
-        return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
 
-def venta_detalle(request, id):
-    venta = get_object_or_404(Venta, id=id)  # Buscar por id 
-    detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
-    form = VentaForm(instance=venta)
-    
-    context = {
-        'form': form,
-        'titulo': 'Detalles de Venta',
-        'listar_url': reverse_lazy('app:venta_listar'),
-        'detalles_venta': detalles_venta,  # Pasamos los detalles de la venta al contexto
-    }
-    return render(request, 'Ventas/ventaD.html', context)
 
