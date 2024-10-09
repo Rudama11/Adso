@@ -4,93 +4,42 @@
 <!-- Incluyendo Bootstrap CSS -->
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <style>
-    .card-modulo {
-        margin-bottom: 20px;
+    body {
+        background-color: #ffffff; /* Fondo blanco para toda la página */
     }
-    .card-title {
-        font-weight: bold;
-        color: #007bff;
+    .welcome-section {
+        padding: 30px 0; /* Espaciado superior e inferior */
+        text-align: center; /* Alineación centrada */
     }
-    .card-body {
-        text-align: center;
+    .welcome-title {
+        font-size: 2rem; /* Tamaño del título */
+        margin-bottom: 10px; /* Espacio inferior */
+        font-weight: bold; /* Negrita */
+        background: linear-gradient(90deg, #007bff, #00bfff); /* Degradado azul */
+        -webkit-background-clip: text; /* Clip del fondo para texto */
+        -webkit-text-fill-color: transparent; /* Relleno del texto transparente */
     }
-    .panel-header {
-        margin-bottom: 30px;
+    .welcome-message {
+        font-size: 1rem; /* Tamaño de fuente */
+        color: #555; /* Color gris oscuro */
+        line-height: 1.5; /* Mejora la legibilidad */
+        margin-bottom: 15px; /* Espacio inferior */
+    }
+    .welcome-image {
+        width: 70%; /* Imagen ocupa el 70% del ancho */
+        max-width: 300px; /* Ancho máximo ajustado */
+        border-radius: 20px; /* Bordes más redondeados */
+        margin-top: 15px; /* Espacio superior */
     }
 </style>
 {% endblock %}
 
 {% block contenido %}
-<div class="container mt-4">
-    <div class="row panel-header">
-        <div class="col-md-12">
-            <h2 class="text-center">Panel Administrativo - Conaldex Boyacá</h2>
-            <p class="text-center">Bienvenido al sistema de gestión de inventario. Accede a los diferentes módulos para gestionar tus registros.</p>
-        </div>
-    </div>
-    
-    <div class="row">
-        <!-- Tarjeta 1: Módulo de Productos -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Productos</h5>
-                    <p>Agregar, editar o eliminar productos</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta 2: Módulo de Categorías -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Categorías</h5>
-                    <p>Gestiona las categorías de productos</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta 3: Módulo de Proveedores -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Proveedores</h5>
-                    <p>Administrar información de proveedores</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Tarjeta 4: Módulo de Inventarios -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Inventarios</h5>
-                    <p>Ver y actualizar el inventario</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta 5: Módulo de Usuarios -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Usuarios</h5>
-                    <p>Gestiona los usuarios del sistema</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta 6: Módulo de Reportes -->
-        <div class="col-md-4">
-            <div class="card card-modulo">
-                <div class="card-body">
-                    <h5 class="card-title">Módulo de Reportes</h5>
-                    <p>Genera reportes de inventario</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="welcome-section">
+    <h2 class="welcome-title">¡Bienvenido a Conaldex Boyacá!</h2>
+    <p class="welcome-message">
+        Acceso exclusivo para empleados y administradores para gestionar sus funciones en la plataforma.
+    </p>
+    <img src="{% static 'img/epp.jpg' %}" alt="Inventario Conaldex" class="welcome-image">
 </div>
 {% endblock %}
