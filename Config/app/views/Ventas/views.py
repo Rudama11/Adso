@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from app.models import Venta, Producto, Cliente , DetalleVenta
 from app.forms import VentaForm
 from django.utils.dateparse import parse_date
+from django.contrib import messages
 
 # Vista para listar ventas
 class VentasListView(ListView):
@@ -55,10 +56,17 @@ class VentasCreateView(CreateView):
         context['clientes'] = Cliente.objects.all()  
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
-        context['listar_url'] = reverse_lazy('app:venta_listar')  
+        context['listar_url'] = self.success_url  
         return context
-    
 
+    def form_invalid(self, form):
+        # Recorre los campos en el orden definido en el formulario
+        for field_name in form.fields:
+            if field_name in form.errors:
+                field_label = form.fields[field_name].label
+                for error in form.errors[field_name]:
+                    messages.error(self.request, f"{field_label}: {error}")
+        return super().form_invalid(form)
 
 # Vista para actualizar una venta existente
 class VentasUpdateView(UpdateView):

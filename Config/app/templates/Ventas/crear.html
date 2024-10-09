@@ -68,18 +68,30 @@
 document.getElementById('confirmButton').addEventListener('click', function(e) {
     e.preventDefault(); 
     
-    // Validar que los campos no estén vacíos
-    let isValid = true;
+    // Validar que cada campo no esté vacío y mostrar alerta específica
     let formFields = document.querySelectorAll('#createForm .form-control');
-    
-    formFields.forEach(function(field) {
+    let isValid = true;
+
+    for (let field of formFields) {
         if (field.value.trim() === '') {
             isValid = false;
-            field.classList.add('is-invalid');
+            Swal.fire({
+                title: 'Campo Obligatorio',
+                text: `El campo ${field.previousElementSibling.innerText} es obligatorio.`,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+            });
+            field.focus();  // Enfocar en el campo vacío
+            break;  // Detener el bucle en el primer campo vacío
         } else {
             field.classList.remove('is-invalid');
         }
-    });
+    }
 
     if (isValid) {
         // Mostrar alerta de éxito y luego enviar el formulario
@@ -93,33 +105,8 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
             timerProgressBar: true,
             position: 'center',
             allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            stopKeydownPropagation: false,
-            buttonsStyling: true,
-            showCloseButton: true,
-            closeButtonAriaLabel: 'Cerrar alerta',
         }).then(() => {
             document.getElementById('createForm').submit();
-        });
-    } else {
-        // Si hay campos vacíos, muestra la alerta de error
-        Swal.fire({
-            title: 'Error',
-            text: 'Debe llenar todos los campos de registro',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            backdrop: true,
-            timer: 3000,
-            timerProgressBar: true,
-            position: 'center',
-            allowOutsideClick: true,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-            stopKeydownPropagation: false,
-            buttonsStyling: true,
-            showCloseButton: true,
-            closeButtonAriaLabel: 'Cerrar alerta',
         });
     }
 });
