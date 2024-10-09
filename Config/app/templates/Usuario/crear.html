@@ -28,6 +28,18 @@
             {% endfor %}
             <!-- Mensaje de error de coincidencia de contraseñas -->
             <div class="invalid-feedback" id="passwordMismatch" style="display:none;">Las contraseñas no coinciden.</div>
+
+            <!-- Contenedor para los requisitos de la contraseña -->
+            <div id="password-requirements" style="margin-top: 20px;">
+                <h5>Requisitos de la contraseña:</h5>
+                <ul id="requirements-list">
+                    <li id="length-requirement">8-15 caracteres <span class="status"></span></li>
+                    <li id="uppercase-requirement">Al menos una letra mayúscula <span class="status"></span></li>
+                    <li id="lowercase-requirement">Al menos una letra minúscula <span class="status"></span></li>
+                    <li id="number-requirement">Al menos un número <span class="status"></span></li>
+                    <li id="special-char-requirement">Al menos un carácter especial (ej. !@#$%^&*) <span class="status"></span></li>
+                </ul>
+            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
@@ -197,6 +209,28 @@
                 });
             }
         });
+    });
+
+    // Función para validar la contraseña en tiempo real
+    const password1Field = document.querySelector('[name="password"]');
+    password1Field.addEventListener('input', function() {
+        const password = this.value;
+
+        // Requisitos
+        const requirements = {
+            length: password.length >= 8 && password.length <= 15,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%^&*]/.test(password),
+        };
+
+        // Actualizar el estado de los requisitos
+        document.getElementById('length-requirement').querySelector('.status').innerHTML = requirements.length ? '✓' : '';
+        document.getElementById('uppercase-requirement').querySelector('.status').innerHTML = requirements.uppercase ? '✓' : '';
+        document.getElementById('lowercase-requirement').querySelector('.status').innerHTML = requirements.lowercase ? '✓' : '';
+        document.getElementById('number-requirement').querySelector('.status').innerHTML = requirements.number ? '✓' : '';
+        document.getElementById('special-char-requirement').querySelector('.status').innerHTML = requirements.specialChar ? '✓' : '';
     });
 </script>
 
