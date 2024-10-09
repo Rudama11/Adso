@@ -1,27 +1,25 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import CustomUser
 from app.forms import UsuarioForm, UsuarioEditForm
-from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
-from django.views.decorators.http import require_POST
-from django.shortcuts import redirect
 from django.shortcuts import redirect
 from functools import wraps
 from django.utils.decorators import method_decorator
 
-
+# Decorador que verifica si el usuario es admin o superuser
 def user_is_admin_or_superuser(view_func):
     @wraps(view_func)
     def _wrapped_view(request, *args, **kwargs):
-        if request.user.tipo_usuario in ['admin', 'superuser']:  # Solo permitir admin y superuser
-            return view_func(request, *args, **kwargs)
-        return redirect('app:acceso_denegado')  # Redirigir si no tiene permiso
+        if request.user.is_authenticated:  # Verificar si está autenticado
+            if request.user.tipo_usuario in ['admin', 'superuser']:  # Solo permitir admin y superuser
+                return view_func(request, *args, **kwargs)
+            return redirect('app:acceso_denegado')  # Redirigir si no tiene permiso
+        return redirect('login')  # Redirigir al login si no está autenticado
     return _wrapped_view
 
+# Aplicar decoradores a la vista
 @method_decorator(user_is_admin_or_superuser, name='dispatch')
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = CustomUser
