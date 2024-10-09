@@ -36,9 +36,6 @@
             </div>
             <hr>
 
-            <!-- Mensaje de error -->
-            <div id="mensajeError" class="alert alert-danger" style="display: none;"></div>
-
             <!-- Detalles de Producto -->
             <div class="form-group">
                 <label for="id_producto">Producto</label>
@@ -152,7 +149,7 @@
         if (!numFactura) missingFields.push('número de factura');
     
         if (missingFields.length > 0) {
-            alert(`Faltan los siguientes datos: ${missingFields.join(', ')}`);
+            mostrarMensajeError(`Faltan los siguientes datos: ${missingFields.join(', ')}`);
             return;
         }
     
@@ -192,14 +189,25 @@
     }
     
     function mostrarMensajeError(error) {
-        const mensajeError = document.getElementById('mensajeError');
-        mensajeError.style.display = 'block';
-        mensajeError.textContent = error;
-        
-        // Ocultar el mensaje de error después de 5 segundos
-        setTimeout(() => {
-            mensajeError.style.display = 'none';
-        }, 5000);
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: error,
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true, // Mostrar la alerta por 2000 milisegundos
+        });
+    }
+
+    function mostrarMensajeExito(mensaje) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: mensaje,
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true // Mostrar la alerta por 2000 milisegundos
+        });
     }
 </script>
 

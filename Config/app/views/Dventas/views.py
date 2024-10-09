@@ -33,9 +33,9 @@ class VentaDetalleCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        venta = get_object_or_404(Venta, id=self.kwargs['venta_id'])  # Cambia 'id' a 'venta_id'
+        venta = get_object_or_404(Venta, id=self.kwargs['venta_id'])  # Obtener la venta actual
         context['venta'] = venta
-        context['detalles_venta_url'] = reverse('app:detalle_venta', kwargs={'venta_id': venta.id})  # Cambia 'id' a 'venta_id' en el reverse
+        context['detalles_venta_url'] = reverse('app:detalle_venta', kwargs={'venta_id': venta.id})
         context['detalles_venta'] = DetalleVenta.objects.filter(venta=venta)
         context['titulo'] = 'Detalles de Venta'
         context['listar_url'] = reverse('app:venta_listar')
@@ -49,6 +49,7 @@ class VentaDetalleCreateView(CreateView):
         return super().form_valid(form)
 
     def post(self, request, *args, **kwargs):
+        # Asegurarse de que es una solicitud AJAX
         if request.headers.get('x-requested-with') != 'XMLHttpRequest':
             return JsonResponse({'success': False, 'error': 'Método no permitido'}, status=405)
 
@@ -60,6 +61,7 @@ class VentaDetalleCreateView(CreateView):
             if any(key not in data for key in required_keys):
                 return JsonResponse({'success': False, 'error': 'Faltan campos requeridos.'}, status=400)
 
+            # Obtener venta y producto, y validar cantidad solicitada
             venta = get_object_or_404(Venta, id=data['id_venta'])
             producto = get_object_or_404(Stock, id=data['producto'])
 
@@ -67,9 +69,12 @@ class VentaDetalleCreateView(CreateView):
             if cantidad <= 0:
                 return JsonResponse({'success': False, 'error': 'La cantidad debe ser mayor que cero.'}, status=400)
 
-            # Verificar stock antes de crear el detalle
+            # Verificar stock disponible
             if producto.cantidad < cantidad:
-                return JsonResponse({'success': False, 'error': f"No hay suficiente stock para {producto.nombre_pro.nombre}. Stock actual: {producto.cantidad}, solicitado: {cantidad}"}, status=400)
+                return JsonResponse({
+                    'success': False,
+                    'error': f"No hay suficiente stock para {producto.nombre_pro.nombre}. Stock actual: {producto.cantidad}, solicitado: {cantidad}"
+                }, status=400)
 
             with transaction.atomic():
                 # Crear el detalle de venta
@@ -87,13 +92,13 @@ class VentaDetalleCreateView(CreateView):
                 producto.cantidad -= cantidad
                 producto.save()
 
-            return JsonResponse({'success': True, 'detalle_venta': detalle_venta.id})
+            # Enviar respuesta exitosa
+            return JsonResponse({'success': True, 'detalle_venta': detalle_venta.id, 'message': 'Detalle de venta agregado correctamente.'})
 
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Error en los datos enviados.'}, status=400)
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
-
 
 
 # Actualizar un detalle de venta
