@@ -18,10 +18,9 @@
                 <input type="text" name="num_factura" class="form-control" id="id_num_factura" value="{{ venta.num_factura }}" readonly>
             </div>
 
-            <!-- ID de la Venta (solo lectura) -->
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label for="id_venta">ID de la Venta</label>
-                <input type="text" name="id_venta" class="form-control" id="id_venta" value="{{ venta.id }}" readonly>
+                <input type="hidden" name="id_venta" id="id_venta" value="{{ venta.id }}">
             </div>
 
             <!-- Fecha de Emisión -->
