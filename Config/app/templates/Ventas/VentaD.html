@@ -15,7 +15,8 @@
             <!-- Número de Factura -->
             <div class="form-group">
                 <label for="id_num_factura">{{ form.num_factura.label }}</label>
-                <input type="text" name="num_factura" class="form-control" id="id_num_factura" value="{{ venta.num_factura }}" readonly>
+                <input type="text" name="num_factura" class="form-control" id="id_num_factura"
+                    value="{{ venta.num_factura }}" readonly>
             </div>
 
             <div class="form-group" style="display: none;">
@@ -26,13 +27,15 @@
             <!-- Fecha de Emisión -->
             <div class="form-group">
                 <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_emision" value="{{ venta.fecha_emision|date:'Y-m-d' }}" readonly>
+                <input type="text" class="form-control" id="id_fecha_emision"
+                    value="{{ venta.fecha_emision|date:'Y-m-d' }}" readonly>
             </div>
 
             <!-- Cliente -->
             <div class="form-group">
                 <label for="id_cliente">{{ form.cliente.label }}</label>
-                <input type="text" name="cliente" class="form-control" id="id_cliente" value="{{ venta.cliente }}" readonly>
+                <input type="text" name="cliente" class="form-control" id="id_cliente" value="{{ venta.cliente }}"
+                    readonly>
             </div>
             <hr>
 
@@ -42,7 +45,7 @@
                 <select id="id_producto" name="producto" class="form-control">
                     <option value="">Seleccione un producto</option>
                     {% for producto in productos %}
-                        <option value="{{ producto.id }}">{{ producto.nombre_pro.nombre }}</option>
+                    <option value="{{ producto.id }}">{{ producto.nombre_pro.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -50,19 +53,22 @@
             <!-- Cantidad -->
             <div class="form-group">
                 <label for="id_cantidad">Cantidad</label>
-                <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="1" value="1" onchange="calcularTotal();">
+                <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="1" value="1"
+                    onchange="calcularTotal();">
             </div>
 
             <!-- Precio Unitario -->
             <div class="form-group">
                 <label for="id_precio">Precio Unitario</label>
-                <input type="number" id="id_precio" name="precio" class="form-control" step="0.01" min="0" required onchange="calcularTotal();">
+                <input type="number" id="id_precio" name="precio" class="form-control" step="0.01" min="0" required
+                    onchange="calcularTotal();">
             </div>
 
             <!-- IVA (%) -->
             <div class="form-group">
                 <label for="id_iva">IVA (%)</label>
-                <input type="number" id="id_iva" name="iva" class="form-control" min="0" max="100" value="19" onchange="calcularTotal();">
+                <input type="number" id="id_iva" name="iva" class="form-control" min="0" max="100" value="19"
+                    onchange="calcularTotal();">
             </div>
 
             <!-- Total -->
@@ -85,33 +91,35 @@
                     </thead>
                     <tbody id="detalleVentaBody">
                         {% for detalle in detalles_venta %}
-                            <tr>
-                                <td>{{ detalle.producto }}</td>
-                                <td>{{ detalle.cantidad }}</td>
-                                <td>{{ detalle.precio }}</td>
-                                <td>{{ detalle.iva }}%</td>
-                                <td>{{ detalle.total }}</td>
-                            </tr>
+                        <tr>
+                            <td>{{ detalle.producto }}</td>
+                            <td>{{ detalle.cantidad }}</td>
+                            <td>{{ detalle.precio }}</td>
+                            <td>{{ detalle.iva }}%</td>
+                            <td>{{ detalle.total }}</td>
+                        </tr>
                         {% empty %}
-                            <tr>
-                                <td colspan="5">No hay productos agregados.</td>
-                            </tr>
+                        <tr>
+                            <td colspan="5">No hay productos agregados.</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
 
             <!-- Footer -->
+            <!-- Footer -->
             <div class="card-footer">
-                <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
-                    <i class="fas fa-times"></i> Volver al Listado
+                <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();">
+                    <i class="fas fa-plus"></i> Agregar producto
+                </button>
+                <button type="button" class="btn btn-success print-hidden" onclick="window.print();">
+                    <i class="fas fa-print"></i> Imprimir factura
+                </button>
+                <a href="{{ listar_url }}" class="btn btn-info btn-flat print-hidden"
+                    style="background-color: #b82b2b; color: white;">
+                    <i class="fas fa-times"></i> Cancelar
                 </a>
-                <button type="button" class="btn btn-success" onclick="window.print();">
-                    <i class="fas fa-print"></i> Imprimir Factura
-                </button>
-                <button type="button" class="btn btn-primary" onclick="agregarDetalle();">
-                    <i class="fas fa-plus"></i> Agregar Detalle
-                </button>
             </div>
         </form>
     </div>
@@ -119,10 +127,10 @@
 
 <!-- Scripts de funcionalidad -->
 <script>
-    const csrftoken = '{{ csrf_token }}'; 
-    const ventaId = '{{ venta.id }}'; 
-    const detallesVentaUrl = '{% url "app:detalle_venta" venta.id %}'; 
-    console.log(detallesVentaUrl); 
+    const csrftoken = '{{ csrf_token }}';
+    const ventaId = '{{ venta.id }}';
+    const detallesVentaUrl = '{% url "app:detalle_venta" venta.id %}';
+    console.log(detallesVentaUrl);
 
     function calcularTotal() {
         const cantidad = parseFloat(document.getElementById('id_cantidad').value) || 0;
@@ -139,20 +147,20 @@
         const precio = parseFloat(document.getElementById('id_precio').value);
         const iva = parseFloat(document.getElementById('id_iva').value);
         const numFactura = document.getElementById('id_num_factura').value;
-    
+
         // Validación de campos
         const missingFields = [];
-        if (!productoId) missingFields.push('producto');
-        if (!cantidad || isNaN(cantidad)) missingFields.push('cantidad');
-        if (!precio || isNaN(precio)) missingFields.push('precio');
+        if (!productoId) missingFields.push('Producto');
+        if (!cantidad || isNaN(cantidad)) missingFields.push('Cantidad');
+        if (!precio || isNaN(precio)) missingFields.push('Precio');
         if (!iva || isNaN(iva)) missingFields.push('IVA');
-        if (!numFactura) missingFields.push('número de factura');
-    
+        if (!numFactura) missingFields.push('Número de factura');
+
         if (missingFields.length > 0) {
-            mostrarMensajeError(`Faltan los siguientes datos: ${missingFields.join(', ')}`);
+            mostrarMensajeError(`Faltan los siguientes campos: ${missingFields.join(', ')}`);
             return;
         }
-    
+
         const formData = {
             producto: productoId,
             cantidad: cantidad,
@@ -161,7 +169,7 @@
             id_venta: ventaId,
             num_factura: numFactura
         };
-    
+
         fetch(detallesVentaUrl, {
             method: 'POST',
             headers: {
@@ -171,27 +179,28 @@
             },
             body: JSON.stringify(formData)
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Detalle de venta creado con ID:', data.detalle_venta);
-                // Recargar la página para mostrar los cambios
-                location.reload();
-            } else {
-                console.error('Error:', data.error);
-                mostrarMensajeError(data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-            mostrarMensajeError('Error inesperado en la solicitud.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Detalle de venta creado con ID:', data.detalle_venta);
+                    mostrarMensajeExito('Producto agregado exitosamente.'); // Mostrar mensaje de éxito
+                    // Recargar la página para mostrar los cambios
+                    setTimeout(() => location.reload(), 2000); // Esperar 2 segundos antes de recargar
+                } else {
+                    console.error('Error:', data.error);
+                    mostrarMensajeError(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud:', error);
+                mostrarMensajeError('Error inesperado en la solicitud.');
+            });
     }
-    
+
     function mostrarMensajeError(error) {
         Swal.fire({
-            icon: 'error',
-            title: '¡Error!',
+            icon: 'warning',
+            title: '¡Campos Vacíos!',
             text: error,
             showConfirmButton: false,
             timer: 2000,

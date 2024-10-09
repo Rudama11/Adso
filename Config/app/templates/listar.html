@@ -26,6 +26,13 @@
         background-color: #1d3c5d;
         border: 2px solid #09335f;
     }
+
+    @media print {
+        .print-hidden {
+            display: none !important; /* Ocultar los elementos durante la impresión */
+        }
+    }
+    
 </style>
 {% endblock %}
 
