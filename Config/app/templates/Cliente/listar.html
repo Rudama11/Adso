@@ -126,16 +126,22 @@
         <a href="{% url 'app:cliente_editarCli' cl.id %}" class="btn btn-info btn-sm" title="Editar cliente">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ cl.id }}" title="Eliminar Cliente">
-            <i class="fas fa-trash"></i>
-        </a>
+        {% if request.user.is_superuser or request.user.is_staff %}
+            <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ cl.id }}" title="Eliminar cliente">
+                <i class="fas fa-trash"></i>
+            </a>
+        {% else %}
+            <span class="btn btn-danger btn-sm disabled" title="Eliminar cliente">
+                <i class="fas fa-trash"></i>
+            </span>
+        {% endif %}
 
+        <!-- Scripts de accesibilidad y AdminLTE -->
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
@@ -145,7 +151,7 @@
                     
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar este cliente?',
+                        text: '¿Estás seguro de que deseas eliminar esta categoría?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -154,25 +160,51 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Mostrar alerta de éxito
-                            Swal.fire({
-                                title: 'Eliminación Exitosa',
-                                text: 'El cliente ha sido eliminado correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Continuar',
-                                backdrop: true,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                position: 'center',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                stopKeydownPropagation: false,
-                                buttonsStyling: true,
-                                showCloseButton: true,
-                                closeButtonAriaLabel: 'Cerrar alerta',
-                            }).then(() => {
-                                window.location.href = deleteUrl;
+                            // Enviar solicitud AJAX para eliminar la categoría
+                            fetch(deleteUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',  // Asegúrate de enviar el token CSRF
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Eliminación Exitosa',
+                                        text: 'El cliente ha sido eliminado correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Continuar',
+                                        backdrop: true,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        position: 'center',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        allowEnterKey: false,
+                                        stopKeydownPropagation: false,
+                                        buttonsStyling: true,
+                                        showCloseButton: true,
+                                        closeButtonAriaLabel: 'Cerrar alerta',
+                                    }).then(() => {
+                                        // Recargar la página después de eliminar
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: data.message,
+                                        icon: 'error',
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ocurrió un error al eliminar el cliente.',
+                                    icon: 'error',
+                                });
                             });
                         }
                     });

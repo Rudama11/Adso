@@ -1,13 +1,14 @@
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
-from django.utils.decorators import method_decorator
-from django.urls import reverse_lazy
-from django.http import JsonResponse
 from app.models import Proveedor
 from app.forms import ProveedorForm
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices
-from django.shortcuts import redirect
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 class ProveedorListView(ListView):
     model = Proveedor
     template_name = 'Proveedor/listar.html'
@@ -51,11 +52,16 @@ class ProveedorListView(ListView):
             queryset = queryset.filter(numero_documento__icontains=numero_documento)
 
         return queryset
-    
+
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarProveedor(request, id_prove):
-        prove = Proveedor.objects.get(pk=id_prove)
-        prove.delete()
-        return redirect('app:proveedor_listar')
+        try:
+            prove = get_object_or_404(Proveedor, pk=id_prove)
+            prove.delete()
+            return JsonResponse({'status': 'success', 'message': 'Proveedor eliminado correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     
 class ProveedorCreateView(CreateView):
     model = Proveedor
