@@ -442,9 +442,14 @@ class NormativaForm(forms.ModelForm):
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
 class VentaForm(forms.ModelForm):
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
+        
+        # Establecemos la fecha actual como valor inicial del campo fecha_emision
+        if not self.instance.pk:
+            self.fields['fecha_emision'].initial = timezone.now().strftime('%Y-%m-%d')
 
     class Meta:
         model = Venta
