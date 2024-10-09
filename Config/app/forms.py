@@ -548,6 +548,9 @@ class VentaForm(forms.ModelForm):
         }
 
 #----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
+from django import forms
+from .models import DetalleVenta, Producto  # Asegúrate de importar tus modelos
+
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
@@ -561,6 +564,36 @@ class DetalleVentaForm(forms.ModelForm):
             'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly', 'id': 'id_total'}),
             'num_factura': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_num_factura'})
         }
+
+    def clean_producto(self):
+        producto = self.cleaned_data.get('producto')
+        if not producto:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        return producto
+
+    def clean_cantidad(self):
+        cantidad = self.cleaned_data.get('cantidad')
+        if cantidad is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if cantidad < 0:
+            raise forms.ValidationError('La cantidad no puede ser negativa.')
+        return cantidad
+
+    def clean_precio(self):
+        precio = self.cleaned_data.get('precio')
+        if precio is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if precio < 0:
+            raise forms.ValidationError('El precio no puede ser negativo.')
+        return precio
+
+    def clean_iva(self):
+        iva = self.cleaned_data.get('iva')
+        if iva is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if iva < 0 or iva > 100:
+            raise forms.ValidationError('El IVA debe estar entre 0 y 100.')
+        return iva
 
     def clean(self):
         cleaned_data = super().clean()
@@ -576,6 +609,7 @@ class DetalleVentaForm(forms.ModelForm):
             cleaned_data['total'] = total
 
         return cleaned_data
+
 #---------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
