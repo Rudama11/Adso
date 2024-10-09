@@ -492,6 +492,7 @@ class NormativaForm(forms.ModelForm):
         }
 
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
+
 class VentaForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
@@ -501,6 +502,26 @@ class VentaForm(forms.ModelForm):
         # Establecemos la fecha actual como valor inicial del campo fecha_emision
         if not self.instance.pk:
             self.fields['fecha_emision'].initial = timezone.now().strftime('%Y-%m-%d')
+
+    def clean_num_factura(self):
+        num_factura = self.cleaned_data.get('num_factura')
+        # Validación de unicidad
+        if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una venta con este número de factura.')
+        
+        # Validación de solo caracteres alfanuméricos
+        if not re.match(r'^[\w-]+$', num_factura):
+            raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
+        
+        return num_factura
+
+    def clean_fecha_emision(self):
+        fecha_emision = self.cleaned_data.get('fecha_emision')
+        # Validación de que la fecha no sea en el futuro
+        if fecha_emision and fecha_emision > timezone.now().date():
+            raise forms.ValidationError('La fecha de emisión no puede ser mayor a la actual. Solo se permiten fechas hasta hoy.')
+        
+        return fecha_emision
 
     class Meta:
         model = Venta
@@ -525,6 +546,7 @@ class VentaForm(forms.ModelForm):
                 }
             ),
         }
+
 #----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
 class DetalleVentaForm(forms.ModelForm):
     class Meta:

@@ -51,10 +51,6 @@
         <a href="{% url 'app:detalle_venta' venta_id=v.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalles">
             <i class="fas fa-plus"></i>
         </a>
-        
-        <a href="{% url 'app:venta_eliminar' v.pk %}" class="btn btn-danger btn-sm" title="Eliminar venta">
-            <i class="fas fa-trash"></i>
-        </a>
     </td>
 </tr>
 {% endfor %}
