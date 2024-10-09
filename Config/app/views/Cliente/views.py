@@ -1,13 +1,14 @@
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
-from django.utils.decorators import method_decorator
-from django.urls import reverse_lazy
-from django.http import JsonResponse
 from app.models import Cliente
 from app.forms import ClienteForm
 from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices
-from django.shortcuts import redirect
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 class ClienteListView(ListView):
     model = Cliente
     template_name = 'Cliente/listar.html'
@@ -52,10 +53,15 @@ class ClienteListView(ListView):
 
         return queryset
     
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarCliente(request, id_cliente):
-        cliente = Cliente.objects.get(pk=id_cliente)
-        cliente.delete()
-        return redirect('app:cliente_listar')
+        try:
+            cliente = get_object_or_404(Cliente, pk=id_cliente)
+            cliente.delete()
+            return JsonResponse({'status': 'success', 'message': 'Cliente eliminado correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 class ClienteCreateView(CreateView):
     model = Cliente

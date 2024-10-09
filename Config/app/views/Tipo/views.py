@@ -1,11 +1,14 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView
-from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Tipo
 from app.forms import TipoForm
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
+
 class TipoListView(ListView):
     model = Tipo 
     template_name = 'Tipo/listar.html'
@@ -14,10 +17,6 @@ class TipoListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
         
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado Tipos de producto'
@@ -28,12 +27,9 @@ class TipoListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        id = self.request.GET.get('id')
         nombre = self.request.GET.get('nombre')
         descripcion = self.request.GET.get('descripcion')
 
-        if id:
-            queryset = queryset.filter(id=id)
         if nombre:
             queryset = queryset.filter(nombre__icontains=nombre)
         if descripcion:
@@ -41,10 +37,15 @@ class TipoListView(ListView):
         
         return queryset
     
+    @require_POST  # Asegura que solo se pueda eliminar con POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarTipo(request, id_tipo):
-        tipo = Tipo.objects.get(pk=id_tipo)
-        tipo.delete()
-        return redirect('app:tipo_listar')
+        try:
+            tipo = get_object_or_404(Tipo, pk=id_tipo)
+            tipo.delete()
+            return JsonResponse({'status': 'success', 'message': 'Tipo producto eliminado correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 class TipoCreateView(CreateView):
     model = Tipo

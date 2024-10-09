@@ -3,7 +3,6 @@
 
 {% load static %}
 
-
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:compras_listar' %}">
     <div class="row">
@@ -65,9 +64,8 @@
         <a href="{% url 'app:compras_editar' com.num_factura %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-secondary btn-sm"
-            title="Detalle">
-            <i class="fas fa-info-circle"></i>
+        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle">
+            <i class="fas fa-plus"></i>
         </a>
         </a>
         {% if request.user.is_superuser or request.user.is_staff %}

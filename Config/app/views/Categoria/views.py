@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -6,10 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Categoria
 from app.forms import CategoriaForm
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
-
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'Categoria/listar.html'
@@ -38,7 +36,7 @@ class CategoriaListView(ListView):
 
         return queryset
 
-    @require_POST  # Asegura que solo se pueda eliminar con POST
+    @require_POST
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def eliminar_categoria(request, id_categ):
         try:

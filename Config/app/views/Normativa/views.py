@@ -1,12 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView
-from django.utils.decorators import method_decorator
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Normativa
 from app.forms import NormativaForm
-from django.shortcuts import redirect
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 class NormativaListView(ListView):
     model = Normativa
     template_name = 'Normativa/listar.html'
@@ -14,10 +15,6 @@ class NormativaListView(ListView):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-        
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,11 +41,16 @@ class NormativaListView(ListView):
             queryset = queryset.filter(producto__icontains=producto)
         
         return queryset
-    
+
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarNormativa(request, id_norma):
-        norma = Normativa.objects.get(pk=id_norma)
-        norma.delete()
-        return redirect('app:normativa_listar')
+        try:
+            norma = get_object_or_404(Normativa, pk=id_norma)
+            norma.delete()
+            return JsonResponse({'status': 'success', 'message': 'Normativa eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 class NormativaCreateView(CreateView):
     model = Normativa

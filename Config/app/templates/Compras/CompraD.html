@@ -1,4 +1,6 @@
 {% extends 'listar.html' %}
+
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -19,8 +21,8 @@
             </div>
             <div class="form-group">
                 <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_compra" 
-                       value="{{ form.fecha_compra.value|date:'d-m-y ' }}" readonly>
+                <input type="text" class="form-control" id="id_fecha_compra"
+                    value="{{ form.fecha_compra.value|date:'d-m-y ' }}" readonly>
             </div>
             <div class="form-group">
                 <label for="id_proveedor">{{ form.proveedor.label }}</label>
@@ -38,26 +40,35 @@
                     <th>Precio Unitario</th>
                     <th>IVA</th>
                     <th>Total</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for detalle in detalles_compra %}
-                    <tr>
-                        <td>{{ detalle.producto }}</td>
-                        <td>{{ detalle.cantidad }}</td>
-                        <td>{{ detalle.precio_unitario }}</td>
-                        <td>{{ detalle.iva }}%</td>
-                        <td>{{ detalle.total }}</td>
-                    </tr>
+                <tr>
+                    <td>{{ detalle.producto }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>{{ detalle.precio_unitario }}</td>
+                    <td>{{ detalle.iva }}%</td>
+                    <td>{{ detalle.total }}</td>
+                    <td>
+                        <!-- Botón de editar producto -->
+                        <a href="#" class="btn btn-info btn-sm" data-toggle="modal"
+                            data-target="#detalleCompraModalEdit{{ detalle.id }}" data-detalle-id="{{ detalle.id }}"
+                            title="Editar Producto">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                </tr>
                 {% empty %}
-                    <tr>
-                        <td colspan="5">No hay productos agregados.</td>
-                    </tr>
+                <tr>
+                    <td colspan="6">No hay productos agregados.</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    
+
     <div class="card-footer">
         <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
             <i class="fas fa-times"></i> Volver al Listado
@@ -69,65 +80,118 @@
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
     </div>
-    
 
-<!-- Modal para DetalleCompra -->
-<div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar Detalle de Compra</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido del modal cargado dinámicamente -->
-                <div id="modalContent">
-                    <!-- Aquí se cargará el contenido dinámicamente -->
-                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
+    <!-- Modal para Agregar Detalle de Compra -->
+    <div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog"
+        aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detalleCompraModalLabel">Agregar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <div class="modal-body">
+                    <!-- Contenido del modal cargado dinámicamente -->
+                    <div id="modalContent">
+                        <!-- Aquí se cargará el contenido dinámicamente -->
+                        <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Cargar dinámicamente el contenido del modal con el formulario de detalle de compra
-$(document).ready(function() {
-    $('#detalleCompraModal').on('show.bs.modal', function(e) {
-        var url = "{% url 'app:detallecompra_crear' %}";
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de que el número de factura esté disponible en el contexto
+    <!-- Modales para Editar cada Detalle de Compra -->
+    {% for detalle in detalles_compra %}
+    <div class="modal fade" id="detalleCompraModalEdit{{ detalle.id }}" tabindex="-1" role="dialog"
+        aria-labelledby="detalleCompraModalEditLabel{{ detalle.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detalleCompraModalEditLabel{{ detalle.id }}">Editar producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Contenido del modal cargado dinámicamente -->
+                    <div id="modalContentEdit{{ detalle.id }}">
+                        <!-- Aquí se cargará el contenido dinámicamente -->
+                        <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
-        $('#modalContent').load(url, function() {
-            // Rellenar el campo num_factura en el formulario cargado
-            $('#id_num_factura').val(numFactura);
+    <!-- Script para manejar la carga dinámica en el modal de agregar -->
+    <script>
+        $(document).ready(function () {
+            $('#detalleCompraModal').on('show.bs.modal', function (e) {
+                var url = "{% url 'app:detallecompra_crear' %}";
+                var numFactura = "{{ form.num_factura.value }}";  // Obtener el número de factura del formulario
+
+                $('#modalContent').load(url, function () {
+                    // Asignar el número de factura al campo en el formulario cargado
+                    $('#id_num_factura').val(numFactura);
+                });
+            });
         });
-    });
-});
+    </script>
 
-</script>
+    <!-- Script para manejar la carga dinámica en los modales de edición -->
+    <script>
+        $(document).ready(function () {
+            // Manejar la carga dinámica de los modales de edición
+            $('[id^=detalleCompraModalEdit]').on('show.bs.modal', function (e) {
+                // Obtener el botón que activó el modal
+                var button = $(e.relatedTarget);
+                // Obtener el ID del detalle de compra desde el atributo 'data-detalle-id'
+                var detalleId = button.data('detalle-id');
 
-<style>
-    .card-footer .btn {
-        margin: 5px 0;
-        flex: 1 1 30%; /* Ajusta el tamaño de los botones */
-    }
-    
-    /* Asegúrate de que la tabla y los botones se adapten en pantallas pequeñas */
-    @media (max-width: 768px) {
-        .table th, .table td {
-            font-size: 14px;
-        }
-    
+                // Construir la URL para editar el detalle de compra pasando el ID correspondiente
+                var url = "{% url 'app:compraD_editar' 0 %}".replace('0', detalleId);
+
+                // Seleccionar el contenedor del contenido dinámico
+                var modalContent = $(this).find('.modal-body #modalContentEdit' + detalleId);
+
+                // Cargar el contenido del formulario de edición
+                modalContent.load(url, function (response, status, xhr) {
+                    if (status == "error") {
+                        modalContent.html("<p>Error al cargar el formulario de edición. Por favor, intenta nuevamente.</p>");
+                    }
+                });
+            });
+        });        
+    </script>
+
+    <style>
         .card-footer .btn {
-            flex: 1 1 100%; /* Los botones ocupan el ancho completo en móviles */
+            margin: 5px 0;
+            flex: 1 1 30%;
         }
-    }
 
-</style>
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 768px) {
 
-{% endblock %}
+            .table th,
+            .table td {
+                font-size: 14px;
+            }
+
+            .card-footer .btn {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+
+    {% endblock %}

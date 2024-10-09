@@ -1,13 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
-from django.shortcuts import redirect
-from django.http import JsonResponse
-
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 class ProductoListView(ListView):
     model = Producto
     template_name = 'Producto/listar.html'
@@ -36,11 +36,15 @@ class ProductoListView(ListView):
 
         return queryset
     
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarProducto(request, id_producto):
-        producto = Producto.objects.get(pk=id_producto)
-        producto.delete()
-        return redirect('app:producto_listar')
-    
+        try:
+            producto = get_object_or_404(Producto, pk=id_producto)
+            producto.delete()
+            return JsonResponse({'status': 'success', 'message': 'Categoría eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

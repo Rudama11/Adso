@@ -9,6 +9,7 @@
 
 <tr>
     <th scope="col">Id</th>
+    <th scope="col">Tipo Usuario</th>
     <th scope="col">Nombre de Usuario</th>
     <th scope="col">Nombres</th>
     <th scope="col">Correo</th>
@@ -22,22 +23,28 @@
 {% for user in object_list %}
 <tr>
     <td>{{ user.id }}</td>
+    <td>{{ user.get_tipo_usuario_display }}</td>
     <td>{{ user.username }}</td>
     <td>{{ user.nombres }}</td>
     <td>{{ user.email }}</td>
-    <td>{{ user.is_active }}</td>
     <td>
-        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar normativa">
+        {% if user.is_active %}
+            Habilitado
+        {% else %}
+            Inhabilitado
+        {% endif %}
+    </td>
+    <td>
+        <a href="{% url 'app:usuario_editar' user.id %}" class="btn btn-info btn-sm" title="Editar usuario">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ user.id }}" title="Eliminar categoría">
+        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ user.id }}" title="Eliminar usuario">
             <i class="fas fa-trash"></i>
         </a>
 
-        <!-- Scripts de accesibilidad y AdminLTE -->
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
         <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
+        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js' %}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
         
@@ -45,12 +52,12 @@
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    let categoriaId = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:categoria_eliminar' 0 %}".replace('0', categoriaId);
+                    let usuarioId = this.getAttribute('data-id');
+                    let deleteUrl = "{% url 'app:usuario_eliminar' 0 %}".replace('0', usuarioId);
                     
                     Swal.fire({
                         title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar esta categoría?',
+                        text: '¿Estás seguro de que deseas eliminar este usuario?',
                         icon: 'question',
                         showCancelButton: true,
                         confirmButtonText: 'Sí, Eliminar',
@@ -62,7 +69,7 @@
                             // Mostrar alerta de éxito
                             Swal.fire({
                                 title: 'Eliminación Exitosa',
-                                text: 'La categoría ha sido eliminada correctamente.',
+                                text: 'El usuario ha sido eliminado correctamente.',
                                 icon: 'success',
                                 confirmButtonText: 'Continuar',
                                 backdrop: true,

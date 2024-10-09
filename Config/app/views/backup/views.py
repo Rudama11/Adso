@@ -1,13 +1,16 @@
 import os
 import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.conf import settings
 import subprocess
+from django.contrib.auth.decorators import login_required
 
+@login_required  # Asegúrate de que el usuario esté autenticado para acceder a la vista
 def backup_view(request):
     return render(request, 'backup.html')
 
+@login_required  # Solo los usuarios autenticados pueden crear un backup
 def backup_database(request):
     if request.method == 'POST':
         backup_dir = os.path.join(settings.BASE_DIR, 'backups')
@@ -40,6 +43,7 @@ def backup_database(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': f"Error al crear la copia de seguridad: {e}"})
 
+@login_required  # Solo los usuarios autenticados pueden restaurar la base de datos
 def restore_database(request):
     if request.method == 'POST' and request.FILES.get('backup_file'):
         backup_file = request.FILES['backup_file']
