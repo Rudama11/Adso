@@ -30,6 +30,17 @@
             <!-- Mensaje de error de coincidencia de contraseñas -->
             <div class="invalid-feedback" id="passwordMismatch" style="display:none;">Las contraseñas no coinciden.
             </div>
+            <!-- Contenedor para los requisitos de la contraseña -->
+            <div id="password-requirements" style="margin-top: 20px;">
+                <h5>Requisitos de la contraseña (Solo si se cambia):</h5>
+                <ul id="requirements-list" style="list-style: none; padding-left: 0;">
+                    <li id="length-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> 8-15 caracteres</li>
+                    <li id="uppercase-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos una letra mayúscula</li>
+                    <li id="lowercase-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos una letra minúscula</li>
+                    <li id="number-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos un número</li>
+                    <li id="special-char-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos un carácter especial (ej. !@#$%^&*)</li>
+                </ul>
+            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
@@ -203,6 +214,24 @@
                     });
                 }
             });
+    });
+    // Validación en tiempo real de la contraseña
+    document.querySelector('[name="password"]').addEventListener('input', function() {
+        const password = this.value;
+        const requirements = {
+            length: password.length >= 8 && password.length <= 15,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%^&*]/.test(password),
+        };
+
+        // Actualizar el estado de los requisitos
+        document.getElementById('length-requirement').querySelector('.status').innerHTML = requirements.length ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('uppercase-requirement').querySelector('.status').innerHTML = requirements.uppercase ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('lowercase-requirement').querySelector('.status').innerHTML = requirements.lowercase ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('number-requirement').querySelector('.status').innerHTML = requirements.number ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('special-char-requirement').querySelector('.status').innerHTML = requirements.specialChar ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
     });
 </script>
 
