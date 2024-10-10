@@ -103,7 +103,6 @@ urlpatterns = [
     path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
     path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
     path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
-    path('ventas/eliminar/<int:pk>/', VentasDeleteView.as_view(), name='venta_eliminar'),
 
 
 #-------------------------------------------------- Dventas ---------------------------------------------------------
