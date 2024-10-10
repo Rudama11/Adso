@@ -1,5 +1,6 @@
 {% load widget_tweaks %}
 
+{% load static %}
 {% block contenidoDC %}
 <form method="post" id="detalleCompraFormEdit" action="{% url 'app:compraD_editar' detalle.id %}">
     {% csrf_token %}
@@ -61,7 +62,7 @@
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
 document.getElementById('detalleCompraFormEdit').addEventListener('input', function() {
     let precio = parseFloat(document.getElementById('id_precio').value) || 0;
