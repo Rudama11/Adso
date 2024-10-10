@@ -631,16 +631,6 @@ class ProductoFilterForm(forms.Form):
 #---------------------------------------------------------- Compras ----------------------------------------------------------
 
 class ComprasForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        
-        # Establecer enfoque automático en el campo proveedor
-        self.fields['proveedor'].widget.attrs['autofocus'] = True
-        
-        # Establecer la fecha actual por defecto si es una nueva instancia
-        if not self.instance.pk:  # Solo si es una nueva instancia
-            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%d')  # Solo la fecha
-
     class Meta:
         model = Compras
         fields = ['num_factura', 'fecha_compra', 'proveedor']
@@ -653,40 +643,48 @@ class ComprasForm(forms.ModelForm):
             'fecha_compra': forms.DateInput(attrs={
                 'placeholder': 'Ingrese la fecha de compra',
                 'type': 'date',  # Cambiado a 'date' para que solo seleccione la fecha
-                'class': 'form-control'
+                'class': 'form-control',
+                'value': timezone.now().strftime('%Y-%m-%d')  # Fecha actual como valor por defecto
             }),
             'proveedor': forms.Select(attrs={
                 'class': 'form-control'
             }),
         }
 
-#------------------------------- Detalle Compras ----------------------------
-
+# ----------------------------Formulario para Detalle de Compras-----------------------------------------
 class DetalleCompraForm(forms.ModelForm):
-    num_factura = forms.CharField(
-        max_length=20,
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Número de Factura'})
-        # Elimina 'disabled=True' para que el campo sea editable
-    )
-
     class Meta:
         model = DetalleCompra
         fields = ['num_factura', 'producto', 'cantidad', 'precio_unitario', 'iva']
         widgets = {
-            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
-            'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
-            'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
+            'num_factura': forms.TextInput(attrs={
+                'placeholder': 'Número de Factura',
+                'class': 'form-control',
+                'readonly': True  # Si no deseas que sea editable
+            }),
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto', 'class': 'form-control'}),
+            'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad', 'class': 'form-control'}),
+            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio', 'class': 'form-control'}),
+            'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)', 'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
-        # Extraer `compra_id` del diccionario de argumentos
         self.compra_id = kwargs.pop('compra_id', None)
         super().__init__(*args, **kwargs)
         # Si `compra_id` está presente, establecer el valor inicial para `num_factura`
         if self.compra_id:
-            self.fields['num_factura'].initial = self.compra_id
+            self.fields['num_factura'].initial = self.compra_id  # Aquí se establece el valor inicial
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cantidad = cleaned_data.get("cantidad")
+        precio_unitario = cleaned_data.get("precio_unitario")
+
+        if cantidad is not None and cantidad <= 0:
+            self.add_error('cantidad', 'La cantidad debe ser mayor que 0.')
+
+        if precio_unitario is not None and precio_unitario <= 0:
+            self.add_error('precio_unitario', 'El precio unitario debe ser mayor que 0.')
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -696,8 +694,6 @@ class DetalleCompraForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
-    
-    
 #-------------------------------- filtro de stok para que se filtre en rangos espesificos ---------------
 class StockFilterForm(forms.Form):
     nombre_pro = forms.ModelChoiceField(
