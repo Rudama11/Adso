@@ -3,9 +3,10 @@ import sys
 sys.path.append (str(Path(__file__).parent.parent))
 from Config.wsgi import *
 from app.models import *
-# Create your tests here.
 
-#Create your tests here.
+
+
+#Creación de test con base de datos
 #---------------------------------------------------------------- CLASE EMPLEADO --------------------------------------------
 # 1. Crear un nuevo cliente
 # def crear_cliente():
@@ -21,16 +22,19 @@ from app.models import *
 #     cliente.save()
 #     print("Cliente creado:", cliente)
 
+
 #Crear una Ubicacion
 # u = Ubicacion(id=1,Departamento="Boyaca",Ciudad="Sogamoso").save()
 # query = Ubicacion.objects.all()
 # print(query)
+
 
 # 2. Listar todos los clientes
 # def listar_clientes():
 #     clientes = Cliente.objects.all()
 #     for cliente in clientes:
 #         print(cliente)
+
 
 # 3. Actualizar un cliente existente
 # def actualizar_cliente(id_cliente, nuevo_nombre):
@@ -39,21 +43,18 @@ from app.models import *
 #     cliente.save()
 #     print("Cliente actualizado:", cliente)
 
+
 # 4. Eliminar un cliente
 # def eliminar_cliente(id_cliente):
 #     cliente = Cliente.objects.get(id=id_cliente)
 #     cliente.delete()
 #     print("Cliente eliminado:", cliente)
-#--------------------------------------------------------------------------------
+
 
 # #Listar Con Filter 
-
 # obj = Tipo.objects.filter(nombre='ven').query #consulta like en base de Datos 
-
 # print(obj)
-
 # obj = Empleado.objects.filter()
-
 # for i in Empleado.objects.filter():
 #     print(i.nombre)
     
@@ -87,5 +88,5 @@ from app.models import *
 
 # print('Todos los productos han sido eliminados.')
 
-departamento = Departamentos.objects.get(id=9)
-print(departamento.municipios.all())
+# departamento = Departamentos.objects.get(id=9)
+# print(departamento.municipios.all())
