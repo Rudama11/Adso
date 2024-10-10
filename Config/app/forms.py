@@ -212,6 +212,9 @@ class CategoriaForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -224,9 +227,13 @@ class CategoriaForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        
         return descripcion
 
     class Meta:
@@ -246,6 +253,9 @@ class TipoForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -258,9 +268,13 @@ class TipoForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        
         return descripcion
 
     class Meta:
@@ -309,8 +323,12 @@ class ClienteForm(forms.ModelForm):
 
     def clean_nombres(self):
         nombres = self.cleaned_data.get('nombres')
+        # Verificar longitud mínima
+        if len(nombres) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 100.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombres):
-            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
         return nombres
 
     def clean_numero_documento(self):
@@ -345,6 +363,12 @@ class ClienteForm(forms.ModelForm):
         if Cliente.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe un cliente con esta dirección de correo electrónico.')
         return correo
+    
+    def clean_direccion(self):
+        direccion = self.cleaned_data.get('direccion')
+        if len(direccion) < 5:
+            raise forms.ValidationError('La direccion debe tener al menos 5 caracteres y un máximo de 50.')
+        return direccion
 
     class Meta:
         model = Cliente
@@ -371,8 +395,12 @@ class ProveedorForm(forms.ModelForm):
 
     def clean_nombres(self):
         nombres = self.cleaned_data.get('nombres')
+        # Verificar longitud mínima
+        if len(nombres) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 100.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombres):
-            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
         return nombres
 
     def clean_numero_documento(self):
@@ -407,6 +435,12 @@ class ProveedorForm(forms.ModelForm):
         if Proveedor.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe un proveedor con esta dirección de correo electrónico.')
         return correo
+    
+    def clean_direccion(self):
+        direccion = self.cleaned_data.get('direccion')
+        if len(direccion) < 5:
+            raise forms.ValidationError('La direccion debe tener al menos 5 caracteres y un máximo de 50.')
+        return direccion
 
     class Meta:
         model = Proveedor
@@ -426,6 +460,9 @@ class ProductoForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -466,6 +503,9 @@ class NormativaForm(forms.ModelForm):
     def clean_decreto(self):
         decreto = self.cleaned_data.get('decreto')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if len(decreto) < 5:
+            raise forms.ValidationError('El decreto debe tener al menos 5 caracteres y un máximo de 50.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', decreto):
             raise forms.ValidationError('El decreto solo puede contener letras, números, espacios, guiones y puntos.')
 
@@ -477,9 +517,13 @@ class NormativaForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        
         return descripcion
 
     class Meta:

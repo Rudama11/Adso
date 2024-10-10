@@ -105,10 +105,10 @@ DROP TABLE IF EXISTS `categoria`;
 CREATE TABLE `categoria` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(150) DEFAULT NULL,
+  `descripcion` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `categoria` (
 
 LOCK TABLES `categoria` WRITE;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-INSERT INTO `categoria` VALUES (1,'Extintor para fuego','Extintor para incendios de fuego');
+INSERT INTO `categoria` VALUES (1,'Extintor','El extintor es un artefacto cuya finalidad es apagar los principios de fuego de manera rápida y eficaz. Con ellos podemos evitar la propagación del fuego y evitar que el incendio se propague.');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,6 +139,8 @@ CREATE TABLE `cliente` (
   `direccion` varchar(50) DEFAULT NULL,
   `ciudad_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `correo` (`correo`),
+  UNIQUE KEY `numero_documento` (`numero_documento`),
   KEY `Cliente_ciudad_id_23172d5a_fk_ubicacion_id` (`ciudad_id`),
   CONSTRAINT `Cliente_ciudad_id_23172d5a_fk_ubicacion_id` FOREIGN KEY (`ciudad_id`) REFERENCES `ubicacion` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -150,7 +152,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'PN','Ruben Martinez','CC','1116552386','dario564@hotmail.es','3176709994','Calle 50 # 10-15',1);
+INSERT INTO `cliente` VALUES (1,'PN','Ruben Martinez','CC','1116552386','dario564@hotmail.es','3176709994','Calle 50 # 30-10',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,10 +164,11 @@ DROP TABLE IF EXISTS `compras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `compras` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `num_factura` varchar(20) NOT NULL,
   `fecha_compra` date NOT NULL,
   `proveedor_id` bigint NOT NULL,
-  PRIMARY KEY (`num_factura`),
+  PRIMARY KEY (`id`),
   KEY `Compras_proveedor_id_f5416bdf_fk_Proveedor_id` (`proveedor_id`),
   CONSTRAINT `Compras_proveedor_id_f5416bdf_fk_Proveedor_id` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -213,16 +216,17 @@ DROP TABLE IF EXISTS `detallecompra`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `detallecompra` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `num_factura` varchar(20) DEFAULT NULL,
   `cantidad` int NOT NULL,
   `precio_unitario` decimal(10,2) NOT NULL,
   `iva` decimal(5,2) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `compra_id` varchar(20) NOT NULL,
+  `compra_id` bigint NOT NULL,
   `producto_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `DetalleCompra_compra_id_e9e73390_fk_Compras_num_factura` (`compra_id`),
+  KEY `DetalleCompra_compra_id_e9e73390_fk_Compras_id` (`compra_id`),
   KEY `DetalleCompra_producto_id_8de69c74_fk_Producto_id` (`producto_id`),
-  CONSTRAINT `DetalleCompra_compra_id_e9e73390_fk_Compras_num_factura` FOREIGN KEY (`compra_id`) REFERENCES `compras` (`num_factura`),
+  CONSTRAINT `DetalleCompra_compra_id_e9e73390_fk_Compras_id` FOREIGN KEY (`compra_id`) REFERENCES `compras` (`id`),
   CONSTRAINT `DetalleCompra_producto_id_8de69c74_fk_Producto_id` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -258,7 +262,7 @@ CREATE TABLE `detalleventa` (
   CONSTRAINT `DetalleVenta_producto_id_a793c5f8_fk_Stock_id` FOREIGN KEY (`producto_id`) REFERENCES `stock` (`id`),
   CONSTRAINT `DetalleVenta_venta_id_d892a61e_fk_Venta_id` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`),
   CONSTRAINT `detalleventa_chk_1` CHECK ((`iva` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +271,6 @@ CREATE TABLE `detalleventa` (
 
 LOCK TABLES `detalleventa` WRITE;
 /*!40000 ALTER TABLE `detalleventa` DISABLE KEYS */;
-INSERT INTO `detalleventa` VALUES (1,10,35000.00,19,416500.00,'Adso26',1,1),(2,11,27900.00,19,365211.00,'Adso26',2,1);
 /*!40000 ALTER TABLE `detalleventa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +347,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +356,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-10-09 21:57:21.864422'),(2,'contenttypes','0002_remove_content_type_name','2024-10-09 21:57:21.896069'),(3,'auth','0001_initial','2024-10-09 21:57:22.100537'),(4,'auth','0002_alter_permission_name_max_length','2024-10-09 21:57:22.140610'),(5,'auth','0003_alter_user_email_max_length','2024-10-09 21:57:22.143193'),(6,'auth','0004_alter_user_username_opts','2024-10-09 21:57:22.143193'),(7,'auth','0005_alter_user_last_login_null','2024-10-09 21:57:22.156462'),(8,'auth','0006_require_contenttypes_0002','2024-10-09 21:57:22.156462'),(9,'auth','0007_alter_validators_add_error_messages','2024-10-09 21:57:22.167608'),(10,'auth','0008_alter_user_username_max_length','2024-10-09 21:57:22.172978'),(11,'auth','0009_alter_user_last_name_max_length','2024-10-09 21:57:22.178954'),(12,'auth','0010_alter_group_name_max_length','2024-10-09 21:57:22.193456'),(13,'auth','0011_update_proxy_permissions','2024-10-09 21:57:22.199121'),(14,'auth','0012_alter_user_first_name_max_length','2024-10-09 21:57:22.207234'),(15,'app','0001_initial','2024-10-09 21:57:23.343821'),(16,'admin','0001_initial','2024-10-09 21:57:23.456228'),(17,'admin','0002_logentry_remove_auto_add','2024-10-09 21:57:23.456228'),(18,'admin','0003_logentry_add_action_flag_choices','2024-10-09 21:57:23.467928'),(19,'app','0002_alter_customuser_tipo_usuario','2024-10-09 21:57:23.473147'),(20,'inicio','0001_initial','2024-10-09 21:57:23.496689'),(21,'inicio','0002_delete_csrftoken','2024-10-09 21:57:23.508362'),(22,'sessions','0001_initial','2024-10-09 21:57:23.532283');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-10-10 06:10:27.306324'),(2,'contenttypes','0002_remove_content_type_name','2024-10-10 06:10:27.342626'),(3,'auth','0001_initial','2024-10-10 06:10:27.472886'),(4,'auth','0002_alter_permission_name_max_length','2024-10-10 06:10:27.496018'),(5,'auth','0003_alter_user_email_max_length','2024-10-10 06:10:27.504092'),(6,'auth','0004_alter_user_username_opts','2024-10-10 06:10:27.510528'),(7,'auth','0005_alter_user_last_login_null','2024-10-10 06:10:27.514614'),(8,'auth','0006_require_contenttypes_0002','2024-10-10 06:10:27.517129'),(9,'auth','0007_alter_validators_add_error_messages','2024-10-10 06:10:27.520899'),(10,'auth','0008_alter_user_username_max_length','2024-10-10 06:10:27.524899'),(11,'auth','0009_alter_user_last_name_max_length','2024-10-10 06:10:27.528650'),(12,'auth','0010_alter_group_name_max_length','2024-10-10 06:10:27.538602'),(13,'auth','0011_update_proxy_permissions','2024-10-10 06:10:27.541951'),(14,'auth','0012_alter_user_first_name_max_length','2024-10-10 06:10:27.546464'),(15,'app','0001_initial','2024-10-10 06:10:28.256256'),(16,'admin','0001_initial','2024-10-10 06:10:28.335911'),(17,'admin','0002_logentry_remove_auto_add','2024-10-10 06:10:28.341645'),(18,'admin','0003_logentry_add_action_flag_choices','2024-10-10 06:10:28.346073'),(19,'inicio','0001_initial','2024-10-10 06:10:28.360748'),(20,'inicio','0002_delete_csrftoken','2024-10-10 06:10:28.370783'),(21,'sessions','0001_initial','2024-10-10 06:10:28.395967');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -379,7 +382,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('s93ifaoxuubvuuaanlscbsj2gkby8rzb','.eJxVjMsOwiAQRf-FtSEwDC24dO83kBkeUjU0Ke3K-O_apAvd3nPOfYlA21rD1vMSpiTOQovT78YUH7ntIN2p3WYZ57YuE8tdkQft8jqn_Lwc7t9BpV6_NerChnLxxgFQNB4L2yG7YjE6MxYANH7UMWtUiH4Aj1ERgwUq3rIS7w_ZqjdE:1syeh6:Yu8sU2W8-aWxRZQfJkHvI0aOMGYbGtu6u56NOA1ICOM','2024-10-23 21:58:08.072770');
+INSERT INTO `django_session` VALUES ('e8qdgebfd8n8fyrt57yf75exygt1nmo5','.eJxVjMEOwiAQRP-FsyFAoVCP3vsNZBd2pWpoUtqT8d9tkx70OPPezFtE2NYSt0ZLnLK4Ci0uvx1CelI9QH5Avc8yzXVdJpSHIk_a5Dhnet1O9--gQCv7mmz27DAk9D2a5ImBbVAhKEuakXPyaKzjfiDMHXUJrDWOlEPNex7E5wsXUzkt:1symO5:25Z1qoWRH0NLRDK7ui_5WRYErHVurozbcqwDYKBzXQo','2024-10-24 06:11:01.296601');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +449,7 @@ DROP TABLE IF EXISTS `producto`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `producto` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(150) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
   `categoria_id` bigint NOT NULL,
   `tipo_pro_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
@@ -463,7 +466,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Extintor 10 A',1,1),(2,'Extintor B',1,1);
+INSERT INTO `producto` VALUES (1,'Extintor de 10 lb',1,1),(2,'Extintor de 15 lb',1,2);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,6 +488,8 @@ CREATE TABLE `proveedor` (
   `direccion` varchar(50) DEFAULT NULL,
   `ciudad_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `correo` (`correo`),
+  UNIQUE KEY `numero_documento` (`numero_documento`),
   KEY `Proveedor_ciudad_id_65bec80c_fk_ubicacion_id` (`ciudad_id`),
   CONSTRAINT `Proveedor_ciudad_id_65bec80c_fk_ubicacion_id` FOREIGN KEY (`ciudad_id`) REFERENCES `ubicacion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -514,7 +519,7 @@ CREATE TABLE `stock` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre_pro_id` (`nombre_pro_id`),
   CONSTRAINT `Stock_nombre_pro_id_1beafd21_fk_Producto_id` FOREIGN KEY (`nombre_pro_id`) REFERENCES `producto` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -523,7 +528,6 @@ CREATE TABLE `stock` (
 
 LOCK TABLES `stock` WRITE;
 /*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-INSERT INTO `stock` VALUES (1,90,35000.00,1),(2,89,25800.00,2);
 /*!40000 ALTER TABLE `stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,10 +541,10 @@ DROP TABLE IF EXISTS `tipo`;
 CREATE TABLE `tipo` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(150) DEFAULT NULL,
+  `descripcion` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -549,7 +553,7 @@ CREATE TABLE `tipo` (
 
 LOCK TABLES `tipo` WRITE;
 /*!40000 ALTER TABLE `tipo` DISABLE KEYS */;
-INSERT INTO `tipo` VALUES (1,'Exintor Tipo A','Extintor para fuegos que se controlen con agua');
+INSERT INTO `tipo` VALUES (1,'Extintor de Agua','Es adecuado para fuegos de clase A. Nunca debes utilizarlo si hay presencia de corriente eléctrica en el lugar, ya que puede producirse una electrocución.'),(2,'Extintores de Polvo ABC','Este tipo de extintores se utilizan en fuegos de clase A, B Y C. Este polvo no conduce la electricidad, por lo que es adecuado cuando hay un componente eléctrico. Es el extintor más recomendado para un fuego clase C.');
 /*!40000 ALTER TABLE `tipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +573,7 @@ CREATE TABLE `ubicacion` (
   KEY `ubicacion_municipio_id_09d5e5ab_fk_municipios_id` (`municipio_id`),
   CONSTRAINT `ubicacion_departamento_id_be50b0a6_fk_departamentos_id` FOREIGN KEY (`departamento_id`) REFERENCES `departamentos` (`id`),
   CONSTRAINT `ubicacion_municipio_id_09d5e5ab_fk_municipios_id` FOREIGN KEY (`municipio_id`) REFERENCES `municipios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +582,7 @@ CREATE TABLE `ubicacion` (
 
 LOCK TABLES `ubicacion` WRITE;
 /*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
-INSERT INTO `ubicacion` VALUES (1,2,3);
+INSERT INTO `ubicacion` VALUES (1,9,13),(2,9,1112);
 /*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -594,7 +598,7 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(15) NOT NULL,
   `nombres` varchar(50) NOT NULL,
-  `email` varchar(254) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `is_superuser` tinyint(1) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
@@ -612,7 +616,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES ('pbkdf2_sha256$870000$dlXTSOqGBQtAUpIX75NWWr$cRtou4bEgGM4BwYyENzyA8Z8ptQkbGYenVGuOWt58Ao=',1,'Admin','','conalde@hotmail.com',1,1,1,'2024-10-09 21:58:08.069589','superuser');
+INSERT INTO `usuario` VALUES ('pbkdf2_sha256$870000$IP7tZfSYGUKLdPwokEMadV$l/qHwaXj0ZVar2uBHVbArcKO7OH9GeDtqARGgyMya5g=',1,'Admin','','conaldex@hotmail.com',1,1,1,'2024-10-10 06:11:01.294678','superuser');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -688,7 +692,7 @@ CREATE TABLE `venta` (
   UNIQUE KEY `num_factura` (`num_factura`),
   KEY `Venta_cliente_id_a2b0be2d_fk_Cliente_id` (`cliente_id`),
   CONSTRAINT `Venta_cliente_id_a2b0be2d_fk_Cliente_id` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -697,7 +701,6 @@ CREATE TABLE `venta` (
 
 LOCK TABLES `venta` WRITE;
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-INSERT INTO `venta` VALUES (1,'Adso26','2024-10-09',1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -710,4 +713,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-09 17:02:04
+-- Dump completed on 2024-10-10  1:32:13

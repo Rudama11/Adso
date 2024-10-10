@@ -33,7 +33,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=15, unique=True, verbose_name='Nombre de usuario')
     nombres = models.CharField(max_length=50, blank=True, verbose_name='Nombres y apellidos')
-    email = models.EmailField(unique=True, verbose_name='Correo electrónico')
+    email = models.EmailField(max_length=50,unique=True, verbose_name='Correo electrónico')
     is_superuser = models.BooleanField(default=False, verbose_name='SuperUsuario')
     is_staff = models.BooleanField(default=False, verbose_name='Administrador')
     is_active = models.BooleanField(default=True, verbose_name='Estado')
@@ -94,7 +94,7 @@ class Municipios(models.Model):
 #----------------------------------------------- Categoría -----------------------------------------------
 class Categoria(models.Model):
     nombre = models.CharField(max_length=50,verbose_name='Nombre',unique=True)
-    descripcion = models.CharField(max_length=150,verbose_name='Descripcion',blank=True,null=True)
+    descripcion = models.CharField(max_length=250,verbose_name='Descripcion',blank=True,null=True)
 
     def __str__(self):
         return self.nombre
@@ -108,7 +108,7 @@ class Categoria(models.Model):
 #----------------------------------------------- Tipo de Producto -----------------------------------------------
 class Tipo(models.Model):
     nombre = models.CharField(max_length=50,verbose_name='Nombre',unique=True)
-    descripcion = models.CharField(max_length=150,verbose_name='Descripción',blank=True,null=True)
+    descripcion = models.CharField(max_length=250,verbose_name='Descripción',blank=True,null=True)
     def __str__(self):
         return self.nombre
     class Meta:
@@ -134,10 +134,10 @@ class Ubicacion(models.Model):
 #----------------------------------------------- Cliente -----------------------------------------------
 class Cliente(models.Model):
     tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
-    nombres = models.CharField(max_length=150,verbose_name='Nombres / Razón Social',null=True, blank=True)
+    nombres = models.CharField(max_length=100,verbose_name='Nombres / Razón Social',null=True, blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True)
-    correo = models.EmailField(max_length=50,verbose_name='Correo')
+    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True,unique=True)
+    correo = models.EmailField(max_length=50,verbose_name='Correo',unique=True)
     telefono = models.CharField(max_length=10,verbose_name='Número de celular',null=True,blank=True)
     ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=50,null=True,blank=True,verbose_name='Dirección')
@@ -155,10 +155,10 @@ class Cliente(models.Model):
 
 class Proveedor(models.Model):
     tipo_persona = models.CharField(max_length=2,choices=Tipo_Persona_Choices,default='PN',verbose_name='Tipo de Persona')
-    nombres = models.CharField(max_length=150,verbose_name='Nombres / Razón Social',null=True, blank=True)
+    nombres = models.CharField(max_length=100,verbose_name='Nombres / Razón Social',null=True, blank=True)
     tipo_documento = models.CharField(max_length=3,choices=Tipo_Documento_Choices,default='CC',verbose_name='Tipo de Documento')
-    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True)
-    correo = models.EmailField(max_length=50,verbose_name='Correo')
+    numero_documento = models.CharField(max_length=11,verbose_name='Número de Documento',null=True,blank=True,unique=True)
+    correo = models.EmailField(max_length=50,verbose_name='Correo',unique=True)
     telefono = models.CharField(max_length=10,verbose_name='Número de celular',null=True,blank=True)
     ciudad = models.ForeignKey(Ubicacion,on_delete=models.CASCADE)
     direccion = models.CharField(max_length=50,null=True,blank=True,verbose_name='Dirección')
@@ -174,7 +174,7 @@ class Proveedor(models.Model):
 
 #----------------------------------------------- Producto -----------------------------------------------
 class Producto(models.Model):
-    nombre = models.CharField(max_length=150, verbose_name='Nombre')
+    nombre = models.CharField(max_length=50, verbose_name='Nombre')
     categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE)
     tipo_pro = models.ForeignKey('Tipo', on_delete=models.CASCADE, verbose_name='Tipo de producto')
 
@@ -275,8 +275,8 @@ class DetalleVenta(models.Model):
         db_table = 'DetalleVenta'
 #----------------------------------------------- Normativas -----------------------------------------------
 class Normativa(models.Model):
-    decreto=models.CharField(max_length=50,verbose_name='Decreto')
-    descripcion=models.CharField(max_length=150,verbose_name='Descripción')
+    decreto=models.CharField(max_length=50,verbose_name='Decreto',unique=True)
+    descripcion=models.CharField(max_length=250,verbose_name='Descripción')
     producto=models.ForeignKey(Producto,on_delete=models.CASCADE,)
     
     def __str__(self):
