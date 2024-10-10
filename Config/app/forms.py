@@ -287,13 +287,22 @@ class TipoForm(forms.ModelForm):
         
 #---------------------------------------------------------- Ubicación ----------------------------------------------------------
 class UbicacionForm(forms.ModelForm):
-    class Meta:
-        model = Ubicacion
-        fields = ['departamento', 'municipio']
-        widgets = {
-            'departamento': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el departamento'}),
-            'municipio': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el municipio'}),
-        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Puedes enfocar un campo si lo deseas, por ejemplo:
+        # self.fields['departamento'].widget.attrs['autofocus'] = True
+
+    def clean_departamento(self):
+        departamento = self.cleaned_data.get('departamento')
+        if not departamento:
+            raise forms.ValidationError('El departamento es obligatorio.')
+        return departamento
+
+    def clean_municipio(self):
+        municipio = self.cleaned_data.get('municipio')
+        if not municipio:
+            raise forms.ValidationError('El municipio es obligatorio.')
+        return municipio
 
     def clean(self):
         cleaned_data = super().clean()
@@ -301,13 +310,22 @@ class UbicacionForm(forms.ModelForm):
         municipio = cleaned_data.get('municipio')
 
         if not municipio:
-            raise ValidationError('Debe seleccionar un municipio.')
+            raise forms.ValidationError('Debe seleccionar un municipio.')
 
         if Ubicacion.objects.filter(departamento=departamento, municipio=municipio).exists():
-            raise ValidationError('Esta combinación de departamento y municipio ya existe.')
+            raise forms.ValidationError('Esta combinación de departamento y municipio ya existe.')
 
         return cleaned_data
-            
+
+
+    class Meta:
+        model = Ubicacion
+        fields = ['departamento', 'municipio']  # Ajusta los campos según tu modelo
+        widgets = {
+            'departamento': forms.Select(attrs={'class': 'form-control'}),
+            'municipio': forms.Select(attrs={'class': 'form-control'}),
+        }
+
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 class ClienteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
