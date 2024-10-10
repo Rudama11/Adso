@@ -8,14 +8,12 @@ from app.forms import CategoriaForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
+from app.views.mixins import LoginRequiredMixin
 
-class CategoriaListView(ListView):
+class CategoriaListView(LoginRequiredMixin,ListView):
     model = Categoria
     template_name = 'Categoria/listar.html'
     
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,7 +45,7 @@ class CategoriaListView(ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
         
-class CategoriaCreateView(CreateView):
+class CategoriaCreateView(LoginRequiredMixin,CreateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/crear.html'
@@ -73,7 +71,7 @@ class CategoriaCreateView(CreateView):
         return super().form_invalid(form)
 
 
-class CategoriaUpdateView(UpdateView):
+class CategoriaUpdateView(LoginRequiredMixin,UpdateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/editarC.html'
