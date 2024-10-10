@@ -32,6 +32,22 @@
                                 <i class="fas fa-layer-group" style="margin-right: 8px;"></i> Categoría
                             </a>
                         </li>
+                        <li><a href="{% url 'app:tipo_listar' %}" class="dropdown-item">
+                                <i class="fas fa-clipboard-list" style="margin-right: 8px;"></i> Tipo producto
+                            </a>
+                        </li>
+                        <li><a href="{% url 'app:producto_listar' %}" class="dropdown-item">
+                                <i class="fa fa-fire-extinguisher" style="margin-right: 8px;"></i> Productos
+                            </a>
+                        </li>
+                        <li><a href="{% url 'app:listar_stock' %}" class="dropdown-item">
+                                <i class="fas fa-cubes" style="margin-right: 8px;"></i> Stock
+                            </a>
+                        </li>
+                        <li><a href="{% url 'app:normativa_listar' %}" class="dropdown-item">
+                                <i class="fas fa-balance-scale" style="margin-right: 8px;"></i> Normativas
+                            </a>
+                        </li>
                         <li><a href="{% url 'app:ubicacion_listar' %}" class="dropdown-item">
                                 <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Ubicación
                             </a>
@@ -41,27 +57,11 @@
                             </a>
                         </li>
                         <li><a href="{% url 'app:proveedor_listar' %}" class="dropdown-item">
-                                <i class="fas fa-truck" style="margin-right: 8px;"></i> Proveedor
-                            </a>
-                        </li>
-                        <li><a href="{% url 'app:tipo_listar' %}" class="dropdown-item">
-                                <i class="fas fa-clipboard-list" style="margin-right: 8px;"></i> Tipo producto
-                            </a>
-                        </li>
-                        <li><a href="{% url 'app:producto_listar' %}" class="dropdown-item">
-                                <i class="fa fa-fire-extinguisher" style="margin-right: 8px;"></i> Productos
+                                <i class="fas fa-truck" style="margin-right: 8px;"></i> Proveedores
                             </a>
                         </li>
                         <li><a href="{% url 'app:compras_listar' %}" class="dropdown-item">
                                 <i class="fas fa-credit-card" style="margin-right: 8px;"></i> Compras
-                            </a>
-                        </li>
-                        <li><a href="{% url 'app:normativa_listar' %}" class="dropdown-item">
-                                <i class="fas fa-balance-scale" style="margin-right: 8px;"></i> Normativas
-                            </a>
-                        </li>
-                        <li><a href="{% url 'app:listar_stock' %}" class="dropdown-item">
-                                <i class="fas fa-cubes" style="margin-right: 8px;"></i> Stock
                             </a>
                         </li>
                         <li><a href="{% url 'app:venta_listar' %}" class="dropdown-item">

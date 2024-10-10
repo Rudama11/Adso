@@ -4,132 +4,135 @@
 {% load widget_tweaks %}
 
 {% block contenido %}
-<div class="card card-default">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-eye"></i>
-            {{ titulo }}
-        </h3>
-    </div>
-    <div class="card-body">
-        <form id="formDetalle" method="post">
-            {% csrf_token %}
-            <!-- Número de Factura -->
-            <div class="form-group">
-                <label for="id_num_factura">{{ form.num_factura.label }}</label>
-                <input type="text" name="num_factura" class="form-control" id="id_num_factura"
-                    value="{{ venta.num_factura }}" readonly>
-            </div>
+<div class="container-fluid">
+    <div class="card card-default mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-eye"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <form id="formDetalle" method="post">
+                {% csrf_token %}
+                <!-- Bloque de Datos de Venta -->
+                <div class="venta-block">
+                    <h4>Datos de Venta</h4>
+                    <!-- Número de Factura -->
+                    <div class="form-group">
+                        <label for="id_num_factura">{{ form.num_factura.label }}</label>
+                        <input type="text" name="num_factura" class="form-control" id="id_num_factura"
+                            value="{{ venta.num_factura }}" readonly>
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <label for="id_venta">ID de la Venta</label>
+                        <input type="hidden" name="id_venta" id="id_venta" value="{{ venta.id }}">
+                    </div>
+                    <!-- Fecha de Emisión -->
+                    <div class="form-group">
+                        <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
+                        <input type="text" class="form-control" id="id_fecha_emision"
+                            value="{{ venta.fecha_emision|date:'Y-m-d' }}" readonly>
+                    </div>
+                    <!-- Cliente -->
+                    <div class="form-group">
+                        <label for="id_cliente">{{ form.cliente.label }}</label>
+                        <input type="text" name="cliente" class="form-control" id="id_cliente" value="{{ venta.cliente }}"
+                            readonly>
+                    </div>
+                </div>
 
-            <div class="form-group" style="display: none;">
-                <label for="id_venta">ID de la Venta</label>
-                <input type="hidden" name="id_venta" id="id_venta" value="{{ venta.id }}">
-            </div>
+                <!-- Separador visual -->
+                <div class="my-4" style="border-top: 2px solid #ccc; margin: 20px 0;"></div>
 
-            <!-- Fecha de Emisión -->
-            <div class="form-group">
-                <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_emision"
-                    value="{{ venta.fecha_emision|date:'Y-m-d' }}" readonly>
-            </div>
-
-            <!-- Cliente -->
-            <div class="form-group">
-                <label for="id_cliente">{{ form.cliente.label }}</label>
-                <input type="text" name="cliente" class="form-control" id="id_cliente" value="{{ venta.cliente }}"
-                    readonly>
-            </div>
-            <hr>
-
-            <!-- Detalles de Producto -->
-            <div class="form-group">
-                <label for="id_producto">Producto</label>
-                <select id="id_producto" name="producto" class="form-control" required>
-                    <option value="">Seleccione un producto</option>
-                    {% for producto in productos %}
-                    <option value="{{ producto.id }}">{{ producto.nombre_pro.nombre }}</option>
-                    {% endfor %}
-                </select>
-                <small class="text-danger" id="error_producto" style="display:none;"></small> <!-- Mensaje de error -->
-                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
-            </div>
-
-            <!-- Cantidad -->
-            <div class="form-group">
-                <label for="id_cantidad">Cantidad</label>
-                <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="1" value="1"
-                    required onchange="calcularTotal();">
-                <small class="text-danger" id="error_cantidad" style="display:none;"></small> <!-- Mensaje de error -->
-                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
-            </div>
-
-            <!-- Precio Unitario -->
-            <div class="form-group">
-                <label for="id_precio">Precio Unitario</label>
-                <input type="number" id="id_precio" name="precio" class="form-control" step="0.01" min="0" required
-                    onchange="calcularTotal();">
-                <small class="text-danger" id="error_precio" style="display:none;"></small> <!-- Mensaje de error -->
-                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
-            </div>
-
-            <!-- IVA (%) -->
-            <div class="form-group">
-                <label for="id_iva">IVA (%)</label>
-                <input type="number" id="id_iva" name="iva" class="form-control" min="0" max="100" value="19"
-                    required onchange="calcularTotal();">
-                <small class="text-danger" id="error_iva" style="display:none;"></small> <!-- Mensaje de error -->
-                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
-            </div>
-
-            <!-- Total -->
-            <div class="form-group">
-                <label for="id_total">Total</label>
-                <input type="number" id="id_total" name="total" class="form-control" readonly>
-            </div>
-
-            <!-- Tabla de Detalles de Venta -->
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>IVA</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="detalleVentaBody">
-                        {% for detalle in detalles_venta %}
-                        <tr>
-                            <td>{{ detalle.producto }}</td>
-                            <td>{{ detalle.cantidad }}</td>
-                            <td>{{ detalle.precio }}</td>
-                            <td>{{ detalle.iva }}%</td>
-                            <td>{{ detalle.total }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5">No hay productos agregados.</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Footer -->
-            <div class="card-footer">
-                <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();">
-                    <i class="fas fa-plus"></i> Agregar producto
-                </button>
-                <button type="button" class="btn btn-success print-hidden" onclick="window.print();">
-                    <i class="fas fa-print"></i> Imprimir factura
-                </button>
-                <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
-                    <i class="fas fa-times"></i> Cancelar
-                </a>
-            </div>
-        </form>
+                <!-- Bloque de Detalles de Venta -->
+                <div class="detalle-venta-block">
+                    <h4>Detalles de Venta</h4>
+                    <!-- Detalles de Producto -->
+                    <div class="form-group">
+                        <label for="id_producto">Producto</label>
+                        <select id="id_producto" name="producto" class="form-control" required>
+                            <option value="">Seleccione un producto</option>
+                            {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre_pro.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-danger" id="error_producto" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                    </div>
+                    <!-- Cantidad -->
+                    <div class="form-group">
+                        <label for="id_cantidad">Cantidad</label>
+                        <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="1" value="1"
+                            required onchange="calcularTotal();">
+                        <small class="text-danger" id="error_cantidad" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                    </div>
+                    <!-- Precio Unitario -->
+                    <div class="form-group">
+                        <label for="id_precio">Precio Unitario</label>
+                        <input type="number" id="id_precio" name="precio" class="form-control" step="0.01" min="0" required
+                            onchange="calcularTotal();">
+                        <small class="text-danger" id="error_precio" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                    </div>
+                    <!-- IVA (%) -->
+                    <div class="form-group">
+                        <label for="id_iva">IVA (%)</label>
+                        <input type="number" id="id_iva" name="iva" class="form-control" min="0" max="100" value="19"
+                            required onchange="calcularTotal();">
+                        <small class="text-danger" id="error_iva" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                    </div>
+                    <!-- Total -->
+                    <div class="form-group">
+                        <label for="id_total">Total</label>
+                        <input type="number" id="id_total" name="total" class="form-control" readonly>
+                    </div>
+                    <!-- Tabla de Detalles de Venta -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleVentaBody">
+                                {% for detalle in detalles_venta %}
+                                <tr>
+                                    <td>{{ detalle.producto }}</td>
+                                    <td>{{ detalle.cantidad }}</td>
+                                    <td>{{ detalle.precio }}</td>
+                                    <td>{{ detalle.iva }}%</td>
+                                    <td>{{ detalle.total }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5">No hay productos agregados.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="card-footer" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();">
+                        <i class="fas fa-plus"></i> Agregar producto
+                    </button>
+                    <button type="button" class="btn btn-success print-hidden" onclick="window.print();">
+                        <i class="fas fa-print"></i> Imprimir factura
+                    </button>
+                    <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -284,4 +287,29 @@
         });
     }
 </script>
+
+<style>
+    .venta-block, .detalle-venta-block {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;
+    }
+    .venta-block h4, .detalle-venta-block h4 {
+        margin-bottom: 10px;
+    }
+    .card-footer .btn {
+        margin: 5px 0;
+        flex: 1 1 30%;
+    }
+    @media (max-width: 768px) {
+        .table th, .table td {
+            font-size: 14px;
+        }
+        .card-footer .btn {
+            flex: 1 1 100%;
+        }
+    }
+</style>
 {% endblock %}
