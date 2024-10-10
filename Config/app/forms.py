@@ -521,8 +521,8 @@ class NormativaForm(forms.ModelForm):
         if descripcion and len(descripcion) < 5:
             raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
         # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
-        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        if descripcion and not re.match(r'^[\w\s,().-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas, puntos y paréntesis.')
         
         return descripcion
 
