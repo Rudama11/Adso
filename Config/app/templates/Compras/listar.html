@@ -46,6 +46,7 @@
 {% block columnas %}
 {# Bloque para los encabezados de la tabla #}
 <tr>
+    <th scope="col">ID</th>
     <th scope="col">Número de Factura</th>
     <th scope="col">Fecha de Compra</th>
     <th scope="col">Proveedor</th>
@@ -57,6 +58,7 @@
 {# Bloque para las filas de la tabla #}
 {% for com in object_list %}
 <tr>
+    <td>{{ com.id }}</td>
     <td>{{ com.num_factura }}</td>
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
@@ -64,7 +66,7 @@
         <a href="{% url 'app:compras_editar' com.num_factura %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:compras_detalle' num_factura=com.num_factura %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle">
+        <a href="{% url 'app:detalle_compra' compra_id=com.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle">
             <i class="fas fa-plus"></i>
         </a>
         </a>

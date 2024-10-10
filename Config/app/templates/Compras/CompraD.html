@@ -1,174 +1,216 @@
 {% extends 'listar.html' %}
-
 {% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
+<div class="container-fluid">
+    <div class="card card-default mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-eye"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <form id="formCompra" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_compra">ID de la Compra</label>
+                    <input type="text" id="id_compra" class="form-control" value="{{ compra.id }}" readonly>
+                </div>
 
-<div class="card card-default">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-eye"></i>
-            {{titulo}}
-        </h3>
-    </div>
-    <div class="card-body">
-        <form>
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_num_factura">{{ form.num_factura.label }}</label>
-                {{ form.num_factura|add_class:'form-control'|attr:'readonly:readonly' }}
-            </div>
-            <div class="form-group">
-                <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_compra" 
-                       value="{{ form.fecha_compra.value|date:'d-m-y ' }}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="id_proveedor">{{ form.proveedor.label }}</label>
-                {{ form.proveedor|add_class:'form-control'|attr:'disabled:disabled' }}
-            </div>
-        </form>
-    </div>
+                <div class="form-group">
+                    <label for="id_num_factura">{{ form.num_factura.label }}</label>
+                    {{ form.num_factura|add_class:'form-control'|attr:'readonly:readonly' }}
+                </div>
 
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>IVA</th>
-                    <th>Total</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for detalle in detalles_compra %}
-                    <tr>
-                        <td>{{ detalle.producto }}</td>
-                        <td>{{ detalle.cantidad }}</td>
-                        <td>{{ detalle.precio_unitario }}</td>
-                        <td>{{ detalle.iva }}%</td>
-                        <td>{{ detalle.total }}</td>
-                        <td>
-                            <!-- Botón de editar producto -->
-                            <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detalleCompraModalEdit{{ detalle.id }}" data-detalle-id="{{ detalle.id }}" title="Editar Producto">
-                                <i class="fas fa-edit"></i>
-                            </a>                                                       
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="6">No hay productos agregados.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <div class="form-group">
+                    <label for="id_fecha_compra">{{ form.fecha_compra.label }}</label>
+                    <input type="text" class="form-control" id="id_fecha_compra" 
+                        value="{{ form.fecha_compra.value|date:'d-m-Y' }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_proveedor">{{ form.proveedor.label }}</label>
+                    {{ form.proveedor|add_class:'form-control'|attr:'disabled:disabled' }}
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="card-footer">
+    <!-- Separador visual -->
+    <hr>
+
+    <!-- Sección de Detalles de Compra -->
+    <div class="card card-default mb-4">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fas fa-box"></i> Detalles de Compra</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST" id="detalle-compra-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_producto">Producto</label>
+                    <select id="id_producto" name="producto" class="form-control">
+                        <option value="">Seleccione un producto</option>
+                        {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre }}</option>  <!-- Usa 'nombre' directamente -->
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_cantidad">Cantidad</label>
+                    <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="0" value="0" onchange="calcularTotal();">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_precio">Precio Unitario</label>
+                    <input type="number" id="id_precio" name="precio_unitario" class="form-control" step="0.01" min="0" required onchange="calcularTotal();">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_iva">IVA (%)</label>
+                    <input type="number" id="id_iva" name="iva" class="form-control"  value="19" onchange="calcularTotal();">
+                </div>
+
+                <div class="form-group">
+                    <label for="id_total">Total</label>
+                    <input type="number" id="id_total" name="total" class="form-control" readonly>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>IVA</th>
+                            <th>Total</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in detalles_compra %}
+                            <tr>
+                                <td>{{ detalle.producto }}</td>
+                                <td>{{ detalle.cantidad }}</td>
+                                <td>{{ detalle.precio_unitario }}</td>
+                                <td>{{ detalle.iva }}%</td>
+                                <td>{{ detalle.total }}</td>
+                                <td>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6">No hay productos agregados.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
         <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
             <i class="fas fa-times"></i> Volver al Listado
         </a>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleCompraModal">
-            <i class="fas fa-plus"></i> Agregar Producto
+        
+        <button type="button" class="btn btn-primary" onclick="agregarDetalle();">
+            <i class="fas fa-plus"></i> Agregar producto 
         </button>
+
         <button type="button" class="btn btn-success" onclick="window.print();">
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
     </div>
-
-<!-- Modal para Agregar Detalle de Compra -->
-<div class="modal fade" id="detalleCompraModal" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalLabel">Agregar producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido del modal cargado dinámicamente -->
-                <div id="modalContent">
-                    <!-- Aquí se cargará el contenido dinámicamente -->
-                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
 </div>
 
-<!-- Modales para Editar cada Detalle de Compra -->
-{% for detalle in detalles_compra %}
-<div class="modal fade" id="detalleCompraModalEdit{{ detalle.id }}" tabindex="-1" role="dialog" aria-labelledby="detalleCompraModalEditLabel{{ detalle.id }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalleCompraModalEditLabel{{ detalle.id }}">Editar producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido del modal cargado dinámicamente -->
-                <div id="modalContentEdit{{ detalle.id }}">
-                    <!-- Aquí se cargará el contenido dinámicamente -->
-                    <input type="text" id="id_num_factura" name="num_factura" value="{{ num_factura }}" readonly>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-
-<!-- Script para manejar la carga dinámica en el modal de agregar -->
 <script>
-$(document).ready(function() {
-    $('#detalleCompraModal').on('show.bs.modal', function(e) {
-        var url = "{% url 'app:detallecompra_crear' %}";
-        var numFactura = "{{ form.num_factura.value }}";  // Obtener el número de factura del formulario
+    const csrftoken = '{{ csrf_token }}';  // El token CSRF
+    const compraId = '{{ compra.id }}';  // El ID de la compra
+    const detalleCompraUrl = '{% url "app:detalle_compra" compra.id %}';  // La URL del endpoint
 
-        $('#modalContent').load(url, function() {
-            // Asignar el número de factura al campo en el formulario cargado
-            $('#id_num_factura').val(numFactura);
+    function calcularTotal() {
+        const cantidad = parseFloat(document.getElementById('id_cantidad').value) || 0;
+        const precioUnitario = parseFloat(document.getElementById('id_precio').value) || 0;
+        const iva = parseFloat(document.getElementById('id_iva').value) || 0;
+
+        const total = (cantidad * precioUnitario) * (1 + (iva / 100));
+        document.getElementById('id_total').value = total.toFixed(2);
+    }
+
+    document.getElementById('id_cantidad').addEventListener('change', calcularTotal);
+    document.getElementById('id_precio').addEventListener('change', calcularTotal);
+    document.getElementById('id_iva').addEventListener('change', calcularTotal);
+
+    function agregarDetalle() {
+        const productoId = document.getElementById('id_producto').value;
+        const cantidad = parseFloat(document.getElementById('id_cantidad').value);
+        const precio = parseFloat(document.getElementById('id_precio').value);
+        const iva = parseFloat(document.getElementById('id_iva').value);
+        const numFactura = document.getElementById('id_num_factura').value;
+    
+        // Validación de campos
+        const missingFields = [];
+        if (!productoId) missingFields.push('producto');
+        if (!cantidad || isNaN(cantidad) || cantidad <= 0) missingFields.push('cantidad válida');
+        if (!precio || isNaN(precio) || precio <= 0) missingFields.push('precio válido');
+        if (!iva || isNaN(iva) || iva < 0) missingFields.push('IVA válido');
+        if (!numFactura) missingFields.push('número de factura');
+    
+        if (missingFields.length > 0) {
+            alert(`Faltan los siguientes datos: ${missingFields.join(', ')}`);
+            return;
+        }
+    
+        // Datos que se enviarán al servidor
+        const formData = {
+            producto: productoId,
+            cantidad: cantidad,
+            precio_unitario: precio,
+            iva: iva,
+            compra_id: compraId,  // Usamos el ID de la compra desde el contexto de la vista
+            num_factura: numFactura
+        };
+    
+        // Enviar la solicitud mediante fetch
+        fetch(detalleCompraUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken  // Agrega el token CSRF para autenticación
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || 'Error inesperado en la respuesta del servidor.');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                location.reload();  // Recargar la página para mostrar los cambios
+            } else {
+                alert(`Error: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            alert('Error inesperado en la solicitud. Por favor, intenta de nuevo.');
         });
-    });
-});
+    }
+
 </script>
 
-<!-- Script para manejar la carga dinámica en los modales de edición -->
-<script>
-    $(document).ready(function() {
-        // Manejar la carga dinámica de los modales de edición
-        $('[id^=detalleCompraModalEdit]').on('show.bs.modal', function(e) {
-            // Obtener el botón que activó el modal
-            var button = $(e.relatedTarget);
-            // Obtener el ID del detalle de compra desde el atributo 'data-detalle-id'
-            var detalleId = button.data('detalle-id');
-        
-            // Construir la URL para editar el detalle de compra pasando el ID correspondiente
-            var url = "{% url 'app:compraD_editar' 0 %}".replace('0', detalleId);
-        
-            // Seleccionar el contenedor del contenido dinámico
-            var modalContent = $(this).find('.modal-body #modalContentEdit' + detalleId);
-        
-            // Cargar el contenido del formulario de edición
-            modalContent.load(url, function(response, status, xhr) {
-                if (status == "error") {
-                    modalContent.html("<p>Error al cargar el formulario de edición. Por favor, intenta nuevamente.</p>");
-                }
-            });
-        });
-    });        
-</script>
 
 <style>
     .card-footer .btn {
@@ -176,7 +218,6 @@ $(document).ready(function() {
         flex: 1 1 30%;
     }
 
-    /* Ajustes para pantallas pequeñas */
     @media (max-width: 768px) {
         .table th, .table td {
             font-size: 14px;

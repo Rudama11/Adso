@@ -40,7 +40,7 @@ urlpatterns = [
     path('compras/crear/', ComprasCreateView.as_view(), name='compras_crear'),
     path('compras/editar/<str:num_factura>/', ComprasUpdateView.as_view(), name='compras_editar'),
     path('compras/eliminar/<int:id_compra>/', ComprasListView.EliminarCompras, name='compras_eliminar'),
-    path('compras/detalle/<str:num_factura>/', compra_detalle, name='compras_detalle'),
+    
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
     
     
@@ -50,8 +50,8 @@ urlpatterns = [
     path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
     path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
     path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
-    path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
-    path('detalle-compras/crear/<str:num_factura>/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
+    # path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
+    path('compras/detalles/<int:compra_id>/', DetalleCompraCreateView.as_view(), name='detalle_compra'),
     
     
     #-------------------------------------------------- Normativa --------------------------------------------------
@@ -111,7 +111,7 @@ urlpatterns = [
     path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
     path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
     path('ventas/detalle/<int:venta_id>/', VentaDetalleCreateView.as_view(), name='detalle_venta'),
-    path('producto/<int:producto_id>/', obtener_datos_producto, name='obtener_datos_producto'),
+    # path('producto/<int:producto_id>/', obtener_datos_producto, name='obtener_datos_producto'),
 
 
     #-------------------------------------------------- Backup del sistema ----------------------------------------

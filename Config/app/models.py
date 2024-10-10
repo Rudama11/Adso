@@ -189,7 +189,7 @@ class Producto(models.Model):
 
 #----------------------------------------------- Compras -----------------------------------------------
 class Compras(models.Model):
-    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura', primary_key=True)  # Clave primaria
+    num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')  # Clave primaria
     fecha_compra = models.DateField(verbose_name='Fecha de Compra')  # Cambiado a DateField
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
     
@@ -204,7 +204,8 @@ class Compras(models.Model):
 
 #----------------------------------------------- Detalle Compra -----------------------------------------------
 class DetalleCompra(models.Model):
-    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles', to_field='num_factura')
+    compra = models.ForeignKey(Compras, on_delete=models.CASCADE, related_name='detalles', )
+    num_factura = models.CharField(max_length=20, null=True, blank=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)], verbose_name='Cantidad')
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Unitario')
@@ -259,7 +260,7 @@ class Venta(models.Model):
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
     producto = models.ForeignKey('Stock', on_delete=models.CASCADE)
-    cantidad = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+    cantidad = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     precio = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     iva = models.PositiveIntegerField(default=19, validators=[MinValueValidator(0), MaxValueValidator(100)])
     total = models.DecimalField(default=0.00, max_digits=9, decimal_places=2)
