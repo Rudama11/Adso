@@ -106,7 +106,6 @@ urlpatterns = [
     path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
     path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
     path('ventas/detalle/<int:venta_id>/', VentaDetalleCreateView.as_view(), name='detalle_venta'),
-    # path('producto/<int:producto_id>/', obtener_datos_producto, name='obtener_datos_producto'),
 
     #-------------------------------------------------- Backup del sistema ----------------------------------------
     
