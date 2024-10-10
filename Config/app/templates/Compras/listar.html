@@ -1,6 +1,5 @@
 {% extends 'listar.html' %}
 
-
 {% load static %}
 
 {% block filtro_form_contenido %}
@@ -66,51 +65,9 @@
         <a href="{% url 'app:compras_editar' com.num_factura %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
-        <a href="{% url 'app:detalle_compra' compra_id=com.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle">
+        <a href="{% url 'app:detalle_compra' compra_id=com.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle Compra">
             <i class="fas fa-plus"></i>
         </a>
-        </a>
-        {% if request.user.is_superuser or request.user.is_staff %}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ com.num_factura }}" title="Eliminar Compra">
-            <i class="fas fa-trash"></i>
-        </a>
-        {% else %}
-        <span class="btn btn-danger btn-sm disabled" title="Eliminar Compra">
-            <i class="fas fa-trash"></i>
-        </span>
-        {% endif %}
-
-        <!-- Scripts de accesibilidad y AdminLTE -->
-        <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
-        <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}?v1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
-        <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
-        <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-
-        <script>
-            document.querySelectorAll('.delete-button').forEach(function (button) {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    let compraD = this.getAttribute('data-id');
-                    let deleteUrl = "{% url 'app:compras_eliminar' 0 %}".replace('0', compraD);
-
-                    Swal.fire({
-                        title: 'Confirmación',
-                        text: '¿Estás seguro de que deseas eliminar esta compra?',
-                        icon: 'question',
-                        showCancelButton: true,
-                        confirmButtonText: 'Sí, Eliminar',
-                        cancelButtonText: 'Cancelar',
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = deleteUrl;
-                        }
-                    });
-                });
-            });
-        </script>
     </td>
 </tr>
 {% endfor %}
