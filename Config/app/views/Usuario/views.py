@@ -65,6 +65,12 @@ class UsuarioCreateView(CreateView):
     template_name = 'Usuario/crear.html'
     success_url = reverse_lazy('app:usuario_listar')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # Pasar el usuario autenticado al formulario
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Usuario'
@@ -89,6 +95,7 @@ class UsuarioUpdateView(UpdateView):
     form_class = UsuarioEditForm
     template_name = 'Usuario/editar.html'
     success_url = reverse_lazy('app:usuario_listar')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -15,48 +15,47 @@ import re
 # Formulario exclusivo para la creación de usuarios.
 class UsuarioForm(forms.ModelForm):
     password = forms.CharField(
-        label='Contraseña',  # Etiqueta en español
+        label='Contraseña',  
         widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese contraseña', 'class': 'form-control'})
     )
     confirm_password = forms.CharField(
-        label='Confirmar Contraseña',  # Etiqueta en español
+        label='Confirmar Contraseña',  
         widget=forms.PasswordInput(attrs={'placeholder': 'Confirme la contraseña', 'class': 'form-control'})
     )
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Obtener el usuario actual
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['autofocus'] = True  # Enfocar el campo username
-        self.fields['tipo_usuario'].choices = CustomUser.USER_TYPE_CHOICES  # Establecer las opciones de tipo de usuario
+        self.fields['username'].widget.attrs['autofocus'] = True
+
+        # Si el usuario actual no es superuser, eliminar la opción de crear superusuarios
+        if user and not user.is_superuser:
+            self.fields['tipo_usuario'].choices = [
+                choice for choice in CustomUser.USER_TYPE_CHOICES if choice[0] != 'superuser'
+            ]
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        # Validación de solo letras, números y guiones
         if not re.match(r'^[a-zA-Z0-9-]+$', username):
             raise forms.ValidationError('El nombre de usuario solo puede contener letras, números y guiones.')
-        
-        # Validación de unicidad
         if CustomUser.objects.filter(username=username).exists():
             raise forms.ValidationError('Ya existe un usuario con este nombre de usuario.')
-        
         return username
-    
+
     def clean_nombres(self):
         nombres = self.cleaned_data.get('nombres')
-        # Validación de solo letras
         if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$', nombres):
             raise forms.ValidationError('Los nombres solo pueden contener letras y espacios.')
         return nombres
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        # Validación de unicidad
         if CustomUser.objects.filter(email=email).exists():
             raise forms.ValidationError('Ya existe un usuario con este correo electrónico.')
         return email
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        # Validación de longitud mínima de la contraseña
         if len(password) < 8:
             raise forms.ValidationError('La contraseña debe tener al menos 8 caracteres.')
         return password
@@ -64,26 +63,24 @@ class UsuarioForm(forms.ModelForm):
     def clean_confirm_password(self):
         password = self.cleaned_data.get('password')
         confirm_password = self.cleaned_data.get('confirm_password')
-        # Validación de coincidencia de contraseñas
         if password != confirm_password:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return confirm_password
 
     class Meta:
         model = CustomUser
-        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password']  # Tipo de usuario al inicio
+        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password']
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Ingrese nombre de usuario', 'class': 'form-control'}),
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres y apellidos', 'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Ingrese correo electrónico', 'class': 'form-control'}),
-            'tipo_usuario': forms.Select(attrs={'class': 'form-control'})  # Campo de selección para tipo de usuario
+            'tipo_usuario': forms.Select(attrs={'class': 'form-control'}) 
         }
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])  # Establecer la contraseña de forma segura
+        user.set_password(self.cleaned_data['password']) 
 
-        # Activar permisos según el tipo de usuario seleccionado
         if self.cleaned_data['tipo_usuario'] == 'superuser':
             user.is_superuser = True
             user.is_staff = True
@@ -95,15 +92,10 @@ class UsuarioForm(forms.ModelForm):
             user.is_staff = False
         
         if commit:
-            user.save()  # Guarda el usuario después de establecer la contraseña encriptada
+            user.save() 
         return user
-    
 
 # Formulario exclusivo para editar los usuarios.
-from django import forms
-import re
-from .models import CustomUser  # Asegúrate de que la importación del modelo es correcta
-
 class UsuarioEditForm(forms.ModelForm):
     password = forms.CharField(
         label='Contraseña',  # Etiqueta en español
