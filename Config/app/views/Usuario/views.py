@@ -96,6 +96,10 @@ class UsuarioUpdateView(UpdateView):
     template_name = 'Usuario/editar.html'
     success_url = reverse_lazy('app:usuario_listar')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # Pasar el usuario autenticado al formulario
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -105,15 +109,13 @@ class UsuarioUpdateView(UpdateView):
         return context
 
     def form_valid(self, form):
-        # Solo actualiza la contraseña si se proporciona una nueva
         password = form.cleaned_data.get('password')
         if password:
-            form.instance.password = make_password(password)  # Encriptar y guardar la nueva contraseña
+            form.instance.password = make_password(password)
         else:
-            # Si no se proporciona una nueva contraseña, mantenemos la contraseña actual
             form.instance.password = self.get_object().password
-        
-        form.save()  # Guardar el resto del formulario
+
+        form.save()
         return JsonResponse({
             'success': True,
             'message': 'Usuario actualizado exitosamente',

@@ -115,9 +115,21 @@ class UsuarioEditForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        # Obtener el usuario autenticado a través de kwargs
+        user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['autofocus'] = True  # Enfocar el campo username
-        self.fields['tipo_usuario'].choices = CustomUser.USER_TYPE_CHOICES  # Establecer las opciones de tipo de usuario
+
+        self.fields['username'].widget.attrs['autofocus'] = True
+
+        # Limitar opciones de tipo_usuario si el usuario autenticado es 'admin'
+        if user and user.tipo_usuario == 'admin':
+            # Excluir la opción de 'superuser' para los admins
+            self.fields['tipo_usuario'].choices = [
+                (choice_value, choice_label) for choice_value, choice_label in CustomUser.USER_TYPE_CHOICES
+                if choice_value != 'superuser'
+            ]
+        else:
+            self.fields['tipo_usuario'].choices = CustomUser.USER_TYPE_CHOICES
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
