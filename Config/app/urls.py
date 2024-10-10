@@ -96,19 +96,17 @@ urlpatterns = [
     path('municipios-por-departamento/', municipios_por_departamento, name='municipios_por_departamento'),
 
     #-------------------------------------------------- Ventas ----------------------------------------------------
-    
     path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
     path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
     path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
 
-
-#-------------------------------------------------- Dventas ---------------------------------------------------------
+    #-------------------------------------------------- Dventas ---------------------------------------------------
+    
     path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
     path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
     path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
     path('ventas/detalle/<int:venta_id>/', VentaDetalleCreateView.as_view(), name='detalle_venta'),
     # path('producto/<int:producto_id>/', obtener_datos_producto, name='obtener_datos_producto'),
-
 
     #-------------------------------------------------- Backup del sistema ----------------------------------------
     
