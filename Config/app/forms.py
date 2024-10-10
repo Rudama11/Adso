@@ -567,6 +567,8 @@ class VentaForm(forms.ModelForm):
 
     def clean_num_factura(self):
         num_factura = self.cleaned_data.get('num_factura')
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El numero de factura debe tener al menos 3 caracteres y un máximo de 20.')
         # Validación de unicidad
         if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe una venta con este número de factura.')
@@ -589,25 +591,10 @@ class VentaForm(forms.ModelForm):
         model = Venta
         fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
         widgets = {
-            'num_factura': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese un número de factura',
-                    'class': 'form-control'
-                }
-            ),
-            'fecha_emision': forms.DateInput(
-                attrs={
-                    'placeholder': 'Seleccione la fecha de emisión',
-                    'class': 'form-control',
-                    'type': 'date'  # Cambiado a 'date' para manejar solo fechas
-                }
-            ),
-            'cliente': forms.Select(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-        }
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura','class': 'form-control'}),
+            'fecha_emision': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión','class': 'form-control','type': 'date'}),
+            'cliente': forms.Select(attrs={'class': 'form-control'}),
+                    }
 
 #----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
 from django import forms
@@ -693,27 +680,47 @@ class ProductoFilterForm(forms.Form):
 #---------------------------------------------------------- Compras ----------------------------------------------------------
 
 class ComprasForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['proveedor'].widget.attrs['autofocus'] = True
+        
+        # Establecemos la fecha actual como valor inicial del campo fecha_emision
+        if not self.instance.pk:
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%d')
+
+    def clean_num_factura(self):
+        num_factura = self.cleaned_data.get('num_factura')
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El numero de factura debe tener al menos 3 caracteres y un máximo de 20.')
+        # Validación de unicidad
+        if Compras.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una compra con este número de factura.')
+        
+        # Validación de solo caracteres alfanuméricos
+        if not re.match(r'^[\w-]+$', num_factura):
+            raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
+        
+        return num_factura
+
+    def clean_fecha_compra(self):
+        fecha_compra = self.cleaned_data.get('fecha_compra')
+        # Validación de que la fecha no sea en el futuro
+        if fecha_compra and fecha_compra > timezone.now().date():
+            raise forms.ValidationError('La fecha de compra no puede ser mayor a la actual. Solo se permiten fechas hasta hoy.')
+        
+        return fecha_compra
+
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'proveedor']
-        
+        fields = ['num_factura', 'fecha_compra', 'proveedor']  # Especifica los campos a incluir
         widgets = {
-            'num_factura': forms.TextInput(attrs={
-                'placeholder': 'Ingrese el número de factura',
-                'class': 'form-control'
-            }),
-            'fecha_compra': forms.DateInput(attrs={
-                'placeholder': 'Ingrese la fecha de compra',
-                'type': 'date',  # Cambiado a 'date' para que solo seleccione la fecha
-                'class': 'form-control',
-                'value': timezone.now().strftime('%Y-%m-%d')  # Fecha actual como valor por defecto
-            }),
-            'proveedor': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-        }
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura','class': 'form-control'}),
+            'fecha_compra': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión','class': 'form-control','type': 'date'}),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+                    }
 
 # ----------------------------Formulario para Detalle de Compras-----------------------------------------
+
 class DetalleCompraForm(forms.ModelForm):
     class Meta:
         model = DetalleCompra
@@ -756,7 +763,8 @@ class DetalleCompraForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
-#-------------------------------- filtro de stok para que se filtre en rangos espesificos ---------------
+
+#-------------------------------- Filtro de stock para que se filtre en rangos específicos ---------------
 class StockFilterForm(forms.Form):
     nombre_pro = forms.ModelChoiceField(
         queryset=Producto.objects.all(),
