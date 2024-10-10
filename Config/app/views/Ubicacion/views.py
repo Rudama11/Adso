@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView
 from app.models import Ubicacion,Departamentos,Municipios
 from app.forms import UbicacionForm
 from django.shortcuts import get_object_or_404
@@ -55,24 +55,24 @@ class UbicacionCreateView(CreateView):
     template_name = 'Ubicacion/crear.html'
     success_url = reverse_lazy('app:ubicacion_listar')
 
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        if form.non_field_errors():
-            print("Error no relacionado con los campos: ", form.non_field_errors())
-        return response
-
-class UbicacionUpdateView(UpdateView):
-    model = Ubicacion
-    form_class = UbicacionForm
-    template_name = 'Ubicacion/editarUbi.html'
-    success_url = reverse_lazy('app:ubicacion_listar')
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Ubicación'
-        context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
+        context['titulo'] = 'Crear Ubicación'  # Corregir título
+        context['entidad'] = 'Ubicación'  # Cambiar entidad a 'Ubicación'
+        context['listar_url'] = reverse_lazy('app:ubicacion_listar')  # Cambiar la URL a la lista de ubicaciones
         return context
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Ubicación creada exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 def municipios_por_departamento(request):
     departamento_id = request.GET.get('departamento_id')

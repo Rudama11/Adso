@@ -53,12 +53,6 @@ class ComprasListView(ListView):
             queryset = queryset.filter(proveedor__id=proveedor_id)  # Filtra por ID de proveedor
 
         return queryset
-
-    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
-    def EliminarCompras(request, id_compra):
-        compraD = get_object_or_404(Compras, pk=id_compra)
-        compraD.delete()
-        return redirect('app:compras_listar')
     
 class ComprasCreateView(CreateView):
     model = Compras
@@ -66,23 +60,25 @@ class ComprasCreateView(CreateView):
     template_name = 'Compras/crear.html'
     success_url = reverse_lazy('app:compras_listar')
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        num_factura = form.instance.num_factura
-        self.object = form.instance
-        context = self.get_context_data()
-        context['num_factura'] = num_factura
-        return response
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['proveedores'] = Proveedor.objects.all()
         context['titulo'] = 'Crear Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
-        context['num_factura'] = self.object.num_factura if self.object else ''
         return context
+    
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Venta creada exitosamente',
+        })
 
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 class ComprasUpdateView(UpdateView):
     model = Compras
@@ -90,24 +86,24 @@ class ComprasUpdateView(UpdateView):
     template_name = 'Compras/editarCom.html'
     success_url = reverse_lazy('app:compras_listar')
 
-    def get_object(self, queryset=None):
-        return Compras.objects.get(num_factura=self.kwargs['num_factura'])
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        num_factura = form.instance.num_factura
-        self.object = form.instance
-        context = self.get_context_data()
-        context['num_factura'] = num_factura
-        return response
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
-        context['num_factura'] = self.object.num_factura if self.object else ''
         return context
+    
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Venta creada exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')

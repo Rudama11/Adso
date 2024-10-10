@@ -29,9 +29,9 @@
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
-                <i class="fas fa-save"></i> Guardar Cambios
+                <i class="fas fa-save"></i> Confirmar
             </button>
-            <a href="{% url 'app:proveedor_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>

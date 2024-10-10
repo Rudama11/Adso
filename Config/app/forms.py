@@ -212,6 +212,9 @@ class CategoriaForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -224,9 +227,13 @@ class CategoriaForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        
         return descripcion
 
     class Meta:
@@ -246,6 +253,9 @@ class TipoForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -258,9 +268,13 @@ class TipoForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,.-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas y puntos.')
+        
         return descripcion
 
     class Meta:
@@ -273,13 +287,22 @@ class TipoForm(forms.ModelForm):
         
 #---------------------------------------------------------- Ubicación ----------------------------------------------------------
 class UbicacionForm(forms.ModelForm):
-    class Meta:
-        model = Ubicacion
-        fields = ['departamento', 'municipio']
-        widgets = {
-            'departamento': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el departamento'}),
-            'municipio': Select2Widget(attrs={'class': 'select2', 'placeholder': 'Seleccione el municipio'}),
-        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Puedes enfocar un campo si lo deseas, por ejemplo:
+        # self.fields['departamento'].widget.attrs['autofocus'] = True
+
+    def clean_departamento(self):
+        departamento = self.cleaned_data.get('departamento')
+        if not departamento:
+            raise forms.ValidationError('El departamento es obligatorio.')
+        return departamento
+
+    def clean_municipio(self):
+        municipio = self.cleaned_data.get('municipio')
+        if not municipio:
+            raise forms.ValidationError('El municipio es obligatorio.')
+        return municipio
 
     def clean(self):
         cleaned_data = super().clean()
@@ -287,13 +310,22 @@ class UbicacionForm(forms.ModelForm):
         municipio = cleaned_data.get('municipio')
 
         if not municipio:
-            raise ValidationError('Debe seleccionar un municipio.')
+            raise forms.ValidationError('Debe seleccionar un municipio.')
 
         if Ubicacion.objects.filter(departamento=departamento, municipio=municipio).exists():
-            raise ValidationError('Esta combinación de departamento y municipio ya existe.')
+            raise forms.ValidationError('Esta combinación de departamento y municipio ya existe.')
 
         return cleaned_data
-            
+
+
+    class Meta:
+        model = Ubicacion
+        fields = ['departamento', 'municipio']  # Ajusta los campos según tu modelo
+        widgets = {
+            'departamento': forms.Select(attrs={'class': 'form-control'}),
+            'municipio': forms.Select(attrs={'class': 'form-control'}),
+        }
+
 #---------------------------------------------------------- Cliente ----------------------------------------------------------
 class ClienteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -309,8 +341,12 @@ class ClienteForm(forms.ModelForm):
 
     def clean_nombres(self):
         nombres = self.cleaned_data.get('nombres')
+        # Verificar longitud mínima
+        if len(nombres) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 100.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombres):
-            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
         return nombres
 
     def clean_numero_documento(self):
@@ -345,6 +381,12 @@ class ClienteForm(forms.ModelForm):
         if Cliente.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe un cliente con esta dirección de correo electrónico.')
         return correo
+    
+    def clean_direccion(self):
+        direccion = self.cleaned_data.get('direccion')
+        if len(direccion) < 5:
+            raise forms.ValidationError('La direccion debe tener al menos 5 caracteres y un máximo de 50.')
+        return direccion
 
     class Meta:
         model = Cliente
@@ -371,8 +413,12 @@ class ProveedorForm(forms.ModelForm):
 
     def clean_nombres(self):
         nombres = self.cleaned_data.get('nombres')
+        # Verificar longitud mínima
+        if len(nombres) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 100.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombres):
-            raise forms.ValidationError('Los nombres solo pueden contener letras, números, espacios, guiones y puntos.')
+            raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
         return nombres
 
     def clean_numero_documento(self):
@@ -407,6 +453,12 @@ class ProveedorForm(forms.ModelForm):
         if Proveedor.objects.filter(correo=correo).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe un proveedor con esta dirección de correo electrónico.')
         return correo
+    
+    def clean_direccion(self):
+        direccion = self.cleaned_data.get('direccion')
+        if len(direccion) < 5:
+            raise forms.ValidationError('La direccion debe tener al menos 5 caracteres y un máximo de 50.')
+        return direccion
 
     class Meta:
         model = Proveedor
@@ -426,6 +478,9 @@ class ProductoForm(forms.ModelForm):
 
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
+        # Verificar longitud mínima
+        if len(nombre) < 5:
+            raise forms.ValidationError('El nombre debe tener al menos 5 caracteres y un máximo de 50.')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', nombre):
             raise forms.ValidationError('El nombre solo puede contener letras, números, espacios, guiones y puntos.')
@@ -466,6 +521,9 @@ class NormativaForm(forms.ModelForm):
     def clean_decreto(self):
         decreto = self.cleaned_data.get('decreto')
         # Validación de solo alfanuméricos, espacios, guiones y puntos
+        if len(decreto) < 5:
+            raise forms.ValidationError('El decreto debe tener al menos 5 caracteres y un máximo de 50.')
+        # Validación de solo alfanuméricos, espacios, guiones y puntos
         if not re.match(r'^[\w\s.-]+$', decreto):
             raise forms.ValidationError('El decreto solo puede contener letras, números, espacios, guiones y puntos.')
 
@@ -477,9 +535,13 @@ class NormativaForm(forms.ModelForm):
 
     def clean_descripcion(self):
         descripcion = self.cleaned_data.get('descripcion')
-        # Validación de solo alfanuméricos, espacios, guiones y puntos
-        if descripcion and not re.match(r'^[\w\s.-]*$', descripcion):
-            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones y puntos.')
+        # Verificar longitud mínima
+        if descripcion and len(descripcion) < 5:
+            raise forms.ValidationError('La descripción debe tener al menos 5 caracteres y un máximo de 250.')
+        # Validación de solo alfanuméricos, espacios, guiones, comas y puntos
+        if descripcion and not re.match(r'^[\w\s,().-]*$', descripcion):
+            raise forms.ValidationError('La descripción solo puede contener letras, números, espacios, guiones, comas, puntos y paréntesis.')
+        
         return descripcion
 
     class Meta:
@@ -505,6 +567,8 @@ class VentaForm(forms.ModelForm):
 
     def clean_num_factura(self):
         num_factura = self.cleaned_data.get('num_factura')
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El numero de factura debe tener al menos 3 caracteres y un máximo de 20.')
         # Validación de unicidad
         if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe una venta con este número de factura.')
@@ -527,27 +591,15 @@ class VentaForm(forms.ModelForm):
         model = Venta
         fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
         widgets = {
-            'num_factura': forms.TextInput(
-                attrs={
-                    'placeholder': 'Ingrese un número de factura',
-                    'class': 'form-control'
-                }
-            ),
-            'fecha_emision': forms.DateInput(
-                attrs={
-                    'placeholder': 'Seleccione la fecha de emisión',
-                    'class': 'form-control',
-                    'type': 'date'  # Cambiado a 'date' para manejar solo fechas
-                }
-            ),
-            'cliente': forms.Select(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
-        }
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura','class': 'form-control'}),
+            'fecha_emision': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión','class': 'form-control','type': 'date'}),
+            'cliente': forms.Select(attrs={'class': 'form-control'}),
+                    }
 
 #----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
+from django import forms
+from .models import DetalleVenta, Producto  # Asegúrate de importar tus modelos
+
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
         model = DetalleVenta
@@ -561,6 +613,36 @@ class DetalleVentaForm(forms.ModelForm):
             'total': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly', 'id': 'id_total'}),
             'num_factura': forms.TextInput(attrs={'class': 'form-control', 'id': 'id_num_factura'})
         }
+
+    def clean_producto(self):
+        producto = self.cleaned_data.get('producto')
+        if not producto:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        return producto
+
+    def clean_cantidad(self):
+        cantidad = self.cleaned_data.get('cantidad')
+        if cantidad is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if cantidad < 0:
+            raise forms.ValidationError('La cantidad no puede ser negativa.')
+        return cantidad
+
+    def clean_precio(self):
+        precio = self.cleaned_data.get('precio')
+        if precio is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if precio < 0:
+            raise forms.ValidationError('El precio no puede ser negativo.')
+        return precio
+
+    def clean_iva(self):
+        iva = self.cleaned_data.get('iva')
+        if iva is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if iva < 0 or iva > 100:
+            raise forms.ValidationError('El IVA debe estar entre 0 y 100.')
+        return iva
 
     def clean(self):
         cleaned_data = super().clean()
@@ -576,6 +658,7 @@ class DetalleVentaForm(forms.ModelForm):
             cleaned_data['total'] = total
 
         return cleaned_data
+
 #---------------------------------------------------- Producto Filter Form ----------------------------------------------------------
 class ProductoFilterForm(forms.Form):
     nombre = forms.CharField(
@@ -599,60 +682,78 @@ class ProductoFilterForm(forms.Form):
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
-        # Establecer enfoque automático en el campo proveedor
         self.fields['proveedor'].widget.attrs['autofocus'] = True
         
-        # Establecer la fecha actual por defecto si es una nueva instancia
-        if not self.instance.pk:  # Solo si es una nueva instancia
-            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%d')  # Solo la fecha
+        # Establecemos la fecha actual como valor inicial del campo fecha_emision
+        if not self.instance.pk:
+            self.fields['fecha_compra'].initial = timezone.now().strftime('%Y-%m-%d')
+
+    def clean_num_factura(self):
+        num_factura = self.cleaned_data.get('num_factura')
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El numero de factura debe tener al menos 3 caracteres y un máximo de 20.')
+        # Validación de unicidad
+        if Compras.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una compra con este número de factura.')
+        
+        # Validación de solo caracteres alfanuméricos
+        if not re.match(r'^[\w-]+$', num_factura):
+            raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
+        
+        return num_factura
+
+    def clean_fecha_compra(self):
+        fecha_compra = self.cleaned_data.get('fecha_compra')
+        # Validación de que la fecha no sea en el futuro
+        if fecha_compra and fecha_compra > timezone.now().date():
+            raise forms.ValidationError('La fecha de compra no puede ser mayor a la actual. Solo se permiten fechas hasta hoy.')
+        
+        return fecha_compra
 
     class Meta:
         model = Compras
-        fields = ['num_factura', 'fecha_compra', 'proveedor']
-        
+        fields = ['num_factura', 'fecha_compra', 'proveedor']  # Especifica los campos a incluir
         widgets = {
-            'num_factura': forms.TextInput(attrs={
-                'placeholder': 'Ingrese el número de factura',
-                'class': 'form-control'
-            }),
-            'fecha_compra': forms.DateInput(attrs={
-                'placeholder': 'Ingrese la fecha de compra',
-                'type': 'date',  # Cambiado a 'date' para que solo seleccione la fecha
-                'class': 'form-control'
-            }),
-            'proveedor': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-        }
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura','class': 'form-control'}),
+            'fecha_compra': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión','class': 'form-control','type': 'date'}),
+            'proveedor': forms.Select(attrs={'class': 'form-control'}),
+                    }
 
-#------------------------------- Detalle Compras ----------------------------
+# ----------------------------Formulario para Detalle de Compras-----------------------------------------
 
 class DetalleCompraForm(forms.ModelForm):
-    num_factura = forms.CharField(
-        max_length=20,
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Número de Factura'})
-        # Elimina 'disabled=True' para que el campo sea editable
-    )
-
     class Meta:
         model = DetalleCompra
         fields = ['num_factura', 'producto', 'cantidad', 'precio_unitario', 'iva']
         widgets = {
-            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto'}),
-            'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
-            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio'}),
-            'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)'}),
+            'num_factura': forms.TextInput(attrs={
+                'placeholder': 'Número de Factura',
+                'class': 'form-control',
+                'readonly': True  # Si no deseas que sea editable
+            }),
+            'producto': forms.Select(attrs={'placeholder': 'Seleccione el producto', 'class': 'form-control'}),
+            'cantidad': forms.NumberInput(attrs={'placeholder': 'Ingrese la cantidad', 'class': 'form-control'}),
+            'precio_unitario': forms.NumberInput(attrs={'placeholder': 'Ingrese el precio', 'class': 'form-control'}),
+            'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)', 'class': 'form-control'}),
         }
 
     def __init__(self, *args, **kwargs):
-        # Extraer `compra_id` del diccionario de argumentos
         self.compra_id = kwargs.pop('compra_id', None)
         super().__init__(*args, **kwargs)
         # Si `compra_id` está presente, establecer el valor inicial para `num_factura`
         if self.compra_id:
-            self.fields['num_factura'].initial = self.compra_id
+            self.fields['num_factura'].initial = self.compra_id  # Aquí se establece el valor inicial
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cantidad = cleaned_data.get("cantidad")
+        precio_unitario = cleaned_data.get("precio_unitario")
+
+        if cantidad is not None and cantidad <= 0:
+            self.add_error('cantidad', 'La cantidad debe ser mayor que 0.')
+
+        if precio_unitario is not None and precio_unitario <= 0:
+            self.add_error('precio_unitario', 'El precio unitario debe ser mayor que 0.')
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -662,9 +763,8 @@ class DetalleCompraForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
-    
-    
-#-------------------------------- filtro de stok para que se filtre en rangos espesificos ---------------
+
+#-------------------------------- Filtro de stock para que se filtre en rangos específicos ---------------
 class StockFilterForm(forms.Form):
     nombre_pro = forms.ModelChoiceField(
         queryset=Producto.objects.all(),

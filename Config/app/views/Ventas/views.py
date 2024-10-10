@@ -5,9 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from app.models import Venta, Cliente
 from app.forms import VentaForm
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
-from django.views.decorators.http import require_POST
 from django.utils.dateparse import parse_date
 
 # Vista para listar ventas
@@ -103,4 +100,3 @@ class VentasUpdateView(UpdateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
-

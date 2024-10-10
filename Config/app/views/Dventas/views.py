@@ -43,10 +43,16 @@ class VentaDetalleCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.venta = get_object_or_404(Venta, id=self.kwargs['venta_id'])
-        form.instance.num_factura = "Factura Generada"
-        form.instance.total = form.instance.precio * form.instance.cantidad * (1 + (form.instance.iva / 100))
-        return super().form_valid(form)
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Categoria creada exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
     def post(self, request, *args, **kwargs):
         # Asegurarse de que es una solicitud AJAX
@@ -115,6 +121,18 @@ class DetalleVentaUpdateView(UpdateView):
         context['entidad'] = 'Detalle de Venta'
         context['listar_url'] = reverse_lazy('app:detalleventa_listar')
         return context
+    
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Categoria actualizada exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 
 # Eliminar un detalle de venta

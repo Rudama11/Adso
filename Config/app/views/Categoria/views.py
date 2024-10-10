@@ -8,6 +8,7 @@ from app.forms import CategoriaForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
+
 class CategoriaListView(ListView):
     model = Categoria
     template_name = 'Categoria/listar.html'
