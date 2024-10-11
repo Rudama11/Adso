@@ -59,6 +59,7 @@ class UsuarioListView(LoginRequiredMixin, ListView):
         usuario.delete()
         return redirect('app:usuario_listar')
 
+@method_decorator(user_is_admin_or_superuser, name='dispatch')
 class UsuarioCreateView(LoginRequiredMixin,CreateView):
     model = CustomUser
     form_class = UsuarioForm
@@ -90,6 +91,7 @@ class UsuarioCreateView(LoginRequiredMixin,CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
+@method_decorator(user_is_admin_or_superuser, name='dispatch')
 class UsuarioUpdateView(LoginRequiredMixin,UpdateView):
     model = CustomUser
     form_class = UsuarioEditForm
