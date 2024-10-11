@@ -560,7 +560,6 @@ class NormativaForm(forms.ModelForm):
 #---------------------------------------------------------- Ventas ----------------------------------------------------------
 
 class VentaForm(forms.ModelForm):
-    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['cliente'].widget.attrs['autofocus'] = True
@@ -572,7 +571,7 @@ class VentaForm(forms.ModelForm):
     def clean_num_factura(self):
         num_factura = self.cleaned_data.get('num_factura')
         if num_factura and len(num_factura) < 3:
-            raise forms.ValidationError('El numero de factura debe tener al menos 3 caracteres y un máximo de 20.')
+            raise forms.ValidationError('El número de factura debe tener al menos 3 caracteres y un máximo de 20.')
         # Validación de unicidad
         if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe una venta con este número de factura.')
@@ -585,9 +584,11 @@ class VentaForm(forms.ModelForm):
 
     def clean_fecha_emision(self):
         fecha_emision = self.cleaned_data.get('fecha_emision')
-        # Validación de que la fecha no sea en el futuro
-        if fecha_emision and fecha_emision > timezone.now().date():
-            raise forms.ValidationError('La fecha de emisión no puede ser mayor a la actual. Solo se permiten fechas hasta hoy.')
+        fecha_actual = timezone.now().date()
+        
+        # Validación de que la fecha debe ser la actual
+        if fecha_emision and (fecha_emision < fecha_actual or fecha_emision > fecha_actual):
+            raise forms.ValidationError('La fecha de emisión debe ser la actual. No se permiten fechas anteriores ni posteriores.')
         
         return fecha_emision
 
@@ -595,14 +596,41 @@ class VentaForm(forms.ModelForm):
         model = Venta
         fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
         widgets = {
-            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura','class': 'form-control'}),
-            'fecha_emision': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión','class': 'form-control','type': 'date'}),
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura', 'class': 'form-control'}),
+            'fecha_emision': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión', 'class': 'form-control', 'type': 'date'}),
             'cliente': forms.Select(attrs={'class': 'form-control'}),
-                    }
+        }
+
+
+class VentaEditForm(forms.ModelForm):
+    class Meta:
+        model = Venta
+        fields = ['num_factura']  # Solo incluir el campo num_factura
+        widgets = {
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura', 'class': 'form-control'}),
+        }
+
+    def clean_num_factura(self):
+        num_factura = self.cleaned_data.get('num_factura')
+        
+        # Validación de unicidad
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El número de factura debe tener al menos 3 caracteres y un máximo de 20.')
+        
+        # Validación de unicidad
+        if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una venta con este número de factura.')
+        
+        # Validación de solo caracteres alfanuméricos
+        if not re.match(r'^[\w-]+$', num_factura):
+            raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
+        
+        return num_factura
+
+
 
 #----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
-from django import forms
-from .models import DetalleVenta, Producto  # Asegúrate de importar tus modelos
+
 
 class DetalleVentaForm(forms.ModelForm):
     class Meta:

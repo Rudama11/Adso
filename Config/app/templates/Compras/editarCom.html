@@ -122,15 +122,14 @@
             }
         })
         .catch(data => {
-            console.log('Error:', data);  // Log de depuración
-            const errorMessage = data.message || 'El número de factura solo puede contener letras, números y guiones.';
+            const errorMessage = data.message || data.errors.num_factura ? data.errors.num_factura[0] : 'El número de factura solo puede contener letras, números y guiones.';
             Swal.fire({
                 title: 'Inválido',
                 text: errorMessage,
                 icon: 'warning',
                 confirmButtonText: 'Aceptar',
             });
-
+        
             // Resaltar los campos con errores y mostrar debajo del campo
             if (data.errors) {
                 Object.keys(data.errors).forEach(function(key) {

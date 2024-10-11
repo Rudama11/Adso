@@ -88,10 +88,8 @@ class ComprasUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        # Solo guardar el campo num_factura
-        num_factura = form.cleaned_data.get('num_factura')
-        self.object.num_factura = num_factura  # Actualiza solo el número de factura
-        self.object.save()  # Guarda el objeto
+        # Guardar el formulario como está, ya que la validación se realiza en el formulario
+        form.save()  # Guarda el objeto
 
         return JsonResponse({
             'success': True,

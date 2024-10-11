@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Venta, Cliente
-from app.forms import VentaForm
+from app.forms import VentaForm,VentaEditForm
 from django.utils.dateparse import parse_date
 from app.mixins import LoginRequiredMixin
 
@@ -71,9 +71,9 @@ class VentasCreateView(LoginRequiredMixin,CreateView):
         return super().form_invalid(form)
 
 # Vista para actualizar una venta existente
-class VentasUpdateView(LoginRequiredMixin,UpdateView):
+class VentasUpdateView(LoginRequiredMixin, UpdateView):
     model = Venta
-    form_class = VentaForm
+    form_class = VentaEditForm
     template_name = 'Ventas/editarVen.html'
     success_url = reverse_lazy('app:venta_listar')
     
@@ -85,10 +85,12 @@ class VentasUpdateView(LoginRequiredMixin,UpdateView):
         return context
     
     def form_valid(self, form):
-        form.save()
+        # Guardar el formulario como está, ya que la validación se realiza en el formulario
+        form.save()  # Guarda el objeto
+
         return JsonResponse({
             'success': True,
-            'message': 'Venta actualizada exitosamente',
+            'message': 'Factura actualizada correctamente',
         })
 
     def form_invalid(self, form):

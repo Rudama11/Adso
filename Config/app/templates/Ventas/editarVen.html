@@ -1,4 +1,5 @@
 {% extends 'listar.html' %}
+
 {% load static %}
 {% load widget_tweaks %}
 
@@ -9,7 +10,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-edit"></i>
-                Editar {{ titulo }}
+                {{ titulo }}
             </h3>
         </div>
         <div class="card-body">
@@ -19,7 +20,7 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                 <h5><i class="icon fas fa-ban"></i>
-                    Ha ocurrido un error al intentar editar {{ titulo }}.
+                    Ha ocurrido un error al intentar {{ titulo }}.
                 </h5>
                 <ul>
                     {% for field in form %}
@@ -30,16 +31,15 @@
                 </ul>
             </div>
             {% endif %}
-            {% for field in form.visible_fields %}
+
             <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <label for="{{ form.num_factura.id_for_label }}">{{ form.num_factura.label }}</label>
+                {{ form.num_factura|add_class:'form-control'|attr:'autocomplete:off' }}
                 <div class="invalid-feedback">
-                    {{ field.errors|striptags }}
+                    {{ form.num_factura.errors|striptags }}
                 </div>
-                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div> <!-- Mensaje de campo obligatorio -->
             </div>
-            {% endfor %}
+
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-success" id="confirmButton">
@@ -53,43 +53,47 @@
 </form>
 
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+
 <script>
+    // Almacenar el valor original del número de factura
+    let originalNumFactura = "{{ object.num_factura }}"; // Suponiendo que `object` es el objeto actual de la compra
+
     document.getElementById('confirmButton').addEventListener('click', function(e) {
         e.preventDefault(); 
 
+        console.log('Confirm Button Clicked');  // Log de depuración
+
+        // Obtener el campo de número de factura
+        let numFacturaField = document.querySelector('#editForm input[name="num_factura"]');
+        let currentNumFactura = numFacturaField.value.trim();
+
         // Validación de campos vacíos
-        let isValid = true;
-        let formFields = document.querySelectorAll('#editForm .form-control');
-
-        formFields.forEach(function(field) {
-            let feedback = field.parentNode.querySelector('.mandatory-feedback');
-            if (field.value.trim() === '') {
-                isValid = false;
-                field.classList.add('is-invalid');
-                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
-            } else {
-                field.classList.remove('is-invalid');
-                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
-            }
-        });
-
-        if (!isValid) {
+        if (currentNumFactura === '') {
+            numFacturaField.classList.add('is-invalid');
             Swal.fire({
                 title: 'Campo vacío',
-                text: 'Debe llenar todos los campos de registro.',
+                text: 'Debe llenar el campo número de factura.',
                 icon: 'warning',
                 confirmButtonText: 'Aceptar',
-                backdrop: true,
-                timer: 3000,
-                timerProgressBar: true,
-                position: 'center',
-                allowOutsideClick: true,
             });
-            return; // Detiene la ejecución si hay campos vacíos
+            return; // Detener la ejecución si hay campos vacíos
+        }
+
+        // Verificar si no se ha realizado ningún cambio en el número de factura
+        if (currentNumFactura === originalNumFactura) {
+            Swal.fire({
+                title: 'Sin cambios',
+                text: 'Debe realizar un cambio en el número de factura.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+            return; // Detener la ejecución si no hay cambios
         }
 
         // Obtener los datos del formulario
         let formData = new FormData(document.getElementById('editForm'));
+
+        console.log('Form Data:', formData);  // Log de depuración
 
         // Enviar los datos mediante AJAX
         fetch(".", {
@@ -109,62 +113,32 @@
             if (data.success) {
                 Swal.fire({
                     title: 'Actualizado Correctamente',
-                    text: 'La venta ha sido actualizada exitosamente.',
+                    text: 'La compra ha sido actualizada exitosamente.',
                     icon: 'success',
                     confirmButtonText: 'Continuar',
-                    backdrop: true,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    position: 'center',
-                    allowOutsideClick: false,
                 }).then(() => {
                     window.location.href = "{{ listar_url }}"; // Redirigir al listado
                 });
             }
         })
         .catch(data => {
-            // Mostrar alerta de error
-            const errorMessage = data.message;
-            const specificErrors = data.errors; // Obtenemos errores específicos
-        
-            // Si hay errores específicos, los recopilamos en un solo mensaje
-            let detailedMessages = [];
-        
-            if (specificErrors) {
-                if (specificErrors.num_factura) {
-                    detailedMessages.push(specificErrors.num_factura[0]); // Agregar mensaje de num_factura
-                }
-                if (specificErrors.fecha_emision) {
-                    detailedMessages.push(specificErrors.fecha_emision[0]); // Agregar mensaje de fecha_emision
-                }
-                if (specificErrors.cliente) {
-                    detailedMessages.push(specificErrors.cliente[0]); // Agregar mensaje de cliente
-                }
-                if (specificErrors.total) {
-                    detailedMessages.push(specificErrors.total[0]); // Agregar mensaje de total
-                }
-            }
-        
-            // Unimos los mensajes detallados con saltos de línea HTML
-            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
-        
-            // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
+            const errorMessage = data.message || data.errors.num_factura ? data.errors.num_factura[0] : 'El número de factura solo puede contener letras, números y guiones.';
             Swal.fire({
                 title: 'Inválido',
-                html: detailedMessage || errorMessage,
+                text: errorMessage,
                 icon: 'warning',
                 confirmButtonText: 'Aceptar',
             });
         
-            // Resaltar los campos con errores
-            if (specificErrors) {
-                Object.keys(specificErrors).forEach(function(key) {
+            // Resaltar los campos con errores y mostrar debajo del campo
+            if (data.errors) {
+                Object.keys(data.errors).forEach(function(key) {
                     let field = document.querySelector(`[name=${key}]`);
                     if (field) {
                         field.classList.add('is-invalid');
                         let errorDiv = field.parentNode.querySelector('.invalid-feedback');
                         if (errorDiv) {
-                            errorDiv.innerHTML = specificErrors[key][0];
+                            errorDiv.innerHTML = data.errors[key][0];  // Mostrar el error debajo del campo
                         }
                     }
                 });
@@ -172,4 +146,5 @@
         });
     });
 </script>
+
 {% endblock %}

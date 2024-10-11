@@ -50,7 +50,7 @@
             <button type="button" class="btn btn-success" id="confirmButton">
                 <i class="fas fa-save"></i> Confirmar
             </button>
-            <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
@@ -58,6 +58,7 @@
 </form>
 
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+
 <script>
     document.getElementById('confirmButton').addEventListener('click', function(e) {
         e.preventDefault(); 
@@ -65,6 +66,8 @@
         // Validación de campos vacíos
         let isValid = true;
         let formFields = document.querySelectorAll('#createForm .form-control');
+        let fechaEmisionField = document.querySelector('[name="fecha_emision"]');
+        let today = new Date().toISOString().split('T')[0];  // Fecha actual en formato YYYY-MM-DD
 
         formFields.forEach(function(field) {
             let feedback = field.parentNode.querySelector('.mandatory-feedback');
@@ -78,6 +81,28 @@
             }
         });
 
+        // Validar que la fecha de emisión no sea mayor a la fecha actual
+        if (fechaEmisionField.value && (fechaEmisionField.value > today)) {
+            isValid = false;
+            Swal.fire({
+                title: 'Fecha Inválida',
+                text: 'La fecha de emisión no puede ser mayor a la fecha actual.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 4000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+            });
+            fechaEmisionField.classList.add('is-invalid');
+            let errorDiv = fechaEmisionField.parentNode.querySelector('.invalid-feedback');
+            errorDiv.innerHTML = 'La fecha de emisión no puede ser mayor a la fecha actual.';
+            return;  // Detener la ejecución si la fecha es inválida
+        } else {
+            fechaEmisionField.classList.remove('is-invalid');
+        }
+
         if (!isValid) {
             Swal.fire({
                 title: 'Campo vacío',
@@ -90,7 +115,7 @@
                 position: 'center',
                 allowOutsideClick: true,
             });
-            return; // Detiene la ejecución si hay campos vacíos
+            return; // Detener la ejecución si hay campos vacíos
         }
 
         // Obtener los datos del formulario
@@ -150,15 +175,14 @@
             // Unimos los mensajes detallados con saltos de línea HTML
             let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
         
-            // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
             Swal.fire({
                 title: 'Inválido',
-                html: detailedMessage || errorMessage, // Usamos 'html' en lugar de 'text' para soportar saltos de línea
+                html: detailedMessage || errorMessage,
                 icon: 'warning',
                 confirmButtonText: 'Aceptar',
             });
         
-            // Resaltar los campos con errores
+            // Resaltar los campos con errores y mostrar debajo del campo
             if (specificErrors) {
                 Object.keys(specificErrors).forEach(function(key) {
                     let field = document.querySelector(`[name=${key}]`);
@@ -166,7 +190,7 @@
                         field.classList.add('is-invalid');
                         let errorDiv = field.parentNode.querySelector('.invalid-feedback');
                         if (errorDiv) {
-                            errorDiv.innerHTML = specificErrors[key][0];
+                            errorDiv.innerHTML = specificErrors[key][0];  // Mostrar el error debajo del campo
                         }
                     }
                 });
