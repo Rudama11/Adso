@@ -683,6 +683,7 @@ class ProductoFilterForm(forms.Form):
     
 #---------------------------------------------------------- Compras ----------------------------------------------------------
 
+#Formulario único para la creación de una compra
 class ComprasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -724,6 +725,31 @@ class ComprasForm(forms.ModelForm):
             'fecha_compra': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de compra','class': 'form-control','type': 'date'}),
             'proveedor': forms.Select(attrs={'class': 'form-control'}),
         }
+
+#Formulario unico para la edicion de una compra
+
+class ComprasEditForm(forms.ModelForm):
+    class Meta:
+        model = Compras
+        fields = ['num_factura']  # Solo incluir el campo num_factura
+        widgets = {
+            'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura', 'class': 'form-control'}),
+        }
+
+    def clean_num_factura(self):
+        num_factura = self.cleaned_data.get('num_factura')
+        if num_factura and len(num_factura) < 3:
+            raise forms.ValidationError('El número de factura debe tener al menos 3 caracteres y un máximo de 20.')
+        
+        # Validación de unicidad
+        if Compras.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Ya existe una compra con este número de factura.')
+        
+        # Validación de solo caracteres alfanuméricos
+        if not re.match(r'^[\w-]+$', num_factura):
+            raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
+        
+        return num_factura
 
 
 # ----------------------------Formulario para Detalle de Compras-----------------------------------------

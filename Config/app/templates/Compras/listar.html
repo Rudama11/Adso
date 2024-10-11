@@ -62,7 +62,7 @@
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
     <td>
-        <a href="{% url 'app:compras_editar' com.num_factura %}" class="btn btn-info btn-sm" title="Editar compra">
+        <a href="{% url 'app:compras_editar' com.id %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
         <a href="{% url 'app:detalle_compra' compra_id=com.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle Compra">

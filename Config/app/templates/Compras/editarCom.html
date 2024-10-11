@@ -1,1 +1,151 @@
-{% extends 'editar.html' %}
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+
+<form method="post" action="." id="editForm">
+    <div class="card card-default">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-edit"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            {% if form.errors %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                <h5><i class="icon fas fa-ban"></i>
+                    Ha ocurrido un error al intentar {{ titulo }}.
+                </h5>
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="{{ form.num_factura.id_for_label }}">{{ form.num_factura.label }}</label>
+                {{ form.num_factura|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ form.num_factura.errors|striptags }}
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+
+<script>
+    // Almacenar el valor original del número de factura
+    let originalNumFactura = "{{ object.num_factura }}"; // Suponiendo que `object` es el objeto actual de la compra
+
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault(); 
+
+        console.log('Confirm Button Clicked');  // Log de depuración
+
+        // Obtener el campo de número de factura
+        let numFacturaField = document.querySelector('#editForm input[name="num_factura"]');
+        let currentNumFactura = numFacturaField.value.trim();
+
+        // Validación de campos vacíos
+        if (currentNumFactura === '') {
+            numFacturaField.classList.add('is-invalid');
+            Swal.fire({
+                title: 'Campo vacío',
+                text: 'Debe llenar el campo número de factura.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+            return; // Detener la ejecución si hay campos vacíos
+        }
+
+        // Verificar si no se ha realizado ningún cambio en el número de factura
+        if (currentNumFactura === originalNumFactura) {
+            Swal.fire({
+                title: 'Sin cambios',
+                text: 'Debe realizar un cambio en el número de factura.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+            return; // Detener la ejecución si no hay cambios
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('editForm'));
+
+        console.log('Form Data:', formData);  // Log de depuración
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Actualizado Correctamente',
+                    text: 'La compra ha sido actualizada exitosamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                }).then(() => {
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                });
+            }
+        })
+        .catch(data => {
+            console.log('Error:', data);  // Log de depuración
+            const errorMessage = data.message || 'El número de factura solo puede contener letras, números y guiones.';
+            Swal.fire({
+                title: 'Inválido',
+                text: errorMessage,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+
+            // Resaltar los campos con errores y mostrar debajo del campo
+            if (data.errors) {
+                Object.keys(data.errors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = data.errors[key][0];  // Mostrar el error debajo del campo
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}

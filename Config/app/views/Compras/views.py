@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
-from app.forms import ComprasForm
+from app.forms import ComprasForm,ComprasEditForm
 from django.shortcuts import get_object_or_404,render
 from django.utils.dateparse import parse_date
 from app.mixins import LoginRequiredMixin
@@ -74,9 +74,9 @@ class ComprasCreateView(LoginRequiredMixin,CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class ComprasUpdateView(LoginRequiredMixin,UpdateView):
+class ComprasUpdateView(LoginRequiredMixin, UpdateView):
     model = Compras
-    form_class = ComprasForm
+    form_class = ComprasEditForm
     template_name = 'Compras/editarCom.html'
     success_url = reverse_lazy('app:compras_listar')
 
@@ -86,19 +86,22 @@ class ComprasUpdateView(LoginRequiredMixin,UpdateView):
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
         return context
-    
+
     def form_valid(self, form):
-        form.save()
+        # Solo guardar el campo num_factura
+        num_factura = form.cleaned_data.get('num_factura')
+        self.object.num_factura = num_factura  # Actualiza solo el número de factura
+        self.object.save()  # Guarda el objeto
+
         return JsonResponse({
             'success': True,
-            'message': 'Venta creada exitosamente',
+            'message': 'Factura actualizada correctamente',
         })
 
     def form_invalid(self, form):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
-
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')
