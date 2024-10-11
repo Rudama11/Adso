@@ -1,22 +1,17 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Venta, Cliente
 from app.forms import VentaForm
 from django.utils.dateparse import parse_date
+from app.mixins import LoginRequiredMixin
 
 # Vista para listar ventas
-class VentasListView(ListView):
+class VentasListView(LoginRequiredMixin,ListView):
     model = Venta
     template_name = 'ventas/listar.html'
     context_object_name = 'ventas'
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -49,7 +44,7 @@ class VentasListView(ListView):
     
     
 # Vista para crear una nueva venta
-class VentasCreateView(CreateView):
+class VentasCreateView(LoginRequiredMixin,CreateView):
     model = Venta
     form_class = VentaForm
     template_name = 'Ventas/crear.html'
@@ -76,7 +71,7 @@ class VentasCreateView(CreateView):
         return super().form_invalid(form)
 
 # Vista para actualizar una venta existente
-class VentasUpdateView(UpdateView):
+class VentasUpdateView(LoginRequiredMixin,UpdateView):
     model = Venta
     form_class = VentaForm
     template_name = 'Ventas/editarVen.html'

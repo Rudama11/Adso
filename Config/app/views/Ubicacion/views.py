@@ -1,22 +1,17 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView
 from app.models import Ubicacion,Departamentos,Municipios
 from app.forms import UbicacionForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
+from app.mixins import LoginRequiredMixin
 
-class UbicacionListView(ListView):
+class UbicacionListView(LoginRequiredMixin,ListView):
     model = Ubicacion
     template_name = 'Ubicacion/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Ubicaciones'
@@ -49,7 +44,7 @@ class UbicacionListView(ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-class UbicacionCreateView(CreateView):
+class UbicacionCreateView(LoginRequiredMixin,CreateView):
     model = Ubicacion
     form_class = UbicacionForm
     template_name = 'Ubicacion/crear.html'

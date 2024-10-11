@@ -1,21 +1,17 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Normativa
 from app.forms import NormativaForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
-class NormativaListView(ListView):
+from app.mixins import LoginRequiredMixin
+
+class NormativaListView(LoginRequiredMixin,ListView):
     model = Normativa
     template_name = 'Normativa/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Normativas'
@@ -52,7 +48,7 @@ class NormativaListView(ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-class NormativaCreateView(CreateView):
+class NormativaCreateView(LoginRequiredMixin,CreateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/crear.html'
@@ -77,7 +73,7 @@ class NormativaCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class NormativaUpdateView(UpdateView):
+class NormativaUpdateView(LoginRequiredMixin,UpdateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/editarN.html'

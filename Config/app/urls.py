@@ -104,7 +104,6 @@ urlpatterns = [
     
     path('detalle-venta/', DetalleVentaListView.as_view(), name='detalleventa_listar'),
     path('detalle-venta/editar/<int:pk>/', DetalleVentaUpdateView.as_view(), name='detalleventa_editar'),
-    path('detalle-venta/eliminar/<int:pk>/', DetalleVentaDeleteView.as_view(), name='detalleventa_eliminar'),
     path('ventas/detalle/<int:venta_id>/', VentaDetalleCreateView.as_view(), name='detalle_venta'),
 
     #-------------------------------------------------- Backup del sistema ----------------------------------------

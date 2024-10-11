@@ -1,18 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from app.models import Stock
 from app.forms import StockFilterForm
+from app.mixins import LoginRequiredMixin
 
-class StockListView(ListView):
+class StockListView(LoginRequiredMixin,ListView):
     model = Stock
     template_name = 'Stock/listar.html'
     context_object_name = 'stocks'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         form = StockFilterForm(self.request.GET or None)

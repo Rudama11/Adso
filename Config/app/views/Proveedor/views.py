@@ -1,7 +1,5 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Proveedor
 from app.forms import ProveedorForm
@@ -9,14 +7,12 @@ from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
-class ProveedorListView(ListView):
+from app.mixins import LoginRequiredMixin
+
+class ProveedorListView(LoginRequiredMixin,ListView):
     model = Proveedor
     template_name = 'Proveedor/listar.html'
 
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Proveedores'
@@ -63,7 +59,7 @@ class ProveedorListView(ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     
-class ProveedorCreateView(CreateView):
+class ProveedorCreateView(LoginRequiredMixin,CreateView):
     model = Proveedor
     form_class = ProveedorForm
     template_name = 'Proveedor/crear.html'
@@ -88,7 +84,7 @@ class ProveedorCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class ProveedorUpdateView(UpdateView):
+class ProveedorUpdateView(LoginRequiredMixin,UpdateView):
     model = Proveedor
     form_class = ProveedorForm
     template_name = 'Proveedor/editarProv.html'

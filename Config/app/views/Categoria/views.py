@@ -1,16 +1,14 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Categoria
 from app.forms import CategoriaForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
-from app.views.mixins import LoginRequiredMixin
+from app.mixins import LoginRequired
 
-class CategoriaListView(LoginRequiredMixin,ListView):
+class CategoriaListView(LoginRequired,ListView):
     model = Categoria
     template_name = 'Categoria/listar.html'
     
@@ -45,7 +43,7 @@ class CategoriaListView(LoginRequiredMixin,ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
         
-class CategoriaCreateView(LoginRequiredMixin,CreateView):
+class CategoriaCreateView(LoginRequired,CreateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/crear.html'
@@ -71,7 +69,7 @@ class CategoriaCreateView(LoginRequiredMixin,CreateView):
         return super().form_invalid(form)
 
 
-class CategoriaUpdateView(LoginRequiredMixin,UpdateView):
+class CategoriaUpdateView(LoginRequired,UpdateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/editarC.html'

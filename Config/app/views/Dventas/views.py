@@ -1,18 +1,14 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, UpdateView
 from django.http import JsonResponse
 from django.db import transaction
 import json  
 from app.forms import DetalleVentaForm
 from app.models import DetalleVenta, Stock, Venta
+from app.mixins import LoginRequiredMixin
 
-
-# Listado de detalles de ventas
-@method_decorator(login_required, name='dispatch')
-class DetalleVentaListView(ListView):
+class DetalleVentaListView(LoginRequiredMixin,ListView):
     model = DetalleVenta
     template_name = 'Dventas/listar.html'
 
@@ -24,9 +20,7 @@ class DetalleVentaListView(ListView):
         return context
 
 
-# Crear un nuevo detalle de venta
-@method_decorator(login_required, name='dispatch')
-class VentaDetalleCreateView(CreateView):
+class VentaDetalleCreateView(LoginRequiredMixin,CreateView):
     model = DetalleVenta
     template_name = 'Ventas/VentaD.html'
     fields = ['producto', 'cantidad', 'precio', 'iva', 'total']  # Campos que se usarán en el formulario
@@ -107,9 +101,7 @@ class VentaDetalleCreateView(CreateView):
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
 
 
-# Actualizar un detalle de venta
-@method_decorator(login_required, name='dispatch')
-class DetalleVentaUpdateView(UpdateView):
+class DetalleVentaUpdateView(LoginRequiredMixin,UpdateView):
     model = DetalleVenta
     form_class = DetalleVentaForm
     template_name = 'Dventas/editar.html'
@@ -133,18 +125,3 @@ class DetalleVentaUpdateView(UpdateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
-
-
-# Eliminar un detalle de venta
-@method_decorator(login_required, name='dispatch')
-class DetalleVentaDeleteView(DeleteView):
-    model = DetalleVenta
-    template_name = 'Dventas/eliminar.html'
-    success_url = reverse_lazy('app:detalleventa_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Detalle de Venta'
-        context['entidad'] = 'Detalle de Venta'
-        context['listar_url'] = reverse_lazy('app:detalleventa_listar')
-        return context

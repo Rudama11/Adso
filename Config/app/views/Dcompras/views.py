@@ -1,24 +1,18 @@
 import json
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from app.models import DetalleCompra, Producto, Compras, Stock
 from app.forms import DetalleCompraForm , ComprasForm
 from django.shortcuts import redirect
 from django.db import transaction
-from django.urls import reverse  
-# Vista para listar detalles de compra
-class DetalleCompraListView(ListView):
+from app.mixins import LoginRequiredMixin
+
+class DetalleCompraListView(LoginRequiredMixin,ListView):
     model = DetalleCompra
     template_name = 'Dcompras/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Detalles de Compras'
@@ -32,7 +26,7 @@ class DetalleCompraListView(ListView):
         comprad.delete()
         return redirect('app:detallecompra_listar')
 
-class DetalleCompraCreateView(CreateView):
+class DetalleCompraCreateView(LoginRequiredMixin,CreateView):
     model = DetalleCompra
     template_name = 'Compras/CompraD.html'
     form_class = DetalleCompraForm
@@ -112,8 +106,9 @@ class DetalleCompraCreateView(CreateView):
             return JsonResponse({'success': False, 'error': 'Error en los datos enviados.'}, status=400)
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=400)
-# Vista para actualizar un detalle de compra existente
-class DetalleCompraUpdateView(UpdateView):
+        
+
+class DetalleCompraUpdateView(LoginRequiredMixin,UpdateView):
     model = DetalleCompra
     form_class = DetalleCompraForm
     template_name = 'Dcompras/editar.html'
@@ -149,17 +144,3 @@ class DetalleCompraUpdateView(UpdateView):
         context['entidad'] = 'Detalle de Compra'
         context['listar_url'] = reverse_lazy('app:detallecompra_listar')
         return context
-
-
-# Vista para obtener datos del producto en formato JSON
-# def obtener_datos_producto(request):
-#     producto_id = request.GET.get('producto_id')
-#     try:
-#         producto = Producto.objects.get(id=producto_id)
-#         data = {
-#             'precio_unitario': float(producto.precio_unitario),
-#             'iva': float(producto.iva),
-#         }
-#         return JsonResponse(data)
-#     except Producto.DoesNotExist:
-#         return JsonResponse({'error': 'Producto no encontrado.'}, status=404)

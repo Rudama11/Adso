@@ -1,23 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
 from app.forms import ComprasForm
-from django.shortcuts import redirect, get_object_or_404,render
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import get_object_or_404,render
 from django.utils.dateparse import parse_date
+from app.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-
-class ComprasListView(ListView):
+class ComprasListView(LoginRequiredMixin,ListView):
     model = Compras
     template_name = 'Compras/listar.html'
     context_object_name = 'compras'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = {'Nombre': 'Admin'}
@@ -54,7 +48,7 @@ class ComprasListView(ListView):
 
         return queryset
     
-class ComprasCreateView(CreateView):
+class ComprasCreateView(LoginRequiredMixin,CreateView):
     model = Compras
     form_class = ComprasForm
     template_name = 'Compras/crear.html'
@@ -80,7 +74,7 @@ class ComprasCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class ComprasUpdateView(UpdateView):
+class ComprasUpdateView(LoginRequiredMixin,UpdateView):
     model = Compras
     form_class = ComprasForm
     template_name = 'Compras/editarCom.html'
@@ -104,6 +98,7 @@ class ComprasUpdateView(UpdateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
+
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')

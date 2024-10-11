@@ -59,7 +59,7 @@ class UsuarioListView(LoginRequiredMixin, ListView):
         usuario.delete()
         return redirect('app:usuario_listar')
 
-class UsuarioCreateView(CreateView):
+class UsuarioCreateView(LoginRequiredMixin,CreateView):
     model = CustomUser
     form_class = UsuarioForm
     template_name = 'Usuario/crear.html'
@@ -90,7 +90,7 @@ class UsuarioCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class UsuarioUpdateView(UpdateView):
+class UsuarioUpdateView(LoginRequiredMixin,UpdateView):
     model = CustomUser
     form_class = UsuarioEditForm
     template_name = 'Usuario/editar.html'

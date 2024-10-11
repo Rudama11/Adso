@@ -1,21 +1,17 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Producto, Categoria, Tipo
 from app.forms import ProductoForm, ProductoFilterForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
-class ProductoListView(ListView):
+from app.mixins import LoginRequiredMixin
+
+class ProductoListView(LoginRequiredMixin,ListView):
     model = Producto
     template_name = 'Producto/listar.html'
     context_object_name = 'productos'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -58,7 +54,7 @@ class ProductoListView(ListView):
 
         return context
     
-class ProductoCreateView(CreateView):
+class ProductoCreateView(LoginRequiredMixin,CreateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'Producto/crear.html'
@@ -83,7 +79,7 @@ class ProductoCreateView(CreateView):
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
 
-class ProductoUpdateView(UpdateView):
+class ProductoUpdateView(LoginRequiredMixin,UpdateView):
     model = Producto
     form_class = ProductoForm
     template_name = 'Producto/editarP.html'
