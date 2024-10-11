@@ -53,21 +53,25 @@
                             <option value="{{ producto.id }}">{{ producto.nombre }}</option>  <!-- Usa 'nombre' directamente -->
                         {% endfor %}
                     </select>
+                    <div id="id_producto-error" class="invalid-feedback"></div> <!-- Mensaje de error -->
                 </div>
 
                 <div class="form-group">
                     <label for="id_cantidad">Cantidad</label>
                     <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="0" value="0" onchange="calcularTotal();">
+                    <div id="id_cantidad-error" class="invalid-feedback"></div> <!-- Mensaje de error -->
                 </div>
 
                 <div class="form-group">
                     <label for="id_precio">Precio Unitario</label>
                     <input type="number" id="id_precio" name="precio_unitario" class="form-control" step="0.01" min="0" required onchange="calcularTotal();">
+                    <div id="id_precio-error" class="invalid-feedback"></div> <!-- Mensaje de error -->
                 </div>
 
                 <div class="form-group">
                     <label for="id_iva">IVA (%)</label>
                     <input type="number" id="id_iva" name="iva" class="form-control"  value="19" onchange="calcularTotal();">
+                    <div id="id_iva-error" class="invalid-feedback"></div> <!-- Mensaje de error -->
                 </div>
 
                 <div class="form-group">
@@ -123,6 +127,7 @@
     </div>
 </div>
 
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
     const csrftoken = '{{ csrf_token }}';  // El token CSRF
     const compraId = '{{ compra.id }}';  // El ID de la compra
@@ -142,25 +147,69 @@
     document.getElementById('id_iva').addEventListener('change', calcularTotal);
 
     function agregarDetalle() {
+        // Limpiar mensajes de error anteriores y estilos
+        const errorFields = ['id_producto', 'id_cantidad', 'id_precio', 'id_iva', 'id_num_factura'];
+        errorFields.forEach(fieldId => {
+            document.getElementById(fieldId).classList.remove('is-invalid');
+            const feedback = document.getElementById(`${fieldId}-error`);
+            if (feedback) feedback.innerText = ''; // Limpiar mensaje de error
+        });
+
         const productoId = document.getElementById('id_producto').value;
         const cantidad = parseFloat(document.getElementById('id_cantidad').value);
         const precio = parseFloat(document.getElementById('id_precio').value);
         const iva = parseFloat(document.getElementById('id_iva').value);
         const numFactura = document.getElementById('id_num_factura').value;
-    
+
         // Validación de campos
         const missingFields = [];
-        if (!productoId) missingFields.push('producto');
-        if (!cantidad || isNaN(cantidad) || cantidad <= 0) missingFields.push('cantidad válida');
-        if (!precio || isNaN(precio) || precio <= 0) missingFields.push('precio válido');
-        if (!iva || isNaN(iva) || iva < 0) missingFields.push('IVA válido');
-        if (!numFactura) missingFields.push('número de factura');
-    
+        const errorMessages = [];
+
+        if (!productoId) {
+            missingFields.push('Producto');
+            document.getElementById('id_producto').classList.add('is-invalid');
+            document.getElementById('id_producto-error').innerText = 'Este campo es obligatorio.';
+        }
+        if (!cantidad || isNaN(cantidad) || cantidad <= 0) {
+            errorMessages.push('La cantidad debe ser mayor a 0.');
+            document.getElementById('id_cantidad').classList.add('is-invalid');
+            document.getElementById('id_cantidad-error').innerText = 'La cantidad no es validad.';
+        }
+        if (!precio || isNaN(precio) || precio < 0) {
+            errorMessages.push('El precio debe ser mayor o igual a 0.');
+            document.getElementById('id_precio').classList.add('is-invalid');
+            document.getElementById('id_precio-error').innerText = 'Precio inválido.';
+        }
+        if (!iva || isNaN(iva) || iva < 0 || iva > 100) {
+            errorMessages.push('El IVA debe estar entre 0 y 100.');
+            document.getElementById('id_iva').classList.add('is-invalid');
+            document.getElementById('id_iva-error').innerText = 'IVA inválido.';
+        }
+        if (!numFactura) {
+            missingFields.push('número de factura');
+            document.getElementById('id_num_factura').classList.add('is-invalid');
+            document.getElementById('id_num_factura-error').innerText = 'Este campo es obligatorio.';
+        }
+
+        let alertMessage = '';
         if (missingFields.length > 0) {
-            alert(`Faltan los siguientes datos: ${missingFields.join(', ')}`);
+            alertMessage += `Faltan los siguientes campos: ${missingFields.join(', ')}.\n`;
+        }
+        if (errorMessages.length > 0) {
+            alertMessage += errorMessages.join(' ');
+        }
+
+        // Mostrar alerta solo si hay errores
+        if (alertMessage) {
+            Swal.fire({
+                title: 'Campos inválidos',
+                text: alertMessage,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar'
+            });
             return;
         }
-    
+
         // Datos que se enviarán al servidor
         const formData = {
             producto: productoId,
@@ -170,7 +219,7 @@
             compra_id: compraId,  // Usamos el ID de la compra desde el contexto de la vista
             num_factura: numFactura
         };
-    
+
         // Enviar la solicitud mediante fetch
         fetch(detalleCompraUrl, {
             method: 'POST',
@@ -191,19 +240,36 @@
         })
         .then(data => {
             if (data.success) {
-                location.reload();  // Recargar la página para mostrar los cambios
+                mostrarMensajeExito('Producto agregado exitosamente.');
+                setTimeout(() => location.reload(), 2000); // Recargar la página después de 2 segundos
             } else {
-                alert(`Error: ${data.error}`);
+                mostrarMensajeError(data.error);
             }
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
-            alert('Error inesperado en la solicitud. Por favor, intenta de nuevo.');
+            mostrarMensajeError('Error inesperado en la solicitud. Por favor, intenta de nuevo.');
         });
     }
 
-</script>
+    function mostrarMensajeExito(mensaje) {
+        Swal.fire({
+            title: 'Éxito',
+            text: mensaje,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    }
 
+    function mostrarMensajeError(mensaje) {
+        Swal.fire({
+            title: 'Error',
+            text: mensaje,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+</script>
 
 <style>
     .card-footer .btn {

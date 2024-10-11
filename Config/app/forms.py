@@ -780,7 +780,6 @@ class ComprasEditForm(forms.ModelForm):
 
 
 #----------------------------------------------------- Detalle Compras ---------------------------------------------------------
-
 class DetalleCompraForm(forms.ModelForm):
     class Meta:
         model = DetalleCompra
@@ -797,23 +796,35 @@ class DetalleCompraForm(forms.ModelForm):
             'iva': forms.NumberInput(attrs={'placeholder': 'Ingrese el IVA (%)', 'class': 'form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        self.compra_id = kwargs.pop('compra_id', None)
-        super().__init__(*args, **kwargs)
-        # Si `compra_id` está presente, establecer el valor inicial para `num_factura`
-        if self.compra_id:
-            self.fields['num_factura'].initial = self.compra_id  # Aquí se establece el valor inicial
+    def clean_producto(self):
+        producto = self.cleaned_data.get('producto')
+        if not producto:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        return producto
+    
+    def clean_cantidad(self):
+        cantidad = self.cleaned_data.get('cantidad')
+        if cantidad is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if cantidad < 0:
+            raise forms.ValidationError('La cantidad no puede ser negativa.')
+        return cantidad
+    
+    def clean_precio(self):
+        precio = self.cleaned_data.get('precio')
+        if precio is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if precio < 0:
+            raise forms.ValidationError('El precio no puede ser negativo.')
+        return precio
 
-    def clean(self):
-        cleaned_data = super().clean()
-        cantidad = cleaned_data.get("cantidad")
-        precio_unitario = cleaned_data.get("precio_unitario")
-
-        if cantidad is not None and cantidad <= 0:
-            self.add_error('cantidad', 'La cantidad debe ser mayor que 0.')
-
-        if precio_unitario is not None and precio_unitario <= 0:
-            self.add_error('precio_unitario', 'El precio unitario debe ser mayor que 0.')
+    def clean_iva(self):
+        iva = self.cleaned_data.get('iva')
+        if iva is None:
+            raise forms.ValidationError('Este campo es obligatorio.')
+        if iva < 0 or iva > 100:
+            raise forms.ValidationError('El IVA debe estar entre 0 y 100.')
+        return iva
 
     def save(self, commit=True):
         instance = super().save(commit=False)
