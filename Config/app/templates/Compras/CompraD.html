@@ -173,17 +173,17 @@
         if (!cantidad || isNaN(cantidad) || cantidad <= 0) {
             errorMessages.push('La cantidad debe ser mayor a 0.');
             document.getElementById('id_cantidad').classList.add('is-invalid');
-            document.getElementById('id_cantidad-error').innerText = 'La cantidad no es validad.';
+            document.getElementById('id_cantidad-error').innerText = 'La cantidad debe ser mayor a 0.';
         }
         if (!precio || isNaN(precio) || precio < 0) {
-            errorMessages.push('El precio debe ser mayor o igual a 0.');
+            errorMessages.push('El precio debe ser mayor a 0.');
             document.getElementById('id_precio').classList.add('is-invalid');
-            document.getElementById('id_precio-error').innerText = 'Precio inválido.';
+            document.getElementById('id_precio-error').innerText = 'El precio debe ser mayor a 0.';
         }
         if (!iva || isNaN(iva) || iva < 0 || iva > 100) {
             errorMessages.push('El IVA debe estar entre 0 y 100.');
             document.getElementById('id_iva').classList.add('is-invalid');
-            document.getElementById('id_iva-error').innerText = 'IVA inválido.';
+            document.getElementById('id_iva-error').innerText = 'El IVA debe estar entre 0 y 100.';
         }
         if (!numFactura) {
             missingFields.push('número de factura');

@@ -65,6 +65,7 @@
                             required onchange="calcularTotal();">
                         <small class="text-danger" id="error_cantidad" style="display:none;"></small> <!-- Mensaje de error -->
                         <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_cantidad-error" class="invalid-feedback"></div>
                     </div>
                     <!-- Precio Unitario -->
                     <div class="form-group">
@@ -73,6 +74,7 @@
                             onchange="calcularTotal();">
                         <small class="text-danger" id="error_precio" style="display:none;"></small> <!-- Mensaje de error -->
                         <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_precio-error" class="invalid-feedback"></div>
                     </div>
                     <!-- IVA (%) -->
                     <div class="form-group">
@@ -81,6 +83,7 @@
                             required onchange="calcularTotal();">
                         <small class="text-danger" id="error_iva" style="display:none;"></small> <!-- Mensaje de error -->
                         <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_iva-error" class="invalid-feedback"></div>
                     </div>
                     <!-- Total -->
                     <div class="form-group">
@@ -195,14 +198,17 @@
         if (!cantidad || isNaN(cantidad) || cantidad <= 0) {
             errorMessages.push('La Cantidad debe ser mayor a 0.');
             document.getElementById('id_cantidad').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_cantidad-error').innerText = 'La cantidad debe ser mayor a 0.';
         }
         if (!precio || isNaN(precio) || precio < 0) {
-            errorMessages.push('El Precio debe ser mayor o igual a 0.');
+            errorMessages.push('El precio debe ser mayor a 0.');
             document.getElementById('id_precio').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_precio-error').innerText = 'El precio debe ser mayor a 0.';
         }
         if (!iva || isNaN(iva) || iva < 0 || iva > 100) {
             errorMessages.push('El IVA debe estar entre 0 y 100.');
             document.getElementById('id_iva').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_iva-error').innerText = 'El IVA debe estar entre 0 y 100.';
         }
         if (!numFactura) {
             missingFields.push('Número de factura');
