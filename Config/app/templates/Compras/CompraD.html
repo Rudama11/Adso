@@ -115,18 +115,16 @@
         </div>
     </div>
 
-    <div class="card-footer" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-        <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
-            <i class="fas fa-times"></i> Volver al Listado
-        </a>
-        
+    <div class="card-footer">
         <button type="button" class="btn btn-primary" onclick="agregarDetalle();">
             <i class="fas fa-plus"></i> Agregar producto 
         </button>
-
         <button type="button" class="btn btn-success" onclick="window.print();">
             <i class="fas fa-print"></i> Imprimir Factura
         </button>
+        <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+            <i class="fas fa-times"></i> Cancelar
+        </a>
     </div>
 </div>
 
