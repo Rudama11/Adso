@@ -156,12 +156,12 @@
         document.getElementById('error_cantidad').innerText = '';
         document.getElementById('error_precio').innerText = '';
         document.getElementById('error_iva').innerText = '';
-
+    
         document.getElementById('id_producto').classList.remove('is-invalid');
         document.getElementById('id_cantidad').classList.remove('is-invalid');
         document.getElementById('id_precio').classList.remove('is-invalid');
         document.getElementById('id_iva').classList.remove('is-invalid');
-
+    
         // Seleccionar los campos que se van a validar
         const formFields = [
             { element: document.getElementById('id_producto'), name: 'Producto' },
@@ -169,9 +169,10 @@
             { element: document.getElementById('id_precio'), name: 'Precio' },
             { element: document.getElementById('id_iva'), name: 'IVA' },
         ];
-
+    
         const missingFields = [];
-
+        const errorMessages = [];
+    
         formFields.forEach(function(field) {
             let feedback = field.element.parentNode.querySelector('.mandatory-feedback');
             if (field.element.value.trim() === '') {
@@ -183,52 +184,50 @@
                 feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
             }
         });
-
-        // Si hay campos no válidos, mostrar alerta y no continuar
-        if (missingFields.length > 0) {
-            Swal.fire({
-                title: 'Campos inválidos',
-                text: `Los siguientes campos están vacíos: ${missingFields.join(', ')}`,
-                icon: 'warning',
-                confirmButtonText: 'Aceptar'
-            });
-            return; // Detener la ejecución si hay errores
-        }
-
-        // Resto de la lógica de validación para cantidad, precio, IVA, y número de factura
+    
+        // Validaciones adicionales para campos numéricos
         const cantidad = parseFloat(document.getElementById('id_cantidad').value);
         const precio = parseFloat(document.getElementById('id_precio').value);
         const iva = parseFloat(document.getElementById('id_iva').value);
         const numFactura = document.getElementById('id_num_factura').value;
-
-        // Validación de campos adicionales
+    
+        // Agregar mensajes de error para cada campo numérico
         if (!cantidad || isNaN(cantidad) || cantidad <= 0) {
-            document.getElementById('error_cantidad').innerText = 'La Cantidad debe ser mayor a 0.';
+            errorMessages.push('La Cantidad debe ser mayor a 0.');
             document.getElementById('id_cantidad').classList.add('is-invalid'); // Resaltar campo
         }
         if (!precio || isNaN(precio) || precio < 0) {
-            document.getElementById('error_precio').innerText = 'El Precio debe ser mayor o igual a 0.';
+            errorMessages.push('El Precio debe ser mayor o igual a 0.');
             document.getElementById('id_precio').classList.add('is-invalid'); // Resaltar campo
         }
         if (!iva || isNaN(iva) || iva < 0 || iva > 100) {
-            document.getElementById('error_iva').innerText = 'El IVA debe estar entre 0 y 100.';
+            errorMessages.push('El IVA debe estar entre 0 y 100.');
             document.getElementById('id_iva').classList.add('is-invalid'); // Resaltar campo
         }
         if (!numFactura) {
             missingFields.push('Número de factura');
         }
-
+    
         // Si hay campos no válidos, mostrar alerta
+        let alertMessage = '';
         if (missingFields.length > 0) {
+            alertMessage += `Faltan los siguientes campos: ${missingFields.join(', ')}.\n`;
+        }
+        if (errorMessages.length > 0) {
+            alertMessage += errorMessages.join(' ');
+        }
+    
+        // Mostrar alerta solo si hay errores
+        if (alertMessage) {
             Swal.fire({
                 title: 'Campos inválidos',
-                text: `Faltan los siguientes campos: ${missingFields.join(', ')}`,
+                text: alertMessage,
                 icon: 'warning',
                 confirmButtonText: 'Aceptar'
             });
             return;
         }
-
+    
         // Código para agregar el detalle de la venta
         const formData = {
             producto: document.getElementById('id_producto').value,
@@ -238,7 +237,7 @@
             id_venta: ventaId,
             num_factura: numFactura
         };
-
+    
         // Envío de la solicitud para agregar el detalle de la venta
         fetch(detallesVentaUrl, {
             method: 'POST',
@@ -266,7 +265,7 @@
             mostrarMensajeError('Error inesperado en la solicitud.');
         });
     }
-
+    
     function mostrarMensajeExito(mensaje) {
         Swal.fire({
             title: 'Éxito',
