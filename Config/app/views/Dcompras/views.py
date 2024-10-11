@@ -36,7 +36,6 @@ class DetalleCompraCreateView(LoginRequiredMixin,CreateView):
         compra_id = self.kwargs.get('compra_id')
         compra = get_object_or_404(Compras, id=compra_id)
         detalles_compra = DetalleCompra.objects.filter(compra=compra)
-
         context['form'] = ComprasForm(instance=compra)
         context['compra'] = compra
         context['detalles_compra'] = detalles_compra
@@ -96,11 +95,7 @@ class DetalleCompraCreateView(LoginRequiredMixin,CreateView):
                 stock.save()
 
             # Enviar respuesta exitosa
-            return JsonResponse({
-                'success': True,
-                'detalle_compra': detalle_compra.id,
-                'message': 'Detalle de compra agregado correctamente.'
-            })
+            return JsonResponse({'success': True, 'detalle_venta': detalle_compra.id, 'message': 'Detalle de venta agregado correctamente.'})
 
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Error en los datos enviados.'}, status=400)

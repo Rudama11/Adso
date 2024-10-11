@@ -629,8 +629,7 @@ class VentaEditForm(forms.ModelForm):
 
 
 
-#----------------------------------------------------- Dellate Ventas---------------------------------------------------------------
-
+#----------------------------------------------------- Detalle Ventas ---------------------------------------------------------
 
 class DetalleVentaForm(forms.ModelForm):
     class Meta:
@@ -780,7 +779,7 @@ class ComprasEditForm(forms.ModelForm):
         return num_factura
 
 
-# ----------------------------Formulario para Detalle de Compras-----------------------------------------
+#----------------------------------------------------- Detalle Compras ---------------------------------------------------------
 
 class DetalleCompraForm(forms.ModelForm):
     class Meta:
