@@ -14,6 +14,8 @@ from app.views.Usuario.views import *
 from app.views.Dcompras.views import *
 from app.views.Dventas.views import *
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 app_name = 'app'
@@ -116,3 +118,6 @@ urlpatterns = [
     
     path('stock/listar/', StockListView.as_view(), name='listar_stock'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static('/backups/', document_root=settings.BACKUP_ROOT)

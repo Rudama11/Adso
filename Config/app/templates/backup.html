@@ -12,6 +12,24 @@
     <div class="backup-header">
         <h1>Copia de Seguridad de la Base de Datos</h1>
     </div>
+
+    <!-- Mostrar archivos de backup disponibles -->
+    <div class="backup-list">
+        <h2>Archivos de Backup Disponibles</h2>
+        <ul>
+            {% if archivos_backup %}
+                {% for archivo in archivos_backup %}
+                    <li>
+                        <a href="/backups/{{ archivo }}" download>{{ archivo }}</a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>No hay archivos de backup disponibles.</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <!-- Sección para crear una nueva copia de seguridad -->
     <div class="backup-form">
         <div class="form-section backup-section">
             <h2>Crear copia de seguridad</h2>
@@ -20,6 +38,8 @@
                 <button type="submit" class="backup-button">Crear</button>
             </form>
         </div>
+
+        <!-- Sección para restaurar desde una copia de seguridad -->
         <div class="form-section restore-section">
             <h2>Restaurar copia de seguridad</h2>
             <form id="restore-form" method="POST" enctype="multipart/form-data" action="">

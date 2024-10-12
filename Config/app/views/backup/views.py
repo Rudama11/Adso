@@ -6,9 +6,25 @@ from django.conf import settings
 import subprocess
 from django.contrib.auth.decorators import login_required
 
-@login_required  # Asegúrate de que el usuario esté autenticado para acceder a la vista
+@login_required
 def backup_view(request):
-    return render(request, 'backup.html')
+    # Definir la ruta donde se almacenan los archivos de backup
+    backup_dir = os.path.join(settings.BASE_DIR, 'backups')
+
+    # Obtener todos los archivos con extensión .sql en el directorio de backups
+    if os.path.exists(backup_dir):
+        archivos_backup = [f for f in os.listdir(backup_dir) if f.endswith('.sql')]
+        archivos_backup.sort(reverse=True)  # Ordenarlos por fecha, el más reciente primero
+    else:
+        archivos_backup = []
+
+    # Pasar la lista de archivos al contexto de la plantilla
+    contexto = {
+        'archivos_backup': archivos_backup,
+    }
+
+    return render(request, 'backup.html', contexto)
+
 
 @login_required  # Solo los usuarios autenticados pueden crear un backup
 def backup_database(request):
