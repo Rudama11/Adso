@@ -2,9 +2,13 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
-    <title>Backup de Base de Datos</title>
-    <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet"
+    href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
+<title>Backup de Base de Datos</title>
+<link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -12,23 +16,6 @@
     <div class="backup-header">
         <h1>Copia de Seguridad de la Base de Datos</h1>
     </div>
-
-    <!-- Mostrar archivos de backup disponibles -->
-    <div class="backup-list">
-        <h2>Archivos de Backup Disponibles</h2>
-        <ul>
-            {% if archivos_backup %}
-                {% for archivo in archivos_backup %}
-                    <li>
-                        <a href="/backups/{{ archivo }}" download>{{ archivo }}</a>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li>No hay archivos de backup disponibles.</li>
-            {% endif %}
-        </ul>
-    </div>
-
     <!-- Sección para crear una nueva copia de seguridad -->
     <div class="backup-form">
         <div class="form-section backup-section">
@@ -38,8 +25,35 @@
                 <button type="submit" class="backup-button">Crear</button>
             </form>
         </div>
-
-        <!-- Sección para restaurar desde una copia de seguridad -->
+        <div class="form-section">
+            <h4>Archivos creados de copia de seguridad</h4>
+            <div class="table-responsive">
+                <table id="tabla" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Archivo</th>
+                            <th scope="col">Fecha de creación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if archivos_backup %}
+                        {% for archivo in archivos_backup %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td> <!-- Este es el índice o item -->
+                            <td><a href="/backups/{{ archivo }}" download>{{ archivo }}</a></td>
+                            <td>{{ archivo.creation_date }}</td> <!-- Asegúrate de que la fecha esté en el objeto archivo -->
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="3">No hay archivos de copia de seguridad disponibles.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="form-section restore-section">
             <h2>Restaurar copia de seguridad</h2>
             <form id="restore-form" method="POST" enctype="multipart/form-data" action="">
@@ -60,18 +74,25 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const restoreButton = document.getElementById('restore-button');
         const restoreForm = document.getElementById('restore-form');
 
-        restoreForm.addEventListener('submit', function(event) {
+        restoreForm.addEventListener('submit', function (event) {
             event.preventDefault(); // Evitar el envío del formulario para demostrar el retraso
             restoreButton.disabled = true; // Deshabilitar el botón
 
-            setTimeout(function() {
+            setTimeout(function () {
                 restoreButton.disabled = false; // Habilitar el botón después de 3 segundos
                 restoreForm.submit(); // Enviar el formulario después del retraso
             }, 2000); // 3000 milisegundos = 3 segundos
