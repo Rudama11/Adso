@@ -106,3 +106,20 @@ def restore_database(request):
             return JsonResponse({'status': 'error', 'message': f"Error al restaurar la base de datos: {e}"})
     else:
         return JsonResponse({'status': 'error', 'message': "Error al restaurar la base de datos."})
+
+login_required  # Solo los usuarios autenticados pueden eliminar archivos
+def delete_backup(request):
+    if request.method == 'POST':
+        archivo = request.POST.get('archivo')
+        backup_dir = os.path.join(settings.BASE_DIR, 'backups', archivo)
+
+        try:
+            if os.path.exists(backup_dir):
+                os.remove(backup_dir)
+                return JsonResponse({'status': 'success', 'message': 'Archivo eliminado exitosamente.'})
+            else:
+                return JsonResponse({'status': 'error', 'message': 'El archivo no existe.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': f'Error al eliminar el archivo: {e}'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Método no permitido.'})

@@ -113,6 +113,7 @@ urlpatterns = [
     path('backup/', backup_view, name='backup'),
     path('backup/create/', backup_database, name='respaldo'),
     path('backup/restore/', restore_database, name='restauracion'),
+    path('backup/delete/', delete_backup, name='eliminar_archivo'),
 
     #-------------------------------------------------- Stock -----------------------------------------------------
     
