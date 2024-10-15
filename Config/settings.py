@@ -122,7 +122,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/dashboard'
 
 #Tiempo para el correo
-PASSWORD_RESET_TIMEOUT=120
+PASSWORD_RESET_TIMEOUT=1800
 
 #inicio,# Olvido su contraseña
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
