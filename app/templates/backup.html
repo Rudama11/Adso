@@ -42,17 +42,17 @@
                         {% for archivo in archivos_backup %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="/backups/{{ archivo }}" download>{{ archivo }}</a></td>
-                            <td>{{ archivo.creation_date }}</td>
+                            <td><a href="/backups/{{ archivo.nombre }}" download>{{ archivo.nombre }}</a></td>
+                            <td>{{ archivo.fecha_creacion }}</td>
                             <td>
                                 <form method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
                                     {% csrf_token %}
-                                    <input type="hidden" name="backup_file" value="{{ archivo }}">
+                                    <input type="hidden" name="backup_file" value="{{ archivo.nombre }}">
                                     <button type="submit" class="btn btn-primary">Restaurar</button>
                                 </form>
                                 <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
                                     {% csrf_token %}
-                                    <input type="hidden" name="archivo" value="{{ archivo }}">
+                                    <input type="hidden" name="archivo" value="{{ archivo.nombre }}">
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
                             </td>
@@ -63,7 +63,7 @@
                             <td colspan="4">No hay archivos de copia de seguridad disponibles.</td>
                         </tr>
                         {% endif %}
-                    </tbody>
+                    </tbody>                    
                 </table>
             </div>
         </div>

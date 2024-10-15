@@ -7,16 +7,30 @@ import subprocess
 from django.contrib.auth.decorators import login_required
 
 @login_required
+@login_required
 def backup_view(request):
     # Definir la ruta donde se almacenan los archivos de backup
     backup_dir = os.path.join(settings.BASE_DIR, 'backups')
 
-    # Obtener todos los archivos con extensión .sql en el directorio de backups
+    archivos_backup = []
     if os.path.exists(backup_dir):
-        archivos_backup = [f for f in os.listdir(backup_dir) if f.endswith('.sql')]
-        archivos_backup.sort(reverse=True)  # Ordenarlos por fecha, el más reciente primero
-    else:
-        archivos_backup = []
+        # Obtener todos los archivos con extensión .sql en el directorio de backups
+        for archivo in os.listdir(backup_dir):
+            if archivo.endswith('.sql'):
+                # Ruta completa del archivo
+                archivo_path = os.path.join(backup_dir, archivo)
+                # Obtener la fecha de creación del archivo
+                timestamp = os.path.getctime(archivo_path)
+                fecha_creacion = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
+
+                # Agregar a la lista como diccionario con el nombre del archivo y la fecha de creación
+                archivos_backup.append({
+                    'nombre': archivo,
+                    'fecha_creacion': fecha_creacion
+                })
+
+        # Ordenarlos por fecha de creación, el más reciente primero
+        archivos_backup.sort(key=lambda x: x['fecha_creacion'], reverse=True)
 
     # Pasar la lista de archivos al contexto de la plantilla
     contexto = {
