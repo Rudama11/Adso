@@ -18,8 +18,13 @@ class CategoriaListView(LoginRequired,ListView):
         context['titulo'] = 'Listado de Categorías'
         context['entidad'] = 'Categoría'
         context['crear_url'] = reverse_lazy('app:categoria_crear')
+        # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
+        ]
         return context
-
+    
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -54,6 +59,13 @@ class CategoriaCreateView(LoginRequired,CreateView):
         context['titulo'] = 'Crear Categoría'
         context['entidad'] = 'Categoría'
         context['listar_url'] = reverse_lazy('app:categoria_listar')
+        # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
+            {'nombre': 'Crear Categoría', 'url': reverse_lazy('app:categoria_crear')},
+        ]
+        
         return context
 
     def form_valid(self, form):
@@ -80,6 +92,13 @@ class CategoriaUpdateView(LoginRequired,UpdateView):
         context['titulo'] = 'Editar Categoría'
         context['entidad'] = 'Categoría'
         context['listar_url'] = reverse_lazy('app:categoria_listar')
+        # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
+            {'nombre': 'Editar', 'url': reverse_lazy('app:categoria_editarC', args=[self.object.pk])},
+        ]
+
         return context
 
     def form_valid(self, form):

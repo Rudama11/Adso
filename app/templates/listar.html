@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="{% static 'css/general/fonts.css' %}" />
 
 <style>
-
     .custom-button {
         background-color: #1f5a96;
         border: 2px solid hwb(0 100% 0%);
@@ -47,6 +46,18 @@
 
 {% block contenido %}
 <div class="card card-default">
+    
+    <!-- Sección de Breadcrumbs -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+                <li class="breadcrumb-item">
+                    <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+    
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-address-book" style="margin-right: 5px;"></i>
@@ -125,8 +136,6 @@
 <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
 <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
 
-
-
 <script>
     $(document).ready(function () {
         $("#tabla").DataTable({
@@ -193,4 +202,4 @@
         document.querySelector('#filtroModal form').submit();
     }
 </script>
-{% endblock %} 
+{% endblock %}
