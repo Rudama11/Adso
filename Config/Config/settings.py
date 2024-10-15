@@ -108,9 +108,13 @@ USE_TZ = True
 # Configuración de archivos estáticos
 STATIC_URL = 'app/static/'
 
+# Agregar la ruta del directorio de backups
+BACKUP_ROOT = os.path.join(BASE_DIR, 'backups')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static'),  # Ruta al directorio static principal
     os.path.join(BASE_DIR, 'app/static/node_modules'),  # Ruta al directorio node_modules
+    ('backups', BACKUP_ROOT),
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
-    <title>Backup de Base de Datos</title>
-    <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet"
+    href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
+<title>Backup de Base de Datos</title>
+<link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -12,6 +15,7 @@
     <div class="backup-header">
         <h1>Copia de Seguridad de la Base de Datos</h1>
     </div>
+    <!-- Sección para crear una nueva copia de seguridad -->
     <div class="backup-form">
         <div class="form-section backup-section">
             <h2>Crear copia de seguridad</h2>
@@ -19,6 +23,49 @@
                 {% csrf_token %}
                 <button type="submit" class="backup-button">Crear</button>
             </form>
+        </div>
+        <div class="form-section">
+            <h2 style="text-align: center;">Archivos disponibles de copia de seguridad</h2>
+            <br>
+            <div class="table-responsive">
+                <table id="tabla" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Archivos</th>
+                            <th scope="col">Fecha de creación</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if archivos_backup %}
+                        {% for archivo in archivos_backup %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="/backups/{{ archivo }}" download>{{ archivo }}</a></td>
+                            <td>{{ archivo.creation_date }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="backup_file" value="{{ archivo }}">
+                                    <button type="submit" class="btn btn-primary">Restaurar</button>
+                                </form>
+                                <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="archivo" value="{{ archivo }}">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No hay archivos de copia de seguridad disponibles.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="form-section restore-section">
             <h2>Restaurar copia de seguridad</h2>
@@ -40,22 +87,128 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script src="{% static 'js/respaldo/backup.js' %}"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        const restoreForms = document.querySelectorAll('form[action="{% url "app:restauracion" %}"]');
+        const deleteForms = document.querySelectorAll('form[action="{% url "app:eliminar_archivo" %}"]');
+
+        // Manejo de la respuesta de la restauración
+        restoreForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Evitar el envío del formulario
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        alert(data.message); // Muestra el mensaje de respuesta
+                        if (data.status === 'success') {
+                            location.reload(); // Recarga la página para ver los cambios
+                        }
+                    });
+            });
+        });
+
+        // Manejo de la respuesta de la eliminación
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Evitar el envío del formulario
+
+                const archivoNombre = form.querySelector('input[name="archivo"]').value; // Obtener el nombre del archivo
+                const url = this.action; // Obtener la acción del formulario
+
+                // Mostrar alerta de confirmación de SweetAlert2
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: `¿Deseas eliminar el archivo "${archivoNombre}"?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const formData = new FormData(this);
+                        fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        }).then(response => response.json())
+                            .then(data => {
+                                // Alerta de éxito o error
+                                Swal.fire({
+                                    title: data.status === 'success' ? 'Eliminado!' : 'Error!',
+                                    text: data.message,
+                                    icon: data.status === 'success' ? 'success' : 'error',
+                                    confirmButtonText: 'Ok', // Botón "Ok" para cerrar la alerta
+                                    showCloseButton: true, // Mostrar botón de cerrar
+                                    timer: 2000, // Mantener visible por 5 segundos
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                        const timerInterval = setInterval(() => {
+                                            // Actualiza el tiempo restante en el título
+                                            Swal.getTitle().textContent = `Esta alerta se cerrará en ${Math.round(Swal.getTimerLeft() / 1000)} segundos.`;
+                                        }, 100);
+                                        Swal.getPopup().addEventListener('close', () => {
+                                            clearInterval(timerInterval);
+                                            if (data.status === 'success') {
+                                                location.reload(); // Recarga la página para ver los cambios
+                                            }
+                                        });
+                                    },
+                                    willClose: () => {
+                                        // Asegúrate de recargar si el usuario cierra manualmente
+                                        if (data.status === 'success') {
+                                            location.reload();
+                                        }
+                                    }
+                                });
+                            });
+                    }
+                });
+            });
+        });
+
+        // Funcionalidad del botón de restaurar con un retraso
         const restoreButton = document.getElementById('restore-button');
         const restoreForm = document.getElementById('restore-form');
 
-        restoreForm.addEventListener('submit', function(event) {
+        restoreForm.addEventListener('submit', function (event) {
             event.preventDefault(); // Evitar el envío del formulario para demostrar el retraso
             restoreButton.disabled = true; // Deshabilitar el botón
 
-            setTimeout(function() {
-                restoreButton.disabled = false; // Habilitar el botón después de 3 segundos
+            setTimeout(function () {
+                restoreButton.disabled = false; // Habilitar el botón después de 2 segundos
                 restoreForm.submit(); // Enviar el formulario después del retraso
-            }, 2000); // 3000 milisegundos = 3 segundos
+            }, 2000); // 2000 milisegundos = 2 segundos
+        });
+
+        // Inicialización de DataTable
+        $(document).ready(function () {
+            $('#tabla').DataTable({
+                "order": [[0, "asc"]],  // Por defecto ordena la primera columna en ascendente
+                "language": {
+                    "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"  // Carga la traducción al español
+                }
+            });
         });
     });
 </script>
+
+
 {% endblock %}
