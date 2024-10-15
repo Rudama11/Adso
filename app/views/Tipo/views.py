@@ -17,6 +17,10 @@ class TipoListView(LoginRequiredMixin,ListView):
         context['titulo'] = 'Listado Tipos de producto'
         context['entidad'] = 'Tipos de producto'
         context['crear_url'] = reverse_lazy('app:tipo_crear')
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Tipo de productos', 'url': reverse_lazy('app:tipo_listar')},
+        ]
         return context
 
     def get_queryset(self):
@@ -53,6 +57,12 @@ class TipoCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Tipos de producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Tipo de productos', 'url': reverse_lazy('app:tipo_listar')},
+            {'nombre': 'Crear un tipo de producto', 'url': reverse_lazy('app:tipo_crear')},
+        ]
+        
         return context
     
     def form_valid(self, form):
@@ -78,6 +88,12 @@ class TipoUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Tipo de Producto'
         context['entidad'] = 'Tipo'
         context['listar_url'] = reverse_lazy('app:tipo_listar')
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Tipo de producto', 'url': reverse_lazy('app:tipo_listar')},
+            {'nombre': 'Editar un tipo de producto', 'url': reverse_lazy('app:tipo_editarTP', args=[self.object.pk])},
+        ]
+
         return context
     
     def form_valid(self, form):
