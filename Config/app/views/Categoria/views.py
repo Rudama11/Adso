@@ -1,22 +1,17 @@
-from django.contrib import messages
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Categoria
 from app.forms import CategoriaForm
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
 from django.views.decorators.http import require_POST
+from app.mixins import LoginRequired
 
-class CategoriaListView(ListView):
+class CategoriaListView(LoginRequired,ListView):
     model = Categoria
     template_name = 'Categoria/listar.html'
     
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,7 +33,7 @@ class CategoriaListView(ListView):
 
         return queryset
 
-    @require_POST  # Asegura que solo se pueda eliminar con POST
+    @require_POST
     @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def eliminar_categoria(request, id_categ):
         try:
@@ -48,7 +43,7 @@ class CategoriaListView(ListView):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
         
-class CategoriaCreateView(CreateView):
+class CategoriaCreateView(LoginRequired,CreateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/crear.html'
@@ -62,44 +57,39 @@ class CategoriaCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la categoría explícitamente
         form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Categoría creada correctamente'
+            'success': True,
+            'message': 'Categoria creada exitosamente',
         })
 
     def form_invalid(self, form):
-        # Si el formulario es inválido, enviamos los errores
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Ya existe una categoría con ese nombre o el formulario es inválido',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 
-class CategoriaUpdateView(UpdateView):
+class CategoriaUpdateView(LoginRequired,UpdateView):
     model = Categoria
     form_class = CategoriaForm
     template_name = 'Categoria/editarC.html'
     success_url = reverse_lazy('app:categoria_listar')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Editar Categoría'
+        context['entidad'] = 'Categoría'
+        context['listar_url'] = reverse_lazy('app:categoria_listar')
+        return context
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            return JsonResponse({'success': True})
-        return response
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Categoria actualizada exitosamente',
+        })
 
     def form_invalid(self, form):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            errors = form.errors.as_json()
-            return JsonResponse({'success': False, 'errors': errors})
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)

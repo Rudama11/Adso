@@ -1,25 +1,17 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Tipo
 from app.forms import TipoForm
-from django.shortcuts import redirect
-class TipoListView(ListView):
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
+from app.mixins import LoginRequiredMixin
+
+class TipoListView(LoginRequiredMixin,ListView):
     model = Tipo 
     template_name = 'Tipo/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-        
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado Tipos de producto'
@@ -30,12 +22,9 @@ class TipoListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        id = self.request.GET.get('id')
         nombre = self.request.GET.get('nombre')
         descripcion = self.request.GET.get('descripcion')
 
-        if id:
-            queryset = queryset.filter(id=id)
         if nombre:
             queryset = queryset.filter(nombre__icontains=nombre)
         if descripcion:
@@ -43,12 +32,17 @@ class TipoListView(ListView):
         
         return queryset
     
+    @require_POST  # Asegura que solo se pueda eliminar con POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarTipo(request, id_tipo):
-        tipo = Tipo.objects.get(pk=id_tipo)
-        tipo.delete()
-        return redirect('app:tipo_listar')
+        try:
+            tipo = get_object_or_404(Tipo, pk=id_tipo)
+            tipo.delete()
+            return JsonResponse({'status': 'success', 'message': 'Tipo producto eliminado correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-class TipoCreateView(CreateView):
+class TipoCreateView(LoginRequiredMixin,CreateView):
     model = Tipo
     form_class = TipoForm
     template_name = 'Tipo/crear.html'
@@ -62,39 +56,18 @@ class TipoCreateView(CreateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar el tipo de producto
-        self.object = form.save()
-
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Tipo de Producto creado correctamente'
+            'success': True,
+            'message': 'Tipo producto creado exitosamente',
         })
 
     def form_invalid(self, form):
-        # Preparar los errores para respuesta JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
-    def form_invalid(self, form):
-        # Si el formulario es inválido, enviamos los errores
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Ya existe un Tipo de producto con ese nombre o el formulario es inválido',
-            'errors': errors
-        }, status=400)
-
-class TipoUpdateView(UpdateView):
+class TipoUpdateView(LoginRequiredMixin,UpdateView):
     model = Tipo
     form_class = TipoForm
     template_name = 'Tipo/editarTP.html'
@@ -108,24 +81,13 @@ class TipoUpdateView(UpdateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar el tipo explícitamente
-        self.object = form.save()
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Tipo de Producto actualizado correctamente'
+            'success': True,
+            'message': 'Tipo producto actualizado exitosamente',
         })
-    
+
     def form_invalid(self, form):
-        # Enviar los errores de validación en formato JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)

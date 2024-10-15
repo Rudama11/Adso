@@ -1,5 +1,6 @@
 {% extends 'listar.html' %}
 
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
@@ -35,7 +36,7 @@
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
     document.getElementById('confirmButton').addEventListener('click', function(e) {
         e.preventDefault(); 

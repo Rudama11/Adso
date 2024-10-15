@@ -1,23 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
-from typing import Any
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.http.response import HttpResponse as HttpResponse
+from django.views.generic import ListView, CreateView
 from app.models import Ubicacion,Departamentos,Municipios
 from app.forms import UbicacionForm
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
+from app.mixins import LoginRequiredMixin
 
-class UbicacionListView(ListView):
+class UbicacionListView(LoginRequiredMixin,ListView):
     model = Ubicacion
     template_name = 'Ubicacion/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Ubicaciones'
@@ -39,50 +33,41 @@ class UbicacionListView(ListView):
             queryset = queryset.filter(municipio_id=municipio_id)
 
         return queryset
-    
+        
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarUbicacion(request, id_ubica):
-        ubica = Ubicacion.objects.get(pk=id_ubica)
-        ubica.delete()
-        return redirect('app:ubicacion_listar')
-    
-    
+        try:
+            ubica = get_object_or_404(Ubicacion, pk=id_ubica)
+            ubica.delete()
+            return JsonResponse({'status': 'success', 'message': 'Ubicacion eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-class UbicacionCreateView(CreateView):
+class UbicacionCreateView(LoginRequiredMixin,CreateView):
     model = Ubicacion
     form_class = UbicacionForm
     template_name = 'Ubicacion/crear.html'
     success_url = reverse_lazy('app:ubicacion_listar')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo'] = 'Crear Ubicación'  # Corregir título
+        context['entidad'] = 'Ubicación'  # Cambiar entidad a 'Ubicación'
+        context['listar_url'] = reverse_lazy('app:ubicacion_listar')  # Cambiar la URL a la lista de ubicaciones
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Ubicación creada exitosamente',
+        })
+
     def form_invalid(self, form):
-        response = super().form_invalid(form)
-        if form.non_field_errors():
-            print("Error no relacionado con los campos: ", form.non_field_errors())
-        return response
-
-class UbicacionUpdateView(UpdateView):
-    model = Ubicacion
-    form_class = UbicacionForm
-    template_name = 'Ubicacion/editarUbi.html'
-    success_url = reverse_lazy('app:ubicacion_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Actualizar Ubicación'
-        context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
-        return context
-
-class UbicacionDeleteView(DeleteView):
-    model = Ubicacion
-    template_name = 'Ubicacion/eliminar.html'
-    success_url = reverse_lazy('app:ubicacion_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Ubicación'
-        context['entidad'] = 'Ubicacion'
-        context['listar_url'] = reverse_lazy('app:ubicacion_listar')
-        return context
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 def municipios_por_departamento(request):
     departamento_id = request.GET.get('departamento_id')

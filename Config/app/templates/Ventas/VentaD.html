@@ -1,124 +1,334 @@
 {% extends 'listar.html' %}
+
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
-
-<div class="card card-default">
-    <div class="card-header">
-        <h3 class="card-title">
-            <i class="fas fa-eye"></i>
-            {{titulo}}
-        </h3>
-    </div>
-    <div class="card-body">
-        <form>
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_num_factura">{{ form.num_factura.label }}</label>
-                {{ form.num_factura|add_class:'form-control'|attr:'readonly:readonly' }}
-            </div>
-            <div class="form-group">
-                <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
-                <input type="text" class="form-control" id="id_fecha_emision" value="{{ form.fecha_emision.value|date:'Y-m-d H:i:s' }}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="id_cliente">{{ form.cliente.label }}</label>
-                {{ form.cliente|add_class:'form-control'|attr:'disabled:disabled' }}
-            </div>
-        </form>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>IVA</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for detalle in detalles_venta %}
-                    <tr>
-                        <td>{{ detalle.producto }}</td>
-                        <td>{{ detalle.cantidad }}</td>
-                        <td>{{ detalle.precio }}</td>
-                        <td>{{ detalle.iva }}%</td>
-                        <td>{{ detalle.total }}</td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="5">No hay productos agregados.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="card-footer">
-        <a href="{{ listar_url }}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
-            <i class="fas fa-times"></i> Volver al Listado
-        </a>
-        <button type="button" class="btn btn-success" onclick="window.print();">
-            <i class="fas fa-print"></i> Imprimir Factura
-        </button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detalleVentaModal">
-            <i class="fas fa-plus"></i> Agregar Detalle de Venta
-        </button>
-    </div>
-</div>
-
-<!-- Modal para DetalleVenta -->
-<div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detalleVentaModalLabel">Agregar Detalle de Venta</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenido del modal cargado dinámicamente -->
-                <div id="modalContent">
-                    <!-- Aquí se cargará el contenido dinámicamente -->
+<div class="container-fluid">
+    <div class="card card-default mb-4">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-eye"></i>
+                {{ titulo }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <form id="formDetalle" method="post">
+                {% csrf_token %}
+                <!-- Bloque de Datos de Venta -->
+                <div class="venta-block">
+                    <h4>Datos de Venta</h4>
+                    <!-- Número de Factura -->
+                    <div class="form-group">
+                        <label for="id_num_factura">{{ form.num_factura.label }}</label>
+                        <input type="text" name="num_factura" class="form-control" id="id_num_factura"
+                            value="{{ venta.num_factura }}" readonly>
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <label for="id_venta">ID de la Venta</label>
+                        <input type="hidden" name="id_venta" id="id_venta" value="{{ venta.id }}">
+                    </div>
+                    <!-- Fecha de Emisión -->
+                    <div class="form-group">
+                        <label for="id_fecha_emision">{{ form.fecha_emision.label }}</label>
+                        <input type="text" class="form-control" id="id_fecha_emision"
+                            value="{{ venta.fecha_emision|date:'Y-m-d' }}" readonly>
+                    </div>
+                    <!-- Cliente -->
+                    <div class="form-group">
+                        <label for="id_cliente">{{ form.cliente.label }}</label>
+                        <input type="text" name="cliente" class="form-control" id="id_cliente" value="{{ venta.cliente }}"
+                            readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
+                <!-- Separador visual -->
+                <div class="my-4" style="border-top: 2px solid #ccc; margin: 20px 0;"></div>
+                <!-- Bloque de Detalles de Venta -->
+                <div class="detalle-venta-block">
+                    <h4>Detalles de Venta</h4>
+                    <!-- Detalles de Producto -->
+                    <div class="form-group">
+                        <label for="id_producto">Producto</label>
+                        <select id="id_producto" name="producto" class="form-control" required>
+                            <option value="">Seleccione un producto</option>
+                            {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre_pro.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-danger" id="error_producto" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                    </div>
+                    <!-- Cantidad -->
+                    <div class="form-group">
+                        <label for="id_cantidad">Cantidad</label>
+                        <input type="number" id="id_cantidad" name="cantidad" class="form-control" min="1" value="1"
+                            required onchange="calcularTotal();">
+                        <small class="text-danger" id="error_cantidad" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_cantidad-error" class="invalid-feedback"></div>
+                    </div>
+                    <!-- Precio Unitario -->
+                    <div class="form-group">
+                        <label for="id_precio">Precio Unitario</label>
+                        <input type="number" id="id_precio" name="precio" class="form-control" step="0.01" min="0" required
+                            onchange="calcularTotal();">
+                        <small class="text-danger" id="error_precio" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_precio-error" class="invalid-feedback"></div>
+                    </div>
+                    <!-- IVA (%) -->
+                    <div class="form-group">
+                        <label for="id_iva">IVA (%)</label>
+                        <input type="number" id="id_iva" name="iva" class="form-control" min="0" max="100" value="19"
+                            required onchange="calcularTotal();">
+                        <small class="text-danger" id="error_iva" style="display:none;"></small> <!-- Mensaje de error -->
+                        <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+                        <div id="id_iva-error" class="invalid-feedback"></div>
+                    </div>
+                    <!-- Total -->
+                    <div class="form-group">
+                        <label for="id_total">Total</label>
+                        <input type="number" id="id_total" name="total" class="form-control" readonly>
+                    </div>
+                    <!-- Tabla de Detalles de Venta -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>IVA</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleVentaBody">
+                                {% for detalle in detalles_venta %}
+                                <tr class="fila-detalle">
+                                    <td>{{ detalle.producto }}</td>
+                                    <td>{{ detalle.cantidad }}</td>
+                                    <td>{{ detalle.precio }}</td>
+                                    <td>{{ detalle.iva }}%</td>
+                                    <td>{{ detalle.total }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5">No hay productos agregados.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();">
+                        <i class="fas fa-plus"></i> Agregar producto
+                    </button>
+                    <button type="button" class="btn btn-success print-hidden" onclick="window.print();">
+                        <i class="fas fa-print"></i> Imprimir factura
+                    </button>
+                    <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
-   // Cargar dinámicamente el contenido del modal con el formulario de detalle de venta
-$(document).ready(function() {
-    $('#detalleVentaModal').on('show.bs.modal', function(e) {
-        var numFactura = "{{ form.num_factura.value }}";  // Asegúrate de obtener el valor correcto
-        var url = "{% url 'app:detalleventa_crear' %}?num_factura=" + numFactura; // Pasar el número de factura como parámetro
-        $('#modalContent').load(url);
-    });
-    });
+    const csrftoken = '{{ csrf_token }}';
+    const ventaId = '{{ venta.id }}';
+    const detallesVentaUrl = '{% url "app:detalle_venta" venta.id %}';
+    console.log(detallesVentaUrl);
+
+    function calcularTotal() {
+        const cantidad = parseFloat(document.getElementById('id_cantidad').value) || 0;
+        const precio = parseFloat(document.getElementById('id_precio').value) || 0;
+        const iva = parseFloat(document.getElementById('id_iva').value) || 0;
+
+        const total = (cantidad * precio) * (1 + (iva / 100));
+        document.getElementById('id_total').value = total.toFixed(2);
+    }
+
+    function agregarDetalle() {
+        // Limpiar mensajes de error anteriores y estilos
+        document.getElementById('error_producto').innerText = '';
+        document.getElementById('error_cantidad').innerText = '';
+        document.getElementById('error_precio').innerText = '';
+        document.getElementById('error_iva').innerText = '';
+    
+        document.getElementById('id_producto').classList.remove('is-invalid');
+        document.getElementById('id_cantidad').classList.remove('is-invalid');
+        document.getElementById('id_precio').classList.remove('is-invalid');
+        document.getElementById('id_iva').classList.remove('is-invalid');
+    
+        // Seleccionar los campos que se van a validar
+        const formFields = [
+            { element: document.getElementById('id_producto'), name: 'Producto' },
+            { element: document.getElementById('id_cantidad'), name: 'Cantidad' },
+            { element: document.getElementById('id_precio'), name: 'Precio' },
+            { element: document.getElementById('id_iva'), name: 'IVA' },
+        ];
+    
+        const missingFields = [];
+        const errorMessages = [];
+    
+        formFields.forEach(function(field) {
+            let feedback = field.element.parentNode.querySelector('.mandatory-feedback');
+            if (field.element.value.trim() === '') {
+                missingFields.push(field.name);
+                field.element.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
+            } else {
+                field.element.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+    
+        // Validaciones adicionales para campos numéricos
+        const cantidad = parseFloat(document.getElementById('id_cantidad').value);
+        const precio = parseFloat(document.getElementById('id_precio').value);
+        const iva = parseFloat(document.getElementById('id_iva').value);
+        const numFactura = document.getElementById('id_num_factura').value;
+    
+        // Agregar mensajes de error para cada campo numérico
+        if (!cantidad || isNaN(cantidad) || cantidad <= 0) {
+            errorMessages.push('La Cantidad debe ser mayor a 0.');
+            document.getElementById('id_cantidad').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_cantidad-error').innerText = 'La cantidad debe ser mayor a 0.';
+        }
+        if (!precio || isNaN(precio) || precio < 0) {
+            errorMessages.push('El precio debe ser mayor a 0.');
+            document.getElementById('id_precio').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_precio-error').innerText = 'El precio debe ser mayor a 0.';
+        }
+        if (!iva || isNaN(iva) || iva < 0 || iva > 100) {
+            errorMessages.push('El IVA debe estar entre 0 y 100.');
+            document.getElementById('id_iva').classList.add('is-invalid'); // Resaltar campo
+            document.getElementById('id_iva-error').innerText = 'El IVA debe estar entre 0 y 100.';
+        }
+        if (!numFactura) {
+            missingFields.push('Número de factura');
+        }
+    
+        // Si hay campos no válidos, mostrar alerta
+        let alertMessage = '';
+        if (missingFields.length > 0) {
+            alertMessage += `Faltan los siguientes campos: ${missingFields.join(', ')}.\n`;
+        }
+        if (errorMessages.length > 0) {
+            alertMessage += errorMessages.join(' ');
+        }
+    
+        // Mostrar alerta solo si hay errores
+        if (alertMessage) {
+            Swal.fire({
+                title: 'Campos inválidos',
+                text: alertMessage,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar'
+            });
+            return;
+        }
+    
+        // Código para agregar el detalle de la venta
+        const formData = {
+            producto: document.getElementById('id_producto').value,
+            cantidad: cantidad,
+            precio: precio,
+            iva: iva,
+            id_venta: ventaId,
+            num_factura: numFactura
+        };
+    
+        // Envío de la solicitud para agregar el detalle de la venta
+        fetch(detallesVentaUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Detalle de venta creado con ID:', data.detalle_venta);
+                mostrarMensajeExito('Producto agregado exitosamente.'); // Mostrar mensaje de éxito
+                // Recargar la página para mostrar los cambios
+                setTimeout(() => location.reload(), 2000); // Esperar 2 segundos antes de recargar
+            } else {
+                console.error('Error:', data.error);
+                mostrarMensajeError(data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            mostrarMensajeError('Error inesperado en la solicitud.');
+        });
+    }
+    
+    function mostrarMensajeExito(mensaje) {
+        Swal.fire({
+            title: 'Éxito',
+            text: mensaje,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+
+    function mostrarMensajeError(mensaje) {
+        Swal.fire({
+            title: 'Error',
+            text: mensaje,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    }
 </script>
 
 <style>
+    .venta-block, .detalle-venta-block {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;
+    }
+    .venta-block h4, .detalle-venta-block h4 {
+        margin-bottom: 10px;
+    }
     .card-footer .btn {
         margin: 5px 0;
         flex: 1 1 30%;
     }
-
     @media (max-width: 768px) {
         .table th, .table td {
             font-size: 14px;
         }
-
         .card-footer .btn {
             flex: 1 1 100%;
         }
     }
-</style>
 
+    /* Estilo para el encabezado de la tabla */
+    .table thead th {
+        background-color: #58697b; /* Color de fondo azul */
+        color: white; /* Color del texto en blanco */
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .table tbody td {
+        background-color: #f2f2f2; /* Color de fondo gris claro */
+    }
+
+    /* Estilo para las filas de la tabla al pasar el mouse */
+    .table tbody tr:hover {
+        background-color: #e0e0e0; /* Color de fondo gris más oscuro al pasar el mouse */
+    }
+</style>
 {% endblock %}

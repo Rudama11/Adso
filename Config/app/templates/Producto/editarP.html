@@ -1,13 +1,15 @@
 {% extends 'listar.html' %}
 
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
+
 <form method="post" action="." id="editForm">
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-edit"></i>
+                <i class="fas fa-edit"></i> <!-- Icono de edición -->
                 Editar {{ entidad }}
             </h3>
         </div>
@@ -21,6 +23,7 @@
                 <div class="invalid-feedback">
                     {{ field.errors|striptags }}
                 </div>
+                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div> <!-- Mensaje de campo obligatorio -->
             </div>
             {% endfor %}
         </div>
@@ -28,60 +31,82 @@
             <button type="button" class="btn btn-success" id="confirmButton">
                 <i class="fas fa-save"></i> Guardar Cambios
             </button>
-            <a href="{% url 'app:producto_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
+    // Almacenar los valores originales
+    let originalValues = {};
+    document.querySelectorAll('#editForm input, #editForm textarea').forEach(field => {
+        originalValues[field.name] = field.value;
+    });
+
     document.getElementById('confirmButton').addEventListener('click', function(e) {
-        e.preventDefault(); // Previene el envío normal del formulario
+        e.preventDefault();
 
-        // Validación del lado del cliente
-        let nombreField = document.querySelector('[name="nombre"]');
-        let categoriaField = document.querySelector('[name="categoria"]');
-        let tipoProductoField = document.querySelector('[name="tipo_pro"]'); 
+        // Validación de campos vacíos
+        let isValid = true;
+        let formFields = document.querySelectorAll('#editForm .form-control');
 
-        // Validación de campos obligatorios
-        if (!nombreField.value.trim()) {
+        formFields.forEach(function(field) {
+            let feedback = field.parentNode.querySelector('.mandatory-feedback');
+            if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
+            } else {
+                field.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+
+        if (!isValid) {
             Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de nombre es obligatorio.',
+                title: 'Campo vacío',
+                text: 'Debe llenar todos los campos de registro',
                 icon: 'warning',
-                timer: 2000,
-                timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 3000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
             });
-            nombreField.focus();
             return;
         }
 
-        if (!categoriaField.value.trim()) {
-            Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de categoría es obligatorio.',
-                icon: 'warning',
-                timer: 2000,
-                timerProgressBar: true,
-                confirmButtonText: 'Aceptar',
-            });
-            categoriaField.focus();
-            return;
+        // Comprobar si hay cambios
+        let hasChanges = false;
+        for (let name in originalValues) {
+            let currentField = document.querySelector(`[name="${name}"]`);
+            if (currentField && currentField.value !== originalValues[name]) {
+                hasChanges = true;
+                break;
+            }
         }
 
-        if (!tipoProductoField.value.trim()) {
+        if (!hasChanges) {
             Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de tipo de producto es obligatorio.',
+                title: 'Sin Cambios',
+                text: 'No se han realizado cambios en el formulario. Por favor, edite un campo antes de guardar.',
                 icon: 'warning',
-                timer: 2000,
-                timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+                buttonsStyling: true,
             });
-            tipoProductoField.focus();
             return;
         }
 
@@ -89,63 +114,83 @@
         let formData = new FormData(document.getElementById('editForm'));
 
         // Enviar los datos mediante AJAX
-        fetch("{% url 'app:producto_editarP' object.id %}", {  // Reemplaza por la URL correcta
+        fetch(".", {
             method: 'POST',
             body: formData,
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.status === 'success') {
+            if (data.success) {
                 Swal.fire({
-                    title: 'Guardado Correctamente',
-                    text: `Los cambios en {{ entidad }} han sido guardados exitosamente.`,
+                    title: 'Actualizado Correctamente',
+                    text: `El producto ha sido actualizado exitosamente.`,
                     icon: 'success',
                     confirmButtonText: 'Continuar',
+                    backdrop: true,
                     timer: 2000,
                     timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
                 }).then(() => {
-                    window.location.href = "{{ listar_url }}"; // Redirigir al listado
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado de productos
                 });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: data.message || 'Ha ocurrido un error al intentar editar {{ entidad }}.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    timer: 2000,
-                    timerProgressBar: true,
-                });
-
-                // Mostrar los errores específicos del formulario
-                if (data.errors) {
-                    Object.keys(data.errors).forEach(function(key) {
-                        let field = document.querySelector(`[name=${key}]`);
-                        if (field) {
-                            field.classList.add('is-invalid');
-                            let errorDiv = field.parentNode.querySelector('.invalid-feedback');
-                            if (errorDiv) {
-                                errorDiv.innerHTML = data.errors[key][0]; // Mostrar el mensaje de error
-                            }
-                        }
-                    });
-                }
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch(data => {
+            // Mostrar alerta de error
+            const errorMessage = data.message;
+            const specificErrors = data.errors; // Obtenemos errores específicos
+
+            let detailedMessages = [];
+            if (specificErrors) {
+                if (specificErrors.nombre) {
+                    detailedMessages.push(specificErrors.nombre[0]); // Agregar mensaje de nombre
+                }
+                if (specificErrors.categoria) {
+                    detailedMessages.push(specificErrors.categoria[0]); // Agregar mensaje de categoría
+                }
+                if (specificErrors.tipo_pro) {
+                    detailedMessages.push(specificErrors.tipo_pro[0]); // Agregar mensaje de tipo de producto
+                }
+            }
+
+            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+
             Swal.fire({
-                title: 'Error',
-                text: 'Error en el servidor o en la red.',
-                icon: 'error',
+                title: 'Inválido',
+                html: detailedMessage || errorMessage,
+                icon: 'warning',
                 confirmButtonText: 'Aceptar',
             });
+
+            if (specificErrors) {
+                Object.keys(specificErrors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = specificErrors[key][0];
+                        }
+                    }
+                });
+            }
         });
     });
 </script>
 
 {% endblock %}
-
-

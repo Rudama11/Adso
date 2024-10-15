@@ -1,26 +1,17 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Normativa
 from app.forms import NormativaForm
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
+from app.mixins import LoginRequiredMixin
 
-class NormativaListView(ListView):
+class NormativaListView(LoginRequiredMixin,ListView):
     model = Normativa
     template_name = 'Normativa/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-        
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Listado de Normativas'
@@ -46,13 +37,18 @@ class NormativaListView(ListView):
             queryset = queryset.filter(producto__icontains=producto)
         
         return queryset
-    
-    def EliminarNormativa(request, id_norma):
-        norma = Normativa.objects.get(pk=id_norma)
-        norma.delete()
-        return redirect('app:normativa_listar')
 
-class NormativaCreateView(CreateView):
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
+    def EliminarNormativa(request, id_norma):
+        try:
+            norma = get_object_or_404(Normativa, pk=id_norma)
+            norma.delete()
+            return JsonResponse({'status': 'success', 'message': 'Normativa eliminada correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+class NormativaCreateView(LoginRequiredMixin,CreateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/crear.html'
@@ -61,36 +57,23 @@ class NormativaCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Crear Normativa'
-        context['entidad'] = 'Normativa'
+        context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
         return context
-    
+
     def form_valid(self, form):
-        # Verificar si el campo de descripción está vacío
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la normativa
-        self.object = form.save()
-
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Normativa creada correctamente'
+            'success': True,
+            'message': 'Normativa creada exitosamente',
         })
 
     def form_invalid(self, form):
-        # Preparar los errores para respuesta JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Error al crear la normativa. Verifica los campos.',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
-class NormativaUpdateView(UpdateView):
+class NormativaUpdateView(LoginRequiredMixin,UpdateView):
     model = Normativa
     form_class = NormativaForm
     template_name = 'Normativa/editarN.html'
@@ -104,24 +87,13 @@ class NormativaUpdateView(UpdateView):
         return context
     
     def form_valid(self, form):
-        # Verificar si la descripción está vacía
-        if not form.cleaned_data.get('descripcion'):
-            return JsonResponse({
-                'status': 'error',
-                'message': 'El campo de descripción es obligatorio.'
-            }, status=400)
-
-        # Guardar la normativa
-        self.object = form.save()
+        form.save()
         return JsonResponse({
-            'status': 'success',
-            'message': 'Normativa actualizada correctamente'
+            'success': True,
+            'message': 'Normativa actualizada exitosamente',
         })
-    
+
     def form_invalid(self, form):
-        # Enviar los errores de validación en formato JSON
-        errors = form.errors.as_json()
-        return JsonResponse({
-            'status': 'error',
-            'errors': errors
-        }, status=400)
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)

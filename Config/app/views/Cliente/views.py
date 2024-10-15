@@ -1,23 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView
 from app.models import Cliente
 from app.forms import ClienteForm
-from django.contrib import messages
-from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices  # Asegúrate de importar tus choices aquí
-from django.shortcuts import redirect
-from django.forms.models import model_to_dict
+from app.choices import Tipo_Documento_Choices, Tipo_Persona_Choices
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
+from app.mixins import LoginRequiredMixin
 
-class ClienteListView(ListView):
+class ClienteListView(LoginRequiredMixin,ListView):
     model = Cliente
     template_name = 'Cliente/listar.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,8 +32,6 @@ class ClienteListView(ListView):
         correo = self.request.GET.get('correo')
         telefono = self.request.GET.get('telefono')
         numero_documento = self.request.GET.get('numero_documento')
-        usuario = self.request.GET.get('usuario')
-        password = self.request.GET.get('password')
 
         # Aplicar filtros si los parámetros existen
         if tipo_persona:
@@ -54,19 +46,20 @@ class ClienteListView(ListView):
             queryset = queryset.filter(telefono__icontains=telefono)
         if numero_documento:
             queryset = queryset.filter(numero_documento__icontains=numero_documento)
-        if usuario:
-            queryset = queryset.filter(usuario__icontains=usuario)
-        if password:
-            queryset = queryset.filter(password__icontains=password)
 
         return queryset
     
+    @require_POST
+    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
     def EliminarCliente(request, id_cliente):
-        cliente = Cliente.objects.get(pk=id_cliente)
-        cliente.delete()
-        return redirect('app:cliente_listar')
+        try:
+            cliente = get_object_or_404(Cliente, pk=id_cliente)
+            cliente.delete()
+            return JsonResponse({'status': 'success', 'message': 'Cliente eliminado correctamente'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
-class ClienteCreateView(CreateView):
+class ClienteCreateView(LoginRequiredMixin,CreateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'Cliente/crear.html'
@@ -79,33 +72,22 @@ class ClienteCreateView(CreateView):
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
 
-    def form_invalid(self, form):
-        """Devuelve errores de formulario en caso de que no pase la validación."""
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            # Enviar errores como respuesta JSON
-            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
-        else:
-            # En caso de una solicitud normal (no AJAX), procesar de la forma normal
-            return super().form_invalid(form)
-
     def form_valid(self, form):
-        """Devuelve una respuesta de éxito si el formulario es válido."""
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            # Guardar el formulario y devolver una respuesta exitosa
-            cliente = form.save()
-            return JsonResponse({
-                'status': 'success',
-                'message': 'Cliente creado exitosamente',
-                'cliente': model_to_dict(cliente)
-            })
-        else:
-            # En caso de una solicitud normal (no AJAX), procesar de la forma normal
-            return super().form_valid(form)
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Cliente creado exitosamente',
+        })
 
-class ClienteUpdateView(UpdateView):
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
+
+class ClienteUpdateView(LoginRequiredMixin,UpdateView):
     model = Cliente
     form_class = ClienteForm
-    template_name = 'Cliente/editarCli.html'  # Aquí apunta a tu nueva plantilla de edición
+    template_name = 'Cliente/editarCli.html'
     success_url = reverse_lazy('app:cliente_listar')
 
     def get_context_data(self, **kwargs):
@@ -115,16 +97,14 @@ class ClienteUpdateView(UpdateView):
         context['listar_url'] = reverse_lazy('app:cliente_listar')
         return context
 
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Cliente actualizado exitosamente',
+        })
+
     def form_invalid(self, form):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
-
-    def form_valid(self, form):
-        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            cliente = form.save()
-            return JsonResponse({
-                'success': True,
-                'message': 'Cliente actualizado exitosamente',
-            })
-        return super().form_valid(form)

@@ -2,12 +2,12 @@
 
 {% load static %}
 {% block contenidoDC %}
-<form method="post" id="detalleCompraForm" action="{% url 'app:detallecompra_crear' %}">
+<form method="post" id="detalleCompraFormEdit" action="{% url 'app:compraD_editar' detalle.id %}">
     {% csrf_token %}
 
     <div class="form-group">
         <label for="id_num_factura">Número de Factura</label>
-        {% render_field form.num_factura class="form-control" id="id_num_factura" placeholder="Número de Factura" %}
+        {% render_field form.num_factura class="form-control" id="id_num_factura" placeholder="Número de Factura" readonly="readonly" %}
     </div>
 
     <div class="form-group">
@@ -43,11 +43,7 @@
             </button>
             <h5>
                 <i class="icon fas fa-ban"></i> 
-                {% if form.instance.pk %}
-                    Ha ocurrido un error al intentar {{ titulo }}.
-                {% else %}
-                    Ha ocurrido un error al intentar crear {{ titulo }}.
-                {% endif %}
+                Ha ocurrido un error al intentar editar el detalle de compra.
             </h5>
             <ul>
                 {% for field in form %}
@@ -60,15 +56,15 @@
     {% endif %}
 
     <div class="card-footer">
-        <button type="submit" class="btn btn-success" id="confirmButton">
-            <i class="fas fa-save"></i> Confirmar
+        <button type="submit" class="btn btn-success" id="confirmButtonEdit">
+            <i class="fas fa-save"></i> Guardar Cambios
         </button>
     </div>
 </form>
 
 <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
-document.getElementById('detalleCompraForm').addEventListener('input', function() {
+document.getElementById('detalleCompraFormEdit').addEventListener('input', function() {
     let precio = parseFloat(document.getElementById('id_precio').value) || 0;
     let cantidad = parseFloat(document.getElementById('id_cantidad').value) || 0;
     let iva = parseFloat(document.getElementById('id_iva').value) || 0;
@@ -77,11 +73,11 @@ document.getElementById('detalleCompraForm').addEventListener('input', function(
     document.getElementById('id_total').value = total.toFixed(2);
 });
 
-document.getElementById('confirmButton').addEventListener('click', function(e) {
+document.getElementById('confirmButtonEdit').addEventListener('click', function(e) {
     e.preventDefault(); // Evita el comportamiento predeterminado del botón
 
     let isValid = true;
-    let formFields = document.querySelectorAll('#detalleCompraForm .form-control');
+    let formFields = document.querySelectorAll('#detalleCompraFormEdit .form-control');
 
     formFields.forEach(function(field) {
         if (field.value.trim() === '' && !field.hasAttribute('readonly')) {
@@ -94,7 +90,7 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
 
     if (isValid) {
         // Obtener el formulario
-        var form = document.getElementById('detalleCompraForm');
+        var form = document.getElementById('detalleCompraFormEdit');
         
         // Enviar el formulario usando AJAX
         $.ajax({
@@ -105,12 +101,12 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
                 // Manejar respuesta exitosa
                 Swal.fire({
                     title: 'Éxito',
-                    text: 'Detalle de compra agregado correctamente.',
+                    text: 'Detalle de compra editado correctamente.',
                     icon: 'success',
                     confirmButtonText: 'Aceptar'
                 }).then(function() {
-                    // Cerrar el modal y recargar la página para ver el nuevo detalle
-                    $('#detalleCompraModal').modal('hide');
+                    // Cerrar el modal y recargar la página para ver los cambios
+                    $('#detalleCompraModalEdit{{ detalle.id }}').modal('hide');
                     location.reload();
                 });
             },
@@ -118,7 +114,7 @@ document.getElementById('confirmButton').addEventListener('click', function(e) {
                 // Manejar error
                 Swal.fire({
                     title: 'Error',
-                    text: 'Ocurrió un error al agregar el detalle de compra.',
+                    text: 'Ocurrió un error al editar el detalle de compra.',
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
                 });

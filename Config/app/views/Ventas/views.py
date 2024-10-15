@@ -1,35 +1,50 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from app.models import Venta, Producto, Cliente , DetalleVenta
-from app.forms import VentaForm
+from django.views.generic import ListView, CreateView, UpdateView
+from app.models import Venta, Cliente
+from app.forms import VentaForm,VentaEditForm
+from django.utils.dateparse import parse_date
+from app.mixins import LoginRequiredMixin
 
 # Vista para listar ventas
-class VentasListView(ListView):
+class VentasListView(LoginRequiredMixin,ListView):
     model = Venta
-    template_name = 'Ventas/listar.html'
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        data = {'Nombre': 'Lorena'}
-        return JsonResponse(data)
+    template_name = 'ventas/listar.html'
+    context_object_name = 'ventas'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Filtrar por número de factura
+        num_factura = self.request.GET.get('num_factura', None)
+        if num_factura:
+            queryset = queryset.filter(num_factura__icontains=num_factura)
+
+        # Filtrar por fecha de emisión
+        fecha_emision = self.request.GET.get('fecha_emision', None)
+        if fecha_emision:
+            # Usar parse_date para convertir el string a un objeto datetime.date
+            fecha_emision = parse_date(fecha_emision)
+            if fecha_emision:
+                queryset = queryset.filter(fecha_emision=fecha_emision)
+
+        # Filtrar por cliente
+        cliente = self.request.GET.get('cliente', None)
+        if cliente:
+            queryset = queryset.filter(cliente__nombres__icontains=cliente)
+
+        return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Listado de Ventas'
-        context['entidad'] = 'Venta'
+        context['titulo'] = 'Listado de Venta'
+        context['entidad'] = 'Ventas'
         context['crear_url'] = reverse_lazy('app:venta_crear')  
         return context
     
+    
 # Vista para crear una nueva venta
-class VentasCreateView(CreateView):
+class VentasCreateView(LoginRequiredMixin,CreateView):
     model = Venta
     form_class = VentaForm
     template_name = 'Ventas/crear.html'
@@ -38,64 +53,47 @@ class VentasCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.all()  
-        context['productos'] = Producto.objects.all()  
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
-        context['listar_url'] = reverse_lazy('app:venta_listar')  
+        context['listar_url'] = self.success_url  
         return context
 
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Venta creada exitosamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
+
 # Vista para actualizar una venta existente
-class VentasUpdateView(UpdateView):
+class VentasUpdateView(LoginRequiredMixin, UpdateView):
     model = Venta
-    form_class = VentaForm
+    form_class = VentaEditForm
     template_name = 'Ventas/editarVen.html'
     success_url = reverse_lazy('app:venta_listar')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Venta'
-        context['entidad'] = 'Venta'
+        context['entidad'] = 'Ventas'
         context['listar_url'] = reverse_lazy('app:venta_listar')  
         return context
-
-# Vista para eliminar una venta
-class VentasDeleteView(DeleteView):
-    model = Venta
-    template_name = 'Ventas/eliminar.html'
-    success_url = reverse_lazy('app:venta_listar')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Eliminar Venta'
-        context['entidad'] = 'Venta'
-        context['listar_url'] = reverse_lazy('app:venta_listar')  
-        return context
-
-# Vista para obtener datos del cliente en formato JSON
-def obtener_datos_cliente(request):
-    cliente_id = request.GET.get('cliente_id')
-    try:
-        cliente = Cliente.objects.get(id=cliente_id)
-        data = {
-            'nombre': cliente.nombres if cliente.tipo_persona == 'PN' else cliente.razon_social,
-            'direccion': cliente.direccion,
-            'correo': cliente.correo,
-            'telefono': cliente.telefono,
-        }
-        return JsonResponse(data)
-    except Cliente.DoesNotExist:
-        return JsonResponse({'error': 'Cliente no encontrado.'}, status=404)
-
-def venta_detalle(request, num_factura):
-    venta = get_object_or_404(Venta, num_factura=num_factura)
-    detalles_venta = DetalleVenta.objects.filter(venta=venta)  # Filtra los detalles de la venta
-    form = VentaForm(instance=venta)
     
-    context = {
-        'form': form,
-        'titulo': 'Detalles de Venta',
-        'listar_url': reverse_lazy('app:venta_listar'),
-        'detalles_venta': detalles_venta,  # Pasamos los detalles de la venta al contexto
-    }
-    return render(request, 'Ventas/ventaD.html', context)
+    def form_valid(self, form):
+        # Guardar el formulario como está, ya que la validación se realiza en el formulario
+        form.save()  # Guarda el objeto
 
+        return JsonResponse({
+            'success': True,
+            'message': 'Factura actualizada correctamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)

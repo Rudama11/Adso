@@ -1,20 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
 from django.http import JsonResponse
 from app.models import Compras, Proveedor ,DetalleCompra
-from app.forms import ComprasForm
-from django.shortcuts import redirect, get_object_or_404,render
-from django.contrib.auth.decorators import user_passes_test
+from app.forms import ComprasForm,ComprasEditForm
+from django.shortcuts import get_object_or_404,render
+from django.utils.dateparse import parse_date
+from app.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-class ComprasListView(ListView):
+class ComprasListView(LoginRequiredMixin,ListView):
     model = Compras
     template_name = 'Compras/listar.html'
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    context_object_name = 'compras'
 
     def post(self, request, *args, **kwargs):
         data = {'Nombre': 'Admin'}
@@ -25,28 +22,37 @@ class ComprasListView(ListView):
         context['titulo'] = 'Listado de Compras'
         context['entidad'] = 'Compras'
         context['crear_url'] = reverse_lazy('app:compras_crear')
-        context['request'] = self.request
+        context['proveedores'] = Proveedor.objects.all()  # Añade la lista de proveedores al contexto
         return context
 
-    @user_passes_test(lambda u: u.is_superuser or u.is_staff)
-    def EliminarCompras(request, id_compra):
-        compraD = get_object_or_404(Compras, pk=id_compra)
-        compraD.delete()
-        return redirect('app:compras_listar')
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Filtrar por número de factura
+        num_factura = self.request.GET.get('num_factura', None)
+        if num_factura:
+            queryset = queryset.filter(num_factura__icontains=num_factura)
+
+        # Filtrar por fecha de compra
+        fecha_compra = self.request.GET.get('fecha_compra', None)
+        if fecha_compra:
+            # Usar parse_date para evitar problemas con la hora
+            fecha_compra = parse_date(fecha_compra)
+            if fecha_compra:
+                queryset = queryset.filter(fecha_compra=fecha_compra)
+
+        # Filtrar por proveedor
+        proveedor_id = self.request.GET.get('proveedor', None)
+        if proveedor_id:
+            queryset = queryset.filter(proveedor__id=proveedor_id)  # Filtra por ID de proveedor
+
+        return queryset
     
-class ComprasCreateView(CreateView):
+class ComprasCreateView(LoginRequiredMixin,CreateView):
     model = Compras
     form_class = ComprasForm
     template_name = 'Compras/crear.html'
     success_url = reverse_lazy('app:compras_listar')
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        num_factura = form.instance.num_factura
-        self.object = form.instance
-        context = self.get_context_data()
-        context['num_factura'] = num_factura
-        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,34 +60,46 @@ class ComprasCreateView(CreateView):
         context['titulo'] = 'Crear Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
-        context['num_factura'] = self.object.num_factura if self.object else ''
         return context
+    
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({
+            'success': True,
+            'message': 'Venta creada exitosamente',
+        })
 
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
-class ComprasUpdateView(UpdateView):
+class ComprasUpdateView(LoginRequiredMixin, UpdateView):
     model = Compras
-    form_class = ComprasForm
+    form_class = ComprasEditForm
     template_name = 'Compras/editarCom.html'
     success_url = reverse_lazy('app:compras_listar')
-
-    def get_object(self, queryset=None):
-        return Compras.objects.get(num_factura=self.kwargs['num_factura'])
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        num_factura = form.instance.num_factura
-        self.object = form.instance
-        context = self.get_context_data()
-        context['num_factura'] = num_factura
-        return response
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'Actualizar Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
-        context['num_factura'] = self.object.num_factura if self.object else ''
         return context
+
+    def form_valid(self, form):
+        # Guardar el formulario como está, ya que la validación se realiza en el formulario
+        form.save()  # Guarda el objeto
+
+        return JsonResponse({
+            'success': True,
+            'message': 'Factura actualizada correctamente',
+        })
+
+    def form_invalid(self, form):
+        if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+        return super().form_invalid(form)
 
 def obtener_datos_proveedor(request):
     proveedor_id = request.GET.get('proveedor_id')

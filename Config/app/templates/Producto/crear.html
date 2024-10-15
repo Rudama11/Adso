@@ -1,13 +1,15 @@
 {% extends 'listar.html' %}
 
+{% load static %}
 {% load widget_tweaks %}
 
 {% block contenido %}
+
 <form method="post" action="." id="createForm">
     <div class="card card-default">
         <div class="card-header">
             <h3 class="card-title">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-plus"></i> <!-- Icono de agregar -->
                 Crear {{ entidad }}
             </h3>
         </div>
@@ -21,6 +23,7 @@
                 <div class="invalid-feedback">
                     {{ field.errors|striptags }}
                 </div>
+                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
             </div>
             {% endfor %}
         </div>
@@ -28,60 +31,53 @@
             <button type="button" class="btn btn-success" id="confirmButton">
                 <i class="fas fa-save"></i> Confirmar
             </button>
-            <a href="{% url 'app:producto_listar' %}" class="btn btn-info btn-flat" style="background-color: #b82b2b; color: white;">
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </div>
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
 <script>
     document.getElementById('confirmButton').addEventListener('click', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        // Validación del lado del cliente
-        let nombreField = document.querySelector('[name="nombre"]');
-        let categoriaField = document.querySelector('[name="categoria"]');
-        let tipoProductoField = document.querySelector('[name="tipo_pro"]');
+        // Validación de campos vacíos
+        let isValid = true;
+        let formFields = document.querySelectorAll('#createForm .form-control');
 
-        if (!nombreField.value.trim()) {
+        formFields.forEach(function(field) {
+            let feedback = field.parentNode.querySelector('.mandatory-feedback');
+            if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
+            } else {
+                field.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+
+        if (!isValid) {
             Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de nombre es obligatorio.',
+                title: 'Campo vacío',
+                text: 'Debe llenar todos los campos de registro.',
                 icon: 'warning',
-                timer: 2000,
-                timerProgressBar: true,
                 confirmButtonText: 'Aceptar',
-            });
-            nombreField.focus();
-            return;
-        }
-
-        if (!categoriaField.value.trim()) {
-            Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de categoría es obligatorio.',
-                icon: 'warning',
-                timer: 2000,
+                backdrop: true,
+                timer: 3000,
                 timerProgressBar: true,
-                confirmButtonText: 'Aceptar',
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
             });
-            categoriaField.focus();
-            return;
-        }
-
-        if (!tipoProductoField.value.trim()) {
-            Swal.fire({
-                title: 'Campo Obligatorio',
-                text: 'El campo de tipo de producto es obligatorio.',
-                icon: 'warning',
-                timer: 2000,
-                timerProgressBar: true,
-                confirmButtonText: 'Aceptar',
-            });
-            tipoProductoField.focus();
-            return;
+            return; // Detiene la ejecución si hay campos vacíos
         }
 
         // Obtener los datos del formulario
@@ -95,47 +91,76 @@
                 'X-Requested-With': 'XMLHttpRequest'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
         .then(data => {
-            if (data.status === 'success') {
+            if (data.success) {
                 Swal.fire({
-                    title: 'Registrado Correctamente',
-                    text: 'Producto creado exitosamente.',
+                    title: 'Creado Correctamente',
+                    text: `El producto ha sido creado exitosamente.`,
                     icon: 'success',
                     confirmButtonText: 'Continuar',
+                    backdrop: true,
                     timer: 2000,
                     timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
                 }).then(() => {
-                    // Redirigir al listado de productos
-                    window.location.href = "{% url 'app:producto_listar' %}";
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado de productos
                 });
-            } else {
-                // Mostrar alerta de error
-                Swal.fire({
-                    title: 'Error',
-                    text: data.message || 'Ha ocurrido un error al intentar crear {{ entidad }}.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                });
-
-                // Mostrar los errores específicos del formulario
-                if (data.errors) {
-                    Object.keys(data.errors).forEach(function(key) {
-                        let field = document.querySelector(`[name=${key}]`);
-                        if (field) {
-                            field.classList.add('is-invalid');
-                            let errorDiv = field.parentNode.querySelector('.invalid-feedback');
-                            if (errorDiv) {
-                                errorDiv.innerHTML = data.errors[key][0].message;
-                            }
-                        }
-                    });
-                }
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch(data => {
+            // Mostrar alerta de error
+            const errorMessage = data.message;
+            const specificErrors = data.errors; // Obtenemos errores específicos
+        
+            let detailedMessages = [];
+            if (specificErrors) {
+                if (specificErrors.nombre) {
+                    detailedMessages.push(specificErrors.nombre[0]); // Agregar mensaje de nombre
+                }
+                if (specificErrors.categoria) {
+                    detailedMessages.push(specificErrors.categoria[0]); // Agregar mensaje de categoría
+                }
+                if (specificErrors.tipo_pro) {
+                    detailedMessages.push(specificErrors.tipo_pro[0]); // Agregar mensaje de tipo de producto
+                }
+            }
+
+            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+
+            Swal.fire({
+                title: 'Inválido',
+                html: detailedMessage || errorMessage,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+
+            if (specificErrors) {
+                Object.keys(specificErrors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = specificErrors[key][0];
+                        }
+                    }
+                });
+            }
         });
     });
 </script>
+
 {% endblock %}

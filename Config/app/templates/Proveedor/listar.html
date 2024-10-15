@@ -24,20 +24,12 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label for="nombres">Nombres</label>
+                <label for="nombres">Nombres / Razón Social</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ingrese los nombres" value="{{ request.GET.nombres }}">
                 {# Campo de texto para ingresar los nombres del proveedor #}
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="razon_social">Razón Social</label>
-                <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese la razón social" value="{{ request.GET.razon_social }}">
-                {# Campo de texto para ingresar la razón social del proveedor #}
-            </div>
-        </div>
     </div>
-    
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -101,8 +93,7 @@
 <tr>
     <th scope="col">Id</th>
     <th scope="col">Tipo de Persona</th>
-    <th scope="col">Nombres</th>
-    <th scope="col">Razón Social</th>
+    <th scope="col">Nombres / Razón Social</th>
     <th scope="col">Tipo de Documento</th>
     <th scope="col">Número de Documento</th>
     <th scope="col">Correo</th>
@@ -120,7 +111,6 @@
     <td>{{ p.id }}</td>
     <td>{{ p.get_tipo_persona_display }}</td>
     <td>{{ p.nombres }}</td>
-    <td>{{ p.razon_social }}</td>
     <td>{{ p.get_tipo_documento_display }}</td>
     <td>{{ p.numero_documento }}</td>
     <td>{{ p.correo }}</td>
@@ -131,10 +121,15 @@
         <a href="{% url 'app:proveedor_editar' p.id %}" class="btn btn-info btn-sm" title="Editar proveedor">
             <i class="fas fa-edit"></i>
         </a>
-        {# Enlace para editar el proveedor #}
-        <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ p.id }}" title="Eliminar ">
-            <i class="fas fa-trash"></i>
-        </a>
+        {% if request.user.is_superuser or request.user.is_staff %}
+            <a href="#" class="btn btn-danger btn-sm delete-button" data-id="{{ p.id }}" title="Eliminar proveedor">
+                <i class="fas fa-trash"></i>
+            </a>
+        {% else %}
+            <span class="btn btn-danger btn-sm disabled" title="Eliminar proveedor">
+                <i class="fas fa-trash"></i>
+            </span>
+        {% endif %}
 
         <!-- Scripts de accesibilidad y AdminLTE -->
         <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}?v1.1"></script>
@@ -142,7 +137,6 @@
         <script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?v1.1"></script>
         <script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?v1.1"></script>
         <script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
-        
         <script>
             document.querySelectorAll('.delete-button').forEach(function(button) {
                 button.addEventListener('click', function(e) {
@@ -161,25 +155,51 @@
                         cancelButtonColor: '#d33',
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Mostrar alerta de éxito
-                            Swal.fire({
-                                title: 'Eliminación Exitosa',
-                                text: 'El proveedor ha sido eliminada correctamente.',
-                                icon: 'success',
-                                confirmButtonText: 'Continuar',
-                                backdrop: true,
-                                timer: 2000,
-                                timerProgressBar: true,
-                                position: 'center',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                allowEnterKey: false,
-                                stopKeydownPropagation: false,
-                                buttonsStyling: true,
-                                showCloseButton: true,
-                                closeButtonAriaLabel: 'Cerrar alerta',
-                            }).then(() => {
-                                window.location.href = deleteUrl;
+                            // Enviar solicitud AJAX para eliminar la categoría
+                            fetch(deleteUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',  // Asegúrate de enviar el token CSRF
+                                    'Content-Type': 'application/json',
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    Swal.fire({
+                                        title: 'Eliminación Exitosa',
+                                        text: 'El proveedor ha sido eliminado correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Continuar',
+                                        backdrop: true,
+                                        timer: 1500,
+                                        timerProgressBar: true,
+                                        position: 'center',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                        allowEnterKey: false,
+                                        stopKeydownPropagation: false,
+                                        buttonsStyling: true,
+                                        showCloseButton: true,
+                                        closeButtonAriaLabel: 'Cerrar alerta',
+                                    }).then(() => {
+                                        // Recargar la página después de eliminar
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: data.message,
+                                        icon: 'error',
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Ocurrió un error al eliminar el proveedor.',
+                                    icon: 'error',
+                                });
                             });
                         }
                     });

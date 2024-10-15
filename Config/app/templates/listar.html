@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-buttons/css/buttons.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/general/fonts.css' %}" />
 
 <style>
 
@@ -24,6 +25,22 @@
     .custom-button:hover {
         background-color: #1d3c5d;
         border: 2px solid #09335f;
+    }
+
+    @media print {
+        .print-hidden {
+            display: none !important; /* Ocultar los elementos durante la impresión */
+        }
+    }
+
+    .custom-btn {
+        background-color: #b82b2b; /* Color más oscuro */
+        border-color: #b82b2b; /* Cambia el borde si es necesario */
+    }
+
+    .custom-btn:hover {
+        background-color: #a82525; /* Color al pasar el mouse */
+        border-color: #a82525; /* Cambia el borde al pasar el mouse */
     }
 </style>
 {% endblock %}
@@ -57,7 +74,7 @@
     </div>
     
     <div class="card-footer">
-        <a href="{{ crear_url }}" class="btn btn-flat" style="background-color: #23853a; border: 1px solid #23853a; color: #fff; margin: 5px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+        <a href="{{ crear_url }}" class="btn btn-success">
             <i class="fas fa-plus"></i> Agregar
         </a>
     </div>
@@ -88,7 +105,10 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="{% static 'lib/adminlte-3.2.0/js/demo.js'%}?V1.1"></script>
+<script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?V1.1"></script>
 <!-- Urls de los archivos Js -->
+<script src="{% static 'lib/adminlte-3.2.0/js/adminlte.js' %}?V1.1"></script>
 <script src="{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
@@ -104,6 +124,7 @@
 <script src="{% static 'lib/adminlte-3.2.0/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
 <script src="{% static 'node_modules/sienna-accessibility/sienna.js' %}"></script>
 <script src="{% static 'node_modules/sienna-accessibility/custom.js' %}"></script>
+
 
 
 <script>
