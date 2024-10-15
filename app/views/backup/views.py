@@ -75,12 +75,14 @@ def backup_database(request):
 
 @login_required  # Solo los usuarios autenticados pueden restaurar la base de datos
 def restore_database(request):
-    if request.method == 'POST' and request.FILES.get('backup_file'):
-        backup_file = request.FILES['backup_file']
+    if request.method == 'POST':
+        # Obtener el nombre del archivo desde el formulario
+        backup_file = request.POST.get('backup_file')
 
-        # Validar la extensión del archivo
-        if not backup_file.name.endswith('.sql'):
-            return JsonResponse({'status': 'error', 'message': 'Por favor, suba un archivo con extensión .sql.'})
+        # Validar que el archivo existe y tiene la extensión correcta
+        backup_path = os.path.join(settings.BASE_DIR, 'backups', backup_file)
+        if not os.path.exists(backup_path) or not backup_file.endswith('.sql'):
+            return JsonResponse({'status': 'error', 'message': 'Archivo no encontrado o formato incorrecto.'})
 
         try:
             db_name = settings.DATABASES['default']['NAME']
@@ -88,12 +90,6 @@ def restore_database(request):
             db_password = settings.DATABASES['default']['PASSWORD']
             db_host = settings.DATABASES['default']['HOST']
             db_port = settings.DATABASES['default']['PORT']
-
-            # Guardar el archivo subido temporalmente
-            temp_file_path = os.path.join(settings.BASE_DIR, 'temp_backup.sql')
-            with open(temp_file_path, 'wb+') as destination:
-                for chunk in backup_file.chunks():
-                    destination.write(chunk)
 
             # Comando para restaurar la base de datos
             restore_command = [
@@ -105,17 +101,17 @@ def restore_database(request):
                 db_name,
             ]
 
-            with open(temp_file_path, 'rb') as input_file:
+            # Abrir el archivo de backup seleccionado
+            with open(backup_path, 'rb') as input_file:
                 process = subprocess.Popen(restore_command, stdin=input_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 stdout, stderr = process.communicate()
-
-            # Eliminar el archivo temporal
-            os.remove(temp_file_path)
 
             if process.returncode == 0:
                 return JsonResponse({'status': 'success', 'message': 'Base de datos restaurada exitosamente.'})
             else:
                 return JsonResponse({'status': 'error', 'message': f"Error al restaurar la base de datos: {stderr.decode('utf-8')}"})
+
+
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': f"Error al restaurar la base de datos: {e}"})
     else:

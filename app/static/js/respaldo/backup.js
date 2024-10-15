@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Manejar el envío del formulario de backup
+    // Manejar el envío del formulario de backup (Crear backup)
     backupForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(backupForm);
@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     text: data.message,
                     showConfirmButton: false,
                     timer: 1500
+                }).then(() => {
+                    location.reload();  // Recargar la página después del éxito
                 });
             } else {
                 Swal.fire({
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Manejar el envío del formulario de restauración
+    // Manejar el envío del formulario de restauración (Restaurar backup)
     restoreForm.addEventListener('submit', function(e) {
         const fileName = fileInput.files[0] ? fileInput.files[0].name : '';
         const validExtensions = ['sql'];
@@ -105,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     text: data.message,
                     showConfirmButton: false,
                     timer: 1500
+                }).then(() => {
+                    location.reload();  // Recargar la página después del éxito
                 });
             } else {
                 Swal.fire({

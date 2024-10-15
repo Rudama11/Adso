@@ -3,8 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
-<link rel="stylesheet"
-    href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
 <title>Backup de Base de Datos</title>
 <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
@@ -15,15 +14,18 @@
     <div class="backup-header">
         <h1>Copia de Seguridad de la Base de Datos</h1>
     </div>
+    
     <!-- Sección para crear una nueva copia de seguridad -->
     <div class="backup-form">
         <div class="form-section backup-section">
             <h2>Crear copia de seguridad</h2>
-            <form id="backup-form" method="POST" enctype="multipart/form-data" action="">
+            <form id="backup-form" method="POST" action="{% url 'app:respaldo' %}">
                 {% csrf_token %}
-                <button type="submit" class="backup-button">Crear</button>
+                <button type="submit" class="backup-button" id="create-backup-button">Crear</button>
             </form>
         </div>
+
+        <!-- Sección de restauración -->
         <div class="form-section">
             <h2 style="text-align: center;">Archivos disponibles de copia de seguridad</h2>
             <br>
@@ -45,11 +47,14 @@
                             <td><a href="/backups/{{ archivo.nombre }}" download>{{ archivo.nombre }}</a></td>
                             <td>{{ archivo.fecha_creacion }}</td>
                             <td>
-                                <form method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
+                                <!-- Formulario para restaurar -->
+                                <form id="restore-form" method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="backup_file" value="{{ archivo.nombre }}">
                                     <button type="submit" class="btn btn-primary">Restaurar</button>
                                 </form>
+
+                                <!-- Formulario para eliminar -->
                                 <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="archivo" value="{{ archivo.nombre }}">
@@ -63,23 +68,14 @@
                             <td colspan="4">No hay archivos de copia de seguridad disponibles.</td>
                         </tr>
                         {% endif %}
-                    </tbody>                    
+                    </tbody>
                 </table>
             </div>
-        </div>
-        <div class="form-section restore-section">
-            <h2>Restaurar copia de seguridad</h2>
-            <form id="restore-form" method="POST" enctype="multipart/form-data" action="">
-                {% csrf_token %}
-                <input type="file" id="backup-file-input" name="backup_file" style="display:none;" required>
-                <button type="button" id="select-file-button">Seleccionar archivo</button>
-                <span id="file-name">Sin archivos seleccionados</span>
-                <button type="submit" class="restore-button" id="restore-button">Restaurar</button>
-            </form>
         </div>
     </div>
 </div>
 
+<!-- Variables JS para backup y restauración -->
 <script>
     const backupUrl = "{% url 'app:respaldo' %}";
     const restoreUrl = "{% url 'app:restauracion' %}";
@@ -96,13 +92,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const backupform = document.querySelectorAll('form[action="{% url "app:respaldo" %}"]');
         const restoreForms = document.querySelectorAll('form[action="{% url "app:restauracion" %}"]');
         const deleteForms = document.querySelectorAll('form[action="{% url "app:eliminar_archivo" %}"]');
 
-        // Manejo de la respuesta de la restauración
-        restoreForms.forEach(form => {
+        // Manejo de la creación de backup
+        backupform.forEach(form => {
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Evitar el envío del formulario
+                event.preventDefault();
                 const formData = new FormData(this);
                 fetch(this.action, {
                     method: 'POST',
@@ -112,23 +109,50 @@
                     }
                 }).then(response => response.json())
                     .then(data => {
-                        alert(data.message); // Muestra el mensaje de respuesta
-                        if (data.status === 'success') {
-                            location.reload(); // Recarga la página para ver los cambios
-                        }
+                        Swal.fire({
+                            title: data.status === 'success' ? 'Creación exitosa' : 'Error',
+                            text: data.message,
+                            icon: data.status === 'success' ? 'success' : 'error'
+                        }).then(() => {
+                            if (data.status === 'success') {
+                                location.reload();
+                            }
+                        });
                     });
             });
         });
 
-        // Manejo de la respuesta de la eliminación
+        // Manejo de la restauración con confirmación
+        restoreForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        Swal.fire({
+                            title: data.status === 'success' ? 'Restauración exitosa' : 'Error',
+                            text: data.message,
+                            icon: data.status === 'success' ? 'success' : 'error'
+                        }).then(() => {
+                            if (data.status === 'success') {
+                                location.reload();  // Recargar la página
+                            }
+                        });
+                    });
+            });
+        });
+
+        // Manejo de eliminación con SweetAlert2
         deleteForms.forEach(form => {
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Evitar el envío del formulario
-
-                const archivoNombre = form.querySelector('input[name="archivo"]').value; // Obtener el nombre del archivo
-                const url = this.action; // Obtener la acción del formulario
-
-                // Mostrar alerta de confirmación de SweetAlert2
+                event.preventDefault();
+                const archivoNombre = form.querySelector('input[name="archivo"]').value;
                 Swal.fire({
                     title: '¿Estás seguro?',
                     text: `¿Deseas eliminar el archivo "${archivoNombre}"?`,
@@ -141,7 +165,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         const formData = new FormData(this);
-                        fetch(url, {
+                        fetch(this.action, {
                             method: 'POST',
                             body: formData,
                             headers: {
@@ -149,33 +173,13 @@
                             }
                         }).then(response => response.json())
                             .then(data => {
-                                // Alerta de éxito o error
                                 Swal.fire({
-                                    title: data.status === 'success' ? 'Eliminado!' : 'Error!',
+                                    title: data.status === 'success' ? 'Eliminado' : 'Error',
                                     text: data.message,
-                                    icon: data.status === 'success' ? 'success' : 'error',
-                                    confirmButtonText: 'Ok', // Botón "Ok" para cerrar la alerta
-                                    showCloseButton: true, // Mostrar botón de cerrar
-                                    timer: 2000, // Mantener visible por 5 segundos
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                        Swal.showLoading();
-                                        const timerInterval = setInterval(() => {
-                                            // Actualiza el tiempo restante en el título
-                                            Swal.getTitle().textContent = `Esta alerta se cerrará en ${Math.round(Swal.getTimerLeft() / 1000)} segundos.`;
-                                        }, 100);
-                                        Swal.getPopup().addEventListener('close', () => {
-                                            clearInterval(timerInterval);
-                                            if (data.status === 'success') {
-                                                location.reload(); // Recarga la página para ver los cambios
-                                            }
-                                        });
-                                    },
-                                    willClose: () => {
-                                        // Asegúrate de recargar si el usuario cierra manualmente
-                                        if (data.status === 'success') {
-                                            location.reload();
-                                        }
+                                    icon: data.status === 'success' ? 'success' : 'error'
+                                }).then(() => {
+                                    if (data.status === 'success') {
+                                        location.reload();  // Recargar la página
                                     }
                                 });
                             });
@@ -184,31 +188,15 @@
             });
         });
 
-        // Funcionalidad del botón de restaurar con un retraso
-        const restoreButton = document.getElementById('restore-button');
-        const restoreForm = document.getElementById('restore-form');
-
-        restoreForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Evitar el envío del formulario para demostrar el retraso
-            restoreButton.disabled = true; // Deshabilitar el botón
-
-            setTimeout(function () {
-                restoreButton.disabled = false; // Habilitar el botón después de 2 segundos
-                restoreForm.submit(); // Enviar el formulario después del retraso
-            }, 2000); // 2000 milisegundos = 2 segundos
-        });
-
-        // Inicialización de DataTable
+        // Inicializar DataTables
         $(document).ready(function () {
             $('#tabla').DataTable({
-                "order": [[0, "asc"]],  // Por defecto ordena la primera columna en ascendente
+                "order": [[0, "asc"]],
                 "language": {
-                    "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"  // Carga la traducción al español
+                    "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"  // Traducción al español
                 }
             });
         });
     });
 </script>
-
-
 {% endblock %}
