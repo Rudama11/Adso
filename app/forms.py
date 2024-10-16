@@ -174,7 +174,7 @@ class UsuarioEditForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password', 'is_active']  # Agregar el campo is_active aquí
+        fields = ['tipo_usuario', 'username', 'nombres', 'email', 'password', 'confirm_password', 'is_active']
         widgets = {
             'username': forms.TextInput(attrs={'placeholder': 'Ingrese nombre de usuario', 'class': 'form-control'}),
             'nombres': forms.TextInput(attrs={'placeholder': 'Ingrese nombres y apellidos', 'class': 'form-control'}),
@@ -324,7 +324,7 @@ class UbicacionForm(forms.ModelForm):
 
     class Meta:
         model = Ubicacion
-        fields = ['departamento', 'municipio']  # Ajusta los campos según tu modelo
+        fields = ['departamento', 'municipio']
         widgets = {
             'departamento': forms.Select(attrs={'class': 'form-control'}),
             'municipio': forms.Select(attrs={'class': 'form-control'}),
