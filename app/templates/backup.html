@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <title>Backup de Base de Datos</title>
 <link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
 {% endblock %}
@@ -51,14 +52,18 @@
                                 <form id="restore-form" method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="backup_file" value="{{ archivo.nombre }}">
-                                    <button type="submit" class="btn btn-primary">Restaurar</button>
+                                    <button type="submit" class="btn btn-primary btn-sm" title="Restaurar">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
                                 </form>
 
                                 <!-- Formulario para eliminar -->
                                 <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="archivo" value="{{ archivo.nombre }}">
-                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
