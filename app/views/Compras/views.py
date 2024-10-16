@@ -23,6 +23,11 @@ class ComprasListView(LoginRequiredMixin,ListView):
         context['entidad'] = 'Compras'
         context['crear_url'] = reverse_lazy('app:compras_crear')
         context['proveedores'] = Proveedor.objects.all()  # Añade la lista de proveedores al contexto
+             # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/dashboard'},
+            {'nombre': 'Compras', 'url': reverse_lazy('app:compras_listar')},
+        ]
         return context
 
     def get_queryset(self):
@@ -60,6 +65,13 @@ class ComprasCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
+        # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/dashboard'},
+            {'nombre': 'Compras', 'url': reverse_lazy('app:compras_listar')},
+            {'nombre': 'Crear Compra', 'url': reverse_lazy('app:compras_crear')},
+        ]
+        
         return context
     
     def form_valid(self, form):
@@ -85,8 +97,14 @@ class ComprasUpdateView(LoginRequiredMixin, UpdateView):
         context['titulo'] = 'Actualizar Compra'
         context['entidad'] = 'Compras'
         context['listar_url'] = reverse_lazy('app:compras_listar')
+        # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/dashboard'},
+            {'nombre': 'Compras', 'url': reverse_lazy('app:compras_listar')},
+            {'nombre': 'Editar Compra', 'url': reverse_lazy('app:compras_editar', args=[self.object.pk])},
+        ]
+       
         return context
-
     def form_valid(self, form):
         # Guardar el formulario como está, ya que la validación se realiza en el formulario
         form.save()  # Guarda el objeto

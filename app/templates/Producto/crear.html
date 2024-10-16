@@ -7,6 +7,15 @@
 
 <form method="post" action="." id="createForm">
     <div class="card card-default">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-plus"></i> <!-- Icono de agregar -->

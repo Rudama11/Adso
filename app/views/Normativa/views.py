@@ -17,8 +17,12 @@ class NormativaListView(LoginRequiredMixin,ListView):
         context['titulo'] = 'Listado de Normativas'
         context['entidad'] = 'Normativas'
         context['crear_url'] = reverse_lazy('app:normativa_crear')
+        # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Normativas', 'url': reverse_lazy('app:normativa_listar')},
+        ]
         return context
-
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -59,8 +63,14 @@ class NormativaCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Normativa'
         context['entidad'] = 'Normativas'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
+          # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Normativas', 'url': reverse_lazy('app:normativa_listar')},
+            {'nombre': 'Crear Normativas', 'url': reverse_lazy('app:normativa_crear')},
+        ]
+        
         return context
-
     def form_valid(self, form):
         form.save()
         return JsonResponse({
@@ -84,6 +94,13 @@ class NormativaUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Normativa'
         context['entidad'] = 'Normativa'
         context['listar_url'] = reverse_lazy('app:normativa_listar')
+           # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': 'Normativas'},
+            {'nombre': 'Normativa', 'url': reverse_lazy('app:normativa_listar')},
+            {'nombre': 'Normativa Editar', 'url': reverse_lazy('app:normativa_crear', args=[self.object.pk])},
+        ]
+
         return context
     
     def form_valid(self, form):

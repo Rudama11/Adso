@@ -52,6 +52,11 @@ class ProductoListView(LoginRequiredMixin,ListView):
         context['tipos'] = Tipo.objects.all()
         context['form'] = ProductoFilterForm(self.request.GET)
 
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Productos', 'url': reverse_lazy('app:producto_listar')},
+        ]
         return context
     
 class ProductoCreateView(LoginRequiredMixin,CreateView):
@@ -65,8 +70,14 @@ class ProductoCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Producto'
         context['entidad'] = 'Producto'
         context['listar_url'] = reverse_lazy('app:producto_listar')
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Productos', 'url': reverse_lazy('app:producto_listar')},
+            {'nombre': 'Crear Producto', 'url': reverse_lazy('app:producto_crear')},
+        ]
+        
         return context
-
     def form_valid(self, form):
         form.save()
         return JsonResponse({
@@ -90,6 +101,13 @@ class ProductoUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Producto'
         context['entidad'] = 'Productos'
         context['listar_url'] = reverse_lazy('app:producto_listar')
+         # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Categorías', 'url': reverse_lazy('app:producto_listar')},
+            {'nombre': 'Editar', 'url': reverse_lazy('app:producto_editarP', args=[self.object.pk])},
+        ]
+
         return context
 
     def form_valid(self, form):

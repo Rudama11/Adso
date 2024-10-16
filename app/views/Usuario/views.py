@@ -31,7 +31,13 @@ class UsuarioListView(LoginRequiredMixin, ListView):
         context['titulo'] = 'Listado de Usuarios'
         context['entidad'] = 'Usuario'
         context['crear_url'] = reverse_lazy('app:usuario_crear')
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Usuario', 'url': reverse_lazy('app:usuario_listar')},
+        ]
         return context
+    
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -77,7 +83,15 @@ class UsuarioCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Usuario'
         context['entidad'] = 'Usuario'
         context['listar_url'] = reverse_lazy('app:usuario_listar')
+          # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Usuario', 'url': reverse_lazy('app:usuario_listar')},
+            {'nombre': 'Crear Usuario', 'url': reverse_lazy('app:usuario_crear')},
+        ]
+        
         return context
+
 
     def form_valid(self, form):
         form.save()
@@ -108,6 +122,13 @@ class UsuarioUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Usuario'
         context['entidad'] = 'Usuario'
         context['listar_url'] = reverse_lazy('app:usuario_listar')
+       # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Usuario', 'url': reverse_lazy('app:usuario_listar')},
+            {'nombre': 'Editar Usuario', 'url': reverse_lazy('app:usuario_editar', args=[self.object.pk])},
+        ]
+
         return context
 
     def form_valid(self, form):
