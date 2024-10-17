@@ -19,8 +19,12 @@ class DetalleCompraListView(LoginRequiredMixin,ListView):
         context['entidad'] = 'Detalle de Compra'
         context['crear_url'] = reverse_lazy('app:detallecompra_crear')
         context['request'] = self.request
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Detalle compra', 'url': reverse_lazy('app:detallecompra_listar')},
+        ]
         return context
-    
     def EliminarComprasD(request, id_compraD):
         comprad = DetalleCompra.objects.get(pk=id_compraD)
         comprad.delete()
@@ -44,8 +48,15 @@ class DetalleCompraCreateView(LoginRequiredMixin,CreateView):
 
         # Cargar productos
         context['productos'] = Producto.objects.all()  # Agrega esta línea para cargar los productos
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Detalle Compras', 'url': reverse_lazy('app:detallecompra_listar')},
+            {'nombre': 'Crear Detalle compra', 'url': reverse_lazy('app:detallecompra_crear')},
+        ]
         
         return context
+
 
     def form_valid(self, form):
         compra_id = self.kwargs['compra_id']
@@ -138,4 +149,11 @@ class DetalleCompraUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
         context['listar_url'] = reverse_lazy('app:detallecompra_listar')
+       # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Detalle Compra', 'url': reverse_lazy('app:detallecompra_listar')},
+            {'nombre': 'Editar Detalle Compra', 'url': reverse_lazy('app:detallecompra_editar', args=[self.object.pk])},
+        ]
+
         return context

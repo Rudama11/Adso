@@ -20,8 +20,13 @@ class ProveedorListView(LoginRequiredMixin,ListView):
         context['crear_url'] = reverse_lazy('app:proveedor_crear')
         context['tipo_documento'] = Tipo_Documento_Choices
         context['tipo_persona'] = Tipo_Persona_Choices
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Proveedor', 'url': reverse_lazy('app:proveedor_listar')},
+        ]
         return context
-
+    
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -70,7 +75,15 @@ class ProveedorCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Proveedor'
         context['entidad'] = 'Proveedor'
         context['listar_url'] = reverse_lazy('app:proveedor_listar')
+     # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Proveerdor', 'url': reverse_lazy('app:proveedor_listar')},
+            {'nombre': 'Crear Proveedor', 'url': reverse_lazy('app:proveedor_crear')},
+        ]
+        
         return context
+
 
     def form_valid(self, form):
         form.save()
@@ -95,6 +108,13 @@ class ProveedorUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Actualizar Proveedor'
         context['entidad'] = 'Proveedor'
         context['listar_url'] = reverse_lazy('app:proveedor_listar')
+         # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Proveedor', 'url': reverse_lazy('app:proveedor_listar')},
+            {'nombre': 'Editar Proveedor', 'url': reverse_lazy('app:proveedor_editar', args=[self.object.pk])},
+        ]
+
         return context
 
     def form_valid(self, form):

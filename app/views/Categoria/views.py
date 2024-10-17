@@ -20,7 +20,7 @@ class CategoriaListView(LoginRequired,ListView):
         context['crear_url'] = reverse_lazy('app:categoria_crear')
         # Agregar breadcrumbs
         context['breadcrumbs'] = [
-            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Modulos', 'url': '/dashboard'},
             {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
         ]
         return context
@@ -61,7 +61,7 @@ class CategoriaCreateView(LoginRequired,CreateView):
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         # Agregar breadcrumbs
         context['breadcrumbs'] = [
-            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Modulos', 'url': '/dashboard'},
             {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
             {'nombre': 'Crear Categoría', 'url': reverse_lazy('app:categoria_crear')},
         ]
@@ -94,9 +94,9 @@ class CategoriaUpdateView(LoginRequired,UpdateView):
         context['listar_url'] = reverse_lazy('app:categoria_listar')
         # Añadir breadcrumbs
         context['breadcrumbs'] = [
-            {'nombre': 'Inicio', 'url': '/'},
+            {'nombre': 'Modulos', 'url': '/dashboard'},
             {'nombre': 'Categorías', 'url': reverse_lazy('app:categoria_listar')},
-            {'nombre': 'Editar', 'url': reverse_lazy('app:categoria_editarC', args=[self.object.pk])},
+            {'nombre': 'Editar Categoría', 'url': reverse_lazy('app:categoria_editarC', args=[self.object.pk])},
         ]
 
         return context

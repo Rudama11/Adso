@@ -19,7 +19,13 @@ class UbicacionListView(LoginRequiredMixin,ListView):
         context['crear_url'] = reverse_lazy('app:ubicacion_crear')
         context['departamentos'] = Departamentos.objects.all()
         context['municipios'] = Municipios.objects.all()
+       # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Ubicación', 'url': reverse_lazy('app:ubicacion_listar')},
+        ]
         return context
+    
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -55,8 +61,14 @@ class UbicacionCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Ubicación'  # Corregir título
         context['entidad'] = 'Ubicación'  # Cambiar entidad a 'Ubicación'
         context['listar_url'] = reverse_lazy('app:ubicacion_listar')  # Cambiar la URL a la lista de ubicaciones
+           # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Ubicación', 'url': reverse_lazy('app:ubicacion_listar')},
+            {'nombre': 'Crear Ubicación', 'url': reverse_lazy('app:ubicacion_crear')},
+        ]
+        
         return context
-
     def form_valid(self, form):
         form.save()
         return JsonResponse({

@@ -17,6 +17,11 @@ class DetalleVentaListView(LoginRequiredMixin,ListView):
         context['titulo'] = 'Listado de Detalles de Ventas'
         context['entidad'] = 'Detalle de Venta'
         context['crear_url'] = reverse_lazy('app:detalleventa_crear')
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Detalle Venta', 'url': reverse_lazy('app:detalleventa_listar')},
+        ]
         return context
 
 
@@ -34,6 +39,13 @@ class VentaDetalleCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Detalles de Venta'
         context['listar_url'] = reverse('app:venta_listar')
         context['productos'] = Stock.objects.all()  # Obtener todos los productos
+             # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Detalle Venta', 'url': reverse_lazy('app:detalleventa_listar')},
+            
+        ]
+        
         return context
 
     def form_valid(self, form):
@@ -112,6 +124,13 @@ class DetalleVentaUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Actualizar Detalle de Venta'
         context['entidad'] = 'Detalle de Venta'
         context['listar_url'] = reverse_lazy('app:detalleventa_listar')
+        # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Detalle Venta', 'url': reverse_lazy('app:detalleventa_listar')},
+            {'nombre': 'Detalle Venta Editar', 'url': reverse_lazy('app:detalleventa_editar', args=[self.object.pk])},
+        ]
+
         return context
     
     def form_valid(self, form):

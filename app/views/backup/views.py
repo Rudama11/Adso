@@ -5,8 +5,9 @@ from django.http import JsonResponse
 from django.conf import settings
 import subprocess
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
-@login_required
+# Vista para realizar el backup de la base de datos
 @login_required
 def backup_view(request):
     # Definir la ruta donde se almacenan los archivos de backup
@@ -38,6 +39,7 @@ def backup_view(request):
     }
 
     return render(request, 'backup.html', contexto)
+
 
 
 @login_required  # Solo los usuarios autenticados pueden crear un backup
@@ -73,7 +75,10 @@ def backup_database(request):
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': f"Error al crear la copia de seguridad: {e}"})
 
+
+
 @login_required  # Solo los usuarios autenticados pueden restaurar la base de datos
+@user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def restore_database(request):
     if request.method == 'POST':
         # Obtener el nombre del archivo desde el formulario
@@ -117,7 +122,10 @@ def restore_database(request):
     else:
         return JsonResponse({'status': 'error', 'message': "Error al restaurar la base de datos."})
 
+
+
 login_required  # Solo los usuarios autenticados pueden eliminar archivos
+@user_passes_test(lambda u: u.is_superuser or u.is_staff)
 def delete_backup(request):
     if request.method == 'POST':
         archivo = request.POST.get('archivo')

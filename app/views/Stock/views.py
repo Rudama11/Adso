@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from app.models import Stock
 from app.forms import StockFilterForm
@@ -36,4 +37,9 @@ class StockListView(LoginRequiredMixin,ListView):
         context['titulo'] = 'Listado de Stocks'
         context['entidad'] = 'Stocks'
         context['form'] = StockFilterForm(self.request.GET or None)  # Agregamos el formulario de filtros
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Modulo Stock', 'url': reverse_lazy('app:listar_stock')},
+        ]
         return context

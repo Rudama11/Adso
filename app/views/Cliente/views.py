@@ -20,8 +20,13 @@ class ClienteListView(LoginRequiredMixin,ListView):
         context['crear_url'] = reverse_lazy('app:cliente_crear')
         context['tipo_documento'] = Tipo_Documento_Choices
         context['tipo_persona'] = Tipo_Persona_Choices
+       # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/dashboard'},
+            {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},
+        ]
         return context
-
+    
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -70,8 +75,14 @@ class ClienteCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
+           # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/'},
+            {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},
+            {'nombre': 'Crear Cliente', 'url': reverse_lazy('app:cliente_crear')},
+        ]
+        
         return context
-
     def form_valid(self, form):
         form.save()
         return JsonResponse({
@@ -95,6 +106,13 @@ class ClienteUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
+               # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulo', 'url': '/dashboard'},
+            {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},
+            {'nombre': 'Editar Cliente', 'url': reverse_lazy('app:cliente_editarCli', args=[self.object.pk])},
+        ]
+
         return context
 
     def form_valid(self, form):

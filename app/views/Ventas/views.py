@@ -42,7 +42,13 @@ class VentasListView(LoginRequiredMixin,ListView):
         context['titulo'] = 'Listado de Venta'
         context['entidad'] = 'Ventas'
         context['crear_url'] = reverse_lazy('app:venta_crear')  
+         # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Ventas', 'url': reverse_lazy('app:venta_listar')},
+        ]
         return context
+    
     
     
 # Vista para crear una nueva venta
@@ -58,6 +64,13 @@ class VentasCreateView(LoginRequiredMixin, CreateView):
         context['titulo'] = 'Crear Venta'
         context['entidad'] = 'Venta'
         context['listar_url'] = self.success_url  
+           # Agregar breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Ventas', 'url': reverse_lazy('app:venta_listar')},
+            {'nombre': 'Crear Ventas', 'url': reverse_lazy('app:venta_crear')},
+        ]
+        
         return context
 
     def form_valid(self, form):
@@ -108,7 +121,15 @@ class VentasUpdateView(LoginRequiredMixin, UpdateView):
         context['titulo'] = 'Actualizar Venta'
         context['entidad'] = 'Ventas'
         context['listar_url'] = reverse_lazy('app:venta_listar')  
+         # Añadir breadcrumbs
+        context['breadcrumbs'] = [
+            {'nombre': 'Modulos', 'url': '/dashboard'},
+            {'nombre': 'Ventas', 'url': reverse_lazy('app:venta_listar')},
+            {'nombre': 'Editar Ventas', 'url': reverse_lazy('app:venta_editar', args=[self.object.pk])},
+        ]
+
         return context
+
     
     def form_valid(self, form):
         # Guardar el formulario como está, ya que la validación se realiza en el formulario
