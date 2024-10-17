@@ -52,18 +52,30 @@
                                 <form id="restore-form" method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="backup_file" value="{{ archivo.nombre }}">
+                                    {% if request.user.is_superuser or request.user.is_staff %}
                                     <button type="submit" class="btn btn-primary btn-sm" title="Restaurar">
                                         <i class="fas fa-undo"></i>
                                     </button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-primary btn-sm disabled" title="No tienes permiso para restaurar">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                {% endif %}
                                 </form>
 
                                 <!-- Formulario para eliminar -->
                                 <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="archivo" value="{{ archivo.nombre }}">
+                                    {% if request.user.is_superuser or request.user.is_staff %}
                                     <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm disabled" title="No tienes permiso para eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                {% endif %}
                                 </form>
                             </td>
                         </tr>
