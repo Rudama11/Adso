@@ -1,0 +1,219 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/dataTables-bs4/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/adminlte-3.2.0/datatables-responsive/css/responsive.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/respaldo/backup.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<title>Backup de Base de Datos</title>
+<link rel="stylesheet" href="{% static 'lib/sweetalert2/sweetalert2.min.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="backup-container">
+    <div class="backup-header">
+        <h1>Copia de Seguridad de la Base de Datos</h1>
+    </div>
+    
+    <!-- Sección para crear una nueva copia de seguridad -->
+    <div class="backup-form">
+        <div class="form-section backup-section">
+            <h2>Crear copia de seguridad</h2>
+            <form id="backup-form" method="POST" action="{% url 'app:respaldo' %}">
+                {% csrf_token %}
+                <button type="submit" class="backup-button" id="create-backup-button">Crear</button>
+            </form>
+        </div>
+
+        <!-- Sección de restauración -->
+        <div class="form-section">
+            <h2 style="text-align: center;">Archivos disponibles de copia de seguridad</h2>
+            <br>
+            <div class="table-responsive">
+                <table id="tabla" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Archivos</th>
+                            <th scope="col">Fecha de creación</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if archivos_backup %}
+                        {% for archivo in archivos_backup %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="/backups/{{ archivo.nombre }}" download>{{ archivo.nombre }}</a></td>
+                            <td>{{ archivo.fecha_creacion }}</td>
+                            <td>
+                                <!-- Formulario para restaurar -->
+                                <form id="restore-form" method="POST" action="{% url 'app:restauracion' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="backup_file" value="{{ archivo.nombre }}">
+                                    {% if request.user.is_superuser or request.user.is_staff %}
+                                    <button type="submit" class="btn btn-primary btn-sm" title="Restaurar">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-primary btn-sm disabled" title="No tienes permiso para restaurar">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                {% endif %}
+                                </form>
+
+                                <!-- Formulario para eliminar -->
+                                <form method="POST" action="{% url 'app:eliminar_archivo' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="archivo" value="{{ archivo.nombre }}">
+                                    {% if request.user.is_superuser or request.user.is_staff %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-danger btn-sm disabled" title="No tienes permiso para eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="4">No hay archivos de copia de seguridad disponibles.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Variables JS para backup y restauración -->
+<script>
+    const backupUrl = "{% url 'app:respaldo' %}";
+    const restoreUrl = "{% url 'app:restauracion' %}";
+</script>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'lib/adminlte-3.2.0/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/adminlte-3.2.0/dataTables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script src="{% static 'js/respaldo/backup.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const backupform = document.querySelectorAll('form[action="{% url "app:respaldo" %}"]');
+        const restoreForms = document.querySelectorAll('form[action="{% url "app:restauracion" %}"]');
+        const deleteForms = document.querySelectorAll('form[action="{% url "app:eliminar_archivo" %}"]');
+
+        // Manejo de la creación de backup
+        backupform.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        Swal.fire({
+                            title: data.status === 'success' ? 'Creación exitosa' : 'Error',
+                            text: data.message,
+                            icon: data.status === 'success' ? 'success' : 'error'
+                        }).then(() => {
+                            if (data.status === 'success') {
+                                location.reload();
+                            }
+                        });
+                    });
+            });
+        });
+
+        // Manejo de la restauración con confirmación
+        restoreForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        Swal.fire({
+                            title: data.status === 'success' ? 'Restauración exitosa' : 'Error',
+                            text: data.message,
+                            icon: data.status === 'success' ? 'success' : 'error'
+                        }).then(() => {
+                            if (data.status === 'success') {
+                                location.reload();  // Recargar la página
+                            }
+                        });
+                    });
+            });
+        });
+
+        // Manejo de eliminación con SweetAlert2
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const archivoNombre = form.querySelector('input[name="archivo"]').value;
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: `¿Deseas eliminar el archivo "${archivoNombre}"?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const formData = new FormData(this);
+                        fetch(this.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        }).then(response => response.json())
+                            .then(data => {
+                                Swal.fire({
+                                    title: data.status === 'success' ? 'Eliminado' : 'Error',
+                                    text: data.message,
+                                    icon: data.status === 'success' ? 'success' : 'error'
+                                }).then(() => {
+                                    if (data.status === 'success') {
+                                        location.reload();  // Recargar la página
+                                    }
+                                });
+                            });
+                    }
+                });
+            });
+        });
+
+        // Inicializar DataTables
+        $(document).ready(function () {
+            $('#tabla').DataTable({
+                "order": [[0, "asc"]],
+                "language": {
+                    "url": "{% static 'lib/adminlte-3.2.0/datatables/Spanish.json' %}"  // Traducción al español
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,243 @@
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+
+<form method="post" action="." id="createForm">
+    <div class="card card-default">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-plus"></i>  <!-- Icono de agregar -->
+                Crear Usuario
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ field.errors|striptags }}
+                </div>
+                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div>
+            </div>
+            {% endfor %}
+            <!-- Mensaje de error de coincidencia de contraseñas -->
+            <div class="invalid-feedback" id="passwordMismatch" style="display:none;">Las contraseñas no coinciden.</div>
+
+            <!-- Contenedor para los requisitos de la contraseña -->
+            <div id="password-requirements" style="margin-top: 20px;">
+                <h5>Requisitos de la contraseña:</h5>
+                <ul id="requirements-list" style="list-style: none; padding-left: 0;">
+                    <li id="length-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Tener entre 8 a 15 caracteres</li>
+                    <li id="uppercase-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos una letra mayúscula</li>
+                    <li id="lowercase-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos una letra minúscula</li>
+                    <li id="number-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos un número</li>
+                    <li id="special-char-requirement"><span class="status" style="color: rgb(221, 221, 221);"><i class="fas fa-circle fa-xs"></i></span> Al menos un carácter especial (ej. !@#$%^&*)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Confirmar
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script>
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault(); 
+
+        // Validación de campos vacíos
+        let isValid = true;
+        let formFields = document.querySelectorAll('#createForm .form-control');
+        let password1 = document.querySelector('[name="password"]');
+        let password2 = document.querySelector('[name="confirm_password"]');
+        let passwordMismatchFeedback = document.getElementById('passwordMismatch');
+
+        formFields.forEach(function(field) {
+            let feedback = field.parentNode.querySelector('.mandatory-feedback');
+            if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
+            } else {
+                field.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+
+        // Validación de coincidencia de contraseñas
+        if (password1.value !== password2.value) {
+            isValid = false;
+            password1.classList.add('is-invalid');
+            password2.classList.add('is-invalid');
+            passwordMismatchFeedback.style.display = 'block';
+        } else {
+            password1.classList.remove('is-invalid');
+            password2.classList.remove('is-invalid');
+            passwordMismatchFeedback.style.display = 'none';
+        }
+
+        // Validación de caracteres permitidos en el nombre de usuario y nombres
+        let usernameField = document.querySelector('[name="username"]');
+        let nombresField = document.querySelector('[name="nombres"]');
+        
+        if (!/^[a-zA-Z0-9-_]+$/.test(usernameField.value)) {
+            isValid = false;
+            usernameField.classList.add('is-invalid');
+            usernameField.parentNode.querySelector('.invalid-feedback').innerHTML = 'El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.';
+        }
+
+        if (!/^[a-zA-Z\s]+$/.test(nombresField.value)) {
+            isValid = false;
+            nombresField.classList.add('is-invalid');
+            nombresField.parentNode.querySelector('.invalid-feedback').innerHTML = 'Los nombres solo pueden contener letras.';
+        }
+
+        if (!isValid) {
+            Swal.fire({
+                title: 'Campo vacío o error de contraseña',
+                text: 'Debe llenar todos los campos de registro y asegurarse de que las contraseñas coincidan.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 3000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
+            });
+            return; // Detiene la ejecución si hay campos vacíos
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('createForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Creado Correctamente',
+                    text: `El usuario ha sido creado exitosamente.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    window.location.href = "{% url 'app:usuario_listar' %}"; // Redirigir al listado
+                });
+            }
+        })
+        .catch(data => {
+            // Mostrar alerta de error
+            const errorMessage = data.message;
+            const specificErrors = data.errors; 
+            // Si hay errores específicos, los recopilamos en un solo mensaje
+            let detailedMessages = [];
+        
+            if (specificErrors) {
+                if (specificErrors.username) {
+                    detailedMessages.push(specificErrors.username[0]); // Agregar mensaje de nombre
+                }
+                if (specificErrors.email) {
+                    detailedMessages.push(specificErrors.email[0]); // Agregar mensaje de email
+                }
+                if (specificErrors.password) {
+                    detailedMessages.push(specificErrors.password[0]); // Agregar mensaje de contraseña
+                }
+            }
+        
+            // Unimos los mensajes detallados con saltos de línea HTML
+            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+        
+            // Si hay mensajes detallados, los mostramos junto con el mensaje genérico
+            Swal.fire({
+                title: 'Inválido',
+                html: detailedMessage || errorMessage, // Usamos 'html' en lugar de 'text' para soportar saltos de línea
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+        
+            // Resaltar los campos con errores
+            if (specificErrors) {
+                Object.keys(specificErrors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = specificErrors[key][0];
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    // Validación en tiempo real de la contraseña
+    document.querySelector('[name="password"]').addEventListener('input', function() {
+        const password = this.value;
+        const requirements = {
+            length: password.length >= 8 && password.length <= 15,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            specialChar: /[!@#$%^&*]/.test(password),
+        };
+
+        // Actualizar el estado de los requisitos
+        document.getElementById('length-requirement').querySelector('.status').innerHTML = requirements.length ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('uppercase-requirement').querySelector('.status').innerHTML = requirements.uppercase ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('lowercase-requirement').querySelector('.status').innerHTML = requirements.lowercase ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('number-requirement').querySelector('.status').innerHTML = requirements.number ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+        document.getElementById('special-char-requirement').querySelector('.status').innerHTML = requirements.specialChar ? '<i class="fas fa-check" style="color: green;"></i>' : '<i class="fas fa-circle" style="color: grey;"></i>';
+    });
+</script>
+
+{% endblock %}

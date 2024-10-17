@@ -1,0 +1,206 @@
+{% extends 'listar.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+
+<form method="post" action="." id="editForm">
+    <div class="card card-default">
+        <!-- Sección de Breadcrumbs -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-edit"></i> <!-- Icono de edición -->
+                Editar {{ entidad }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% csrf_token %}
+            <div id="alert-container"></div>
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                <div class="invalid-feedback">
+                    {{ field.errors|striptags }}
+                </div>
+                <div class="mandatory-feedback" style="display:none; color: red;">Este campo es obligatorio</div> <!-- Mensaje de campo obligatorio -->
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-success" id="confirmButton">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</form>
+
+<script src="{% static 'lib/sweetalert2/sweetalert2.all.min.js' %}"></script>
+<script>
+    // Almacenar los valores originales
+    let originalValues = {};
+    document.querySelectorAll('#editForm input, #editForm textarea').forEach(field => {
+        originalValues[field.name] = field.value;
+    });
+
+    document.getElementById('confirmButton').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Validación de campos vacíos
+        let isValid = true;
+        let formFields = document.querySelectorAll('#editForm .form-control');
+
+        formFields.forEach(function(field) {
+            let feedback = field.parentNode.querySelector('.mandatory-feedback');
+            if (field.value.trim() === '') {
+                isValid = false;
+                field.classList.add('is-invalid');
+                feedback.style.display = 'block'; // Mostrar mensaje de campo obligatorio
+            } else {
+                field.classList.remove('is-invalid');
+                feedback.style.display = 'none'; // Ocultar mensaje si el campo es válido
+            }
+        });
+
+        if (!isValid) {
+            Swal.fire({
+                title: 'Campo vacío',
+                text: 'Debe llenar todos los campos de registro',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                timer: 3000,
+                timerProgressBar: true,
+                position: 'center',
+                allowOutsideClick: true,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                stopKeydownPropagation: false,
+                buttonsStyling: true,
+                showCloseButton: true,
+                closeButtonAriaLabel: 'Cerrar alerta',
+            });
+            return;
+        }
+
+        // Comprobar si hay cambios
+        let hasChanges = false;
+        for (let name in originalValues) {
+            let currentField = document.querySelector(`[name="${name}"]`);
+            if (currentField && currentField.value !== originalValues[name]) {
+                hasChanges = true;
+                break;
+            }
+        }
+
+        if (!hasChanges) {
+            Swal.fire({
+                title: 'Sin Cambios',
+                text: 'No se han realizado cambios en el formulario. Por favor, edite un campo antes de guardar.',
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+                backdrop: true,
+                position: 'center',
+                allowOutsideClick: true,
+                buttonsStyling: true,
+            });
+            return;
+        }
+
+        // Obtener los datos del formulario
+        let formData = new FormData(document.getElementById('editForm'));
+
+        // Enviar los datos mediante AJAX
+        fetch(".", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Actualizado Correctamente',
+                    text: `El producto ha sido actualizado exitosamente.`,
+                    icon: 'success',
+                    confirmButtonText: 'Continuar',
+                    backdrop: true,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    position: 'center',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                    stopKeydownPropagation: false,
+                    buttonsStyling: true,
+                    showCloseButton: true,
+                    closeButtonAriaLabel: 'Cerrar alerta',
+                }).then(() => {
+                    window.location.href = "{{ listar_url }}"; // Redirigir al listado de productos
+                });
+            }
+        })
+        .catch(data => {
+            // Mostrar alerta de error
+            const errorMessage = data.message;
+            const specificErrors = data.errors; // Obtenemos errores específicos
+
+            let detailedMessages = [];
+            if (specificErrors) {
+                if (specificErrors.nombre) {
+                    detailedMessages.push(specificErrors.nombre[0]); // Agregar mensaje de nombre
+                }
+                if (specificErrors.categoria) {
+                    detailedMessages.push(specificErrors.categoria[0]); // Agregar mensaje de categoría
+                }
+                if (specificErrors.tipo_pro) {
+                    detailedMessages.push(specificErrors.tipo_pro[0]); // Agregar mensaje de tipo de producto
+                }
+            }
+
+            let detailedMessage = detailedMessages.length > 0 ? detailedMessages.join('<br>') : '';
+
+            Swal.fire({
+                title: 'Inválido',
+                html: detailedMessage || errorMessage,
+                icon: 'warning',
+                confirmButtonText: 'Aceptar',
+            });
+
+            if (specificErrors) {
+                Object.keys(specificErrors).forEach(function(key) {
+                    let field = document.querySelector(`[name=${key}]`);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        let errorDiv = field.parentNode.querySelector('.invalid-feedback');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = specificErrors[key][0];
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{% endblock %}
