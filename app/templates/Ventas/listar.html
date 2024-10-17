@@ -1,7 +1,5 @@
 {% extends 'listar.html' %}
-
 {% load static %}
-
 {% block filtro_form_contenido %}
 <form method="GET" action="{% url 'app:venta_listar' %}">
     <div class="row">
@@ -14,7 +12,6 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label for="fecha_emision">Fecha de Emisión</label>
-                <!-- Cambiamos el tipo de input a 'date' -->
                 <input type="date" class="form-control" id="fecha_emision" name="fecha_emision" value="{{ fecha_emision }}">
             </div>
         </div>
@@ -46,12 +43,29 @@
     <td>{{ v.fecha_emision }}</td>
     <td>{{ v.cliente.nombres }}</td>
     <td>
+        <!-- Botón para editar la venta -->
         <a href="{% url 'app:venta_editar' v.pk %}" class="btn btn-info btn-sm" title="Editar venta">
             <i class="fas fa-edit"></i>
         </a>
+
+        <!-- Botón para agregar detalles a la venta -->
         <a href="{% url 'app:detalle_venta' venta_id=v.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Agregar detalles">
             <i class="fas fa-plus"></i>
         </a>
+
+        <!-- Botón para cambiar el estado de la venta (editable <-> bloqueado) -->
+        <form method="post" action="{% url 'app:cambiar_estado_venta' v.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm" 
+                {% if v.estado == 'editable' %}
+                    style="background-color: #ffc107; color: white;" title="Bloquear venta">
+                    <i class="fas fa-lock"></i> Bloquear
+                {% else %}
+                    style="background-color: #28a745; color: white;" title="Desbloquear venta">
+                    <i class="fas fa-unlock"></i> Desbloquear
+                {% endif %}
+            </button>
+        </form>
     </td>
 </tr>
 {% endfor %}

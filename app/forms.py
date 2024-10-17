@@ -572,6 +572,7 @@ class VentaForm(forms.ModelForm):
         num_factura = self.cleaned_data.get('num_factura')
         if num_factura and len(num_factura) < 3:
             raise forms.ValidationError('El número de factura debe tener al menos 3 caracteres y un máximo de 20.')
+        
         # Validación de unicidad
         if Venta.objects.filter(num_factura=num_factura).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('Ya existe una venta con este número de factura.')
@@ -594,7 +595,7 @@ class VentaForm(forms.ModelForm):
 
     class Meta:
         model = Venta
-        fields = ['num_factura', 'fecha_emision', 'cliente']  # Especifica los campos a incluir
+        fields = ['num_factura', 'fecha_emision', 'cliente']  # No se incluyen total_venta y estado
         widgets = {
             'num_factura': forms.TextInput(attrs={'placeholder': 'Ingrese un número de factura', 'class': 'form-control'}),
             'fecha_emision': forms.DateInput(attrs={'placeholder': 'Seleccione la fecha de emisión', 'class': 'form-control', 'type': 'date'}),
@@ -626,7 +627,6 @@ class VentaEditForm(forms.ModelForm):
             raise forms.ValidationError('El número de factura solo puede contener letras, números y guiones.')
         
         return num_factura
-
 
 
 #----------------------------------------------------- Detalle Ventas ---------------------------------------------------------

@@ -87,7 +87,7 @@
                     </div>
                     <!-- Total -->
                     <div class="form-group">
-                        <label for="id_total">Total</label>
+                        <label for="id_total">Subtotal</label>
                         <input type="number" id="id_total" name="total" class="form-control" readonly>
                     </div>
                     <!-- Tabla de Detalles de Venta -->
@@ -99,7 +99,7 @@
                                     <th>Cantidad</th>
                                     <th>Precio Unitario</th>
                                     <th>IVA</th>
-                                    <th>Total</th>
+                                    <th>Subtotal</th>
                                 </tr>
                             </thead>
                             <tbody id="detalleVentaBody">
@@ -120,16 +120,25 @@
                         </table>
                     </div>
                 </div>
+                <!-- Total General -->
+                <div class="form-group">
+                    <label>Total General</label>
+                    <input type="number" id="total_general" class="form-control" value="0" readonly>
+                </div>
+
                 <!-- Footer -->
                 <div class="card-footer">
-                    <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();">
+                    <button type="button" class="btn btn-primary print-hidden" onclick="agregarDetalle();" 
+                        {% if venta.estado == 'bloqueado' %} disabled {% endif %}>
                         <i class="fas fa-plus"></i> Agregar producto
                     </button>
+
+
                     <button type="button" class="btn btn-success print-hidden" onclick="window.print();">
                         <i class="fas fa-print"></i> Imprimir factura
                     </button>
                     <a href="{{ listar_url }}" class="btn btn-danger custom-btn print-hidden">
-                        <i class="fas fa-times"></i> Cancelar
+                        <i class="fas fa-times"></i> cerrar
                     </a>
                 </div>
             </form>
@@ -151,6 +160,16 @@
 
         const total = (cantidad * precio) * (1 + (iva / 100));
         document.getElementById('id_total').value = total.toFixed(2);
+    }
+
+    function actualizarTotalGeneral() {
+        let totalGeneral = 0;
+        const filas = document.querySelectorAll('#detalleVentaBody .fila-detalle');
+        filas.forEach(fila => {
+            const subtotal = parseFloat(fila.cells[4].innerText) || 0; // Cambiado a la columna del subtotal
+            totalGeneral += subtotal;
+        });
+        document.getElementById('total_general').value = totalGeneral.toFixed(2);
     }
 
     function agregarDetalle() {
@@ -259,6 +278,31 @@
             if (data.success) {
                 console.log('Detalle de venta creado con ID:', data.detalle_venta);
                 mostrarMensajeExito('Producto agregado exitosamente.'); // Mostrar mensaje de éxito
+                // Después de agregar el detalle de la venta, actualizar el total de la venta
+                fetch('/actualizar-total-venta/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: new URLSearchParams({
+                        'venta_id': ventaId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Total de venta actualizado:', data.total);
+                        // Actualizar la UI si es necesario
+                    } else {
+                        console.error('Error al actualizar el total de la venta');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+    
                 // Recargar la página para mostrar los cambios
                 setTimeout(() => location.reload(), 2000); // Esperar 2 segundos antes de recargar
             } else {
@@ -270,6 +314,8 @@
             console.error('Error en la solicitud:', error);
             mostrarMensajeError('Error inesperado en la solicitud.');
         });
+    
+        actualizarTotalGeneral();
     }
     
     function mostrarMensajeExito(mensaje) {
@@ -289,6 +335,20 @@
             confirmButtonText: 'Aceptar'
         });
     }
+    // Llama a actualizarTotalGeneral al cargar la página para mostrar el total inicial
+    document.addEventListener('DOMContentLoaded', actualizarTotalGeneral);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const estadoVenta = '{{ venta.estado }}';
+        const agregarBtn = document.querySelector('.btn.btn-primary.print-hidden');
+        
+        // Si el estado es 'bloqueado', deshabilitar el botón de agregar producto
+        if (estadoVenta === 'bloqueado') {
+            agregarBtn.disabled = true;
+            agregarBtn.title = "La venta está bloqueada. No se pueden agregar más productos.";
+        }
+    });
+    
 </script>
 
 <style>

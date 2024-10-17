@@ -42,6 +42,7 @@ urlpatterns = [
     path('compras/crear/', ComprasCreateView.as_view(), name='compras_crear'),
     path('compras/editar/<int:pk>/', ComprasUpdateView.as_view(), name='compras_editar'),
     path('obtener-datos-proveedor/', obtener_datos_proveedor, name='obtener_datos_proveedor'),
+    path('compras/<int:compra_id>/cambiar-estado/', cambiar_estado_compra, name='cambiar_estado_compra'),
     
     
         #-------------------------------------------------- Dcompras --------------------------------------------------------
@@ -101,6 +102,7 @@ urlpatterns = [
     path('ventas/listar/', VentasListView.as_view(), name='venta_listar'),
     path('ventas/crear/', VentasCreateView.as_view(), name='venta_crear'),
     path('ventas/editar/<int:pk>/', VentasUpdateView.as_view(), name='venta_editar'),
+    path('cambiar-estado-venta/<int:venta_id>/',cambiar_estado_venta, name='cambiar_estado_venta'),
 
     #-------------------------------------------------- Dventas ---------------------------------------------------
     
