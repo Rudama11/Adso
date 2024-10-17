@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404,render
 from django.utils.dateparse import parse_date
 from app.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect
 
 class ComprasListView(LoginRequiredMixin,ListView):
     model = Compras
@@ -146,3 +147,19 @@ def compra_detalle(request, num_factura):
         'detalles_compra': detalles_compra,  # Pasamos los detalles de la compra al contexto
     }
     return render(request, 'Compras/CompraD.html', context)
+
+def cambiar_estado_compra(request, compra_id):
+    # Obtener la compra
+    compra = get_object_or_404(Compras, id=compra_id)
+    
+    # Cambiar el estado de "editable" a "bloqueado" y viceversa
+    if compra.estado == 'editable':
+        compra.estado = 'bloqueado'
+    else:
+        compra.estado = 'editable'
+    
+    # Guardar el cambio en la base de datos
+    compra.save()
+    
+    # Redirigir a la lista de compras
+    return redirect('app:compras_listar')  

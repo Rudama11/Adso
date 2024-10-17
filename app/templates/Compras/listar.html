@@ -62,12 +62,26 @@
     <td>{{ com.fecha_compra }}</td>
     <td>{{ com.proveedor }}</td>
     <td>
+        <!-- Botón para editar la compra -->
         <a href="{% url 'app:compras_editar' com.id %}" class="btn btn-info btn-sm" title="Editar compra">
             <i class="fas fa-edit"></i>
         </a>
+
+        <!-- Botón para ver los detalles de la compra -->
         <a href="{% url 'app:detalle_compra' compra_id=com.id %}" class="btn btn-sm" style="background-color: #23853a; color: white;" title="Detalle Compra">
             <i class="fas fa-plus"></i>
         </a>
+
+        <!-- Botón para cambiar el estado de la compra -->
+        {% if com.estado == 'editable' %}
+            <a href="{% url 'app:cambiar_estado_compra' com.id %}" class="btn btn-warning btn-sm" title="Bloquear compra">
+                <i class="fas fa-lock"></i> Bloquear
+            </a>
+        {% else %}
+            <a href="{% url 'app:cambiar_estado_compra' com.id %}" class="btn btn-success btn-sm" title="Desbloquear compra">
+                <i class="fas fa-unlock"></i> Desbloquear
+            </a>
+        {% endif %}
     </td>
 </tr>
 {% endfor %}

@@ -1,10 +1,12 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView
-from app.models import Venta, Cliente
+from app.models import Venta, Cliente,  DetalleVenta
 from app.forms import VentaForm,VentaEditForm
 from django.utils.dateparse import parse_date
 from app.mixins import LoginRequiredMixin
+from django.views import View
+from django.shortcuts import get_object_or_404, redirect
 
 # Vista para listar ventas
 class VentasListView(LoginRequiredMixin,ListView):
@@ -50,7 +52,7 @@ class VentasListView(LoginRequiredMixin,ListView):
     
     
 # Vista para crear una nueva venta
-class VentasCreateView(LoginRequiredMixin,CreateView):
+class VentasCreateView(LoginRequiredMixin, CreateView):
     model = Venta
     form_class = VentaForm
     template_name = 'Ventas/crear.html'
@@ -72,7 +74,15 @@ class VentasCreateView(LoginRequiredMixin,CreateView):
         return context
 
     def form_valid(self, form):
-        form.save()
+        # Crear la instancia de Venta, pero no guardar aún
+        venta = form.save(commit=False)
+        
+        # Establecer valores predeterminados para total_venta y estado
+        venta.estado = 'editable'  # O el valor que desees establecer
+
+        # Guardar la venta
+        venta.save()
+        
         return JsonResponse({
             'success': True,
             'message': 'Venta creada exitosamente',
@@ -82,6 +92,22 @@ class VentasCreateView(LoginRequiredMixin,CreateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
+
+def cambiar_estado_venta(request, venta_id):
+    # Obtener la venta
+    venta = get_object_or_404(Venta, id=venta_id)
+    
+    # Cambiar el estado de "editable" a "bloqueado" y viceversa
+    if venta.estado == 'editable':
+        venta.estado = 'bloqueado'
+    else:
+        venta.estado = 'editable'
+    
+    # Guardar el cambio en la base de datos
+    venta.save()
+    
+    # Redirigir a la lista de ventas o a donde prefieras
+    return redirect('app:venta_listar')  # Asumiendo que tienes una vista llamada 'lista_ventas'
 
 # Vista para actualizar una venta existente
 class VentasUpdateView(LoginRequiredMixin, UpdateView):
@@ -118,3 +144,4 @@ class VentasUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
         return super().form_invalid(form)
+

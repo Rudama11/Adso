@@ -189,10 +189,16 @@ class Producto(models.Model):
 
 #----------------------------------------------- Compras -----------------------------------------------
 class Compras(models.Model):
+    ESTADO_CHOICES = [
+        ('editable', 'Editable'),
+        ('bloqueado', 'Bloqueado'),
+    ]
+
     num_factura = models.CharField(max_length=20, verbose_name='Número de Factura')  # Clave primaria
     fecha_compra = models.DateField(verbose_name='Fecha de Compra')  # Cambiado a DateField
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
-    
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='editable')
+
     def __str__(self):
         return f'Factura {self.num_factura}'
 
@@ -248,6 +254,11 @@ class Venta(models.Model):
     num_factura = models.CharField(max_length=10, unique=True)  # Ahora es único
     fecha_emision = models.DateField(verbose_name='Fecha de emisión', editable=True)  # Cambiado a DateField
     cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
+    ESTADO_CHOICES = [
+        ('editable', 'Editable'),
+        ('bloqueado', 'Bloqueado'),
+    ]
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='editable')  # Campo estado con opciones
 
     def __str__(self):
         return f'Factura {self.num_factura} - Cliente: {self.cliente.nombre}'
@@ -256,6 +267,7 @@ class Venta(models.Model):
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
         db_table = 'Venta'
+
 #----------------------------------------------- Detalle Venta -----------------------------------------------
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='detalles')
