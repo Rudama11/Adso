@@ -51,7 +51,6 @@ urlpatterns = [
     path('detalle-compras/crear/', DetalleCompraCreateView.as_view(), name='detallecompra_crear'),
     path('detalle-compras/editar/<int:pk>/', DetalleCompraUpdateView.as_view(), name='detallecompra_editar'),
     path('detalle-compras/eliminar/<int:id_compraD>/', DetalleCompraListView.EliminarComprasD,name='detallecompra_eliminar'),
-    # path('obtener-datos-producto/', obtener_datos_producto, name='obtener_datos_producto'),
     path('compras/detalles/<int:compra_id>/', DetalleCompraCreateView.as_view(), name='detalle_compra'),
     
     

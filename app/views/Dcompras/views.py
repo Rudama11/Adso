@@ -19,7 +19,7 @@ class DetalleCompraListView(LoginRequiredMixin,ListView):
         context['entidad'] = 'Detalle de Compra'
         context['crear_url'] = reverse_lazy('app:detallecompra_crear')
         context['request'] = self.request
-         # Agregar breadcrumbs
+        # Agregar breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Modulos', 'url': '/dashboard'},
             {'nombre': 'Detalle compra', 'url': reverse_lazy('app:detallecompra_listar')},
@@ -48,7 +48,7 @@ class DetalleCompraCreateView(LoginRequiredMixin,CreateView):
 
         # Cargar productos
         context['productos'] = Producto.objects.all()  # Agrega esta línea para cargar los productos
-         # Agregar breadcrumbs
+        # Agregar breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Modulos', 'url': '/dashboard'},
             {'nombre': 'Detalle Compras', 'url': reverse_lazy('app:detallecompra_listar')},
@@ -149,7 +149,7 @@ class DetalleCompraUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Detalle de Compra'
         context['entidad'] = 'Detalle de Compra'
         context['listar_url'] = reverse_lazy('app:detallecompra_listar')
-       # Añadir breadcrumbs
+        # Añadir breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Inicio', 'url': '/'},
             {'nombre': 'Detalle Compra', 'url': reverse_lazy('app:detallecompra_listar')},

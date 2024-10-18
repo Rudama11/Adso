@@ -30,6 +30,15 @@
 {% block contenido %}
 <div class="card card-default">
     <div class="card-header">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li class="breadcrumb-item">
+                        <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
         <h3 class="card-title">
             <i class="fas fa-box" style="margin-right: 5px;"></i>
             {{ titulo }}

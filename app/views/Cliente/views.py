@@ -20,7 +20,7 @@ class ClienteListView(LoginRequiredMixin,ListView):
         context['crear_url'] = reverse_lazy('app:cliente_crear')
         context['tipo_documento'] = Tipo_Documento_Choices
         context['tipo_persona'] = Tipo_Persona_Choices
-       # Agregar breadcrumbs
+        # Agregar breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Modulo', 'url': '/dashboard'},
             {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},
@@ -75,7 +75,7 @@ class ClienteCreateView(LoginRequiredMixin,CreateView):
         context['titulo'] = 'Crear Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
-           # Agregar breadcrumbs
+        # Agregar breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Modulo', 'url': '/'},
             {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},
@@ -106,7 +106,7 @@ class ClienteUpdateView(LoginRequiredMixin,UpdateView):
         context['titulo'] = 'Editar Cliente'
         context['entidad'] = 'Cliente'
         context['listar_url'] = reverse_lazy('app:cliente_listar')
-               # Añadir breadcrumbs
+        # Añadir breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Modulo', 'url': '/dashboard'},
             {'nombre': 'Cliente', 'url': reverse_lazy('app:cliente_listar')},

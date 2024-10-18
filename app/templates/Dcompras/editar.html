@@ -3,6 +3,15 @@
 {% load static %}
 {% block contenidoDC %}
 <form method="post" id="detalleCompraFormEdit" action="{% url 'app:compraD_editar' detalle.id %}">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {% for breadcrumb in breadcrumbs %}
+                <li class="breadcrumb-item">
+                    <a href="{{ breadcrumb.url }}">{{ breadcrumb.nombre }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
     {% csrf_token %}
 
     <div class="form-group">
