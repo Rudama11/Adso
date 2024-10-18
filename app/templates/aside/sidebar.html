@@ -23,44 +23,59 @@
                 
                 <!-- Menú desplegable para Gestión de Inventario -->
                 <li class="nav-item has-treeview {% if 'categoria' in request.path or 'tipo' in request.path or 'producto' in request.path or 'stock' in request.path or 'normativa' in request.path %} menu-open {% endif %}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-boxes" style="color: #eee600;"></i>
-                        <p style="color: #fff;"><b>Gestión de Inventario</b></p>
+                    <a href="#" class="nav-link" style="display: flex; align-items: center;">
+                        <i class="nav-icon fas fa-boxes" style="color: #eee600; margin-right: 15px;"></i>
+                        <p style="color: #fff; font-size: 15px; margin-right: auto;"><b>Gestión de Inventario</b></p>
+                        <!-- Flecha indicadora que rota al abrir/cerrar el menú -->
+                        <i class="fas fa-angle-right arrow {% if 'menu-open' in request.path %} rotate-arrow {% endif %}" style="color: #fff;"></i>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview" style="padding-left: 20px;">
                         <li class="nav-item">
                             <a href="{% url 'app:categoria_listar' %}" class="nav-link {% if 'categoria' in request.path %} active {% endif %}">
-                                <i class="nav-icon fas fa-layer-group" style="color: #fff;"></i>
-                                <p style="color: #fff;">Categoría</p>
+                                <i class="nav-icon fas fa-layer-group" style="color: #fff; margin-right: 10px;"></i>
+                                <p style="color: #fff; font-size: 16px;">Categoría</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'app:tipo_listar' %}" class="nav-link {% if 'tipo' in request.path %} active {% endif %}">
-                                <i class="nav-icon fas fa-clipboard-list" style="color: #e1ffed;"></i>
-                                <p style="color: #fff;">Tipo Producto</p>
+                                <i class="nav-icon fas fa-clipboard-list" style="color: #e1ffed; margin-right: 10px;"></i>
+                                <p style="color: #fff; font-size: 16px;">Tipo Producto</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'app:producto_listar' %}" class="nav-link {% if 'producto' in request.path %} active {% endif %}">
-                                <i class="nav-icon fas fa-fire-extinguisher" style="color: #eee600;"></i>
-                                <p style="color: #fff;">Productos</p>
+                                <i class="nav-icon fas fa-fire-extinguisher" style="color: #eee600; margin-right: 10px;"></i>
+                                <p style="color: #fff; font-size: 16px;">Productos</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'app:listar_stock' %}" class="nav-link {% if 'stock' in request.path %} active {% endif %}">
-                                <i class="nav-icon fas fa-cubes" style="color: #e2bf5e;"></i>
-                                <p style="color: #fff;">Stock</p>
+                                <i class="nav-icon fas fa-cubes" style="color: #e2bf5e; margin-right: 10px;"></i>
+                                <p style="color: #fff; font-size: 16px;">Stock</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'app:normativa_listar' %}" class="nav-link {% if 'normativa' in request.path %} active {% endif %}">
-                                <i class="nav-icon fas fa-balance-scale" style="color: #b6e8e2;"></i>
-                                <p style="color: #fff;">Normativas</p>
+                                <i class="nav-icon fas fa-balance-scale" style="color: #b6e8e2; margin-right: 10px;"></i>
+                                <p style="color: #fff; font-size: 16px;">Normativas</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
+                <style>
+                    /* Estilo para la flecha cuando el menú está abierto */
+                    .menu-open .arrow {
+                        transform: rotate(90deg); /* Gira la flecha 90 grados */
+                        transition: transform 0.0.1s ease-in-out; /* Transición suave */
+                    }
+                
+                    /* Transición suave para la flecha en general */
+                    .arrow {
+                        transition: transform 0.3s ease-in-out;
+                    }
+                </style>
+                
                 <li class="nav-item">
                     <a href="{% url 'app:ubicacion_listar' %}" class="nav-link {% if 'ubicacion' in request.path %} active {% endif %}">
                         <i class="nav-icon fas fa-map-marker-alt" style="color: #e1ffed;"></i>
