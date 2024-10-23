@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-l$w2&3)pz0=h_a-hg^=k8%-ehfi2elsgexc&01&002-8rc@&al'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["conaldexboyaca.sogamosotecnologiadigital.pro"]
 
 # Application definition
 
@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
+    'app.apps.AppConfig',
     #dash
     'dashboard',
     #Index
@@ -59,9 +59,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'app.context_processors.user_last_login',
-                'app.context_processors.user_count',
-                'app.context_processors.user_name',
+                
             ],
         },
     },
@@ -72,9 +70,9 @@ WSGI_APPLICATION = 'Config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Conaldex_Boyaca',
-        'USER': 'root',
-        'PASSWORD': 'Adso2670',
+        'NAME': 'database-conaldex',
+        'USER': 'user-conaldex',
+        'PASSWORD': 'KH5J8DEiRBkz17RGr1fQ',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -106,7 +104,8 @@ USE_L10N = True
 USE_TZ = True
 
 # Configuración de archivos estáticos
-STATIC_URL = 'app/static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Agregar la ruta del directorio de backups
 BACKUP_ROOT = os.path.join(BASE_DIR, 'backups')
