@@ -104,7 +104,7 @@ class ProductoUpdateView(LoginRequiredMixin,UpdateView):
          # Añadir breadcrumbs
         context['breadcrumbs'] = [
             {'nombre': 'Inicio', 'url': '/'},
-            {'nombre': 'Categorías', 'url': reverse_lazy('app:producto_listar')},
+            {'nombre': 'Productos', 'url': reverse_lazy('app:producto_listar')},
             {'nombre': 'Editar', 'url': reverse_lazy('app:producto_editarP', args=[self.object.pk])},
         ]
 
