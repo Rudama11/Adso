@@ -1,7 +1,7 @@
-{% extends 'listar.html' %}
+{% extends 'templates/listar.html' %}
 {% load static %}
 {% block filtro_form_contenido %}
-<form method="GET" action="{% url 'app:venta_listar' %}">
+<form method="GET" action="{% url 'app:ventas_listar' %}">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">

@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, redirect
 # Vista para listar ventas
 class VentasListView(LoginRequiredMixin,ListView):
     model = Venta
-    template_name = 'ventas/listar.html'
+    template_name = 'Ventas/listar.html'
     context_object_name = 'ventas'
 
     def get_queryset(self):
